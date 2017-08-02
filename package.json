@@ -1,13 +1,13 @@
 {
-  "name": "convenient",
+  "name": "necessary",
   "author": "James Smith",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
-  "homepage": "https://github.com/djalbat/Convenient",
+  "homepage": "https://github.com/djalbat/Necessary",
   "description": "Utilities for arrays, paths, etc.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/djalbat/Convenient"
+    "url": "https://github.com/djalbat/Necessary"
   },
   "dependencies": {},
   "devDependencies": {

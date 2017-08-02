@@ -1,16 +1,16 @@
-# Convenient
+# Necessary
 
 Utilities for arrays, paths, etc.
 
 ## Installation
 
-You can install Convenient with [npm](https://www.npmjs.com/):
+You can install Necessary with [npm](https://www.npmjs.com/):
 
-    npm install convenient
+    npm install necessary
 
 You can also clone the repository with [Git](https://git-scm.com/)...
 
-    git clone https://github.com/djalbat/Convenient.git
+    git clone https://github.com/djalbat/Necessary.git
 
 ...and then install the necessary modules with npm from within the project's root directory:
 
@@ -21,9 +21,9 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 If you are building with [Node.js](http://nodejs.org) the usage is as follows:
 
 ```js
-const convenient = require('convenient'),
-      pathUtilities = convenient.pathUtilities,
-      arrayUtilities = convenient.arrayUtilities;
+const necessary = require('necessary'),
+      pathUtilities = necessary.pathUtilities,
+      arrayUtilities = necessary.arrayUtilities;
 ```
 
 ## Compiling from source
