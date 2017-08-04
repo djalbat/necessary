@@ -16,7 +16,7 @@ class async {
       } else {
         const element = array[index];
 
-        callback(element, next);
+        callback(element, index, next);
       }
     };
 
