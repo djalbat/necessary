@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  array: require('./array'),
-  async: require('./async'),
-  fileSystem: require('./fileSystem')
+  array: require('./lib/array'),
+  async: require('./lib/async'),
+  fileSystem: require('./lib/fileSystem')
 };
