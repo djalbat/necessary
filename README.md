@@ -1,6 +1,6 @@
 # Necessary
 
-Utilities for arrays, paths, etc.
+Utilities for arrays, paths and so on.
 
 ## Installation
 
