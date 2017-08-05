@@ -11,6 +11,14 @@ function isPathTopmostDirectoryName(path) {
   return pathTopmostDirectoryName;
 }
 
+function combinePaths(path1, path2) {
+  path1 = pathWithoutTrailingSlashFromPath(path1);  ///
+
+  const combinedPath = `${path1}/${path2}`;
+
+  return combinedPath;
+}
+
 function bottommostNameFromPath(path) {
   let bottommostName = null;
 
@@ -25,6 +33,14 @@ function bottommostNameFromPath(path) {
   return bottommostName;
 }
 
+function directoryPathFromPath(path) {
+  const matches = path.match(/^(.*)\/[^\/]*$/),
+        secondMatch = second(matches),
+        directoryPath = secondMatch; ///
+
+  return directoryPath;
+}
+
 function topmostDirectoryNameFromPath(path) {
   let topmostDirectoryName = null;
 
@@ -37,6 +53,12 @@ function topmostDirectoryNameFromPath(path) {
   }
 
   return topmostDirectoryName;
+}
+
+function pathWithoutTrailingSlashFromPath(path) {
+  const pathWithoutTrailingSlash = path.replace(/\/$/, '');
+
+  return pathWithoutTrailingSlash;
 }
 
 function pathWithoutBottommostNameFromPath(path) {
@@ -69,8 +91,11 @@ function pathWithoutTopmostDirectoryNameFromPath(path) {
 
 module.exports = {
   isPathTopmostDirectoryName: isPathTopmostDirectoryName,
+  combinePaths: combinePaths,
   bottommostNameFromPath: bottommostNameFromPath,
+  directoryPathFromPath: directoryPathFromPath,
   topmostDirectoryNameFromPath: topmostDirectoryNameFromPath,
+  pathWithoutTrailingSlashFromPath: pathWithoutTrailingSlashFromPath,
   pathWithoutBottommostNameFromPath: pathWithoutBottommostNameFromPath,
   pathWithoutTopmostDirectoryNameFromPath: pathWithoutTopmostDirectoryNameFromPath
 };
