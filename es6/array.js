@@ -1,54 +1,63 @@
 'use strict';
 
-class array {
-  static first(array) { return array[0]; }
+function first(array) { return array[0]; }
 
-  static second(array) { return array[1]; }
+function second(array) { return array[1]; }
 
-  static last(array) { return array[array.length - 1]; }
+function last(array) { return array[array.length - 1]; }
 
-  static tail(array) { return array.slice(1); }
+function tail(array) { return array.slice(1); }
 
-  static push(array1, array2) { Array.prototype.push.apply(array1, array2); }
+function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
-  static unshift(array1, array2) { Array.prototype.unshift.apply(array1, array2); }
+function unshift(array1, array2) { Array.prototype.unshift.apply(array1, array2); }
 
-  static splice(array, start, deleteCount, itemsArray = []) {
-    const args = [start, deleteCount, ...itemsArray],
-          deletedItemsArray = Array.prototype.splice.apply(array, args);
+function splice(array, start, deleteCount, itemsArray = []) {
+  const args = [start, deleteCount, ...itemsArray],
+        deletedItemsArray = Array.prototype.splice.apply(array, args);
 
-    return deletedItemsArray;
-  }
+  return deletedItemsArray;
+}
 
-  static combine(array1, array2 = [], test) {
-    array1 = array2.reduce(function(array1, element, index) {
-      const passed = test(element, index);
+function combine(array1, array2 = [], test) {
+  array1 = array2.reduce(function(array1, element, index) {
+    const passed = test(element, index);
 
-      if (passed) {
-        array1.push(element);
-      }
-
-      return array1;
-    }, array1);
+    if (passed) {
+      array1.push(element);
+    }
 
     return array1;
-  }
-  
-  static forwardsForEach(array, callback) {
-    array.forEach(function(element, index) {
-      callback(element, index);
-    });
-  }
+  }, array1);
 
-  static backwardsForEach(array, callback) {
-    const arrayLength = array.length;
+  return array1;
+}
 
-    for (var index = arrayLength - 1; index >= 0; index--) {
-      const element = array[index];
+function forwardsForEach(array, callback) {
+  array.forEach(function(element, index) {
+    callback(element, index);
+  });
+}
 
-      callback(element, index);
-    }
+function backwardsForEach(array, callback) {
+  const arrayLength = array.length;
+
+  for (var index = arrayLength - 1; index >= 0; index--) {
+    const element = array[index];
+
+    callback(element, index);
   }
 }
 
-module.exports = array;
+module.exports = {
+  first: first,
+  second: second,
+  last: last,
+  tail: tail,
+  push: push,
+  unshift: unshift,
+  splice: splice,
+  combine: combine,
+  forwardsForEach: forwardsForEach,
+  backwardsForEach: backwardsForEach
+};
