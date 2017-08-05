@@ -9,9 +9,7 @@ function forEach(array, callback, done) {
     index++;
 
     if (index === arrayLength) {
-      if (done) {
-        done();
-      }
+      done();
     } else {
       const element = array[index];
 

@@ -2,8 +2,10 @@
 
 const array = require('./array');
 
+const { second } = array;
+
 function isPathTopmostDirectoryName(path) {
-  const topmostDirectoryName = pathUtil.topmostDirectoryNameFromPath(path),
+  const topmostDirectoryName = topmostDirectoryNameFromPath(path),
         pathTopmostDirectoryName = (topmostDirectoryName === null); ///
 
   return pathTopmostDirectoryName;
@@ -15,7 +17,7 @@ function bottommostNameFromPath(path) {
   const matches = path.match(/^.*\/([^\/]*$)/);
 
   if (matches !== null) {
-    const secondMatch = array.second(matches);
+    const secondMatch = second(matches);
 
     bottommostName = secondMatch;  ///
   }
@@ -29,7 +31,7 @@ function topmostDirectoryNameFromPath(path) {
   const matches = path.match(/^([^\/]*)\//);
 
   if (matches !== null) {
-    const secondMatch = array.second(matches);
+    const secondMatch = second(matches);
 
     topmostDirectoryName = secondMatch;  ///
   }
@@ -43,7 +45,7 @@ function pathWithoutBottommostNameFromPath(path) {
   const matches = path.match(/(^.*)\/[^\/]*$/);
 
   if (matches !== null) {
-    const secondMatch = array.second(matches);
+    const secondMatch = second(matches);
 
     pathWithoutBottommostName = secondMatch; ///
   }
@@ -57,7 +59,7 @@ function pathWithoutTopmostDirectoryNameFromPath(path) {
   const matches = path.match(/^[^\/]*\/(.*$)/);
 
   if (matches !== null) {
-    const secondMatch = array.second(matches);
+    const secondMatch = second(matches);
 
     pathWithoutTopmostDirectoryName = secondMatch;
   }

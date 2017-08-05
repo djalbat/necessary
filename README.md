@@ -22,8 +22,8 @@ If you are building with [Node.js](http://nodejs.org) the usage is as follows:
 
 ```js
 const necessary = require('necessary'),
-      pathUtilities = necessary.pathUtilities,
-      arrayUtilities = necessary.arrayUtilities;
+      path = necessary.path,
+      array = necessary.array;
 ```
 
 ## Compiling from source

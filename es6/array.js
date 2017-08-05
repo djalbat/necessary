@@ -4,7 +4,15 @@ function first(array) { return array[0]; }
 
 function second(array) { return array[1]; }
 
+function third(array) { return array[2]; }
+
+function fourth(array) { return array[3]; }
+
+function fifth(array) { return array[4]; }
+
 function last(array) { return array[array.length - 1]; }
+
+function lastButOne(array) { return array[array.length - 2]; }
 
 function tail(array) { return array.slice(1); }
 
@@ -17,6 +25,64 @@ function splice(array, start, deleteCount, itemsArray = []) {
         deletedItemsArray = Array.prototype.splice.apply(array, args);
 
   return deletedItemsArray;
+}
+
+function filter(array, test) {
+  arrayUtil.backwardsForEach(array, function(element, index) {
+    const passed = test(element, index),
+        failed = !passed;
+
+    if (failed) {  ///
+      const start = index,  ///
+          deleteCount = 1;
+
+      array.splice(start, deleteCount);
+    }
+  });
+}
+
+function prune(array, test) {
+  const found = array.some(function(element, index) {
+    const passed = test(element, index);
+
+    if (passed) {
+      const start = index,  ///
+          deleteCount = 1;
+
+      array.splice(start, deleteCount);
+
+      return true;
+    }
+  });
+
+  return found;
+}
+
+function augment(array, test, element) {
+  const found = array.some(function(element, index) {
+    const passed = test(element, index);
+
+    if (passed) {
+      return true;
+    }
+  });
+
+
+  if (!found) {
+    array.push(element);
+  }
+
+  return found;
+}
+
+function separate(array, test, array1, array2) {
+  array.forEach(function(element, index) {
+    const passed = test(element, index);
+
+    passed ?
+        array1.push(element) :
+        array2.push(element);
+  });
 }
 
 function combine(array1, array2 = [], test) {
@@ -52,7 +118,11 @@ function backwardsForEach(array, callback) {
 module.exports = {
   first: first,
   second: second,
+  third: third,
+  fourth: fourth,
+  fifth: fifth,
   last: last,
+  lastButOne: lastButOne,
   tail: tail,
   push: push,
   unshift: unshift,
