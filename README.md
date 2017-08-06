@@ -199,19 +199,19 @@ topmostDirectoryPathFromPath('root/etc/init.conf'); // the return value is 'root
 topmostDirectoryNameFromPath('root/etc/init.conf'); // the return value is 'root'
 ```
 
-* The `pathWithoutTrailingSlashFromPath()` method will remove the trailing slash from the string argument. It expects there to be at least one delimiter, returning `null` otherwise
+* The `pathWithoutTrailingSlashFromPath()` method will remove the trailing slash from the string argument. It expects there to be at least one delimiter, returning `null` otherwise:
 
 ```js
 pathWithoutTrailingSlashFromPath('root/etc/'); // the return value will be 'root/etc'
 ```
 
-* The `pathWithoutBottommostNameFromPath()` method will remove the bottommost name from the string argument be it a directory name or file name. It expects there to be at least one delimiter, returning `null` otherwise
+* The `pathWithoutBottommostNameFromPath()` method will remove the bottommost name from the string argument be it a directory name or file name. It expects there to be at least one delimiter, returning `null` otherwise:
 
 ```js
 pathWithoutBottommostNameFromPath('root/etc/init.conf'); // the return value will be 'root/etc'
 ```
 
-* The `pathWithoutTopmostDirectoryNameFromPath()` method will remove the topmost directory name from the string argument. It expects there to be at least one delimiter, returning `null` otherwise
+* The `pathWithoutTopmostDirectoryNameFromPath()` method will remove the topmost directory name from the string argument. It expects there to be at least one delimiter, returning `null` otherwise:
 
 ```js
 pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return value will be 'etc/init.conf'
