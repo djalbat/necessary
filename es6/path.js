@@ -90,7 +90,7 @@ function bottommostNameFromPath(path) {
   return bottommostName;
 }
 
-function directoryPathFromPath(path) {
+function topmostDirectoryPathFromPath(path) {
   const matches = path.match(/^(.*)\/[^\/]+\/?$/),
         secondMatch = second(matches),
         directoryPath = secondMatch; ///
@@ -154,7 +154,7 @@ module.exports = {
   combinePaths: combinePaths,
   concatenatePaths: concatenatePaths,
   bottommostNameFromPath: bottommostNameFromPath,
-  directoryPathFromPath: directoryPathFromPath,
+  topmostDirectoryPathFromPath: topmostDirectoryPathFromPath,
   topmostDirectoryNameFromPath: topmostDirectoryNameFromPath,
   pathWithoutTrailingSlashFromPath: pathWithoutTrailingSlashFromPath,
   pathWithoutBottommostNameFromPath: pathWithoutBottommostNameFromPath,

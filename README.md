@@ -137,7 +137,7 @@ These methods manipulate or query strings that represent file and directory path
 - `combinePaths()`
 - `concatenatePaths()`
 - `bottommostNameFromPath()`
-- `directoryPathFromPath()`
+- `topmostDirectoryPathFromPath()`
 - `topmostDirectoryNameFromPath()`
 - `pathWithoutTrailingSlashFromPath()`
 - `pathWithoutBottommostNameFromPath()`
@@ -187,10 +187,10 @@ concatenatePaths('root/', 'etc/'); // the return value is 'root/etc/'
 bottommostNameFromPath('root/etc'); // the return value is 'etc'
 ```
 
-* The `directoryPathFromPath()` method will return the bottommost name from the string argument, whether this is a directory or file name. It expects there to be at least one delimiter, returning `null` otherwise:
+* The `topmostDirectoryPathFromPath()` method will return the bottommost name from the string argument, whether this is a directory or file name. It expects there to be at least one delimiter, returning `null` otherwise:
 
 ```js
-directoryPathFromPath()
+topmostDirectoryPathFromPath()
 ```
 
 * The `topmostDirectoryNameFromPath()` method...
