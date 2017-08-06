@@ -20,21 +20,20 @@ function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
 function unshift(array1, array2) { Array.prototype.unshift.apply(array1, array2); }
 
-function splice(array, start, deleteCount, itemsArray = []) {
-  const args = [start, deleteCount, ...itemsArray],
-        deletedItemsArray = Array.prototype.splice.apply(array, args);
+function splice(array1, start, deleteCount, array2 = []) {
+  const args = [start, deleteCount, ...array2],
+        deletedItemsArray = Array.prototype.splice.apply(array1, args);
 
   return deletedItemsArray;
 }
 
 function filter(array, test) {
   backwardsForEach(array, function(element, index) {
-    const passed = test(element, index),
-        failed = !passed;
+    const passed = test(element, index);
 
-    if (failed) {  ///
+    if (!passed) {
       const start = index,  ///
-          deleteCount = 1;
+            deleteCount = 1;
 
       array.splice(start, deleteCount);
     }

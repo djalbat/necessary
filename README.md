@@ -68,16 +68,24 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 * The methods `first()` through to `lastButOne()` return the requisite element of the array, if passed an array of at least the required length. If the array is not long enough they return `undefined`. If passed anything other than an array their behaviour is unknown. The `tail()` method returns all but the first element of an array with similar provisos to the other methods.
 
-* The `push()` and `unshift()` methods work in a similar vein to their native counterparts, however they take an array rather than a single element as their second argument:
+* The `push()` and `unshift()` methods work in a similar vein to their native counterparts, however they take an array rather than a single element as their second argument. They both return a new array and leave their arguments untouched:
 
 ```js
-const { push, unshift } = array;
+push([1, 2, 3], [4, 5]); // = [1, 2, 3, 4, 5]
 
-push([1, 2, 3], [4, 5]); // [1, 2, 3, 4, 5]
-
-unshift([1, 2], [3, 4, 5]); // [3, 4, 5, 1, 2]
+unshift([1, 2], [3, 4, 5]); // = [3, 4, 5, 1, 2]
 ```
 
+* The `splice()` method works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array that it is passed and returns an array of the elements that have been removed:
+
+```js
+const array1 = [1, 2, 3],
+      start - 1,
+      deleteCount = 2,
+      array2 = [4, 5]
+
+splice(array1, start, deleteCount, array2); // = [2, 3] with array1 becoming [1, 4, 5]
+```
 
 
 ## Contact
