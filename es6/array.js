@@ -76,7 +76,7 @@ function patch(array, test, element) {
 }
 
 function augment(array1, array2, test) {
-  array2.forEach(function(array1, element, index) {
+  array2.forEach(function(element, index) {
     const passed = test(element, index);
 
     if (passed) {
