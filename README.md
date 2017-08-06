@@ -2,7 +2,7 @@
 
 Utilities for arrays, paths and so on.
 
-These utility methods were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly by such popular packages. The idea here was only to create methods that addressed specific and relatively modest requirements and would result in a tiny footprint. Additionally, in the case of the asynchronous methods especially, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
+These utility methods were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea here was only to create methods that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, in the case of the asynchronous methods especially, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
 
 Currently there are four sets of methods dealing with arrays, file and directory paths, asynchronous JavaScript and the file system.
 
@@ -154,6 +154,8 @@ isPathRelativePath('../root/etc'); // the return value is true
 isPathAbsolutePath('root/etc'); // the return value is true
 ```
 
+Note that an absolute path is considered to be a path that is not a relative path, rather than a path that starts with a delimiter.
+
 * The `isPathTopmostDirectoryName()` method returns `true` if the first string argument is a non-empty string containing no delimiters apart from optionally the last character:
 
 ```js
@@ -193,6 +195,65 @@ pathWithoutBottommostNameFromPath('root/etc/init.conf'); // the return value wil
 
 pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return value will be 'etc/init.conf'
 ```
+
+## File system methods
+
+A small if motley collection of methods, most of which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) methods.
+
+- `entryExists()`
+- `isEntryDirectory()`
+- `fileExists()`
+- `readFile()`
+- `writeFile()`
+- `readDirectory()`
+- `isDirectoryEmpty()`
+
+* The `entryExists()` method
+
+```js
+entryExists(); // the return value is
+```
+
+* The `isEntryDirectory()` method
+
+```js
+isEntryDirectory(); // the return value is
+```
+
+* The `fileExists()` method
+
+```js
+fileExists(); // the return value is
+```
+
+* The `readFile()` method
+
+```js
+readFile(); // the return value is
+```
+
+* The `writeFile()` method
+
+```js
+writeFile(); // the return value is
+```
+
+* The `readDirectory()` method
+
+```js
+readDirectory(); // the return value is
+```
+
+* The `isDirectoryEmpty()` method
+
+```js
+isDirectoryEmpty(); // the return value is
+```
+
+
+
+
+
 
 ## Contact
 
