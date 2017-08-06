@@ -1,5 +1,19 @@
 'use strict';
 
+function whilst(test, callback, done) {
+  const next = function() {
+    const passed = test();
+
+    if (passed) {
+      callback(next);
+    } else {
+      done();
+    }
+  };
+
+  next();
+}
+
 function forEach(array, callback, done) {
   const arrayLength = array.length;
   
@@ -20,19 +34,7 @@ function forEach(array, callback, done) {
   next();
 }
 
-function whilst(test, callback, done) {
-  const next = function() {
-    if (test()) {
-      callback(next);
-    } else {
-      done();
-    }
-  };
-
-  next();
-}
-
 module.exports = {
-  forEach: forEach,
-  whilst: whilst
+  whilst: whilst,
+  forEach: forEach
 };
