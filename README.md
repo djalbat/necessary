@@ -66,7 +66,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `forwardsForEach()`
 - `backwardsForEach()`
 
-* The methods `first()` through to `lastButOne()` return the requisite element of the array, if passed an array of at least the required length or `undefined` otherwise. If passed anything other than an array their behaviour is unknown. The `tail()` method returns all but the first element of an array with similar provisos to the other methods.
+* The methods `first()` through to `lastButOne()` return the requisite element of the array, if passed an array of at least the required length. If the array is not long enough they return `undefined`. If passed anything other than an array their behaviour is unknown. The `tail()` method returns all but the first element of an array with similar provisos to the other methods.
 
 
 
