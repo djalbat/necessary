@@ -57,7 +57,7 @@ function prune(array, test) {
   return found;
 }
 
-function patch(array, test, element) {
+function patch(array, element, test) {
   const found = array.some(function(element, index) {
     const passed = test(element, index);
 

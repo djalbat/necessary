@@ -19,14 +19,14 @@ function isPathAbsolutePath(path) {
 }
 
 function isPathTopmostDirectoryName(path) {
-  const topmostDirectoryName = topmostDirectoryNameFromPath(path),
-        pathTopmostDirectoryName = (topmostDirectoryName === null); ///
+  const position = path.search(/^[^\/]+\/?$/),
+        pathTopmostDirectoryName = (position !== -1);
 
   return pathTopmostDirectoryName;
 }
 
 function isTopmostDirectoryNameContainedInPath(topmostDirectoryName, path) {
-  const regExp = new RegExp(`^${topmostDirectoryName}`),
+  const regExp = new RegExp(`^${topmostDirectoryName}(?:\\/.+)?$`),
         position = path.search(regExp),
         topmostDirectoryNameContainedInFilePath = (position !== -1);
 

@@ -2,7 +2,7 @@
 
 Utilities for arrays, paths and so on.
 
-These utility methods were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will be covered far more comprehensibly by these popular packages, or others. The idea here was only to create methods that addressed specific and relatively modest requirements and would result in a tiny footprint. Additionally, in the case of the asynchronous methods especially, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
+These utility methods were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly by such popular packages. The idea here was only to create methods that addressed specific and relatively modest requirements and would result in a tiny footprint. Additionally, in the case of the asynchronous methods especially, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
 
 Currently there are four sets of methods dealing with arrays, file and directory paths, asynchronous JavaScript and the file system.
 
@@ -47,8 +47,6 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 ## Array methods
 
-None of these methods
-
 Note that none of these methods take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
 
 - `first()`
@@ -72,18 +70,18 @@ Note that none of these methods take or pass on a `thisArg` argument when they m
 
 * The methods `first()` through to `lastButOne()` return the requisite element of the first array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` method returns all but the first element of the first array argument.
 
-* The `push()` and `unshift()` methods work in a similar vein to their native counterparts, however they take an array rather than a single element as their second argument. They both return a new array and the first array argument untouched:
+* The `push()` and `unshift()` methods work in a similar vein to their native counterparts, however they take an array rather than a single element as their second arguments. They both return a new array and the first array argument untouched:
 
 ```js
-push([1, 2, 3], [4, 5]); // = [1, 2, 3, 4, 5]
+push([1, 2, 3], [4, 5]); // the return value will be [1, 2, 3, 4, 5]
 
-unshift([1, 2], [3, 4, 5]); // = [3, 4, 5, 1, 2]
+unshift([1, 2], [3, 4, 5]); // the return value will be [3, 4, 5, 1, 2]
 ```
 
 * The `splice()` method works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
 
 ```js
-splice([1, 2, 3], 1, 2, [4, 5]); // = [2, 3] with the first argument becoming [1, 4, 5]
+splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3] with the first array argument becoming [1, 4, 5]
 ```
 
 * The `filter()` method is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a test callback method that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
@@ -91,7 +89,7 @@ splice([1, 2, 3], 1, 2, [4, 5]); // = [2, 3] with the first argument becoming [1
 ```js
 filter([1, 2, -1, -2], function(element, index) {
   return element > 0; }]
-}); // the first argument becomes [1, 2]
+}); // the first array argument becomes [1, 2]
 ```
 
 * The `prune()` method is much like the `filter()` method, however it will terminate the first time that the test callback method returns a truthy value:
@@ -99,15 +97,15 @@ filter([1, 2, -1, -2], function(element, index) {
 ```js
 prune([1, 2, -1, -2], function(element, index) {
   return element > 0; }]
-}); // the first argument becomes [1, 2, -2]
+}); // the first array argument becomes [1, 2, -2]
 ```
 
 * The `patch()` method will append the given element to the first array argument provided that the test callback method does not return a truthy value for any of the array's elements:
 
 ```js
-patch([1, 2, 3], function(element, index) {
+patch([1, 2, 3], 4, function(element, index) {
   return element < 0; }]
-}, 4); // the first argument becomes [1, 2, 3, 4]
+}); // the first array argument becomes [1, 2, 3, 4]
 ```
 
 * The `augment()` method is appends each of the elements of the second array argument to the first array argument whenever the test callback returns a truthy value:
@@ -115,7 +113,7 @@ patch([1, 2, 3], function(element, index) {
 ```js
 augment([1, 2, 3], [-1, 4, -2, 5], function(element, index) {
   return element > 0; }]
-}); // the first argument becomes [1, 2, 3, 4, 5]
+}); // the first array argument becomes [1, 2, 3, 4, 5]
 ```
 
 * The `separate()` method separates the first array argument, pushing each of its elements onto either the second or the third array argument depending on whether or not the test callback returns a truthy value:
@@ -123,11 +121,101 @@ augment([1, 2, 3], [-1, 4, -2, 5], function(element, index) {
 ```js
 augment([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
   return element > 0; }]
-}, [-1, 4, -2, 5]); // the second and third arguments become [1, 2, 3] and [-1, -2, 3], respectively.
+}); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
 
 * The `forwardsForEach()` and `backwardsForEach()` methods work as their names suggest.
 
+## Path methods
+
+These methods manipulate or query strings that represent file and directory paths. Only forward slash '/' delimiters are supported and paths are not expected to start with a delimiter. Trailing delimiters are tolerated, however.
+
+- `isPathRelativePath()`
+- `isPathAbsolutePath()`
+- `isPathTopmostDirectoryName()`
+- `isTopmostDirectoryNameContainedInPath()`
+- `combinePaths()`
+- `concatenatePaths()`
+- `bottommostNameFromPath()`
+- `directoryPathFromPath()`
+- `topmostDirectoryNameFromPath()`
+- `pathWithoutTrailingSlashFromPath()`
+- `pathWithoutBottommostNameFromPath()`
+- `pathWithoutTopmostDirectoryNameFromPath()`
+
+* The `isPathRelativePath()` method returns `true` if the first string argument starts with a period `.` or double period `..`:
+
+```js
+isPathRelativePath('../root/etc'); // the return value is true
+```
+
+* The `isPathAbsolutePath()` returns `true` if the first string argument does not start with a period `.` or double period `..`:
+
+```js
+isPathAbsolutePath('root/etc'); // the return value is true
+```
+
+* The `isPathTopmostDirectoryName()` method returns `true` if the first string argument is a non-empty string containing no delimiters apart from optionally the last charater:
+
+```js
+isPathTopmostDirectoryName('root/') // the return value is true
+```
+
+* The `isTopmostDirectoryNameContainedInPath()` method returns `true` if the second string argument begins with the first string argument optionally followed by a delimiter and further characters:
+
+```js
+isTopmostDirectoryNameContainedInPath('root', 'root/etc') // the return value is true
+```
+
+Note that this method does not tolerate trailing delimiters on the first string argument.
+
+* The `combinePaths()` method
+
+```js
+combinePaths()
+```
+
+* The `concatenatePaths()` method...
+
+```js
+concatenatePaths()
+```
+
+* The `bottommostNameFromPath()` method...
+
+```js
+bottommostNameFromPath()
+```
+
+* The `directoryPathFromPath()` method...
+
+```js
+directoryPathFromPath()
+```
+
+* The `topmostDirectoryNameFromPath()` method...
+
+```js
+topmostDirectoryNameFromPath()
+```
+
+* The `pathWithoutTrailingSlashFromPath()` method...
+
+```js
+pathWithoutTrailingSlashFromPath()
+```
+
+* The `pathWithoutBottommostNameFromPath()` method...
+
+```js
+pathWithoutBottommostNameFromPath()
+```
+
+* The `pathWithoutTopmostDirectoryNameFromPath()` method...
+
+```js
+pathWithoutTopmostDirectoryNameFromPath()
+```
 
 ## Contact
 
