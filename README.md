@@ -47,6 +47,10 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 ## Array methods
 
+None of these methods
+
+Note that none of these methods take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
+
 - `first()`
 - `second()`
 - `third()`
@@ -66,9 +70,9 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `forwardsForEach()`
 - `backwardsForEach()`
 
-* The methods `first()` through to `lastButOne()` return the requisite element of the array, if passed an array of at least the required length. If the array is not long enough they return `undefined`. If passed anything other than an array their behaviour is unknown. The `tail()` method returns all but the first element of an array with similar provisos to the other methods.
+* The methods `first()` through to `lastButOne()` return the requisite element of the first array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` method returns all but the first element of the first array argument.
 
-* The `push()` and `unshift()` methods work in a similar vein to their native counterparts, however they take an array rather than a single element as their second argument. They both return a new array and leave their arguments untouched:
+* The `push()` and `unshift()` methods work in a similar vein to their native counterparts, however they take an array rather than a single element as their second argument. They both return a new array and the first array argument untouched:
 
 ```js
 push([1, 2, 3], [4, 5]); // = [1, 2, 3, 4, 5]
@@ -76,16 +80,53 @@ push([1, 2, 3], [4, 5]); // = [1, 2, 3, 4, 5]
 unshift([1, 2], [3, 4, 5]); // = [3, 4, 5, 1, 2]
 ```
 
-* The `splice()` method works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array that it is passed and returns an array of the elements that have been removed:
+* The `splice()` method works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
 
 ```js
-const array1 = [1, 2, 3],
-      start - 1,
-      deleteCount = 2,
-      array2 = [4, 5]
-
-splice(array1, start, deleteCount, array2); // = [2, 3] with array1 becoming [1, 4, 5]
+splice([1, 2, 3], 1, 2, [4, 5]); // = [2, 3] with the first argument becoming [1, 4, 5]
 ```
+
+* The `filter()` method is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a test callback method that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
+
+```js
+filter([1, 2, -1, -2], function(element, index) {
+  return element > 0; }]
+}); // the first argument becomes [1, 2]
+```
+
+* The `prune()` method is much like the `filter()` method, however it will terminate the first time that the test callback method returns a truthy value:
+
+```js
+prune([1, 2, -1, -2], function(element, index) {
+  return element > 0; }]
+}); // the first argument becomes [1, 2, -2]
+```
+
+* The `patch()` method will append the given element to the first array argument provided that the test callback method does not return a truthy value for any of the array's elements:
+
+```js
+patch([1, 2, 3], function(element, index) {
+  return element < 0; }]
+}, 4); // the first argument becomes [1, 2, 3, 4]
+```
+
+* The `augment()` method is appends each of the elements of the second array argument to the first array argument whenever the test callback returns a truthy value:
+
+```js
+augment([1, 2, 3], [-1, 4, -2, 5], function(element, index) {
+  return element > 0; }]
+}); // the first argument becomes [1, 2, 3, 4, 5]
+```
+
+* The `separate()` method separates the first array argument, pushing each of its elements onto either the second or the third array argument depending on whether or not the test callback returns a truthy value:
+
+```js
+augment([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
+  return element > 0; }]
+}, [-1, 4, -2, 5]); // the second and third arguments become [1, 2, 3] and [-1, -2, 3], respectively.
+```
+
+* The `forwardsForEach()` and `backwardsForEach()` methods work as their names suggest.
 
 
 ## Contact
