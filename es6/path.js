@@ -69,7 +69,7 @@ function combinePaths(directoryPath, relativePath) {
 }
 
 function concatenatePaths(path1, path2) {
-  path1 = pathWithoutTrailingSlashFromPath(path1);  ///
+  path1 = path1.replace(/\/$/, '');  ///
 
   const combinedPath = `${path1}/${path2}`;
 
@@ -112,12 +112,6 @@ function topmostDirectoryNameFromPath(path) {
   return topmostDirectoryName;
 }
 
-function pathWithoutTrailingSlashFromPath(path) {
-  const pathWithoutTrailingSlash = path.replace(/\/$/, '');
-
-  return pathWithoutTrailingSlash;
-}
-
 function pathWithoutBottommostNameFromPath(path) {
   let pathWithoutBottommostName = null;
 
@@ -156,7 +150,6 @@ module.exports = {
   bottommostNameFromPath: bottommostNameFromPath,
   topmostDirectoryPathFromPath: topmostDirectoryPathFromPath,
   topmostDirectoryNameFromPath: topmostDirectoryNameFromPath,
-  pathWithoutTrailingSlashFromPath: pathWithoutTrailingSlashFromPath,
   pathWithoutBottommostNameFromPath: pathWithoutBottommostNameFromPath,
   pathWithoutTopmostDirectoryNameFromPath: pathWithoutTopmostDirectoryNameFromPath
 };

@@ -139,7 +139,6 @@ These methods manipulate or query strings that represent file and directory path
 - `bottommostNameFromPath()`
 - `topmostDirectoryPathFromPath()`
 - `topmostDirectoryNameFromPath()`
-- `pathWithoutTrailingSlashFromPath()`
 - `pathWithoutBottommostNameFromPath()`
 - `pathWithoutTopmostDirectoryNameFromPath()`
 
@@ -181,7 +180,7 @@ combinePaths('root/etc/', '../init'); // the return value is 'root/init'
 concatenatePaths('root/', 'etc/'); // the return value is 'root/etc/'
 ```
 
-* The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutTrailingSlashFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` methods work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
+* The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` methods work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
 
 ```js
 bottommostNameFromPath('root/etc'); // the return value is 'etc'
@@ -189,8 +188,6 @@ bottommostNameFromPath('root/etc'); // the return value is 'etc'
 topmostDirectoryPathFromPath('root/etc/init.conf'); // the return value is 'root/etc'
 
 topmostDirectoryNameFromPath('root/etc/init.conf'); // the return value is 'root'
-
-pathWithoutTrailingSlashFromPath('root/etc/'); // the return value will be 'root/etc'
 
 pathWithoutBottommostNameFromPath('root/etc/init.conf'); // the return value will be 'root/etc'
 
