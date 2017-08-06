@@ -124,6 +124,7 @@ module.exports = {
   tail: tail,
   push: push,
   unshift: unshift,
+  splice: splice,
   filter: filter,
   prune: prune,
   patch: patch,
