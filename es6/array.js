@@ -83,8 +83,6 @@ function augment(array1, array2, test) {
       array1.push(element);
     }
   });
-
-  return array1;
 }
 
 function separate(array, test, array1, array2) {
