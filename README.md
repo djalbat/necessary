@@ -4,7 +4,7 @@ Utilities for arrays, paths and so on.
 
 These utility methods were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea here was only to create methods that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, especially in the case of the asynchronous methods, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
 
-Currently there are four sets of methods dealing with arrays, file and directory paths, asynchronous JavaScript and the file system.
+Currently there are four sets of methods dealing with arrays, file and directory paths, the file system and asynchronous JavaScript. Remember that this package is no great shakes and does not bear comparison to the likes of lodash.
 
 ## Installation
 
@@ -126,7 +126,7 @@ augment([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
 
 * The `forwardsForEach()` and `backwardsForEach()` methods work as their names suggest.
 
-## Path methods
+## File and directory path methods
 
 - `isPathRelativePath()`
 - `isPathAbsolutePath()`
