@@ -4,7 +4,7 @@ Utilities for arrays, paths and so on.
 
 These utility methods were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea here was only to create methods that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, especially in the case of the asynchronous methods, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
 
-Currently there are four sets of methods dealing with arrays, file and directory paths, the file system and asynchronous JavaScript. Remember that this package is no great shakes and does not bear comparison to the likes of lodash.
+There are four sets of methods dealing with arrays, file and directory paths, the file system and asynchronous JavaScript. Remember that this package is no great shakes and does not bear comparison to the likes of lodash.
 
 ## Installation
 
