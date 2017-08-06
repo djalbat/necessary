@@ -29,11 +29,12 @@ const necessary = require('necessary'),
       { array, async, fileSystem } = necessary,
       { first, last } = array,
       { isDirectory } = fileSystem;
-
+```
 
 Using the destructing syntax is often best and avoids conflicts if you have variables named `path` or `array`, say. However, it may itself lead to conflicts or confusion, in which case just call the methods directly against the objects in question:
 
 
+```js
     async.forEach(...)
 
 ```
