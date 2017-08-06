@@ -58,7 +58,7 @@ function prune(array, test) {
   return found;
 }
 
-function augment(array, test, element) {
+function patch(array, test, element) {
   const found = array.some(function(element, index) {
     const passed = test(element, index);
 
@@ -75,28 +75,26 @@ function augment(array, test, element) {
   return found;
 }
 
-function separate(array, test, array1, array2) {
-  array.forEach(function(element, index) {
-    const passed = test(element, index);
-
-    passed ?
-        array1.push(element) :
-        array2.push(element);
-  });
-}
-
-function combine(array1, array2 = [], test) {
-  array1 = array2.reduce(function(array1, element, index) {
+function augment(array1, array2, test) {
+  array2.forEach(function(array1, element, index) {
     const passed = test(element, index);
 
     if (passed) {
       array1.push(element);
     }
-
-    return array1;
-  }, array1);
+  });
 
   return array1;
+}
+
+function separate(array, test, array1, array2) {
+  array.forEach(function(element, index) {
+    const passed = test(element, index);
+
+    passed ?
+      array1.push(element) :
+        array2.push(element);
+  });
 }
 
 function forwardsForEach(array, callback) {
@@ -126,8 +124,11 @@ module.exports = {
   tail: tail,
   push: push,
   unshift: unshift,
-  splice: splice,
-  combine: combine,
+  filter: filter,
+  prune: prune,
+  patch: patch,
+  augment: augment,
+  separate: separate,
   forwardsForEach: forwardsForEach,
   backwardsForEach: backwardsForEach
 };

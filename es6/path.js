@@ -77,7 +77,7 @@ function concatenatePaths(path1, path2) {
 function bottommostNameFromPath(path) {
   let bottommostName = null;
 
-  const matches = path.match(/^.*\/([^\/]*$)/);
+  const matches = path.match(/^.*\/([^\/]*)$/);
 
   if (matches !== null) {
     const secondMatch = second(matches);
@@ -110,14 +110,6 @@ function topmostDirectoryNameFromPath(path) {
   return topmostDirectoryName;
 }
 
-function pathWithoutTopmostDirectoryName(path) {
-  const matches = path.match(/^[^\/]*\/(.*$)/),
-        second = second(matches),
-        pathWithoutTopmostDirectoryName = second;
-
-  return pathWithoutTopmostDirectoryName;
-}
-
 function pathWithoutTrailingSlashFromPath(path) {
   const pathWithoutTrailingSlash = path.replace(/\/$/, '');
 
@@ -141,7 +133,7 @@ function pathWithoutBottommostNameFromPath(path) {
 function pathWithoutTopmostDirectoryNameFromPath(path) {
   let pathWithoutTopmostDirectoryName = null;
 
-  const matches = path.match(/^[^\/]*\/(.*$)/);
+  const matches = path.match(/^[^\/]*\/(.*)$/);
 
   if (matches !== null) {
     const secondMatch = second(matches);
@@ -162,7 +154,6 @@ module.exports = {
   bottommostNameFromPath: bottommostNameFromPath,
   directoryPathFromPath: directoryPathFromPath,
   topmostDirectoryNameFromPath: topmostDirectoryNameFromPath,
-  pathWithoutTopmostDirectoryName: pathWithoutTopmostDirectoryName,
   pathWithoutTrailingSlashFromPath: pathWithoutTrailingSlashFromPath,
   pathWithoutBottommostNameFromPath: pathWithoutBottommostNameFromPath,
   pathWithoutTopmostDirectoryNameFromPath: pathWithoutTopmostDirectoryNameFromPath
