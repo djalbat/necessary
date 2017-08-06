@@ -2,7 +2,7 @@
 
 Utilities for arrays, paths and so on.
 
-These utility methods were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea here was only to create methods that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, in the case of the asynchronous methods especially, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
+These utility methods were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea here was only to create methods that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, especially in the case of the asynchronous methods, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
 
 Currently there are four sets of methods dealing with arrays, file and directory paths, asynchronous JavaScript and the file system.
 
@@ -47,8 +47,6 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 ## Array methods
 
-Note that none of these methods take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
-
 - `first()`
 - `second()`
 - `third()`
@@ -67,6 +65,8 @@ Note that none of these methods take or pass on a `thisArg` argument when they m
 - `separate()`
 - `forwardsForEach()`
 - `backwardsForEach()`
+
+Note that none of these methods take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
 
 * The methods `first()` through to `lastButOne()` return the requisite element of the first array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` method returns all but the first element of the first array argument.
 
@@ -128,8 +128,6 @@ augment([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
 
 ## Path methods
 
-These methods manipulate or query strings that represent file and directory paths. Only forward slash '/' delimiters are supported and paths are not expected to start with a delimiter. Trailing delimiters are tolerated, however.
-
 - `isPathRelativePath()`
 - `isPathAbsolutePath()`
 - `isPathTopmostDirectoryName()`
@@ -141,6 +139,8 @@ These methods manipulate or query strings that represent file and directory path
 - `topmostDirectoryNameFromPath()`
 - `pathWithoutBottommostNameFromPath()`
 - `pathWithoutTopmostDirectoryNameFromPath()`
+
+These methods manipulate or query strings that represent file and directory paths. Only forward slash '/' delimiters are supported and paths are not expected to start with a delimiter. Trailing delimiters are tolerated, however.
 
 * The `isPathRelativePath()` method returns `true` if the first string argument starts with a period `.` or double period `..`:
 
@@ -198,8 +198,6 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 
 ## File system methods
 
-A small if motley collection of methods, most of which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) methods.
-
 - `entryExists()`
 - `isEntryDirectory()`
 - `fileExists()`
@@ -207,6 +205,8 @@ A small if motley collection of methods, most of which do no more than paper ove
 - `writeFile()`
 - `readDirectory()`
 - `isDirectoryEmpty()`
+
+A small if motley collection of methods, most of which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) methods.
 
 * The `entryExists()` method
 
