@@ -68,6 +68,14 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 * The methods `first()` through to `lastButOne()` return the requisite element of the array, if passed an array of at least the required length. If the array is not long enough they return `undefined`. If passed anything other than an array their behaviour is unknown. The `tail()` method returns all but the first element of an array with similar provisos to the other methods.
 
+* The `push()` and `unshift()` methods work in a similar vein to their native counterparts, however they take an array rather than a single element as their second argument:
+
+     const { push, unshift } = array;
+
+     push([1, 2, 3], [4, 5]); // [1, 2, 3, 4, 5]
+
+     unshift([1, 2], [3, 4, 5]); // [3, 4, 5, 1, 2]
+
 
 
 ## Contact
