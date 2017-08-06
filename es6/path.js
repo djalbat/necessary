@@ -79,7 +79,7 @@ function concatenatePaths(path1, path2) {
 function bottommostNameFromPath(path) {
   let bottommostName = null;
 
-  const matches = path.match(/^.*\/([^\/]+\/?)$/);
+  const matches = path.match(/^.+\/([^\/]+\/?)$/);
 
   if (matches !== null) {
     const secondMatch = second(matches);
@@ -91,7 +91,7 @@ function bottommostNameFromPath(path) {
 }
 
 function topmostDirectoryPathFromPath(path) {
-  const matches = path.match(/^(.*)\/[^\/]+\/?$/),
+  const matches = path.match(/^(.+)\/[^\/]+\/?$/),
         secondMatch = second(matches),
         directoryPath = secondMatch; ///
 
@@ -101,7 +101,7 @@ function topmostDirectoryPathFromPath(path) {
 function topmostDirectoryNameFromPath(path) {
   let topmostDirectoryName = null;
 
-  const matches = path.match(/^([^\/]*)\//);
+  const matches = path.match(/^([^\/]+)\/.+$/);
 
   if (matches !== null) {
     const secondMatch = second(matches);
@@ -121,7 +121,7 @@ function pathWithoutTrailingSlashFromPath(path) {
 function pathWithoutBottommostNameFromPath(path) {
   let pathWithoutBottommostName = null;
 
-  const matches = path.match(/(^.*)\/[^\/]*$/);
+  const matches = path.match(/(^.+)\/[^\/]+\/?$/);
 
   if (matches !== null) {
     const secondMatch = second(matches);
@@ -135,7 +135,7 @@ function pathWithoutBottommostNameFromPath(path) {
 function pathWithoutTopmostDirectoryNameFromPath(path) {
   let pathWithoutTopmostDirectoryName = null;
 
-  const matches = path.match(/^[^\/]*\/(.*)$/);
+  const matches = path.match(/^[^\/]+\/(.+)$/);
 
   if (matches !== null) {
     const secondMatch = second(matches);

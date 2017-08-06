@@ -181,40 +181,40 @@ combinePaths('root/etc/', '../init'); // the return value is 'root/init'
 concatenatePaths('root/', 'etc/'); // the return value is 'root/etc/'
 ```
 
-* The `bottommostNameFromPath()` method will return the bottommost name from the string argument, whether this is a directory or file name. It expects there to be at least one delimiter, returning `null` otherwise:
+* The `bottommostNameFromPath()` method will return the bottommost name from the string argument, be it a directory name or file name. It expects there to be at least one delimiter, returning `null` otherwise:
 
 ```js
 bottommostNameFromPath('root/etc'); // the return value is 'etc'
 ```
 
-* The `topmostDirectoryPathFromPath()` method will return the bottommost name from the string argument, whether this is a directory or file name. It expects there to be at least one delimiter, returning `null` otherwise:
+* The `topmostDirectoryPathFromPath()` method will return the topmost directory path from the string argument. It expects there to be at least one delimiter, returning `null` otherwise:
 
 ```js
-topmostDirectoryPathFromPath()
+topmostDirectoryPathFromPath('root/etc/init.conf'); // the return value is 'root/etc'
 ```
 
-* The `topmostDirectoryNameFromPath()` method...
+* The `topmostDirectoryNameFromPath()` method will return the topmost directory name from the string argument. It expects there to be at least one delimiter, returning `null` otherwise:
 
 ```js
-topmostDirectoryNameFromPath()
+topmostDirectoryNameFromPath('root/etc/init.conf'); // the return value is 'root'
 ```
 
-* The `pathWithoutTrailingSlashFromPath()` method...
+* The `pathWithoutTrailingSlashFromPath()` method will remove the trailing slash from the string argument. It expects there to be at least one delimiter, returning `null` otherwise
 
 ```js
-pathWithoutTrailingSlashFromPath()
+pathWithoutTrailingSlashFromPath('root/etc/'); // the return value will be 'root/etc'
 ```
 
-* The `pathWithoutBottommostNameFromPath()` method...
+* The `pathWithoutBottommostNameFromPath()` method will remove the bottommost name from the string argument be it a directory name or file name. It expects there to be at least one delimiter, returning `null` otherwise
 
 ```js
-pathWithoutBottommostNameFromPath()
+pathWithoutBottommostNameFromPath('root/etc/init.conf'); // the return value will be 'root/etc'
 ```
 
-* The `pathWithoutTopmostDirectoryNameFromPath()` method...
+* The `pathWithoutTopmostDirectoryNameFromPath()` method will remove the topmost directory name from the string argument. It expects there to be at least one delimiter, returning `null` otherwise
 
 ```js
-pathWithoutTopmostDirectoryNameFromPath()
+pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return value will be 'etc/init.conf'
 ```
 
 ## Contact
