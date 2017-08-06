@@ -70,11 +70,13 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 * The `push()` and `unshift()` methods work in a similar vein to their native counterparts, however they take an array rather than a single element as their second argument:
 
-     const { push, unshift } = array;
+```js
+const { push, unshift } = array;
 
-     push([1, 2, 3], [4, 5]); // [1, 2, 3, 4, 5]
+push([1, 2, 3], [4, 5]); // [1, 2, 3, 4, 5]
 
-     unshift([1, 2], [3, 4, 5]); // [3, 4, 5, 1, 2]
+unshift([1, 2], [3, 4, 5]); // [3, 4, 5, 1, 2]
+```
 
 
 
