@@ -2,7 +2,7 @@
 
 const array = require('./array');
 
-const { second } = array;
+const { first, second } = array;
 
 function isPathRelativePath(path) {
   const position = path.search(/^\.{1,2}\//),
