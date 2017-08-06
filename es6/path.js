@@ -26,6 +26,8 @@ function isPathTopmostDirectoryName(path) {
 }
 
 function isTopmostDirectoryNameContainedInPath(topmostDirectoryName, path) {
+  topmostDirectoryName = topmostDirectoryName.replace(/\/$/, ''); ///
+
   const regExp = new RegExp(`^${topmostDirectoryName}(?:\\/.+)?$`),
         position = path.search(regExp),
         topmostDirectoryNameContainedInFilePath = (position !== -1);
@@ -77,7 +79,7 @@ function concatenatePaths(path1, path2) {
 function bottommostNameFromPath(path) {
   let bottommostName = null;
 
-  const matches = path.match(/^.*\/([^\/]*)$/);
+  const matches = path.match(/^.*\/([^\/]+\/?)$/);
 
   if (matches !== null) {
     const secondMatch = second(matches);
@@ -89,7 +91,7 @@ function bottommostNameFromPath(path) {
 }
 
 function directoryPathFromPath(path) {
-  const matches = path.match(/^(.*)\/[^\/]*$/),
+  const matches = path.match(/^(.*)\/[^\/]+\/?$/),
         secondMatch = second(matches),
         directoryPath = secondMatch; ///
 

@@ -155,7 +155,7 @@ isPathRelativePath('../root/etc'); // the return value is true
 isPathAbsolutePath('root/etc'); // the return value is true
 ```
 
-* The `isPathTopmostDirectoryName()` method returns `true` if the first string argument is a non-empty string containing no delimiters apart from optionally the last charater:
+* The `isPathTopmostDirectoryName()` method returns `true` if the first string argument is a non-empty string containing no delimiters apart from optionally the last character:
 
 ```js
 isPathTopmostDirectoryName('root/') // the return value is true
@@ -167,27 +167,27 @@ isPathTopmostDirectoryName('root/') // the return value is true
 isTopmostDirectoryNameContainedInPath('root', 'root/etc') // the return value is true
 ```
 
-Note that this method does not tolerate trailing delimiters on the first string argument.
+Note that this method tolerates a trailing delimiter on the first string argument, removing it before applying the test.
 
-* The `combinePaths()` method
-
-```js
-combinePaths()
-```
-
-* The `concatenatePaths()` method...
+* The `combinePaths()` method will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `../` signifier it finds in the latter, returning the result:
 
 ```js
-concatenatePaths()
+combinePaths('root/etc/', '../init'); // the return value is 'root/init'
 ```
 
-* The `bottommostNameFromPath()` method...
+* The `concatenatePaths()` method will concatenate the first and second string arguments, removing the trailing delimiter from the first string if it finds one, returning the result:
 
 ```js
-bottommostNameFromPath()
+concatenatePaths('root/', 'etc/'); // the return value is 'root/etc/'
 ```
 
-* The `directoryPathFromPath()` method...
+* The `bottommostNameFromPath()` method will return the bottommost name from the string argument, whether this is a directory or file name. It expects there to be at least one delimiter, returning `null` otherwise:
+
+```js
+bottommostNameFromPath('root/etc'); // the return value is 'etc'
+```
+
+* The `directoryPathFromPath()` method will return the bottommost name from the string argument, whether this is a directory or file name. It expects there to be at least one delimiter, returning `null` otherwise:
 
 ```js
 directoryPathFromPath()
