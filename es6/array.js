@@ -28,7 +28,7 @@ function splice(array, start, deleteCount, itemsArray = []) {
 }
 
 function filter(array, test) {
-  arrayUtil.backwardsForEach(array, function(element, index) {
+  backwardsForEach(array, function(element, index) {
     const passed = test(element, index),
         failed = !passed;
 
