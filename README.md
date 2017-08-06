@@ -31,12 +31,11 @@ const necessary = require('necessary'),
       { isDirectory } = fileSystem;
 ```
 
-Using the destructing syntax is often best and avoids conflicts if you have variables named `path` or `array`, say. However, it may itself lead to conflicts or confusion, in which case just call the methods directly against the objects in question:
+Using the destructing syntax is often best and avoids conflicts if you have variables named `path` or `array`, say. However, it may itself lead to conflicts, in which case just call the methods directly against the objects in question:
 
 
 ```js
-    async.forEach(...)
-
+async.forEach(...)
 ```
 
 ## Compiling from source
@@ -66,6 +65,8 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `separate()`
 - `forwardsForEach()`
 - `backwardsForEach()`
+
+* The methods `first()` through to `lastButOne()` return the requisite element of the array, if passed an array of at least the required length or `undefined` otherwise. If passed anything other than an array their behaviour is unknown. The `tail()` method returns all but the first element of an array with similar provisos to the other methods.
 
 
 
