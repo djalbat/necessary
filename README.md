@@ -206,9 +206,9 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 - `readFile()`
 - `readDirectory()`
 
-A small if motley collection of methods, most of which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) methods.
+A small if motley collection of methods which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) methods. Note that the paths passed to all of these methods are considered absolute and that all of the methods will throw the native errors upon failure.
 
-* The `entryExists()`, `fileExists()`, `isEntryDirectory()` and `isDirectoryEmpty()` methods work as their names suggest, returning a boolean value. The `fileExists()` method is identical to the `entryExists()` method in all but name. Note that the paths passed to these methods are interpreted as being absolute:
+* The `entryExists()`, `fileExists()`, `isEntryDirectory()` and `isDirectoryEmpty()` methods work as their names suggest, returning a boolean value. The `fileExists()` method is identical to the `entryExists()` method in all but name:
 
 ```js
 entryExists('root/etc'); // the return value is true if the file or directory exists
@@ -217,16 +217,16 @@ fileExists('root/etc/init.conf'); // the return value is true if the file exists
 
 isEntryDirectory('root'); // the return value is true if the entry is a directory
 
-isDirectoryEmpty('root/etc'); // the return value is true if the directory is emtpy
+isDirectoryEmpty('root/etc'); // the return value is true if the directory is empty
 ```
 
-* The `writeFile()` method takes the content of the file as a second string argument. It throws an error if the file cannot be written to for whatever reason. It does not return anything upon success or otherwise:
+* The `writeFile()` method takes the content of the file as a second string argument. It does not return anything upon success:
 
 ```js
 writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' file
 ```
 
-* The `readFile()` method takes the file encoding as an optional second string argument. The default is `utf8`. It throws an error if the file cannot be read from for whatever reason. It returns the content of the file upon success:
+* The `readFile()` method takes the file encoding as an optional second string argument. The default is `utf8`. It returns the content of the file upon success:
 
 ```js
 readFile('root/etc/init.conf'); // returns the content of the 'root/etc/init.conf' file

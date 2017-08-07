@@ -12,15 +12,15 @@ function fileExists(absoluteFilePath) {
 
 function isEntryDirectory(absolutePath) {
   const stat = fs.statSync(absolutePath),
-      entryDirectory = stat.isDirectory();
+        entryDirectory = stat.isDirectory();
 
   return entryDirectory;
 }
 
 function isDirectoryEmpty(absoluteDirectoryPath) {
   const subEntryNames = readDirectory(absoluteDirectoryPath),
-      subEntryNamesLength = subEntryNames.length,
-      directoryEmpty = (subEntryNamesLength === 0);
+        subEntryNamesLength = subEntryNames.length,
+        directoryEmpty = (subEntryNamesLength === 0);
 
   return directoryEmpty;
 }
