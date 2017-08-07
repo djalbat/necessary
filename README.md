@@ -4,7 +4,7 @@ Utilities for arrays, paths and so on.
 
 These utility methods were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea here was only to create methods that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, especially in the case of the asynchronous methods, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
 
-There are four sets of methods dealing with arrays, file and directory paths, the file system and asynchronous JavaScript. Remember that this package is no great shakes and does not bear comparison to the likes of lodash.
+There are four sets of methods dealing with arrays, file and directory paths, the file system and asynchronous JavaScript.
 
 ## Installation
 
@@ -199,61 +199,87 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 ## File system methods
 
 - `entryExists()`
-- `isEntryDirectory()`
 - `fileExists()`
-- `readFile()`
-- `writeFile()`
-- `readDirectory()`
+- `isEntryDirectory()`
 - `isDirectoryEmpty()`
+- `writeFile()`
+- `readFile()`
+- `readDirectory()`
 
 A small if motley collection of methods, most of which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) methods.
 
-* The `entryExists()` method
+* The `entryExists()`, `fileExists()`, `isEntryDirectory()` and `isDirectoryEmpty()` methods work as their names suggest, returning a boolean value. The `fileExists()` method is identical to the `entryExists()` method in all but name. Note that the paths passed to these methods are interpreted as being absolute:
 
 ```js
-entryExists(); // the return value is
+entryExists('root/etc'); // the return value is true if the file or directory exists
+
+fileExists('root/etc/init.conf'); // the return value is true if the file exists
+
+isEntryDirectory('root'); // the return value is true if the entry is a directory
+
+isDirectoryEmpty('root/etc'); // the return value is true if the directory is emtpy
 ```
 
-* The `isEntryDirectory()` method
+* The `writeFile()` method takes the content of the file as a second string argument. It throws an error if the file cannot be written to for whatever reason. It does not return anything upon success or otherwise:
 
 ```js
-isEntryDirectory(); // the return value is
+writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' file
 ```
 
-* The `fileExists()` method
+* The `readFile()` method takes the file encoding as an optional second string argument. The default is `utf8`. It throws an error if the file cannot be read from for whatever reason. It returns the content of the file upon success:
 
 ```js
-fileExists(); // the return value is
+readFile('root/etc/init.conf'); // returns the content of the 'root/etc/init.conf' file
 ```
 
-* The `readFile()` method
+* The `readDirectory()` method returns an array of string entry names if the directory exists:
 
 ```js
-readFile(); // the return value is
+readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 ```
 
-* The `writeFile()` method
+## Asynchronous JavaScript
+
+- `whilst()`
+- `forEach()`
+
+Currently only two methods. One of the original purposes was to collect these kinds of methods as needed and not to throw them away when not. Perhaps the best thing to do is give the listings. It is fun and informative to work out such asynchronous methods for yourself:
 
 ```js
-writeFile(); // the return value is
+function whilst(test, callback, done) {
+  const next = function() {
+    const passed = test();
+
+    if (passed) {
+      callback(next);
+    } else {
+      done();
+    }
+  };
+
+  next();
+}
+
+function forEach(array, callback, done) {
+  const arrayLength = array.length;
+
+  let index = -1;
+
+  const next = function() {
+    index++;
+
+    if (index === arrayLength) {
+      done();
+    } else {
+      const element = array[index];
+
+      callback(element, index, next);
+    }
+  };
+
+  next();
+}
 ```
-
-* The `readDirectory()` method
-
-```js
-readDirectory(); // the return value is
-```
-
-* The `isDirectoryEmpty()` method
-
-```js
-isDirectoryEmpty(); // the return value is
-```
-
-
-
-
-
 
 ## Contact
 
