@@ -59,6 +59,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `unshift()`
 - `splice()`
 - `filter()`
+- `filter()`
 - `prune()`
 - `patch()`
 - `augment()`
@@ -90,6 +91,14 @@ splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3] with the fir
 filter([1, 2, -1, -2], function(element, index) {
   return element > 0; }]
 }); // the first array argument becomes [1, 2]
+```
+
+* The `replace()` method will replace an element in the array with the given element the first time that the test callback method returns a truthy value:
+
+```js
+prune([1, 2, 0, -1, -2], 3, function(element, index) {
+  return element === 0; }]
+}); // the first array argument becomes [1, 2, 3, -1, -2]
 ```
 
 * The `prune()` method is much like the `filter()` method, however it will terminate the first time that the test callback method returns a truthy value:

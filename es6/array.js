@@ -40,13 +40,35 @@ function filter(array, test) {
   });
 }
 
+function replace(array, element, test) {
+  let start = -1;
+  
+  const found = array.some(function(element, index) {
+    const passed = test(element, index);
+
+    if (passed) {
+      start = index;  ///
+      
+      return true;
+    }
+  });
+  
+  if (found) {
+    const deleteCount = 1;
+
+    array.splice(start, deleteCount, element);
+  }
+
+  return found;
+}
+
 function prune(array, test) {
   const found = array.some(function(element, index) {
     const passed = test(element, index);
 
     if (passed) {
       const start = index,  ///
-          deleteCount = 1;
+            deleteCount = 1;
 
       array.splice(start, deleteCount);
 
@@ -123,6 +145,7 @@ module.exports = {
   unshift: unshift,
   splice: splice,
   filter: filter,
+  replace: replace,
   prune: prune,
   patch: patch,
   augment: augment,
