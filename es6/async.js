@@ -1,11 +1,11 @@
 'use strict';
 
-function whilst(test, callback, done) {
+function whilst(test, callback, done, context) {
   const next = function() {
     const passed = test();
 
     if (passed) {
-      callback(next);
+      callback(next, context);
     } else {
       done();
     }
@@ -14,7 +14,7 @@ function whilst(test, callback, done) {
   next();
 }
 
-function forEach(array, callback, done) {
+function forEach(array, callback, done, context) {
   const arrayLength = array.length;
   
   let index = -1;
@@ -27,7 +27,7 @@ function forEach(array, callback, done) {
     } else {
       const element = array[index];
 
-      callback(element, index, next);
+      callback(element, index, next, context);
     }
   };
 
