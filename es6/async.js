@@ -2,7 +2,7 @@
 
 function whilst(test, callback, done, context) {
   const next = function() {
-    const passed = test();
+    const passed = test(context);
 
     if (passed) {
       callback(next, context);

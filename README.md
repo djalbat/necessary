@@ -252,12 +252,12 @@ readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 - `whilst()`
 - `forEach()`
 
-Currently there are only two functions. Probably the best thing to do is give the listings. It is fun and informative to work out such asynchronous functions for yourself. Each takes a context as an optional last argument and passes it to the callback:
+Currently there are only two functions. Probably the best thing to do is give the listings. It is fun and informative to work out such asynchronous functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks:
 
 ```js
 function whilst(test, callback, done, context) {
   const next = function() {
-    const passed = test();
+    const passed = test(context);
 
     if (passed) {
       callback(next, context);
