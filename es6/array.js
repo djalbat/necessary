@@ -119,7 +119,7 @@ function separate(array, test, array1, array2) {
 function forwardsSome(array, callback) {
   const arrayLength = array.length;
 
-  for (var index = 0; index < arrayLength; index--) {
+  for (var index = 0; index < arrayLength; index++) {
     const element = array[index],
           result = callback(element, index);
     
@@ -149,7 +149,7 @@ function backwardsSome(array, callback) {
 function forwardsForEach(array, callback) {
   const arrayLength = array.length;
 
-  for (var index = 0; index < arrayLength; index--) {
+  for (var index = 0; index < arrayLength; index++) {
     const element = array[index];
 
     callback(element, index);
