@@ -116,10 +116,44 @@ function separate(array, test, array1, array2) {
   });
 }
 
+function forwardsSome(array, callback) {
+  const arrayLength = array.length;
+
+  for (var index = 0; index < arrayLength; index--) {
+    const element = array[index],
+          result = callback(element, index);
+    
+    if (result) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function backwardsSome(array, callback) {
+  const arrayLength = array.length;
+
+  for (var index = arrayLength - 1; index >= 0; index--) {
+    const element = array[index],
+          result = callback(element, index);
+
+    if (result) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function forwardsForEach(array, callback) {
-  array.forEach(function(element, index) {
+  const arrayLength = array.length;
+
+  for (var index = 0; index < arrayLength; index--) {
+    const element = array[index];
+
     callback(element, index);
-  });
+  }
 }
 
 function backwardsForEach(array, callback) {
@@ -150,6 +184,8 @@ module.exports = {
   patch: patch,
   augment: augment,
   separate: separate,
+  forwardsSome: forwardsSome,
+  backwardsSome: backwardsSome,
   forwardsForEach: forwardsForEach,
   backwardsForEach: backwardsForEach
 };
