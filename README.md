@@ -84,7 +84,8 @@ unshift([1, 2], [3, 4, 5]); // the return value will be [3, 4, 5, 1, 2]
 * The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
 
 ```js
-splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3] with the first array argument becoming [1, 4, 5]
+splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3] 
+                                 // the first array argument becomes [1, 4, 5]
 ```
 
 * The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a test callback function that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
@@ -202,9 +203,9 @@ topmostDirectoryPathFromPath('root/etc/init.conf'); // the return value is 'root
 
 topmostDirectoryNameFromPath('root/etc/init.conf'); // the return value is 'root'
 
-pathWithoutBottommostNameFromPath('root/etc/init.conf'); // the return value will be 'root/etc'
+pathWithoutBottommostNameFromPath('root/etc/init.conf'); // the return value is 'root/etc'
 
-pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return value will be 'etc/init.conf'
+pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return value is 'etc/init.conf'
 ```
 
 ## File system functions
