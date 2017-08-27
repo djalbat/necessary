@@ -27,19 +27,6 @@ function splice(array1, start, deleteCount, array2 = []) {
   return deletedItemsArray;
 }
 
-function filter(array, test) {
-  backwardsForEach(array, function(element, index) {
-    const passed = test(element, index);
-
-    if (!passed) {
-      const start = index,  ///
-            deleteCount = 1;
-
-      array.splice(start, deleteCount);
-    }
-  });
-}
-
 function replace(array, element, test) {
   let start = -1;
   
@@ -60,6 +47,33 @@ function replace(array, element, test) {
   }
 
   return found;
+}
+
+function filter(array, test) {
+  backwardsForEach(array, function(element, index) {
+    const passed = test(element, index);
+
+    if (!passed) {
+      const start = index,  ///
+          deleteCount = 1;
+
+      array.splice(start, deleteCount);
+    }
+  });
+}
+
+function find(array, test) {
+  const elements = [];
+
+  fowardsForEach(array, function(element, index) {
+    const passed = test(element, index);
+
+    if (passed) {
+      elements.push(element);
+    }
+  });
+
+  return elements;
 }
 
 function prune(array, test) {
@@ -178,8 +192,9 @@ module.exports = {
   push: push,
   unshift: unshift,
   splice: splice,
-  filter: filter,
   replace: replace,
+  filter: filter,
+  find: find,
   prune: prune,
   patch: patch,
   augment: augment,

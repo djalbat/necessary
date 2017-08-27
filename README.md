@@ -2,7 +2,7 @@
 
 Utilities for arrays, paths and so on.
 
-These utility functions were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea here was only to create functions that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, especially in the case of the asynchronous functions, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
+These utility functions were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea here was only to create functions that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, especially in the case of the asynchronous functions, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging. This is a basic package meant for the authors's own use. If you feel the need to be impressed, look elsewhere. 
 
 There are four sets of functions dealing with arrays, file and directory paths, the file system and asynchronous JavaScript.
 
@@ -58,8 +58,9 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `push()`
 - `unshift()`
 - `splice()`
-- `filter()`
 - `replace()`
+- `filter()`
+- `find()`
 - `prune()`
 - `patch()`
 - `augment()`
@@ -73,19 +74,19 @@ Note that none of these functions take or pass on a `thisArg` argument when they
 
 * The functions `first()` through to `lastButOne()` return the requisite element of the first array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` function returns all but the first element of the first array argument.
 
-* The `push()` and `unshift()` functions work in a similar vein to their native counterparts, however they take an array rather than a single element as their second arguments. They both return a new array and the first array argument untouched:
-
-```js
-push([1, 2, 3], [4, 5]); // the return value will be [1, 2, 3, 4, 5]
-
-unshift([1, 2], [3, 4, 5]); // the return value will be [3, 4, 5, 1, 2]
-```
-
 * The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
 
 ```js
 splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3] 
                                  // the first array argument becomes [1, 4, 5]
+```
+
+* The `replace()` function will replace an element in the array with the given element the first time that the test callback function returns a truthy value:
+
+```js
+replace([1, 2, 0, -1, -2], 3, function(element, index) {
+  return element === 0; }]
+}); // the first array argument becomes [1, 2, 3, -1, -2]
 ```
 
 * The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a test callback function that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
@@ -96,12 +97,12 @@ filter([1, 2, -1, -2], function(element, index) {
 }); // the first array argument becomes [1, 2]
 ```
 
-* The `replace()` function will replace an element in the array with the given element the first time that the test callback function returns a truthy value:
+* The `find()` function is like its native counterpart, however it returns an array of all the elements for which the test callback function returns a truthy value, rather than just the first:
 
 ```js
-replace([1, 2, 0, -1, -2], 3, function(element, index) {
-  return element === 0; }]
-}); // the first array argument becomes [1, 2, 3, -1, -2]
+find([1, 2, -1, -2], function(element, index) {
+  return element > 0; }]
+}); // the return value will be [1, 2]
 ```
 
 * The `prune()` function is much like the `filter()` function, however it will terminate the first time that the test callback function returns a truthy value:
@@ -256,7 +257,7 @@ readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 - `forEach()`
 - `sequence()`
 
-Currently there are only three functions. Probably the best thing to do is give the listings. It is fun and informative to work out such asynchronous functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks:
+Currently there are only three functions. Probably the best thing to do is give the listings. It is fun and informative to work out such asynchronous functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index`, which seems to be rarely used. Note that the callbacks are given access to both the `next()` and `done()` methods, so that they can terminate things themselves if need be.
 
 ```js
 function whilst(callback, done, context) {
@@ -320,7 +321,7 @@ function sequence(callbacks, done, context) {
 }
 ```
 
-Note that any callback passed to the `whilst()` function must not call `next()` or `done()` if it choooses to terminate by returning a truthy value. Generally it is best just to call the `done()` callback.
+Note that any callback passed to the `whilst()` function must not call `next()` or `done()` if it chooses to terminate by returning a truthy value. Generally it is best just to call the `done()` callback.
 
 ## Contact
 
