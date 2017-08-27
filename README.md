@@ -59,7 +59,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `unshift()`
 - `splice()`
 - `filter()`
-- `filter()`
+- `replace()`
 - `prune()`
 - `patch()`
 - `augment()`
@@ -99,7 +99,7 @@ filter([1, 2, -1, -2], function(element, index) {
 * The `replace()` function will replace an element in the array with the given element the first time that the test callback function returns a truthy value:
 
 ```js
-prune([1, 2, 0, -1, -2], 3, function(element, index) {
+replace([1, 2, 0, -1, -2], 3, function(element, index) {
   return element === 0; }]
 }); // the first array argument becomes [1, 2, 3, -1, -2]
 ```
@@ -131,7 +131,7 @@ augment([1, 2, 3], [-1, 4, -2, 5], function(element, index) {
 * The `separate()` function separates the first array argument, pushing each of its elements onto either the second or the third array argument depending on whether or not the test callback returns a truthy value:
 
 ```js
-augment([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
+separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
   return element > 0; }]
 }); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
