@@ -65,7 +65,7 @@ function filter(array, test) {
 function find(array, test) {
   const elements = [];
 
-  fowardsForEach(array, function(element, index) {
+  forwardsForEach(array, function(element, index) {
     const passed = test(element, index);
 
     if (passed) {

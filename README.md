@@ -85,7 +85,7 @@ splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3]
 
 ```js
 replace([1, 2, 0, -1, -2], 3, function(element, index) {
-  return element === 0; }]
+  return element === 0;
 }); // the first array argument becomes [1, 2, 3, -1, -2]
 ```
 
@@ -93,7 +93,7 @@ replace([1, 2, 0, -1, -2], 3, function(element, index) {
 
 ```js
 filter([1, 2, -1, -2], function(element, index) {
-  return element > 0; }]
+  return element > 0;
 }); // the first array argument becomes [1, 2]
 ```
 
@@ -101,7 +101,7 @@ filter([1, 2, -1, -2], function(element, index) {
 
 ```js
 find([1, 2, -1, -2], function(element, index) {
-  return element > 0; }]
+  return element > 0;
 }); // the return value will be [1, 2]
 ```
 
@@ -109,7 +109,7 @@ find([1, 2, -1, -2], function(element, index) {
 
 ```js
 prune([1, 2, -1, -2], function(element, index) {
-  return element > 0; }]
+  return element > 0;
 }); // the first array argument becomes [1, 2, -2]
 ```
 
@@ -117,7 +117,7 @@ prune([1, 2, -1, -2], function(element, index) {
 
 ```js
 patch([1, 2, 3], 4, function(element, index) {
-  return element < 0; }]
+  return element < 0;
 }); // the first array argument becomes [1, 2, 3, 4]
 ```
 
@@ -125,7 +125,7 @@ patch([1, 2, 3], 4, function(element, index) {
 
 ```js
 augment([1, 2, 3], [-1, 4, -2, 5], function(element, index) {
-  return element > 0; }]
+  return element > 0;
 }); // the first array argument becomes [1, 2, 3, 4, 5]
 ```
 
@@ -133,7 +133,7 @@ augment([1, 2, 3], [-1, 4, -2, 5], function(element, index) {
 
 ```js
 separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
-  return element > 0; }]
+  return element > 0;
 }); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
 
