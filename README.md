@@ -53,7 +53,8 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `fourth()`
 - `fifth()`
 - `last()`
-- `lastButOne()`
+- `ultimate()`
+- `penultimate()`
 - `tail()`
 - `push()`
 - `unshift()`
@@ -72,7 +73,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 Note that none of these functions take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
 
-* The functions `first()` through to `lastButOne()` return the requisite element of the first array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` function returns all but the first element of the first array argument.
+* The functions `first()` through to `penultimate()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` function returns all but the first element of the array argument.
 
 * The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
 

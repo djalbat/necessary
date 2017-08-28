@@ -12,7 +12,9 @@ function fifth(array) { return array[4]; }
 
 function last(array) { return array[array.length - 1]; }
 
-function lastButOne(array) { return array[array.length - 2]; }
+function ultimate(array) { return array[array.length - 1]; }
+
+function penultimate(array) { return array[array.length - 2]; }
 
 function tail(array) { return array.slice(1); }
 
@@ -187,7 +189,8 @@ module.exports = {
   fourth: fourth,
   fifth: fifth,
   last: last,
-  lastButOne: lastButOne,
+  ultimate: ultimate,
+  penultimate: penultimate,
   tail: tail,
   push: push,
   unshift: unshift,
