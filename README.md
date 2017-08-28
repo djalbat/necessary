@@ -138,7 +138,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
 
 * The `forwardsSome()`, `backwardsSome()`, `forwardsForEach()` and `backwardsForEach()` functions work as their names suggest.
 
-## File and directory path functions
+## Path functions
 
 - `isPathRelativePath()`
 - `isPathAbsolutePath()`
@@ -250,7 +250,7 @@ readFile('root/etc/init.conf'); // returns the content of the 'root/etc/init.con
 readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 ```
 
-## Asynchronous JavaScript
+## Asynchronous functions
 
 - `whilst()`
 - `forEach()`
