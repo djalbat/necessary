@@ -29,6 +29,13 @@ function splice(array1, start, deleteCount, array2 = []) {
   return deletedItemsArray;
 }
 
+function copy(array1, array2) {
+  const start = 0,
+        deleteCount = array2.length;  ///
+  
+  splice(array1, start, deleteCount, array2);
+}
+
 function replace(array, element, test) {
   let start = -1;
   
@@ -195,6 +202,7 @@ module.exports = {
   push: push,
   unshift: unshift,
   splice: splice,
+  copy: copy,
   replace: replace,
   filter: filter,
   find: find,
