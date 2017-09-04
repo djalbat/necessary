@@ -126,12 +126,12 @@ prune([1, 2, -1, -2], function(element, index) {
 }); // the first array argument becomes [1, 2, -2]
 ```
 
-* The `patch()` function will append the given element to the first array argument provided that the test callback function does not return a truthy value for any of the array's elements:
+* The `patch()` function will append the given element to the first array argument the first time that the test callback function returns a truthy value:
 
 ```js
-patch([1, 2, 3], 4, function(element, index) {
-  return element < 0;
-}); // the first array argument becomes [1, 2, 3, 4]
+patch([1, 2, 0, -1, -2], 4, function(element, index) {
+  return element === 0;
+}); // the first array argument becomes [1, 2, 0, -1, -2, 4]
 ```
 
 * The `augment()` function is appends each of the elements of the second array argument to the first array argument whenever the test callback returns a truthy value:

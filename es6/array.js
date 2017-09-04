@@ -71,7 +71,7 @@ function filter(array, test) {
 
     if (!passed) {
       const start = index,  ///
-          deleteCount = 1;
+            deleteCount = 1;
 
       array.splice(start, deleteCount);
     }
@@ -119,7 +119,7 @@ function patch(array, element, test) {
   });
 
 
-  if (!found) {
+  if (found) {
     array.push(element);
   }
 
