@@ -22,18 +22,25 @@ function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
 function unshift(array1, array2) { Array.prototype.unshift.apply(array1, array2); }
 
-function splice(array1, start, deleteCount, array2 = []) {
-  const args = [start, deleteCount, ...array2],
-        deletedItemsArray = Array.prototype.splice.apply(array1, args);
-
-  return deletedItemsArray;
-}
-
 function copy(array1, array2) {
   const start = 0,
         deleteCount = array2.length;  ///
   
   splice(array1, start, deleteCount, array2);
+}
+
+function merge(array1, array2) {
+  const start = array2.length,  ///
+        deleteCount = 0;
+
+  splice(array1, start, deleteCount, array2);
+}
+
+function splice(array1, start, deleteCount, array2 = []) {
+  const args = [start, deleteCount, ...array2],
+        deletedItemsArray = Array.prototype.splice.apply(array1, args);
+
+  return deletedItemsArray;
 }
 
 function replace(array, element, test) {
@@ -201,8 +208,9 @@ module.exports = {
   tail: tail,
   push: push,
   unshift: unshift,
-  splice: splice,
   copy: copy,
+  merge: merge,
+  splice: splice,
   replace: replace,
   filter: filter,
   find: find,

@@ -56,8 +56,9 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `tail()`
 - `push()`
 - `unshift()`
-- `splice()`
 - `copy()`
+- `merge()`
+- `splice()`
 - `replace()`
 - `filter()`
 - `find()`
@@ -78,6 +79,12 @@ Note that none of these functions take or pass on a `thisArg` argument when they
 
 ```js
 copy([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [4, 5, 6, 7]
+```
+
+* The `merge()` function copies the second array argument onto to the end of the first array argument:  
+
+```js
+merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4, 5, 6, 7]
 ```
 
 * The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
