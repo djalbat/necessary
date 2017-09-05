@@ -22,6 +22,12 @@ function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
 function unshift(array1, array2) { Array.prototype.unshift.apply(array1, array2); }
 
+function clear(array) {
+  const start = 0;
+  
+  return array.splice(start);
+}
+
 function copy(array1, array2) {
   const start = 0,
         deleteCount = array2.length;  ///
@@ -208,6 +214,7 @@ module.exports = {
   tail: tail,
   push: push,
   unshift: unshift,
+  clear: clear,
   copy: copy,
   merge: merge,
   splice: splice,

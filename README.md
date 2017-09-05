@@ -56,6 +56,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `tail()`
 - `push()`
 - `unshift()`
+- `clear()`
 - `copy()`
 - `merge()`
 - `splice()`
@@ -74,6 +75,13 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 Note that none of these functions take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
 
 * The functions `first()` through to `penultimate()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` function returns all but the first element of the array argument.
+
+* The `clear()` function removes all the elements in the array argument and returns them as a fresh array:  
+
+```js
+clear([1, 2, 3]); // the array argument becomes []
+                  // the return value will be [1, 2, 3] 
+```
 
 * The `copy()` function copies the second array argument over the top of the first array argument, in other words it replaces each element of the first array argument with the corresponding element in the second array argument. If there are more elements in the second array argument that the first, the first is lengthened:  
 
