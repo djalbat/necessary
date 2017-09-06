@@ -49,9 +49,11 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `third()`
 - `fourth()`
 - `fifth()`
+- `fifthLast()`
+- `fourthLast()`
+- `thirdLast()`
+- `secondLast()`
 - `last()`
-- `ultimate()`
-- `penultimate()`
 - `tail()`
 - `push()`
 - `unshift()`
@@ -73,7 +75,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 Note that none of these functions take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
 
-* The functions `first()` through to `penultimate()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` function returns all but the first element of the array argument.
+* The functions `first()` through to `last()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` function returns all but the first element of the array argument.
 
 * The `clear()` function removes all the elements in the array argument and returns them as a fresh array:  
 

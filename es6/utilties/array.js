@@ -10,11 +10,15 @@ function fourth(array) { return array[3]; }
 
 function fifth(array) { return array[4]; }
 
+function fifthLast(array) { return array[array.length - 5]; }
+
+function fourthLast(array) { return array[array.length - 4]; }
+
+function thirdLast(array) { return array[array.length - 3]; }
+
+function secondLast(array) { return array[array.length - 2]; }
+
 function last(array) { return array[array.length - 1]; }
-
-function ultimate(array) { return array[array.length - 1]; }
-
-function penultimate(array) { return array[array.length - 2]; }
 
 function tail(array) { return array.slice(1); }
 
@@ -208,9 +212,11 @@ module.exports = {
   third: third,
   fourth: fourth,
   fifth: fifth,
+  fifthLast: fifthLast,
+  fourthLast: fourthLast,
+  thirdLast: thirdLast,
+  secondLast: secondLast,
   last: last,
-  ultimate: ultimate,
-  penultimate: penultimate,
   tail: tail,
   push: push,
   unshift: unshift,
