@@ -24,16 +24,15 @@ If you are building with [Node.js](http://nodejs.org) the usage is as follows:
 
 ```js
 const necessary = require('necessary'),
-      { array, async, fileSystem } = necessary,
-      { first, last } = array,
-      { isDirectory } = fileSystem;
+      { arrayUtilities, asynchronousUtilities, fileSystemUtilities } = necessary,
+      { first, last } = arrayUtilities,
+      { isDirectory } = fileSystemUtilities;
 ```
 
-Using the destructing syntax is often best and avoids conflicts if you have variables named `path` or `array`, say. However, it may itself lead to conflicts, in which case just call the functions directly against the objects in question:
-
+Using the destructing syntax is often best, however it may lead to conflicts, in which case just call the functions directly against the objects in question:
 
 ```js
-async.forEach(...)
+asynchronousUtilities.forEach(...)
 ```
 
 ## Compiling from source

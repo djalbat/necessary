@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-  path: require('./lib/path'),
-  array: require('./lib/array'),
-  async: require('./lib/async'),
-  fileSystem: require('./lib/fileSystem')
+  pathUtilities: require('./lib/utilities/path'),
+  arrayUtilities: require('./lib/utilities/array'),
+  fileSystemUtilities: require('./lib/utilities/fileSystem'),
+  asynchronousUtilities: require('./lib/utilities/asynchronous')
 };
