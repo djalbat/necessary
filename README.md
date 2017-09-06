@@ -281,7 +281,7 @@ readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 - `forEach()`
 - `sequence()`
 
-Currently there are only three functions. Probably the best thing to do is give the listings. It is fun and informative to work out such asynchronous functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index`, which seems to be rarely used. Note that the callbacks are given access to both the `next()` and `done()` methods, so that they can terminate things themselves if need be.
+Currently there are only three functions. Probably the best thing to do is give the listings. It is fun and informative to work out such asynchronous functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index` argument. Note that the callbacks are given access to both the `next()` and `done()` callbacks, so that they can terminate things themselves if need be.
 
 ```js
 function whilst(callback, done, context) {
