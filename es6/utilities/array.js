@@ -146,7 +146,7 @@ function augment(array1, array2, test) {
   });
 }
 
-function separate(array, test, array1, array2) {
+function separate(array, array1, array2, test) {
   array.forEach(function(element, index) {
     const passed = test(element, index);
 
