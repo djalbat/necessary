@@ -283,7 +283,7 @@ readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 - `eventually()`
 - `repeatedly()`
 
-Probably the best thing to do is give the listings. It is fun and informative to work out such asynchronous functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index` argument. The callbacks are given access to both the `next()` and `done()` methods, so that they can terminate things themselves if need be.
+Probably the best thing to do is give the listings. It is fun and informative to work out these functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index` argument. The callbacks are given access to both the `next()` and `done()` functions, so that they can terminate things themselves if need be.
 
 ```js
 function whilst(callback, done, context) {
@@ -389,7 +389,7 @@ function repeatedly(callback, length, done, context) {
 
 ```
 
-Note that any callback passed to the `whilst()` function must not call `next()` or `done()` if it chooses to terminate by returning a truthy value. Generally it is best just to call the `done()` callback. On the other hand the `eventually()` and `repeatedly()` methods invoke the callbacks immediately, therefore calling the `done()` methods in these cases will have no direct effect.   
+Note that any callback passed to the `whilst()` function must not call `next()` or `done()` if it chooses to terminate by returning a truthy value. Generally it is best just to call the `done()` callback. On the other hand the `eventually()` and `repeatedly()` functions invoke the callbacks immediately, therefore calling the `done()` function will have no direct effect.   
 
 ## Contact
 
