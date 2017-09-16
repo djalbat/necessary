@@ -1,12 +1,13 @@
 'use strict';
 
 function whilst(callback, done, context) {
-  let index = -1;
+  let count = -1;
 
   function next() {
-    index++;
+    count++;
 
-    const terminate = callback(next, done, context, index);
+    const index = count,  ///
+          terminate = callback(next, done, context, index);
 
     if (terminate) {
       done();
@@ -17,19 +18,20 @@ function whilst(callback, done, context) {
 }
 
 function forEach(array, callback, done, context) {
-  const arrayLength = array.length;
+  const length = array.length;  ///
 
-  let index = -1;
+  let count = -1;
 
   function next() {
-    index++;
+    count++;
 
-    const terminate = (index === arrayLength);
+    const terminate = (count === length);
 
     if (terminate) {
       done();
     } else {
-      const element = array[index];
+      const index = count,  ///
+            element = array[index];
 
       callback(element, next, done, context, index);
     }
@@ -39,19 +41,20 @@ function forEach(array, callback, done, context) {
 }
 
 function sequence(callbacks, done, context) {
-  const callbacksLength = callbacks.length;
+  const length = callbacks.length;  ///
 
-  let index = -1;
+  let count = -1;
 
   function next() {
-    index++;
+    count++;
 
-    const terminate = (index === callbacksLength);
+    const terminate = (count === length);
 
     if (terminate) {
       done();
     } else {
-      const callback = callbacks[index];
+      const index = count,  ///
+            callback = callbacks[index];
 
       callback(next, done, context, index);
     }
@@ -60,8 +63,48 @@ function sequence(callbacks, done, context) {
   next();
 }
 
+function eventually(callbacks, done, context) {
+  const length = callbacks.length;  ///
+
+  let count = 0;
+
+  function next() {
+    count++;
+
+    const terminate = (count === length);
+
+    if (terminate) {
+      done();
+    }
+  }
+
+  callbacks.forEach(function(callback, index) {
+    callback(next, done, context, index);
+  });
+}
+
+function repeatedly(callback, length, done, context) {
+  let count = 0;
+
+  function next() {
+    count++;
+
+    const terminate = (count === length);
+
+    if (terminate) {
+      done();
+    }
+  }
+
+  for (let index = 0; index < length; index++) {
+    callback(next, done, context, index);
+  }
+}
+
 module.exports = {
   whilst: whilst,
   forEach: forEach,
-  sequence: sequence
+  sequence: sequence,
+  eventually: eventually,
+  repeatedly: repeatedly
 };

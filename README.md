@@ -280,18 +280,21 @@ readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 - `whilst()`
 - `forEach()`
 - `sequence()`
+- `eventually()`
+- `repeatedly()`
 
-Currently there are only three functions. Probably the best thing to do is give the listings. It is fun and informative to work out such asynchronous functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index` argument. Note that the callbacks are given access to both the `next()` and `done()` callbacks, so that they can terminate things themselves if need be.
+Probably the best thing to do is give the listings. It is fun and informative to work out such asynchronous functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index` argument. The callbacks are given access to both the `next()` and `done()` methods, so that they can terminate things themselves if need be.
 
 ```js
 function whilst(callback, done, context) {
-  let index = -1;
+  let count = -1;
 
   function next() {
-    index++;
+    count++;
 
-    const terminate = callback(next, done, context, index);
-    
+    const index = count,  ///
+          terminate = callback(next, done, context, index);
+
     if (terminate) {
       done();
     }
@@ -301,19 +304,20 @@ function whilst(callback, done, context) {
 }
 
 function forEach(array, callback, done, context) {
-  const arrayLength = array.length;
+  const length = array.length;  ///
 
-  let index = -1;
+  let count = -1;
 
   function next() {
-    index++;
+    count++;
 
-    const terminate = (index === arrayLength);
+    const terminate = (count === length);
 
     if (terminate) {
       done();
     } else {
-      const element = array[index];
+      const index = count,  ///
+            element = array[index];
 
       callback(element, next, done, context, index);
     }
@@ -323,19 +327,20 @@ function forEach(array, callback, done, context) {
 }
 
 function sequence(callbacks, done, context) {
-  const callbacksLength = callbacks.length;
+  const length = callbacks.length;  ///
 
-  let index = -1;
+  let count = -1;
 
   function next() {
-    index++;
+    count++;
 
-    const terminate = (index === callbacksLength);
+    const terminate = (count === length);
 
     if (terminate) {
       done();
     } else {
-      const callback = callbacks[index];
+      const index = count,  ///
+            callback = callbacks[index];
 
       callback(next, done, context, index);
     }
@@ -343,9 +348,48 @@ function sequence(callbacks, done, context) {
 
   next();
 }
+
+function eventually(callbacks, done, context) {
+  const length = callbacks.length;  ///
+
+  let count = 0;
+
+  function next() {
+    count++;
+
+    const terminate = (count === length);
+
+    if (terminate) {
+      done();
+    }
+  }
+
+  callbacks.forEach(function(callback, index) {
+    callback(next, done, context, index);
+  });
+}
+
+function repeatedly(callback, length, done, context) {
+  let count = 0;
+
+  function next() {
+    count++;
+
+    const terminate = (count === length);
+
+    if (terminate) {
+      done();
+    }
+  }
+
+  for (let index = 0; index < length; index++) {
+    callback(next, done, context, index);
+  }
+}
+
 ```
 
-Note that any callback passed to the `whilst()` function must not call `next()` or `done()` if it chooses to terminate by returning a truthy value. Generally it is best just to call the `done()` callback.
+Note that any callback passed to the `whilst()` function must not call `next()` or `done()` if it chooses to terminate by returning a truthy value. Generally it is best just to call the `done()` callback. On the other hand the `eventually()` and `repeatedly()` methods invoke the callbacks immediately, therefore calling the `done()` methods in these cases will have no direct effect.   
 
 ## Contact
 
