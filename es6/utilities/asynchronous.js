@@ -101,10 +101,58 @@ function repeatedly(callback, length, done, context) {
   }
 }
 
+function forwardsForEach(array, callback, done, context) {
+  const length = array.length;  ///
+
+  let count = -1;
+
+  function next() {
+    count++;
+
+    const terminate = (count === length);
+
+    if (terminate) {
+      done();
+    } else {
+      const index = count,  ///
+            element = array[index];
+
+      callback(element, next, done, context, index);
+    }
+  }
+
+  next();
+}
+
+function backwardsForEach(array, callback, done, context) {
+  const length = array.length;  ///
+
+  let count = length;
+
+  function next() {
+    count--;
+
+    const terminate = (count === -1);
+
+    if (terminate) {
+      done();
+    } else {
+      const index = count,  ///
+            element = array[index];
+
+      callback(element, next, done, context, index);
+    }
+  }
+
+  next();
+}
+
 module.exports = {
   whilst: whilst,
   forEach: forEach,
   sequence: sequence,
   eventually: eventually,
-  repeatedly: repeatedly
+  repeatedly: repeatedly,
+  forwardsForEach: forwardsForEach,
+  backwardsForEach: backwardsForEach
 };
