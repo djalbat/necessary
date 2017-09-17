@@ -285,7 +285,7 @@ readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 - `forwardsForEach()`
 - `backwardsForEach()`
 
-Probably the best thing to do is give the majority of the listings since it can be fun and informative to work out these functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index` argument. The callbacks are given access to both the `next()` and `done()` functions, so that they can terminate themselves if need be.
+Probably the best thing to do is give the majority of the listings since it can be fun and informative to work out these functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index` argument. The callbacks are given access to both the `next()` and `done()` functions, so that they can terminate early if need be.
 
 ```js
 function whilst(callback, done, context) {
