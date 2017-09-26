@@ -65,6 +65,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `splice()`
 - `replace()`
 - `filter()`
+- `transfer()`
 - `find()`
 - `prune()`
 - `patch()`
@@ -119,6 +120,14 @@ replace([1, 2, 0, -1, -2], 3, function(element, index) {
 filter([1, 2, -1, -2], function(element, index) {
   return element > 0;
 }); // the first array argument becomes [1, 2]
+```
+
+* The `transfer()` function transfers elements of the first array argument onto the second array argument depending on whether or not the test callback returns a truthy value:
+
+```js
+transfer([1, -1, -2, 2, 3, -3], [], function(element, index) {
+  return element > 0;
+}); // the first and second array arguments become [-1, -2, -3] and [1, 2, 3], respectively
 ```
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the test callback function returns a truthy value, rather than just the first:
