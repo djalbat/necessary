@@ -46,47 +46,38 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 ## Array functions
 
-- [`first()`](#first)
-- [`second()`](#second)
-- [`third()`](#third)
-- [`fourth()`](#fourth)
-- [`fifth()`](#fifth)
-- [`fifthLast()`](#fifthLast)
-- [`fourthLast()`](#fourthLast)
-- [`thirdLast()`](#thirdLast)
-- [`secondLast()`](#secondLast)
-- [`last()`](#last)
-- [`tail()`](#tail)
-- [`push()`](#push)
-- [`unshift()`](#unshift)
-- [`clear()`](#clear)
-- [`copy()`](#copy)
-- [`merge()`](#merge)
-- [`splice()`](#splice)
-- [`replace()`](#replace)
-- [`filter()`](#filter)
-- [`transfer()`](#transfer)
-- [`find()`](#find)
-- [`prune()`](#prune)
-- [`patch()`](#patch)
-- [`augment()`](#augment)
-- [`separate()`](#separate)
-- [`forwardsSome()`](#forwardsSome)
-- [`backwardsSome()`](#backwardsSome)
-- [`forwardsForEach()`](#forwardsForEach)
-- [`backwardsForEach()`](#backwardsForEach)
+- `first()`
+- `second()`
+- `third()`
+- `fourth()`
+- `fifth()`
+- `fifthLast()`
+- `fourthLast()`
+- `thirdLast()`
+- `secondLast()`
+- `last()`
+- `tail()`
+- `push()`
+- `unshift()`
+- `clear()`
+- `copy()`
+- `merge()`
+- `splice()`
+- `replace()`
+- `filter()`
+- `transfer()`
+- `find()`
+- `prune()`
+- `patch()`
+- `augment()`
+- `separate()`
+- `forwardsSome()`
+- `backwardsSome()`
+- `forwardsForEach()`
+- `backwardsForEach()`
 
 Note that none of these functions take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
 
-<a name="second"></a>
-<a name="third"></a>
-<a name="fourth"></a>
-<a name="fifth"></a>
-<a name="fifthLast"></a>
-<a name="fourthLast"></a>
-<a name="thirdLast"></a>
-<a name="secondLast"></a>
-<a name="last"></a>
 * The functions `first()` through to `last()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` function returns all but the first element of the array argument.
 
 * The `clear()` function removes all the elements in the array argument and returns them as a fresh array:  
@@ -183,17 +174,17 @@ separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
 
 ## Path functions
 
-- [`isPathRelativePath()`](#isPathRelativePath)
-- [`isPathAbsolutePath()`](#isPathAbsolutePath)
-- [`isPathTopmostDirectoryName()`](#isPathTopmostDirectoryName)
-- [`isTopmostDirectoryNameContainedInPath()`](#isTopmostDirectoryNameContainedInPath)
-- [`combinePaths()`](#combinePaths)
-- [`concatenatePaths()`](#concatenatePaths)
-- [`bottommostNameFromPath()`](#bottommostNameFromPath)
-- [`topmostDirectoryPathFromPath()`](#topmostDirectoryPathFromPath)
-- [`topmostDirectoryNameFromPath()`](#topmostDirectoryNameFromPath)
-- [`pathWithoutBottommostNameFromPath()`](#pathWithoutBottommostNameFromPath)
-- [`pathWithoutTopmostDirectoryNameFromPath()`](#pathWithoutTopmostDirectoryNameFromPath)
+- `isPathRelativePath()`
+- `isPathAbsolutePath()`
+- `isPathTopmostDirectoryName()`
+- `isTopmostDirectoryNameContainedInPath()`
+- `combinePaths()`
+- `concatenatePaths()`
+- `bottommostNameFromPath()`
+- `topmostDirectoryPathFromPath()`
+- `topmostDirectoryNameFromPath()`
+- `pathWithoutBottommostNameFromPath()`
+- `pathWithoutTopmostDirectoryNameFromPath()`
 
 These functions manipulate or query strings that represent file and directory paths. Only forward slash '/' delimiters are supported and paths are not expected to start with a delimiter. Trailing delimiters are tolerated, however.
 
@@ -253,13 +244,13 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 
 ## File system functions
 
-- [`entryExists()`](#entryExists)
-- [`fileExists()`](#fileExists)
-- [`isEntryDirectory()`](#isEntryDirectory)
-- [`isDirectoryEmpty()`](#isDirectoryEmpty)
-- [`writeFile()`](#writeFile)
-- [`readFile()`](#readFile)
-- [`readDirectory()`](#readDirectory)
+- `entryExists()`
+- `fileExists()`
+- `isEntryDirectory()`
+- `isDirectoryEmpty()`
+- `writeFile()`
+- `readFile()`
+- `readDirectory()`
 
 A small if motley collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. Note that the paths passed to all of these functions are considered absolute and that all of the functions will throw the native errors upon failure.
 
@@ -295,13 +286,13 @@ readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 
 ## Asynchronous functions
 
-- [`whilst()`](#whilst)
-- [`forEach()`](#forEach)
-- [`sequence()`](#sequence)
-- [`eventually()`](#eventually)
-- [`repeatedly()`](#repeatedly)
-- [`forwardsForEach()`](#forwardsForEach)
-- [`backwardsForEach()`](#backwardsForEach)
+- `whilst()`
+- `forEach()`
+- `sequence()`
+- `eventually()`
+- `repeatedly()`
+- `forwardsForEach()`
+- `backwardsForEach()`
 
 Probably the best thing to do is give the majority of the listings since it can be fun and informative to work out these functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index` argument. The callbacks are given access to both the `next()` and `done()` functions, so that they can terminate early if need be.
 
