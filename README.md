@@ -119,6 +119,7 @@ replace([1, 2, 0, -1, -2], 3, function(element, index) {
 filter([1, 2, -1, -2], function(element, index) {
   return element > 0;
 }); // the first array argument becomes [1, 2]
+    // the return value is [-1, -2]
 ```
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the test callback function returns a truthy value, rather than just the first:
@@ -134,7 +135,8 @@ find([1, 2, -1, -2], function(element, index) {
 ```js
 prune([1, 2, -1, -2], function(element, index) {
   return element > 0;
-}); // the first array argument becomes [1, 2, -2]
+}); // the first array argument becomes [1, 2, -2] 
+    // the return value is -1 
 ```
 
 * The `patch()` function will append the given element to the first array argument the first time that the test callback function returns a truthy value:

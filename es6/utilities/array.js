@@ -76,16 +76,22 @@ function replace(array, element, test) {
 }
 
 function filter(array, test) {
+  const filteredElements = [];
+  
   backwardsForEach(array, function(element, index) {
     const passed = test(element, index);
 
     if (!passed) {
       const start = index,  ///
-            deleteCount = 1;
-
-      array.splice(start, deleteCount);
+            deleteCount = 1,
+            deletedElements = array.splice(start, deleteCount),
+            firstDeletedElement = first(deletedElements);
+      
+      filteredElements.unshift(firstDeletedElement);  ///
     }
   });
+  
+  return filteredElements;
 }
 
 function find(array, test) {
@@ -103,20 +109,24 @@ function find(array, test) {
 }
 
 function prune(array, test) {
-  const found = array.some(function(element, index) {
+  let prunedElement = undefined;
+  
+  array.some(function(element, index) {
     const passed = test(element, index);
 
     if (passed) {
       const start = index,  ///
-            deleteCount = 1;
-
-      array.splice(start, deleteCount);
+            deleteCount = 1,
+            deletedElements = array.splice(start, deleteCount),
+            firstDeletedElement = first(deletedElements);
+      
+      prunedElement = firstDeletedElement;  ///
 
       return true;
     }
   });
-
-  return found;
+  
+  return prunedElement;
 }
 
 function patch(array, element, test) {
