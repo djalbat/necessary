@@ -88,21 +88,6 @@ function filter(array, test) {
   });
 }
 
-function transfer(array1, array2, test) {
-  backwardsForEach(array1, function(element, index) {
-    const passed = test(element, index);
-
-    if (passed) {
-      const start = index,  ///
-            deleteCount = 1;
-
-      array1.splice(start, deleteCount);
-
-      array2.push(element);
-    }
-  });
-}
-
 function find(array, test) {
   const elements = [];
 
@@ -241,7 +226,6 @@ module.exports = {
   splice: splice,
   replace: replace,
   filter: filter,
-  transfer: transfer,
   find: find,
   prune: prune,
   patch: patch,
