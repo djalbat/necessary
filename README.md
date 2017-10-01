@@ -256,6 +256,10 @@ entryExists('root/etc'); // the return value is true if the file or directory ex
 
 fileExists('root/etc/init.conf'); // the return value is true if the file exists
 
+isEntryFile('root/etc/init.conf'); // the return value is true if the entry is a file
+
+directoryExists('root/etcconf'); // the return value is true if the directory exists
+
 isEntryDirectory('root'); // the return value is true if the entry is a directory
 
 isDirectoryEmpty('root/etc'); // the return value is true if the directory is empty
