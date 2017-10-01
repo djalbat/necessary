@@ -2,12 +2,50 @@
 
 const fs = require('fs');
 
-function entryExists(absoluteFilePath) {
-  return fs.existsSync(absoluteFilePath);
+function entryExists(absolutePath) {
+  return fs.existsSync(absolutePath);
 }
 
 function fileExists(absoluteFilePath) {
-  return fs.existsSync(absoluteFilePath);
+  let fileExists = false;
+  
+  const absolutePath = absoluteFilePath, ///
+        entryExists = entryExists(absolutePath);
+  
+  if (entryExists) {
+    const entryFile = isEntryFile(absolutePath);
+    
+    if (entryFile) {
+      fileExists = true;
+    }
+  }
+  
+  return fileExists;
+}
+
+function isEntryFile(absolutePath) {
+  const stat = fs.statSync(absolutePath),
+      entryDirectory = stat.isDirectory(),
+      entryFile = !entryDirectory;
+
+  return entryFile;
+}
+
+function directoryExists(absoluteDirectoryPath) {
+  let directoryExists = false;
+
+  const absolutePath = absoluteDirectoryPath, ///
+        entryExists = entryExists(absolutePath);
+
+  if (entryExists) {
+    const entryDirectory = isEntryDirectory(absolutePath);
+
+    if (entryDirectory) {
+      directoryExists = true;
+    }
+  }
+
+  return directoryExists;
 }
 
 function isEntryDirectory(absolutePath) {
@@ -25,8 +63,10 @@ function isDirectoryEmpty(absoluteDirectoryPath) {
   return directoryEmpty;
 }
 
-function writeFile(absoluteFilePath, content) {
-  fs.writeFileSync(absoluteFilePath, content);
+function readDirectory(absoluteDirectoryPath) {
+  const subEntryNames = fs.readdirSync(absoluteDirectoryPath);
+
+  return subEntryNames;
 }
 
 function readFile(absoluteFilePath, encoding = 'utf8') {
@@ -38,18 +78,18 @@ function readFile(absoluteFilePath, encoding = 'utf8') {
   return content;
 }
 
-function readDirectory(absoluteDirectoryPath) {
-  const subEntryNames = fs.readdirSync(absoluteDirectoryPath);
-
-  return subEntryNames;
+function writeFile(absoluteFilePath, content) {
+  fs.writeFileSync(absoluteFilePath, content);
 }
 
 module.exports = {
   entryExists: entryExists,
   fileExists: fileExists,
+  isEntryFile: isEntryFile,
+  directoryExists: directoryExists,
   isEntryDirectory: isEntryDirectory,
   isDirectoryEmpty: isDirectoryEmpty,
-  writeFile: writeFile,
+  readDirectory: readDirectory,
   readFile: readFile,
-  readDirectory: readDirectory
+  writeFile: writeFile
 };

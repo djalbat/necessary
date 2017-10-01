@@ -239,15 +239,17 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 
 - `entryExists()`
 - `fileExists()`
+- `isEntryFile()`
+- `directoryExists()`
 - `isEntryDirectory()`
 - `isDirectoryEmpty()`
-- `writeFile()`
-- `readFile()`
 - `readDirectory()`
+- `readFile()`
+- `writeFile()`
 
 A small if motley collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. Note that the paths passed to all of these functions are considered absolute and that all of the functions will throw the native errors upon failure.
 
-* The `entryExists()`, `fileExists()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value. The `fileExists()` function is identical to the `entryExists()` function in all but name:
+* The `entryExists()`, `fileExists()`, `isEntryFile()`, `directoryExists()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
 
 ```js
 entryExists('root/etc'); // the return value is true if the file or directory exists
@@ -259,10 +261,10 @@ isEntryDirectory('root'); // the return value is true if the entry is a director
 isDirectoryEmpty('root/etc'); // the return value is true if the directory is empty
 ```
 
-* The `writeFile()` function takes the content of the file as a second string argument. It does not return anything upon success:
+* The `readDirectory()` function returns an array of string entry names if the directory exists:
 
 ```js
-writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' file
+readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 ```
 
 * The `readFile()` function takes the file encoding as an optional second string argument. The default is `utf8`. It returns the content of the file upon success:
@@ -271,10 +273,10 @@ writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' fi
 readFile('root/etc/init.conf'); // returns the content of the 'root/etc/init.conf' file
 ```
 
-* The `readDirectory()` function returns an array of string entry names if the directory exists:
+* The `writeFile()` function takes the content of the file as a second string argument. It does not return anything upon success:
 
 ```js
-readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
+writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' file
 ```
 
 ## Asynchronous functions
