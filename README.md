@@ -2,7 +2,7 @@
 
 Utilities for arrays, paths and so on.
 
-These utility functions were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea here was only to create functions that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, especially in the case of the asynchronous functions, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging. 
+These utility functions were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea was only to create functions that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, especially in the case of the asynchronous functions, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
 
 This is a basic package meant for the authors's own use. If you feel the need to be impressed, look elsewhere! 
 
@@ -301,7 +301,7 @@ These functions take either a callback or an array of callbacks, followed by a `
 const context = {}; ///
 
 const callback = function(next, done, context, index) {
-  const terminate = (index === 10);
+  const terminate = (index === 9);
 
   if (terminate) {
     done();
@@ -322,8 +322,6 @@ whilst(callback, function() {
 ```js
 const context = {};
 
-const array = [0, 1, 2, 3, 4, 5];
-
 const callback = function(element, next, done, context, index) {
   const terminate = (element === 3);
 
@@ -335,6 +333,8 @@ const callback = function(element, next, done, context, index) {
     next();
   }
 }
+
+const array = [0, 1, 2, 3, 4, 5];
 
 forEach(array, callback, function() {
   /// done
