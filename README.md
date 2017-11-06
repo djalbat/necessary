@@ -293,7 +293,7 @@ writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' fi
 - `forwardsForEach()`
 - `backwardsForEach()`
 
-These functions typically take a callback or array of callbacks, a `done()` function and an optional `context`. They will pass a `next()` method to the callbacks, followed by the `done()` method, the `context` and an `index` argument. Callbacks are given access to the `done()` function so that they can terminate early if need be.
+These functions take either a callback or an array of callbacks, followed by a `done()` function and an optional `context`. They all pass a `next()` function to the callbacks followed by the `done()` function, the `context` and then an `index` argument. Callbacks are given access to the `done()` function so that they can terminate early if need be.
 
 * The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function or until the callback invokes the given `done()` function. The callback can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the callback will be exectuted ten times:
 
@@ -362,7 +362,7 @@ sequence(callbacks, function() {
 }, context);
 ```
 
-* The `eventually()` function takes an array of callbacks, each of which it calls immediately without waiting for the callbacks to invoke the given `next()` functions. When each of the callbacks has invoked the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` method from within a callback will not halt the execution of other callbacks, it is passed as an argument only for the sake of convention. In the example below each of the callbacks is executed:
+* The `eventually()` function takes an array of callbacks, each of which it calls immediately without waiting for the callbacks to invoke the given `next()` functions. When each of the callbacks has invoked the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` function from within a callback will not halt the execution of other callbacks, it is passed as an argument only for the sake of convention. In the example below each of the callbacks is executed:
 
 ```js
 const context = {};
@@ -380,7 +380,7 @@ eventually(callbacks, function() {
   /// done
 }, context);
 ```
-* The `repeatedly()` function takes a single callback and a `length` parameter, immediately calling the callback a `length` number of times without waiting for it to invoke the given `next()` function each time. When the callback has invoked the given `next()` function a `length` number of times, it will call the `done()` function. Note that in this case invoking the `done()` method from within the callback will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the callback is executed ten times:
+* The `repeatedly()` function takes a single callback and a `length` parameter, immediately calling the callback a `length` number of times without waiting for it to invoke the given `next()` function each time. When the callback has invoked the given `next()` function a `length` number of times, it will call the `done()` function. Note that in this case invoking the `done()` function from within the callback will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the callback is executed ten times:
 
 ```js
 const context = {};
