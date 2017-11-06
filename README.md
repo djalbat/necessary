@@ -295,7 +295,7 @@ writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' fi
 
 These functions typically take a callback or array of callbacks, a `done()` function and an optional `context`. They will pass a `next()` method to the callbacks, followed by the `done()` method, the `context` and an `index` argument. Callbacks are given access to the `done()` function so that they can terminate early if need be.
 
-* The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function, until the callback invokes the given `done()` function. In the example below the callback will be exectuted ten times:
+* The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function or until the callback invokes the given `done()` function. The callback can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the callback will be exectuted ten times:
 
 ```js
 const context = {}; ///
@@ -315,9 +315,7 @@ const callback = function(next, done, context, index) {
 whilst(callback, function() {
   /// done
 }, context);
-```
-
-Note that the callback can also force termination by returning a truthy value. In this case it must *not* call the given `next()` or `done()` functions aswell. 
+``` 
 
 * The `forEach()` function takes an array as the first argument followed by a single callback, which it calls for each element of the array unless the callback invokes the given `done()` function. If the `done()` function is never invoked by the callback, it is called once each of the array elements has been passed to the callback, provided the callback invokes the given `next ()` function each time. In the example below the callback will be executed four times:
 
@@ -364,7 +362,7 @@ sequence(callbacks, function() {
 }, context);
 ```
 
-* The `eventually()` function takes an array of callbacks, each of which it calls immediately without waiting for the callbacks to invoke the given `next()` functions. When each of the callbacks has called the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` method from within a callback will not halt the execution of other callbacks, it is passed as an argument only for the sake of convention. In the example below each of the callbacks is executed:
+* The `eventually()` function takes an array of callbacks, each of which it calls immediately without waiting for the callbacks to invoke the given `next()` functions. When each of the callbacks has invoked the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` method from within a callback will not halt the execution of other callbacks, it is passed as an argument only for the sake of convention. In the example below each of the callbacks is executed:
 
 ```js
 const context = {};
@@ -382,7 +380,7 @@ eventually(callbacks, function() {
   /// done
 }, context);
 ```
-* The `repeatedly()` function takes a single callback and a `length` parameter, immediately calling the callback a `length` number of times without waiting for it to invoke the given `next()` function each time. When the callback has called the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` method from within the callback will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the callback is executed ten times:
+* The `repeatedly()` function takes a single callback and a `length` parameter, immediately calling the callback a `length` number of times without waiting for it to invoke the given `next()` function each time. When the callback has invoked the given `next()` function a `length` number of times, it will call the `done()` function. Note that in this case invoking the `done()` method from within the callback will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the callback is executed ten times:
 
 ```js
 const context = {};
