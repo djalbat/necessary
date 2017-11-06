@@ -293,113 +293,112 @@ writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' fi
 - `forwardsForEach()`
 - `backwardsForEach()`
 
-Probably the best thing to do is give the majority of the listings since it can be fun and informative to work out these functions for yourself. Each takes a context as an optional last argument and passes it to the callbacks before the `index` argument. The callbacks are given access to both the `next()` and `done()` functions, so that they can terminate early if need be.
+These functions typically take a callback or array of callbacks, a `done()` function and an optional `context`. They will pass a `next()` method to the callbacks, followed by the `done()` method, the `context` and an `index` argument. Callbacks are given access to the `done()` function so that they can terminate early if need be.
+
+* The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function, until the callback invokes the given `done()` function. In the example below the callback will be exectuted ten times:
 
 ```js
-function whilst(callback, done, context) {
-  let count = -1;
+const context = {}; ///
 
-  function next() {
-    count++;
+const callback = function(next, done, context, index) {
+  const terminate = (index === 10);
 
-    const index = count,  ///
-          terminate = callback(next, done, context, index);
+  if (terminate) {
+    done();
+  } else {
+    ...
 
-    if (terminate) {
-      done();
-    }
-  }
-
-  next();
-}
-
-function forEach(array, callback, done, context) {
-  const length = array.length;  ///
-
-  let count = -1;
-
-  function next() {
-    count++;
-
-    const terminate = (count === length);
-
-    if (terminate) {
-      done();
-    } else {
-      const index = count,  ///
-            element = array[index];
-
-      callback(element, next, done, context, index);
-    }
-  }
-
-  next();
-}
-
-function sequence(callbacks, done, context) {
-  const length = callbacks.length;  ///
-
-  let count = -1;
-
-  function next() {
-    count++;
-
-    const terminate = (count === length);
-
-    if (terminate) {
-      done();
-    } else {
-      const index = count,  ///
-            callback = callbacks[index];
-
-      callback(next, done, context, index);
-    }
-  }
-
-  next();
-}
-
-function eventually(callbacks, done, context) {
-  const length = callbacks.length;  ///
-
-  let count = 0;
-
-  function next() {
-    count++;
-
-    const terminate = (count === length);
-
-    if (terminate) {
-      done();
-    }
-  }
-
-  callbacks.forEach(function(callback, index) {
-    callback(next, done, context, index);
-  });
-}
-
-function repeatedly(callback, length, done, context) {
-  let count = 0;
-
-  function next() {
-    count++;
-
-    const terminate = (count === length);
-
-    if (terminate) {
-      done();
-    }
-  }
-
-  for (let index = 0; index < length; index++) {
-    callback(next, done, context, index);
+    next();
   }
 }
 
+whilst(callback, function() {
+  /// done
+}, context);
 ```
 
-Note that any callback passed to the `whilst()` function must not call `next()` or `done()` if it chooses to terminate by returning a truthy value. Generally it is best just to call the `done()` callback. On the other hand the `eventually()` and `repeatedly()` functions invoke the callbacks immediately, therefore calling the `done()` function will have no direct effect.   
+Note that the callback can also force termination by returning a truthy value. In this case it must *not* call the given `next()` or `done()` functions aswell. 
+
+* The `forEach()` function takes an array as the first argument followed by a single callback, which it calls for each element of the array unless the callback invokes the given `done()` function. If the `done()` function is never invoked by the callback, it is called once each of the array elements has been passed to the callback, provided the callback invokes the given `next ()` function each time. In the example below the callback will be executed four times:
+
+```js
+const context = {};
+
+const array = [0, 1, 2, 3, 4, 5];
+
+const callback = function(element, next, done, context, index) {
+  const terminate = (element === 3);
+
+  if (terminate) {
+    done();
+  } else {
+    ...
+
+    next();
+  }
+}
+
+forEach(array, callback, function() {
+  /// done
+}, context);
+```
+
+* The `sequence()` function takes an array of callbacks, which it calls in turn unless the callback invokes the given `done()` function. If the `done()` function is never invoked by a callback, it is called once each of the callbacks have been called, provided each callback invokes the given `next ()` function. In the example below each of the callbacks bar the last is executed:
+
+```js
+const context = {};
+
+const firstCallback = function(next, done, context, index) { next(); },
+      secondCallback = function(next, done, context, index) { next(); },
+      thirdCallback = function(next, done, context, index) { done(); },
+      lastCallback = function(next, done, context, index) { next(); },
+      callbacks = [
+        firstCallback,
+        secondCallback,
+        thirdCallback,
+        lastCallback
+      ];
+
+sequence(callbacks, function() {
+  /// done
+}, context);
+```
+
+* The `eventually()` function takes an array of callbacks, each of which it calls immediately without waiting for the callbacks to invoke the given `next()` functions. When each of the callbacks has called the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` method from within a callback will not halt the execution of other callbacks, it is passed as an argument only for the sake of convention. In the example below each of the callbacks is executed:
+
+```js
+const context = {};
+
+const firstCallback = function(next, done, context, index) { next(); },
+      secondCallback = function(next, done, context, index) { next(); },
+      thirdCallback = function(next, done, context, index) { done(); },
+      callbacks = [
+        firstCallback,
+        secondCallback,
+        thirdCallback
+      ];
+
+eventually(callbacks, function() {
+  /// done
+}, context);
+```
+* The `repeatedly()` function takes a single callback and a `length` parameter, immediately calling the callback a `length` number of times without waiting for it to invoke the given `next()` function each time. When the callback has called the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` method from within the callback will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the callback is executed ten times:
+
+```js
+const context = {};
+
+const callback = function(next, done, context, index) {
+  ...
+
+  next();
+};
+
+const length = 10;
+
+repeatedly(callback, length, function() {
+  // done
+}, context);
+```
 
 ## Contact
 
