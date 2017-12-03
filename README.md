@@ -79,6 +79,10 @@ Note that none of these functions take or pass on a `thisArg` argument when they
 
 * The functions `first()` through to `last()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` function returns all but the first element of the array argument.
 
+* The `push()` function is similar to its native counterpart but will push an array rather than a single element.
+
+* The `unshift()` function is similar to its native counterpart but will unshift an array rather than a single element.
+
 * The `clear()` function removes all the elements in the array argument and returns them as a fresh array:  
 
 ```js
