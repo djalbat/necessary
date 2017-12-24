@@ -6,6 +6,14 @@ These utility functions were partly inspired by [lodash](https://lodash.com/), [
 
 This is a basic package meant for the authors's own use. If you feel the need to be impressed, look elsewhere! 
 
+## Contents
+
+* [Array functions](#array-functions)
+* [Path functions](#path-functions)
+* [File system functions](#file-system-functions)
+* [Asynchronous functions](#asynchronous-functions)
+* [Template functions](#template-functions)
+
 ## Installation
 
 You can install Necessary with [npm](https://www.npmjs.com/):
@@ -400,6 +408,58 @@ const length = 10;
 repeatedly(callback, length, function() {
   // done
 }, context);
+```
+
+## Template functions
+
+- `parseFile()`
+- `parseContent()`
+- `parseLine()`
+
+These functions parse files, content or single lines, replacing tokens of the form `${<name>}` with the value of the corresponding property of a plain old JavaScript object passed as the second argument, or replacing the token with an empty string if no such property exists.
+
+* The `parseFile()` function takes an absolute file path as the first argument:
+
+```js
+const absoluteFilePath = '/etc/var/public/name.html',
+      name = 'Joe Bloggs',
+      age = 99,
+      args = {
+        name: name,
+        age: age
+      }
+      parsedContent = parseFile(absoluteFilePath, args); 
+```
+
+* The `parseContent()` function takes content as the first argument, honouring newline `\n` characters:
+
+```js
+const content = `
+
+  name: <strong>${name}</strong><br/>
+  age: <strong>${age}</strong><br/>
+  
+      `,
+      name = 'Joe Bloggs',
+      age = 99,
+      args = {
+        name: name,
+        age: age
+      }
+      parsedContent = parseFile(content, args); 
+```
+
+* The `parseLine()` function takes a single line of content as the first argument:
+
+```js
+const line = '${name}, aged ${age}.',
+      name = 'Joe Bloggs',
+      age = 99,
+      args = {
+        name: name,
+        age: age
+      }
+      parsedLine = parseFile(line, args); // returns 'Joe Bloggs, aged 99.' 
 ```
 
 ## Contact
