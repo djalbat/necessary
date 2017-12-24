@@ -416,7 +416,7 @@ repeatedly(callback, length, function() {
 - `parseContent()`
 - `parseLine()`
 
-These functions parse files, content or single lines, replacing tokens of the form `${<name>}` with the value of the corresponding property of a plain old JavaScript object passed as the second argument, or replacing the token with an empty string if no such property exists.
+These functions parse files, content or single lines, replacing each token of the form `${<name>}` with the value of the corresponding property of a plain old JavaScript object passed as the second argument, or replacing the token with an empty string if no such property exists.
 
 * The `parseFile()` function takes an absolute file path as the first argument:
 
@@ -446,7 +446,7 @@ const content = `
         name: name,
         age: age
       }
-      parsedContent = parseFile(content, args); 
+      parsedContent = parseContent(content, args); 
 ```
 
 * The `parseLine()` function takes a single line of content as the first argument:
@@ -459,7 +459,7 @@ const line = '${name}, aged ${age}.',
         name: name,
         age: age
       }
-      parsedLine = parseFile(line, args); // returns 'Joe Bloggs, aged 99.' 
+      parsedLine = parseLine(line, args); // returns 'Joe Bloggs, aged 99.' 
 ```
 
 ## Contact
