@@ -6,14 +6,6 @@ These utility functions were partly inspired by [lodash](https://lodash.com/), [
 
 This is a basic package meant for the authors's own use. If you feel the need to be impressed, look elsewhere! 
 
-## Contents
-
-* [Array functions](#array-functions)
-* [Path functions](#path-functions)
-* [File system functions](#file-system-functions)
-* [Asynchronous functions](#asynchronous-functions)
-* [Template functions](#template-functions)
-
 ## Installation
 
 You can install Necessary with [npm](https://www.npmjs.com/):
