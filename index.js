@@ -5,5 +5,6 @@ module.exports = {
   arrayUtilities: require('./lib/utilities/array'),
   templateUtilities: require('./lib/utilities/template'),
   fileSystemUtilities: require('./lib/utilities/fileSystem'),
-  asynchronousUtilities: require('./lib/utilities/asynchronous')
+  asynchronousUtilities: require('./lib/utilities/asynchronous'),
+  miscellaneousUtilities: require('./lib/utilities/miscellaneous')
 };

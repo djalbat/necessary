@@ -251,7 +251,7 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 - `readFile()`
 - `writeFile()`
 
-A small if motley collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. Note that the paths passed to all of these functions are considered absolute and that all of the functions will throw the native errors upon failure.
+An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. Note that the paths passed to all of these functions are considered absolute and that all of the functions will throw the native errors upon failure.
 
 * The `entryExists()`, `fileExists()`, `isEntryFile()`, `directoryExists()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
 
@@ -452,6 +452,22 @@ const line = '${name}, aged ${age}.',
         age: age
       }
       parsedLine = parseLine(line, args); // returns 'Joe Bloggs, aged 99.' 
+```
+
+## Miscellaneous functions
+
+- `onEXT()`
+
+A small if motley collection of functions for various common tasks.
+
+* The `onEXT()` function takes a handler which is invoked whenever the `EXT` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This method is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener:
+
+```js
+const offExt = onExt(process.exit);
+
+\\\
+
+offExt();
 ```
 
 ## Contact
