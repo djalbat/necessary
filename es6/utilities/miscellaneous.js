@@ -2,7 +2,7 @@
 
 const ETX_CHARACTER = '\u0003';
 
-function onEXT(handler) {
+function onETX(handler) {
   const { stdin } = process,
         { setRawMode } = stdin;
 
@@ -32,5 +32,5 @@ function onEXT(handler) {
 }
 
 module.exports = {
-  onEXT: onEXT
+  onETX: onETX
 };
