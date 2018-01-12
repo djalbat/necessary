@@ -1,5 +1,7 @@
 'use strict';
 
+const ETX_CHARACTER = '\u0003';
+
 function onEXT(handler) {
   const { stdin } = process,
         { setRawMode } = stdin;

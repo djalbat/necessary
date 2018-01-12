@@ -460,12 +460,12 @@ const line = '${name}, aged ${age}.',
 
 A small if motley collection of functions for various common tasks.
 
-* The `onEXT()` function takes a handler which is invoked whenever the `EXT` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This method is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener:
+* The `onEXT()` function takes a handler which is invoked whenever the `EXT` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This method is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener at some later point in time:
 
 ```js
 const offExt = onExt(process.exit);
 
-\\\
+...
 
 offExt();
 ```
