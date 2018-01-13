@@ -480,7 +480,7 @@ get(host, uri, parameters, function(json) {
 
 Note that the `uri` argument should not include a leading forward slash `/`, this is prepended automatically.
 
-* The `post` function behaves similarly to the above `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `uri` arguments. This argument is stringified and sent in the request body. Note that for this reason he `content-type` of the request is hard coded as `application/json` and not the usual 'xxx/url-form-encoded':
+* The `post` function behaves similarly to the above `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `uri` arguments. This argument is stringified and sent in the request body:
 
 ```js
 const host = '...',

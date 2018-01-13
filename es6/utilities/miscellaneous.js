@@ -84,8 +84,6 @@ function request(host, uri, parameters, method, body, callback) {
 
   xmlHttpRequest.open(method, url, true);
 
-  xmlHttpRequest.setRequestHeader('Content-Type', 'application/json');
-
   xmlHttpRequest.send(body);
 }
 
