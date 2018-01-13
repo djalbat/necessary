@@ -1,7 +1,7 @@
 {
   "name": "necessary",
   "author": "James Smith",
-  "version": "1.11.4",
+  "version": "1.11.5",
   "license": "MIT",
   "homepage": "https://github.com/djalbat/Necessary",
   "description": "Utilities for arrays, paths and so on.",

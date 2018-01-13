@@ -89,3 +89,30 @@ function request(host, uri, parameters, method, body, callback) {
   xmlHttpRequest.send(body);
 }
 
+
+function urlFromHostURIAndParameters(host, uri, parameters) {
+  const queryString = queryStringFromParameters(parameters),
+        url = (queryString === '') ?
+                `${host}/${uri}` :
+                  `${host}/${uri}?${queryString}`;
+
+  return url;
+}
+
+function queryStringFromParameters(parameters) {
+  const names = Object.keys(parameters),
+        namesLength = names.length,
+        lastIndex = namesLength - 1,
+        queryString = names.reduce(function(queryString, name, index) {
+          const value = parameters[name],
+                encodedName = encodeURIComponent(name),
+                encodedValue = encodeURIComponent(value),
+                ampersandOrNothing = (index !== lastIndex) ? '&' : '';
+
+          queryString += `${encodedName}=${encodedValue}${ampersandOrNothing}`;
+
+          return queryString;
+        }, '');
+
+  return queryString;
+}
