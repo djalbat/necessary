@@ -456,9 +456,43 @@ const line = '${name}, aged ${age}.',
 
 ## Miscellaneous functions
 
+- `get()`
+- `post()`
 - `onETX()`
 
 A small if motley collection of functions for various common tasks.
+
+* The `get` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
+
+```js
+const host = '...',
+      uri = '...',
+      parameters = {
+        ...
+      };
+
+get(host, uri, parameters, function(json) {
+  if (json !== null) {
+    ...
+  }
+});
+```
+
+* The `post` function behaves similarly to the above `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `uri` arguments. This argument is stringified and sent in the request body. Note that for this reason he `content-type` of the request is hard coded as `application/json` and not the usual 'xxx/url-form-encoded':
+
+```js
+const host = '...',
+      uri = '...',
+      json = ...;
+
+post(host, uri, json, function(json) {
+  if (json !== null) {
+    ...
+  }
+});
+```
+
+Note that `parameters` argument is missing in the example above but that there is nothing wrong with including it and thereby appending a query string to the request URL.
 
 * The `onETX()` function takes a handler which is invoked whenever the `ETX` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This method is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener at some later point in time:
 
