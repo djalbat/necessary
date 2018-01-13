@@ -89,7 +89,6 @@ function request(host, uri, parameters, method, body, callback) {
   xmlHttpRequest.send(body);
 }
 
-
 function urlFromHostURIAndParameters(host, uri, parameters) {
   const queryString = queryStringFromParameters(parameters),
         url = (queryString === '') ?
