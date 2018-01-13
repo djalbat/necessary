@@ -13,7 +13,7 @@ function get(host, uri, parameters, callback) {
   const method = GET_METHOD,
         body = undefined;
 
-  this.request(host, uri, parameters, method, body, callback);
+  request(host, uri, parameters, method, body, callback);
 }
 
 function post(host, uri, json, parameters, callback) {
@@ -25,7 +25,7 @@ function post(host, uri, json, parameters, callback) {
   const method = POST_METHOD,
         body = JSON.stringify(json);
 
-  this.request(host, uri, parameters, method, body, callback);
+  request(host, uri, parameters, method, body, callback);
 }
 
 function onETX(handler) {
