@@ -241,10 +241,10 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 
 ## File system functions
 
-- `entryExists()`
-- `fileExists()`
+- `doesEntryExist()`
+- `doesFileExist()`
+- `doesDirectoryExist()`
 - `isEntryFile()`
-- `directoryExists()`
 - `isEntryDirectory()`
 - `isDirectoryEmpty()`
 - `readDirectory()`
@@ -253,16 +253,16 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 
 An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. Note that the paths passed to all of these functions are considered absolute and that all of the functions will throw the native errors upon failure.
 
-* The `entryExists()`, `fileExists()`, `isEntryFile()`, `directoryExists()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
+* The `doesEntryExist()`, `doesFileExist()`, `doesDirectoryExist()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
 
 ```js
-entryExists('root/etc'); // the return value is true if the file or directory exists
+doesEntryExist('root/etc'); // the return value is true if the file or directory exists
 
-fileExists('root/etc/init.conf'); // the return value is true if the file exists
+doesFileExist('root/etc/init.conf'); // the return value is true if the file exists
+
+doesDirectoryExist('root/etcconf'); // the return value is true if the directory exists
 
 isEntryFile('root/etc/init.conf'); // the return value is true if the entry is a file
-
-directoryExists('root/etcconf'); // the return value is true if the directory exists
 
 isEntryDirectory('root'); // the return value is true if the entry is a directory
 

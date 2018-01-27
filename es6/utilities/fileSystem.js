@@ -2,15 +2,17 @@
 
 const fs = require('fs');
 
-function entryExists(absolutePath) {
-  return fs.existsSync(absolutePath);
+function doesEntryExist(absolutePath) {
+  const entryExists = fs.existsSync(absolutePath);
+
+  return entryExists;
 }
 
-function fileExists(absoluteFilePath) {
+function doesFileExist(absoluteFilePath) {
   let fileExists = false;
   
   const absolutePath = absoluteFilePath, ///
-        entryExists = entryExists(absolutePath);
+        entryExists = doesEntryExist(absolutePath);
   
   if (entryExists) {
     const entryFile = isEntryFile(absolutePath);
@@ -23,19 +25,11 @@ function fileExists(absoluteFilePath) {
   return fileExists;
 }
 
-function isEntryFile(absolutePath) {
-  const stat = fs.statSync(absolutePath),
-      entryDirectory = stat.isDirectory(),
-      entryFile = !entryDirectory;
-
-  return entryFile;
-}
-
-function directoryExists(absoluteDirectoryPath) {
+function doesDirectoryExist(absoluteDirectoryPath) {
   let directoryExists = false;
 
   const absolutePath = absoluteDirectoryPath, ///
-        entryExists = entryExists(absolutePath);
+        entryExists = doesEntryExist(absolutePath);
 
   if (entryExists) {
     const entryDirectory = isEntryDirectory(absolutePath);
@@ -46,6 +40,14 @@ function directoryExists(absoluteDirectoryPath) {
   }
 
   return directoryExists;
+}
+
+function isEntryFile(absolutePath) {
+  const stat = fs.statSync(absolutePath),
+      entryDirectory = stat.isDirectory(),
+      entryFile = !entryDirectory;
+
+  return entryFile;
 }
 
 function isEntryDirectory(absolutePath) {
@@ -83,10 +85,10 @@ function writeFile(absoluteFilePath, content) {
 }
 
 module.exports = {
-  entryExists: entryExists,
-  fileExists: fileExists,
+  doesEntryExist: doesEntryExist,
+  doesFileExist: doesFileExist,
+  doesDirectoryExist: doesDirectoryExist,
   isEntryFile: isEntryFile,
-  directoryExists: directoryExists,
   isEntryDirectory: isEntryDirectory,
   isDirectoryEmpty: isDirectoryEmpty,
   readDirectory: readDirectory,
