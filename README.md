@@ -183,7 +183,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
 - `pathWithoutBottommostNameFromPath()`
 - `pathWithoutTopmostDirectoryNameFromPath()`
 
-These functions manipulate or query strings that represent file and directory paths. Only forward slash '/' delimiters are supported and paths are not expected to start with a delimiter. Trailing delimiters are tolerated, however.
+These functions manipulate or query strings that represent file and directory paths. Only forward slash '/' delimiters are supported and absolute paths are not expected to start with a delimiter, so be careful. Trailing delimiters are not needed, but tolerated.
 
 * The `isPathRelativePath()` function returns `true` if the first string argument starts with a period `.` or double period `..`:
 
@@ -197,7 +197,7 @@ isPathRelativePath('../root/etc'); // the return value is true
 isPathAbsolutePath('root/etc'); // the return value is true
 ```
 
-Note that an absolute path is considered to be a path that is not a relative path, rather than a path that starts with a delimiter.
+Again, note that an absolute path is considered to be a path that is not a relative path, rather than a path that starts with a delimiter.
 
 * The `isPathTopmostDirectoryName()` function returns `true` if the first string argument is a non-empty string containing no delimiters apart from optionally the last character:
 
@@ -250,8 +250,11 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 - `readDirectory()`
 - `readFile()`
 - `writeFile()`
+- `appendToFile()`
+- `renameFile()`
+- `getStats()`
 
-An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. Note that the paths passed to all of these functions are considered absolute and that all of the functions will throw the native errors upon failure.
+An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. Note that the paths passed to all of these functions are considered absolute and that all of the functions will throw native errors upon failure.
 
 * The `doesEntryExist()`, `doesFileExist()`, `doesDirectoryExist()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
 
@@ -269,7 +272,7 @@ isEntryDirectory('root'); // the return value is true if the entry is a director
 isDirectoryEmpty('root/etc'); // the return value is true if the directory is empty
 ```
 
-* The `readDirectory()` function returns an array of string entry names if the directory exists:
+* The `readDirectory()` function returns an array of entry names if the directory exists:
 
 ```js
 readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
@@ -285,6 +288,18 @@ readFile('root/etc/init.conf'); // returns the content of the 'root/etc/init.con
 
 ```js
 writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' file
+```
+
+* The `appendToFile()` function takes the content to append file as a second string argument. It will create teh file if necessary and does not return anything upon success:
+
+```js
+appendToFile('root/etc/init.conf', ''); // appends '' to the 'root/etc/init.conf' file
+```
+
+* The `getStats()` function returns an instance of the [fs.Stats](https://nodejs.org/api/fs.html#fs_class_fs_stats) class for a file or a directory:
+
+```js
+const stats = getStats('root/etc'); // returns stats for the 'root/etc' directory.
 ```
 
 ## Asynchronous functions
@@ -460,7 +475,7 @@ const line = '${name}, aged ${age}.',
 - `post()`
 - `onETX()`
 
-A small if motley collection of functions for various common tasks.
+A small albeit motley collection of functions for various common tasks.
 
 * The `get` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
 

@@ -84,6 +84,18 @@ function writeFile(absoluteFilePath, content) {
   fs.writeFileSync(absoluteFilePath, content);
 }
 
+function appendToFile(absoluteFilePath, content) {
+  fs.appendFileSync(absoluteFilePath, content);
+}
+
+function renameFile(oldAbsoluteFilePath, newAbsoluteFilePath) {
+  fs.renameSync(oldAbsoluteFilePath, newAbsoluteFilePath);
+}
+
+function getStats(absoluteFilePath) {
+  return fs.statSync(absoluteFilePath);
+}
+
 module.exports = {
   doesEntryExist: doesEntryExist,
   doesFileExist: doesFileExist,
@@ -93,5 +105,8 @@ module.exports = {
   isDirectoryEmpty: isDirectoryEmpty,
   readDirectory: readDirectory,
   readFile: readFile,
-  writeFile: writeFile
+  writeFile: writeFile,
+  appendToFile: appendToFile,
+  renameFile: renameFile,
+  getStats: getStats
 };
