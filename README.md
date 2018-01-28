@@ -2,7 +2,7 @@
 
 Utilities for arrays, paths and so on.
 
-These utility functions were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that for the most part is covered far more comprehensibly elsewhere. The idea was only to create functions that addressed a set of relatively modest requirements and would result in a relatively small footprint. That said, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging, especially in the case of the asynchronous functions.
+These utility functions were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide functionality that for the most part will be covered far more comprehensibly elsewhere. The idea was only to create a collection of functions that addressed some modest requirements and would result in a relatively small footprint. That said, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging, especially in the case of the asynchronous functions.
 
 This is a basic package meant for the authors's own use. If you feel the need to be impressed, look elsewhere!
 
