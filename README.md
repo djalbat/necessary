@@ -492,18 +492,18 @@ const { setLogFileBaseName, setLogDirectoryPath } = log;
 setLogFileBaseName('example');
 setLogDirectoryPath('./log');
 
-log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...' line being appended to the
-           // './log/example.log' file as well as the message being printed to the console.
+log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...\n' line being appended to
+           // the './log/example.log' file as well as the message being printed to the console.
 ```
 
-Also, a standard set of functions, namely `fatal()`, `error()`, `warning()`, `info()`, `debug()` and `trace()`, are available and these are filtered in the usual way assuming the log level has been set:
+Also, a standard set of functions, namely `fatal()`, `error()`, `warning()`, `info()`, `debug()` and `trace()`, are available and these are filtered in the usual way, assuming the log level has been set:
 
 ```js
 const { setLogLevel, DEBUG } = log;
 
 setLogLevel(DEBUG);
 
-log.error('...') // Printed to the console and optionally, the log file.
+log.error('...') // Printed to the console and optionally, to the log file.
 log.trace('...') // Ignored, because the trace level is lower than the debug level.
 ```
 
