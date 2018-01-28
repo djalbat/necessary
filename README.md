@@ -31,7 +31,7 @@ const necessary = require('necessary'),
       { isDirectory } = fileSystemUtilities;
 ```
 
-Using the destructing syntax is often best, however it may lead to conflicts, in which case just call the functions directly against the objects in question:
+Using the destructor syntax is often best, however it may lead to conflicts, in which case just call the functions directly against the objects in question:
 
 ```js
 asynchronousUtilities.forEach(...)
@@ -471,11 +471,43 @@ const line = '${name}, aged ${age}.',
 
 ## Miscellaneous functions
 
+- `log()`
 - `get()`
 - `post()`
 - `onETX()`
 
 A small if motley collection of functions for various common tasks.
+
+* The `log` function by default prints to the output to the console with a date and time stamp together with the path of the file containing the callee function and the line number:
+
+```js
+log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...' being printed to the console.
+```
+
+Additionally it is possible to print to a log file if a log directory and, optionally, a base name for the log file are specified. The base name here means the file name minus the extension and separator. The default is `default`:
+
+```js
+const { setLogFileBaseName, setLogDirectoryPath } = log;
+
+setLogFileBaseName('example');
+setLogDirectoryPath('./log');
+
+log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...' line being appended to the
+           // './log/example.log' file as well as the message being printed to the console.
+```
+
+Also, a standard set of functions, namely `fatal()`, `error()`, `warning()`, `info()`, `debug()` and `trace()`, are available and these are filtered in the usual way assuming the log level has been set:
+
+```js
+const { setLogLevel, DEBUG } = log;
+
+setLogLevel(DEBUG);
+
+log.error('...') // Printed to the console and optionally, the log file
+log.trace('...') // Ignored, because the trace level is lower than the debug level
+```
+
+Finally, log files are rolled over every day, for example `./log/example.log` would become `./log/example.28-01-2018.log` and a new `./log/example.log` file would be started at midnight.
 
 * The `get` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
 
