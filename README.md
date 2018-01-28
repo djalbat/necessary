@@ -2,9 +2,9 @@
 
 Utilities for arrays, paths and so on.
 
-These utility functions were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that will most likely be covered far more comprehensibly elsewhere. The idea was only to create functions that addressed a set of relatively modest requirements and would result in a tiny footprint. Additionally, especially in the case of the asynchronous functions, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging.
+These utility functions were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide limited functionality that for the most part is covered far more comprehensibly elsewhere. The idea was only to create functions that addressed a set of relatively modest requirements and would result in a relatively small footprint. That said, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging, especially in the case of the asynchronous functions.
 
-This is a basic package meant for the authors's own use. If you feel the need to be impressed, look elsewhere! 
+This is a basic package meant for the authors's own use. If you feel the need to be impressed, look elsewhere!
 
 ## Installation
 
@@ -475,7 +475,7 @@ const line = '${name}, aged ${age}.',
 - `post()`
 - `onETX()`
 
-A small albeit motley collection of functions for various common tasks.
+A small if motley collection of functions for various common tasks.
 
 * The `get` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
 
