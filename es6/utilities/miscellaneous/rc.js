@@ -2,18 +2,49 @@
 
 const path = require('path');
 
-const pathUtilities = require('../../utilities/path'),
-      arrayUtilities = require('../../utilities/array'),
-      fileSystemUtilities = require('../utilities/fileSystem');
+const arrayUtilities = require('../../utilities/array'),
+      fileSystemUtilities = require('../../utilities/fileSystem');
 
-const { second } = arrayUtilities,
-      { concatenatePaths } = pathUtilities,
-      { doesFileExist, readFile, appendToFile, renameFile, getStats } = fileSystemUtilities;
+const { first } = arrayUtilities,
+      { readFile } = fileSystemUtilities;
 
-function rc(fileName) {
+let rcBaseExtension = '';
 
+function rc(environmentName = null) {
+  const filePath = `./.${rcBaseExtension}rc`,
+        absoluteFilePath = path.resolve(filePath),
+        fileContent = readFile(absoluteFilePath),
+        json = JSON.parse(fileContent),
+        { environments } = json;
+
+  let environment;
+
+  if (environmentName === null) {
+    const firstEnvironment = first(environments);
+
+    environment = firstEnvironment; ///
+  } else {
+    environment = environments.find(function(environment) {
+      const { name } = environment,
+            found = (name === environmentName);
+
+      return found;
+    });
+  }
+
+  delete environment.name;
+
+  Object.assign(rc, environment);
+
+  return environment;
 }
 
-module.exports = {
-  rc: rc
-};
+function setRCBaseExtension(baseExtension) { rcBaseExtension = baseExtension; }
+
+Object.assign(rc, {
+  setRCBaseExtension: setRCBaseExtension
+});
+
+rc();
+
+module.exports = rc;
