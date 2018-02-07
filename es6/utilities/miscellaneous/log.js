@@ -4,11 +4,22 @@ const path = require('path');
 
 const pathUtilities = require('../../utilities/path'),
       arrayUtilities = require('../../utilities/array'),
-      fileSystemUtilities = require('../utilities/fileSystem');
+      fileSystemUtilities = require('../../utilities/fileSystem');
 
 const { second } = arrayUtilities,
       { concatenatePaths } = pathUtilities,
       { doesFileExist, readFile, appendToFile, renameFile, getStats } = fileSystemUtilities;
+
+const TRACE = 'TRACE',
+      DEBUG = 'DEBUG',
+      INFO = 'INFO',
+      WARNING = 'WARNING',
+      ERROR = 'ERROR',
+      FATAL = 'FATAL';
+
+let logLevel = WARNING,
+    logFileBaseName = 'default',
+    logDirectoryPath = null;
 
 function log(message, level = '') {
   let pertinentStackMessageIndex = 2;
@@ -26,7 +37,7 @@ function log(message, level = '') {
     const levelIndex = levels.indexOf(level),
           logLevelIndex = levels.indexOf(logLevel);
 
-    if (levelIndex > logLevelIndex) {
+    if (levelIndex < logLevelIndex) {
       return;
     }
 
@@ -55,13 +66,6 @@ function log(message, level = '') {
     appendToFile(logFilePath, logFileContent);
   }
 }
-
-const TRACE = 'TRACE',
-      DEBUG = 'DEBUG',
-      INFO = 'INFO',
-      WARNING = 'WARNING',
-      ERROR = 'ERROR',
-      FATAL = 'FATAL';
 
 function trace(message) { log(message, TRACE); }
 
@@ -107,13 +111,7 @@ Object.assign(log, {
   getLogFileContent: getLogFileContent
 });
 
-module.exports = {
-  log: log
-};
-
-const logLevel = WARNING,
-      logFileBaseName = 'default',
-      logDirectoryPath = null;
+module.exports = log;
 
 function getLogFilePath() {
   const logFileName = `${logFileBaseName}.log`,

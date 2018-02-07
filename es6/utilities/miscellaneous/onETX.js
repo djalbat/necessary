@@ -31,6 +31,4 @@ function onETX(handler) {
   }
 }
 
-module.exports = {
-  onETX: onETX
-};
+module.exports = onETX;
