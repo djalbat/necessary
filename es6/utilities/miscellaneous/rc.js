@@ -6,7 +6,7 @@ const arrayUtilities = require('../../utilities/array'),
       fileSystemUtilities = require('../../utilities/fileSystem');
 
 const { first, second } = arrayUtilities,
-      { readFile } = fileSystemUtilities;
+      { readFile, writeFile } = fileSystemUtilities;
 
 let rcBaseExtension = '';
 
@@ -22,10 +22,7 @@ function rc(environmentNameOrArgv = null) {
     environmentName = environmentNameOrArgv;
   }
 
-  const filePath = `./.${rcBaseExtension}rc`,
-        absoluteFilePath = path.resolve(filePath),
-        fileContent = readFile(absoluteFilePath),
-        json = JSON.parse(fileContent),
+  const json = readRCFile(),
         { environments } = json;
 
   if (environmentName === null) {
@@ -48,9 +45,36 @@ function rc(environmentNameOrArgv = null) {
   return environment;
 }
 
+function readRCFile() {
+  const filePath = `./.${rcBaseExtension}rc`,
+        absoluteFilePath = path.resolve(filePath),
+        fileContent = readFile(absoluteFilePath),
+        json = JSON.parse(fileContent);
+
+  return json;      
+}
+
+function writeRCFile(json) {
+  const filePath = `./.${rcBaseExtension}rc`,
+        absoluteFilePath = path.resolve(filePath),
+        fileContent = JSON.stringify(json, null, `\t`);
+
+  writeFile(fileContent);      
+}
+
+function updateRCFile(json) {
+  const oldJSON = readRCFile(),
+        newJSON = Object.assign(oldJSON, json);
+
+  writeRCFile(newJSON);      
+}
+
 function setRCBaseExtension(baseExtension) { rcBaseExtension = baseExtension; }
 
 Object.assign(rc, {
+  readRCFile: readRCFile,
+  writeRCFile: writeRCFile,
+  updateRCFile: updateRCFile,
   setRCBaseExtension: setRCBaseExtension
 });
 

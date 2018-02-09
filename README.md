@@ -544,7 +544,7 @@ rc('production'); // Provides the 'production' environment
 Or you can pass `process.argv` if the command line arguments include something of the form `--environment=...`:
 
 ```js
-rc(process.argv); // Provides the 'development' environment if '--environment=development' argument is given
+rc(process.argv); // Provides the 'development' if given '--environment=development'
 ```
 
 You can change the base extension of the file that is parsed, that is the part of the extension between the leading dot and `rc`, by making use of the `setRCBaseExtension()` function:
@@ -558,6 +558,18 @@ rc(); // Provides the first environment in the '.defaultrc' file
 ```
 
 Note that the `rc()` function can be included in any file but only needs to be called once. But be careful that it is called before it is ever destructured.
+
+Finally, the `readRCFile()`, `writeRCFile()` and `updateRCFile()` functions are provided that do as their names suggest:
+
+```js
+const { readRCFile, writeRCFile, updateRCFile } = rc;
+
+const json = readRCFile();  // Reads the entire contents of the rc file into a JSON object
+
+writeRCFile(json);  // Stringifies the given JSON object and writes it to the rc file
+
+updateRCFile({...});  // Updates the rc file, overwriting the given properties
+```
 
 * The `get()` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
 
