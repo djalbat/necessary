@@ -59,7 +59,7 @@ function writeRCFile(json) {
         absoluteFilePath = path.resolve(filePath),
         fileContent = JSON.stringify(json, null, `\t`);
 
-  writeFile(fileContent);      
+  writeFile(absoluteFilePath, fileContent);
 }
 
 function updateRCFile(json) {
