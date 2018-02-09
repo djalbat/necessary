@@ -510,7 +510,7 @@ log.trace('...') // Ignored, because the trace level is lower than the debug lev
 
 Finally, log files are rolled over every night. So `./log/example.log` would become `./log/example.28-01-2018.log` and a new `./log/example.log` file would be started at midnight.
 
-* The `rc()` function parses a JSON runtime configuration file of a certain format and provides the information by assigning it to itself:
+* The `rc()` function parses a JSON runtime configuration file of a certain format and provides the information therein by assigning it to itself:
 
 ```js
 rc();
@@ -535,13 +535,13 @@ By default it will parse a file called `.rc` in the current working directory. T
 }
 ```
 
-In the abscence of being passed an environment name, it will parse and return the first element of the `enviromnents` array. It will not try to assign the `name` property of the chosen environment to itself, by the way, because functions already have a `name` property. It can be instructed to a chose a specific environment by passing it the environment`s name:
+In the abscence of being passed an environment name, it will parse and return the first element of the `enviromnents` array. It will not try to assign the `name` property of the chosen environment to itself, by the way, because functions already have a `name` property. It can be instructed to a chose a specific environment thus:
 
 ```js
 rc('production');
 ```
 
-Or you can pass the `process.argv` array if the command line arguments includes something of the form `--environment=...`, for example:
+Or you can pass `process.argv` if the command line arguments include something of the form `--environment=...`:
 
 ```js
 rc(process.argv);
