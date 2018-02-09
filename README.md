@@ -510,7 +510,7 @@ log.trace('...') // Ignored, because the trace level is lower than the debug lev
 
 Finally, log files are rolled over every night. So `./log/example.log` would become `./log/example.28-01-2018.log` and a new `./log/example.log` file would be started at midnight.
 
-* The `rc()` function parses a JSON runtime configuration file of a certain format and provide the information by assigning it to itself:
+* The `rc()` function parses a JSON runtime configuration file of a certain format and provides the information by assigning it to itself:
 
 ```js
 rc();
@@ -556,6 +556,8 @@ setRCBaseExtension('default');  // Results in the '.defaultrc' file being parsed
 
 rc();
 ```
+
+Note that the `rc()` function can be included in any file but only needs to be called once. Make sure, however, that it is called before it is ever destructured.
 
 * The `get()` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
 
