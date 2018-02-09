@@ -535,7 +535,7 @@ By default it will parse a file called `.rc` in the current working directory. T
 }
 ```
 
-In the abscence of any explicit environment name, it will parse and return the first element of the `enviromnents` array in the configuration file. It will not try to assign the `name` property of the chosen environment to itself, because functions already have a `name` property. It can be instructed to a chose a specific environment by passing it the environment`s name:
+In the abscence of being passed an environment name, it will parse and return the first element of the `enviromnents` array. It will not try to assign the `name` property of the chosen environment to itself, by the way, because functions already have a `name` property. It can be instructed to a chose a specific environment by passing it the environment`s name:
 
 ```js
 rc('production');
@@ -557,7 +557,7 @@ setRCBaseExtension('default');  // Results in the '.defaultrc' file being parsed
 rc();
 ```
 
-Note that the `rc()` function can be included in any file but only needs to be called once. Make sure, however, that it is called before it is ever destructured.
+Note that the `rc()` function can be included in any file but only needs to be called once. Be careful, therefore, that it is called before it is ever destructured.
 
 * The `get()` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
 
