@@ -5,19 +5,28 @@ const path = require('path');
 const arrayUtilities = require('../../utilities/array'),
       fileSystemUtilities = require('../../utilities/fileSystem');
 
-const { first } = arrayUtilities,
+const { first, second } = arrayUtilities,
       { readFile } = fileSystemUtilities;
 
 let rcBaseExtension = '';
 
-function rc(environmentName = null) {
+function rc(environmentNameOrArgv = null) {
+  let environment,
+      environmentName;
+
+  if (environmentNameOrArgv instanceof Array) {
+    const argv = environmentNameOrArgv;
+
+    environmentName = environmentNameFromArgv(argv);
+  } else {
+    environmentName = environmentNameOrArgv;
+  }
+
   const filePath = `./.${rcBaseExtension}rc`,
         absoluteFilePath = path.resolve(filePath),
         fileContent = readFile(absoluteFilePath),
         json = JSON.parse(fileContent),
         { environments } = json;
-
-  let environment;
 
   if (environmentName === null) {
     const firstEnvironment = first(environments);
@@ -48,3 +57,22 @@ Object.assign(rc, {
 rc();
 
 module.exports = rc;
+
+function environmentNameFromArgv(argv) {
+  let environmentName = null;
+
+  argv.find(function(argument) {  ///
+    const matches = argument.match(/\-\-environment=(.+)/),
+          found = (matches !== null);
+
+    if (found) {
+      const secondMatch = second(matches);
+
+      environmentName = secondMatch;
+    }
+
+    return found;
+  });
+
+  return environmentName;
+}
