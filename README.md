@@ -510,7 +510,7 @@ log.trace('...') // Ignored, because the trace level is lower than the debug lev
 
 Finally, log files are rolled over every night. So `./log/example.log` would become `./log/example.28-01-2018.log` and a new `./log/example.log` file would be started at midnight.
 
-* The `rc()` parses a JSON runtime configuration file of a certain format and provides the information therein. By default there is no need to call it explictly, it will parse the aforementioned file automatically and provide the information by assigning it to itself:
+* The `rc()` function parses a JSON runtime configuration file of a certain format and provides the information therein. There is no need to call it explictly, it will parse the aforementioned file automatically and provide the information by assigning it to itself:
 
 ```js
 const { logLevel, publicDirectorPath } = rc;
@@ -533,23 +533,19 @@ By default it will parse a file called `.rc` in the current working directory, w
 }
 ```
 
-It will not try to assign the `name` property to itself, because functions already have a `name` property.
-
-It can be instructed to provide the information corresponding to a given environment name, for example:
+In the abscence of any explicit environment name, it will parse and return the first element of the `enviromnents` array in the configuration file. It will not try to assign the `name` property of the chosen environment to itself, because functions already have a `name` property. It can be instructed to a chose a specific environment by passing it the environment`s name:
 
 ```js
-rc('development');
+rc('production');
 ```
 
-Or you can pass the `process.argv` array if the command line argument includes something of the form `--environment=...`, for example:
+Or you can pass the `process.argv` array if the command line arguments includes something of the form `--environment=...`, for example:
 
 ```js
 rc(process.argv);
 ```
 
-In the abscence of any explicit environment name, it will parse and return the first of the enviromnent in the configuration file.
-
-You can change the base extension of the file that is parsed, that is the part of the extension between the leading dot and `rc`, for example:
+You can change the base extension of the file that is parsed, that is the part of the extension between the leading dot and `rc`, by making use of the `setRCBaseExtension()` function:
 
 ```js
 const { setRCBaseExtension } = rc;
@@ -557,7 +553,7 @@ const { setRCBaseExtension } = rc;
 setRCBaseExtension('default');  // Results in the '.defaultrc' file being parsed.
 ```
 
-If the base extension is adjusted in this way, the function must be called afterwards.
+If the base extension is adjusted in this way, the `rc()` function must be called afterwards.
 
 * The `get()` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
 
