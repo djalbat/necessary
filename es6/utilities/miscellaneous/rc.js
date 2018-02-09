@@ -54,8 +54,6 @@ Object.assign(rc, {
   setRCBaseExtension: setRCBaseExtension
 });
 
-rc();
-
 module.exports = rc;
 
 function environmentNameFromArgv(argv) {
