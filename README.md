@@ -472,13 +472,14 @@ const line = '${name}, aged ${age}.',
 ## Miscellaneous functions
 
 - `log()`
+- `rc()`
 - `get()`
 - `post()`
 - `onETX()`
 
 A small if motley collection of functions for various common tasks.
 
-* The `log` function prints the argument to the console by default, prepended with a date and time stamp together with the path of the file containing the callee function and the line number:
+* The `log()` function provides rudimentary logging functionality, printing its argument to the console by default, prepended with a date and time stamp together with the path of the file containing the callee function and the line number:
 
 ```js
 log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...' being printed to the console, say.
@@ -509,7 +510,56 @@ log.trace('...') // Ignored, because the trace level is lower than the debug lev
 
 Finally, log files are rolled over every night. So `./log/example.log` would become `./log/example.28-01-2018.log` and a new `./log/example.log` file would be started at midnight.
 
-* The `get` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
+* The `rc()` parses a JSON runtime configuration file of a certain format and provides the information therein. By default there is no need to call it explictly, it will parse the aforementioned file automatically and provide the information by assigning it to itself:
+
+```js
+const { logLevel, publicDirectorPath } = rc;
+```
+
+By default it will parse a file called `.rc` in the current working directory, which should have the following format:
+
+```js
+{
+  "environments": [
+    {
+      "name": "development",
+      ...
+    },
+    {
+      "name": "production",
+      ...
+    }
+  ]
+}
+```
+
+It will not try to assign the `name` property to itself, because functions already have a `name` property.
+
+It can be instructed to provide the information corresponding to a given environment name, for example:
+
+```js
+rc('development');
+```
+
+Or you can pass the `process.argv` array if the command line argument includes something of the form `--environment=...`, for example:
+
+```js
+rc(process.argv);
+```
+
+In the abscence of any explicit environment name, it will parse and return the first of the enviromnent in the configuration file.
+
+You can change the base extension of the file that is parsed, that is the part of the extension between the leading dot and `rc`, for example:
+
+```js
+const { setRCBaseExtension } = rc;
+
+setRCBaseExtension('default');  // Results in the '.defaultrc' file being parsed.
+```
+
+If the base extension is adjusted in this way, the function must be called afterwards.
+
+* The `get()` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
 
 ```js
 const host = '...',
@@ -527,7 +577,7 @@ get(host, uri, parameters, function(json) {
 
 Note that the `uri` argument should not include a leading forward slash `/`, this is prepended automatically.
 
-* The `post` function behaves similarly to the above `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `uri` arguments. This argument is stringified and sent in the request body:
+* The `post()` function behaves similarly to the above `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `uri` arguments. This argument is stringified and sent in the request body:
 
 ```js
 const host = '...',
