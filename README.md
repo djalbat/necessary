@@ -299,7 +299,7 @@ appendToFile('root/etc/init.conf', ''); // appends '' to the 'root/etc/init.conf
 * The `getStats()` function returns an instance of the [fs.Stats](https://nodejs.org/api/fs.html#fs_class_fs_stats) class for a file or a directory:
 
 ```js
-const stats = getStats('root/etc'); // returns stats for the 'root/etc' directory.
+const stats = getStats('root/etc'); // returns stats for the 'root/etc' directory
 ```
 
 ## Asynchronous functions
@@ -538,13 +538,13 @@ By default it will parse a file called `.rc` in the current working directory. T
 In the abscence of being passed an environment name, it will parse and return the first element of the `enviromnents` array. It will not try to assign the `name` property of the chosen environment to itself, by the way, because functions already have a `name` property. It can be instructed to a chose a specific environment thus:
 
 ```js
-rc('production');
+rc('production'); // Provides the 'production' environment
 ```
 
 Or you can pass `process.argv` if the command line arguments include something of the form `--environment=...`:
 
 ```js
-rc(process.argv);
+rc(process.argv); // Provides the 'development' environment if '--environment=development' argument is given
 ```
 
 You can change the base extension of the file that is parsed, that is the part of the extension between the leading dot and `rc`, by making use of the `setRCBaseExtension()` function:
@@ -552,9 +552,9 @@ You can change the base extension of the file that is parsed, that is the part o
 ```js
 const { setRCBaseExtension } = rc;
 
-setRCBaseExtension('default');  // Results in the '.defaultrc' file being parsed.
+setRCBaseExtension('default'); 
 
-rc();
+rc(); // Provides the first environment in the '.defaultrc' file
 ```
 
 Note that the `rc()` function can be included in any file but only needs to be called once. Be careful, therefore, that it is called before it is ever destructured.
