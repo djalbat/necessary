@@ -65,19 +65,21 @@ function log(message, level = '') {
 
     appendToFile(logFilePath, logFileContent);
   }
+
+  return logMessage;
 }
 
-function trace(message) { log(message, TRACE); }
+function trace(message) { return log(message, TRACE); }
 
-function debug(message) { log(message, DEBUG); }
+function debug(message) { return log(message, DEBUG); }
 
-function info(message) { log(message, INFO); }
+function info(message) { return log(message, INFO); }
 
-function warning(message) { log(message, WARNING); }
+function warning(message) { return log(message, WARNING); }
 
-function error(message) { log(message, ERROR); }
+function error(message) { return log(message, ERROR); }
 
-function fatal(message) { log(message, FATAL); }
+function fatal(message) { return log(message, FATAL); }
 
 function setLogLevel(level) { logLevel = level; }
 
