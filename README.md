@@ -84,7 +84,7 @@ Note that none of these functions take or pass on a `thisArg` argument when they
 
 * The `unshift()` function is similar to its native counterpart but will unshift an array rather than a single element.
 
-* The `concat()` function is similar to its native counterpart, however it alters the first array argument in place. Like its native counterpart it will also take a single element as the second argument and convert it to an array.
+* The `concat()` function is similar to its native counterpart, however it alters the first array argument *in place*. Like its native counterpart it will also take a single element as the second argument and convert it to an array.
 
 ```js
 concat([1, 2, 3], 4); // the array argument becomes [1, 2, 3, 4]
