@@ -26,6 +26,17 @@ function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
 function unshift(array1, array2) { Array.prototype.unshift.apply(array1, array2); }
 
+function concat(array1, array2) {
+  if (!(array2 instanceof Array)) {
+    array2 = [array2];
+  }
+
+  const start = 0,
+        deleteCount = 0;
+
+  splice(array1, start, deleteCount, array2);
+}
+
 function clear(array) {
   const start = 0;
   
@@ -230,6 +241,7 @@ module.exports = {
   tail: tail,
   push: push,
   unshift: unshift,
+  concat: concat,
   clear: clear,
   copy: copy,
   merge: merge,
