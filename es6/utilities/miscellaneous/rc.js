@@ -62,11 +62,18 @@ function writeRCFile(json) {
   writeFile(absoluteFilePath, fileContent);
 }
 
-function updateRCFile(json) {
-  const oldJSON = readRCFile(),
-        newJSON = Object.assign(oldJSON, json);
+function updateRCFile(addedPropperties, ...deletedPropertyNames) {
+  let json = readRCFile();
 
-  writeRCFile(newJSON);      
+  if (addedPropperties) {
+    Object.assign(json, addedPropperties);
+  }
+
+  deletedPropertyNames.forEach(function(deletedPropertyName) {
+    delete json[deletedPropertyName];
+  });
+
+  writeRCFile(json);      
 }
 
 function setRCBaseExtension(baseExtension) { rcBaseExtension = baseExtension; }

@@ -566,7 +566,7 @@ rc(); // Provides the first environment in the '.defaultrc' file
 
 Note that the `rc()` function can be included in any file but only needs to be called once. But be careful that it is called before it is ever destructured.
 
-Finally, the `readRCFile()`, `writeRCFile()` and `updateRCFile()` functions are provided that do as their names suggest:
+Lastly, the `readRCFile()` and `writeRCFile()` functions do as their names suggest. The `updateRCFile()` function, if passed a plain old JavaScript object as the first parameter, will add the properties therein. Existing properties will be overwritten. Properties to be removed can be given as further arguments. If you do not want to add as well as remove properties, set the first argument to a falsey value.
 
 ```js
 const { readRCFile, writeRCFile, updateRCFile } = rc;
@@ -575,7 +575,9 @@ const json = readRCFile();  // Reads the entire contents of the rc file into a J
 
 writeRCFile(json);  // Stringifies the given JSON object and writes it to the rc file
 
-updateRCFile({...});  // Updates the rc file, overwriting the given properties
+updateRCFile({example: 'example'});  // Updates the rc file, adding the 'example' property
+
+updateRCFile(null, 'example');  // Updates the rc file, removing the 'example' property
 ```
 
 * The `get()` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. The function expects the response to be stringified JSON and will return the parse this and return it as JSON if the status code is `200`, otherwise it will return null:
