@@ -180,7 +180,7 @@ function separate(array, array1, array2, test) {
 function forwardsSome(array, callback) {
   const arrayLength = array.length;
 
-  for (var index = 0; index < arrayLength; index++) {
+  for (let index = 0; index < arrayLength; index++) {
     const element = array[index],
           result = callback(element, index);
     
@@ -195,7 +195,7 @@ function forwardsSome(array, callback) {
 function backwardsSome(array, callback) {
   const arrayLength = array.length;
 
-  for (var index = arrayLength - 1; index >= 0; index--) {
+  for (let index = arrayLength - 1; index >= 0; index--) {
     const element = array[index],
           result = callback(element, index);
 
@@ -207,10 +207,40 @@ function backwardsSome(array, callback) {
   return false;
 }
 
+function forwardsEvery(array, callback) {
+  const arrayLength = array.length;
+
+  for (let index = 0; index < arrayLength; index++) {
+    const element = array[index],
+          result = callback(element, index);
+
+    if (!result) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function backwardsEvery(array, callback) {
+  const arrayLength = array.length;
+
+  for (let index = arrayLength - 1; index >= 0; index--) {
+    const element = array[index],
+          result = callback(element, index);
+
+    if (!result) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 function forwardsForEach(array, callback) {
   const arrayLength = array.length;
 
-  for (var index = 0; index < arrayLength; index++) {
+  for (let index = 0; index < arrayLength; index++) {
     const element = array[index];
 
     callback(element, index);
@@ -220,7 +250,7 @@ function forwardsForEach(array, callback) {
 function backwardsForEach(array, callback) {
   const arrayLength = array.length;
 
-  for (var index = arrayLength - 1; index >= 0; index--) {
+  for (let index = arrayLength - 1; index >= 0; index--) {
     const element = array[index];
 
     callback(element, index);
@@ -255,6 +285,8 @@ module.exports = {
   separate: separate,
   forwardsSome: forwardsSome,
   backwardsSome: backwardsSome,
+  forwardsEvery: forwardsEvery,
+  backwardsEvery: backwardsEvery,
   forwardsForEach: forwardsForEach,
   backwardsForEach: backwardsForEach
 };

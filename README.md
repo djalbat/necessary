@@ -73,6 +73,8 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 - `separate()`
 - `forwardsSome()`
 - `backwardsSome()`
+- `forwardsEvery()`
+- `backwardsEvery()`
 - `forwardsForEach()`
 - `backwardsForEach()`
 
@@ -174,7 +176,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
 }); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
 
-* The `forwardsSome()`, `backwardsSome()`, `forwardsForEach()` and `backwardsForEach()` functions work as their names suggest.
+* The `forwardsSome()`, `backwardsSome()`, `forwardsEvery()`, `backwardsEvery()`, `forwardsForEach()` and `backwardsForEach()` functions work as their names suggest.
 
 ## Path functions
 
