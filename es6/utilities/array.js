@@ -57,7 +57,7 @@ function merge(array1, array2) {
   splice(array1, start, deleteCount, array2);
 }
 
-function splice(array1, start, deleteCount, array2 = []) {
+function splice(array1, start, deleteCount = Infinity, array2 = []) {
   const args = [start, deleteCount, ...array2],
         deletedItemsArray = Array.prototype.splice.apply(array1, args);
 
