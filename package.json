@@ -4,7 +4,7 @@
   "version": "2.6.0",
   "license": "MIT",
   "homepage": "https://github.com/djalbat/Necessary",
-  "description": "Utilities for arrays, paths and so on.",
+  "description": "A collection of utility functions.",
   "repository": {
     "type": "git",
     "url": "https://github.com/djalbat/Necessary"
