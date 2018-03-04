@@ -627,7 +627,7 @@ const offEXT = onEXT(process.exit);
 offEXT();
 ```
 
-* The `prompt()` function admits user input from the command or terminal prompt and is meant for use in terminal applications. It takes a first `options` argument and a callback function as a second argument. The latter is invoked when the user hits return, and is passed the user-specified input value:
+* The `prompt()` function is meant for use in terminal applications. It takes its options as the first argument and a callback function as a second argument. The latter is invoked when the user hits return, and is passed the input value:
 
 ```js
 const hidden = true,
@@ -635,6 +635,7 @@ const hidden = true,
       errorMessage = ...,
       validationFunction = ...,
       options = {
+        hidden: hidden,
         description: description,
         errorMessage: errorMessage,
         validationFunction: validationFunction
@@ -645,7 +646,7 @@ prompt(options, function(value) {
 });
 ```
 
-It takes a range of options. Aside from those above, the options object can have `attempts` and `encoding` properties with default values `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. The options can also include a `validatePattern` property, which must be a regular expression. This is used for validation in the absence of a validation function. Lastly, note that the `description` and `errorMessage` properties are mandatory.
+It takes a range of options. Aside from those above, the options object can have `attempts` and `encoding` properties with default values `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. Setting it to `true` results in password-style input, that is the characters remain hidden. The options can also include a `validatePattern` property, which must be a regular expression. This is used for validation in the absence of a validation function. Lastly, note that the `description` and `errorMessage` properties are mandatory.
 
 ## Contact
 
