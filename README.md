@@ -485,6 +485,7 @@ const line = '${name}, aged ${age}.',
 - `get()`
 - `post()`
 - `onETX()`
+- `prompt()`
 
 A small if motley collection of functions for various common tasks.
 
@@ -619,12 +620,32 @@ Note that `parameters` argument is missing in the example above but that there i
 * The `onETX()` function takes a handler which is invoked whenever the `ETX` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This method is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener at some later point in time:
 
 ```js
-const offExt = onExt(process.exit);
+const offEXT = onEXT(process.exit);
 
 ...
 
-offExt();
+offEXT();
 ```
+
+* The `prompt()` function admits user input from the command or terminal prompt and is meant for use in terminal applications. It takes a first `options` argument and a callback function as a second argument. The latter is invoked when the user hits return, and is passed the user-specified input value:
+
+```js
+const hidden = true,
+      description = ...,
+      errorMessage = ...,
+      validationFunction = ...,
+      options = {
+        description: description,
+        errorMessage: errorMessage,
+        validationFunction: validationFunction
+      };
+
+prompt(options, function(value) {
+  ...
+});
+```
+
+It takes a range of options. Aside from those above, the options object can have `attempts` and `encoding` properties with default values `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. The options can also include a `validatePattern` property, which must be a regular expression. This is used for validation in the absence of a validation function. Lastly, note that the `description` and `errorMessage` properties are mandatory.
 
 ## Contact
 

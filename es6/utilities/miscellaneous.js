@@ -3,7 +3,8 @@
 const rc = require('./miscellaneous/rc'),
       log = require('./miscellaneous/log'),
       ajax = require('./miscellaneous/ajax'),
-      onETX = require('./miscellaneous/onETX');
+      onETX = require('./miscellaneous/onETX'),
+      prompt = require('./miscellaneous/prompt');
 
 const { get, post } = ajax;
 
@@ -12,5 +13,6 @@ module.exports = {
   rc: rc,
   get: get,
   post: post,
-  onETX: onETX
+  onETX: onETX,
+  prompt: prompt
 };
