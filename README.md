@@ -639,7 +639,7 @@ const hidden = true,
         description: description,
         errorMessage: errorMessage,
         validationFunction: validationFunction
-      };
+      }; 
 
 prompt(options, function(value) {
   ...
