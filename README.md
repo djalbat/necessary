@@ -569,12 +569,14 @@ rc(); // Provides the first environment in the '.defaultrc' file
 
 Note that the `rc()` function can be included in any file but only needs to be called once. But be careful that it is called before it is ever deconstructed, unless to make use of the following functions.
 
-The `checkRCFileExists()`, `readRCFile()` and `writeRCFile()` functions do as their names suggest. The `updateRCFile()` function, if passed a plain old JavaScript object as the first parameter, will add the properties therein. Existing properties will be overwritten. Properties to be removed can be given as further arguments. If you do not want to add as well as remove properties, set the first argument to a falsey value.
+The `checkRCFileExists()`, `createVacuousRCFile()`, `readRCFile()` and `writeRCFile()` functions do as their names suggest. The `updateRCFile()` function, if passed a plain old JavaScript object as the first parameter, will add the properties therein. Existing properties will be overwritten. Properties to be removed can be given as further arguments. If you do not want to add as well as remove properties, set the first argument to a falsey value.
 
 ```js
-const { checkRCFileExists, readRCFile, writeRCFile, updateRCFile } = rc;
+const { readRCFile, writeRCFile, updateRCFile, checkRCFileExists, createVacuousRCFile } = rc;
 
 const rcFileExists = checkRCFileExists();  // Returns true if the rc file exists.
+
+createVacuousRCFile(); // creates an rc file with an empty environment.
 
 const json = readRCFile();  // Reads the entire contents of the rc file into a JSON object
 

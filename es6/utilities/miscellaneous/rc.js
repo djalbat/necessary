@@ -75,11 +75,21 @@ function updateRCFile(addedProperties, ...deletedPropertyNames) {
   writeRCFile(json);      
 }
 
-function doesRCFileExist() {
+function checkRCFileExists() {
   const absoluteRCFilePath = absoluteRCFilePathFromNothing(),
         rcFileExists = checkFileExists(absoluteRCFilePath);
 
   return rcFileExists;
+}
+
+function createVacuousRCFile() {
+  const json = {
+    "environments": [
+      {}
+    ]
+  };
+
+  writeRCFile(json);
 }
 
 function setRCBaseExtension(baseExtension) { rcBaseExtension = baseExtension; }
@@ -88,7 +98,8 @@ Object.assign(rc, {
   readRCFile: readRCFile,
   writeRCFile: writeRCFile,
   updateRCFile: updateRCFile,
-  doesRCFileExist: doesRCFileExist,
+  checkRCFileExists: checkRCFileExists,
+  createVacuousRCFile: createVacuousRCFile,
   setRCBaseExtension: setRCBaseExtension
 });
 
