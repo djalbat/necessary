@@ -6,20 +6,21 @@ const arrayUtilities = require('../../utilities/array'),
       fileSystemUtilities = require('../../utilities/fileSystem');
 
 const { first, second } = arrayUtilities,
-      { readFile, writeFile } = fileSystemUtilities;
+      { readFile, writeFile, checkFileExists } = fileSystemUtilities;
 
 let rcBaseExtension = '';
 
 function rc(environmentNameOrArgv = null) {
   let environment,
-      environmentName;
+      environmentName,
+      environmentNameOrArgvArgv = (environmentNameOrArgv instanceof Array);
 
-  if (environmentNameOrArgv instanceof Array) {
-    const argv = environmentNameOrArgv;
+  if (environmentNameOrArgvArgv) {
+    const argv = environmentNameOrArgv; ///
 
     environmentName = environmentNameFromArgv(argv);
   } else {
-    environmentName = environmentNameOrArgv;
+    environmentName = environmentNameOrArgv;  ///
   }
 
   const json = readRCFile(),
@@ -46,27 +47,25 @@ function rc(environmentNameOrArgv = null) {
 }
 
 function readRCFile() {
-  const filePath = `./.${rcBaseExtension}rc`,
-        absoluteFilePath = path.resolve(filePath),
-        fileContent = readFile(absoluteFilePath),
+  const absoluteRCFilePath = absoluteRCFilePathFromNothing(),
+        fileContent = readFile(absoluteRCFilePath),
         json = JSON.parse(fileContent);
 
   return json;      
 }
 
 function writeRCFile(json) {
-  const filePath = `./.${rcBaseExtension}rc`,
-        absoluteFilePath = path.resolve(filePath),
+  const absoluteRCFilePath = absoluteRCFilePathFromNothing(),
         fileContent = JSON.stringify(json, null, `\t`);
 
-  writeFile(absoluteFilePath, fileContent);
+  writeFile(absoluteRCFilePath, fileContent);
 }
 
-function updateRCFile(addedPropperties, ...deletedPropertyNames) {
+function updateRCFile(addedProperties, ...deletedPropertyNames) {
   let json = readRCFile();
 
-  if (addedPropperties) {
-    Object.assign(json, addedPropperties);
+  if (addedProperties) {
+    Object.assign(json, addedProperties);
   }
 
   deletedPropertyNames.forEach(function(deletedPropertyName) {
@@ -76,12 +75,20 @@ function updateRCFile(addedPropperties, ...deletedPropertyNames) {
   writeRCFile(json);      
 }
 
+function doesRCFileExist() {
+  const absoluteRCFilePath = absoluteRCFilePathFromNothing(),
+        rcFileExists = checkFileExists(absoluteRCFilePath);
+
+  return rcFileExists;
+}
+
 function setRCBaseExtension(baseExtension) { rcBaseExtension = baseExtension; }
 
 Object.assign(rc, {
   readRCFile: readRCFile,
   writeRCFile: writeRCFile,
   updateRCFile: updateRCFile,
+  doesRCFileExist: doesRCFileExist,
   setRCBaseExtension: setRCBaseExtension
 });
 
@@ -104,4 +111,11 @@ function environmentNameFromArgv(argv) {
   });
 
   return environmentName;
+}
+
+function absoluteRCFilePathFromNothing() {
+  const filePath = `./.${rcBaseExtension}rc`,
+        absoluteRCFilePath = path.resolve(filePath);
+
+  return absoluteRCFilePath;
 }
