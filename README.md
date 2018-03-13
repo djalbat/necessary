@@ -250,9 +250,9 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 
 ## File system functions
 
-- `doesEntryExist()`
-- `doesFileExist()`
-- `doesDirectoryExist()`
+- `checkEntryExists()`
+- `checkFileExists()`
+- `checkDirectoryExists()`
 - `isEntryFile()`
 - `isEntryDirectory()`
 - `isDirectoryEmpty()`
@@ -265,14 +265,14 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 
 An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. Note that the paths passed to all of these functions are considered absolute and that all of the functions will throw native errors upon failure.
 
-* The `doesEntryExist()`, `doesFileExist()`, `doesDirectoryExist()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
+* The `checkEntryExists()`, `checkFileExists()`, `checkDirectoryExists()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
 
 ```js
-doesEntryExist('root/etc'); // the return value is true if the file or directory exists
+checkEntryExists('root/etc'); // the return value is true if the file or directory exists
 
-doesFileExist('root/etc/init.conf'); // the return value is true if the file exists
+checkFileExists('root/etc/init.conf'); // the return value is true if the file exists
 
-doesDirectoryExist('root/etcconf'); // the return value is true if the directory exists
+checkDirectoryExists('root/etcconf'); // the return value is true if the directory exists
 
 isEntryFile('root/etc/init.conf'); // the return value is true if the entry is a file
 
@@ -567,12 +567,16 @@ setRCBaseExtension('default');
 rc(); // Provides the first environment in the '.defaultrc' file
 ```
 
-Note that the `rc()` function can be included in any file but only needs to be called once. But be careful that it is called before it is ever destructured.
+Note that the `rc()` function can be included in any file but only needs to be called once. But be careful that it is called before it is ever deconstructed.
 
-Lastly, the `readRCFile()` and `writeRCFile()` functions do as their names suggest. The `updateRCFile()` function, if passed a plain old JavaScript object as the first parameter, will add the properties therein. Existing properties will be overwritten. Properties to be removed can be given as further arguments. If you do not want to add as well as remove properties, set the first argument to a falsey value.
+Aside from the aforementioned `setRCBaseExtension()` functions, the `checkRCFileExists()`, `createVacuousRCFile()`, `readRCFile()` and `writeRCFile()` functions do as their names suggest. The `updateRCFile()` function, if passed a plain old JavaScript object as the first parameter, will add the properties therein, overwriting any existing properties. Properties to be removed can be given as further arguments. If you do not want to add as well as remove properties, set the first argument to a falsey value.
 
 ```js
-const { readRCFile, writeRCFile, updateRCFile } = rc;
+const { readRCFile, writeRCFile, updateRCFile, checkRCFileExists, createVacuousRCFile } = rc;
+
+const rcFileExists = checkRCFileExists();  // Returns true if the rc file exists.
+
+createVacuousRCFile(); // creates an rc file with an empty environment.
 
 const json = readRCFile();  // Reads the entire contents of the rc file into a JSON object
 
@@ -639,7 +643,7 @@ const hidden = true,
         description: description,
         errorMessage: errorMessage,
         validationFunction: validationFunction
-      }; 
+      };
 
 prompt(options, function(value) {
   ...

@@ -2,17 +2,17 @@
 
 const fs = require('fs');
 
-function doesEntryExist(absolutePath) {
+function checkEntryExists(absolutePath) {
   const entryExists = fs.existsSync(absolutePath);
 
   return entryExists;
 }
 
-function doesFileExist(absoluteFilePath) {
+function checkFileExists(absoluteFilePath) {
   let fileExists = false;
   
   const absolutePath = absoluteFilePath, ///
-        entryExists = doesEntryExist(absolutePath);
+        entryExists = checkEntryExists(absolutePath);
   
   if (entryExists) {
     const entryFile = isEntryFile(absolutePath);
@@ -25,11 +25,11 @@ function doesFileExist(absoluteFilePath) {
   return fileExists;
 }
 
-function doesDirectoryExist(absoluteDirectoryPath) {
+function checkDirectoryExists(absoluteDirectoryPath) {
   let directoryExists = false;
 
   const absolutePath = absoluteDirectoryPath, ///
-        entryExists = doesEntryExist(absolutePath);
+        entryExists = checkEntryExists(absolutePath);
 
   if (entryExists) {
     const entryDirectory = isEntryDirectory(absolutePath);
@@ -97,9 +97,9 @@ function getStats(absoluteFilePath) {
 }
 
 module.exports = {
-  doesEntryExist: doesEntryExist,
-  doesFileExist: doesFileExist,
-  doesDirectoryExist: doesDirectoryExist,
+  checkEntryExists: checkEntryExists,
+  checkFileExists: checkFileExists,
+  checkDirectoryExists: checkDirectoryExists,
   isEntryFile: isEntryFile,
   isEntryDirectory: isEntryDirectory,
   isDirectoryEmpty: isDirectoryEmpty,
