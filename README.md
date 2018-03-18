@@ -603,7 +603,7 @@ get(host, uri, parameters, function(json) {
 });
 ```
 
-Note that the `uri` argument should not include a leading forward slash `/`, this is prepended automatically.
+Note that the `uri` argument should include a leading forward slash `/` if the `host` argument does not have a trailing one.
 
 * The `post()` function behaves similarly to the above `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `uri` arguments. This argument is stringified and sent in the request body:
 

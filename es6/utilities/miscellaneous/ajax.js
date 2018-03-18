@@ -59,8 +59,8 @@ function request(host, uri, parameters, method, body, callback) {
 function urlFromHostURIAndParameters(host, uri, parameters) {
   const queryString = queryStringFromParameters(parameters),
         url = (queryString === '') ?
-                `${host}/${uri}` :
-                  `${host}/${uri}?${queryString}`;
+                `${host}${uri}` :
+                  `${host}${uri}?${queryString}`;
 
   return url;
 }
