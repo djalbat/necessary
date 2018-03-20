@@ -8,7 +8,7 @@ const pathUtilities = require('../../utilities/path'),
 
 const { second } = arrayUtilities,
       { concatenatePaths } = pathUtilities,
-      { doesFileExist, readFile, appendToFile, renameFile, getStats } = fileSystemUtilities;
+      { checkFileExists, readFile, appendToFile, renameFile, getStats } = fileSystemUtilities;
 
 const TRACE = 'TRACE',
       DEBUG = 'DEBUG',
@@ -141,7 +141,7 @@ function getLogFileLastModifiedDate() {
 
 function rollOverLogFile() {
   const logFilePath = getLogFilePath(),
-        logFileExists = doesFileExist(logFilePath);
+        logFileExists = checkFileExists(logFilePath);
 
   if (!logFileExists) {
     return;
