@@ -321,7 +321,7 @@ const stats = getStats('root/etc'); // returns stats for the 'root/etc' director
 - `forwardsForEach()`
 - `backwardsForEach()`
 
-These functions take either a callback or an array of callbacks, followed by a `done()` function and an optional `context`. They all pass a `next()` function to the callbacks followed by the `done()` function, the `context` and then an `index` argument. Callbacks are given access to the `done()` function so that they can terminate early if need be.
+These functions generally take either a callback or an array of callbacks, followed by a `done()` function and an optional `context`. They all pass a `next()` function to the callbacks followed by the `done()` function, the `context` and then an `index` argument. Callbacks are given access to the `done()` function so that they can terminate early if need be.
 
 * The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function or until the callback invokes the given `done()` function. The callback can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the callback will be exectuted ten times:
 
