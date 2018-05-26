@@ -492,7 +492,7 @@ A small if motley collection of functions for various common tasks.
 * The `log()` function provides rudimentary logging functionality, printing its argument to the console by default, prepended with a date and time stamp together with the path of the file containing the callee function and the line number:
 
 ```js
-log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...' being printed to the console, say.
+log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...' being logged.
 ```
 
 Additionally, it is possible to print to a log file if a log directory and, optionally, a base name for the log file are specified. The base name here means the file name minus the extension and separator. The default is `default`:
@@ -504,7 +504,7 @@ setLogFileBaseName('example');
 setLogDirectoryPath('./log');
 
 log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...\n' line being appended to
-           // the './log/example.log' file as well as the message being printed to the console.
+           // the './log/example.log' file as well as the message being logged.
 ```
 
 Also, a standard set of functions, namely `fatal()`, `error()`, `warning()`, `info()`, `debug()` and `trace()`, are available and these are filtered in the usual way, assuming the log level has been set:
