@@ -73,7 +73,7 @@ function readDirectory(absoluteDirectoryPath) {
 
 function readFile(absoluteFilePath, encoding = 'utf8') {
   const options = {
-          encoding: encoding
+          encoding
         },
         content = fs.readFileSync(absoluteFilePath, options);
 
@@ -97,16 +97,16 @@ function getStats(absoluteFilePath) {
 }
 
 module.exports = {
-  checkEntryExists: checkEntryExists,
-  checkFileExists: checkFileExists,
-  checkDirectoryExists: checkDirectoryExists,
-  isEntryFile: isEntryFile,
-  isEntryDirectory: isEntryDirectory,
-  isDirectoryEmpty: isDirectoryEmpty,
-  readDirectory: readDirectory,
-  readFile: readFile,
-  writeFile: writeFile,
-  appendToFile: appendToFile,
-  renameFile: renameFile,
-  getStats: getStats
+  checkEntryExists,
+  checkFileExists,
+  checkDirectoryExists,
+  isEntryFile,
+  isEntryDirectory,
+  isDirectoryEmpty,
+  readDirectory,
+  readFile,
+  writeFile,
+  appendToFile,
+  renameFile,
+  getStats
 };

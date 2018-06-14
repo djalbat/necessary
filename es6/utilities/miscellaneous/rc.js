@@ -95,12 +95,12 @@ function createVacuousRCFile() {
 function setRCBaseExtension(baseExtension) { rcBaseExtension = baseExtension; }
 
 Object.assign(rc, {
-  readRCFile: readRCFile,
-  writeRCFile: writeRCFile,
-  updateRCFile: updateRCFile,
-  checkRCFileExists: checkRCFileExists,
-  createVacuousRCFile: createVacuousRCFile,
-  setRCBaseExtension: setRCBaseExtension
+  readRCFile,
+  writeRCFile,
+  updateRCFile,
+  checkRCFileExists,
+  createVacuousRCFile,
+  setRCBaseExtension
 });
 
 module.exports = rc;

@@ -148,11 +148,11 @@ function backwardsForEach(array, callback, done, context) {
 }
 
 module.exports = {
-  whilst: whilst,
-  forEach: forEach,
-  sequence: sequence,
-  eventually: eventually,
-  repeatedly: repeatedly,
-  forwardsForEach: forwardsForEach,
-  backwardsForEach: backwardsForEach
+  whilst,
+  forEach,
+  sequence,
+  eventually,
+  repeatedly,
+  forwardsForEach,
+  backwardsForEach
 };

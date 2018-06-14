@@ -95,22 +95,22 @@ function getLogFileContent() {
 }
 
 Object.assign(log, {
-  TRACE: TRACE,
-  DEBUG: DEBUG,
-  INFO: INFO,
-  WARNING: WARNING,
-  ERROR: ERROR,
-  FATAL: FATAL,
-  trace: trace,
-  debug: debug,
-  info: info,
-  warning: warning,
-  error: error,
-  fatal: fatal,
-  setLogLevel: setLogLevel,
-  setLogFileBaseName: setLogFileBaseName,
-  setLogDirectoryPath: setLogDirectoryPath,
-  getLogFileContent: getLogFileContent
+  TRACE,
+  DEBUG,
+  INFO,
+  WARNING,
+  ERROR,
+  FATAL,
+  trace,
+  debug,
+  info,
+  warning,
+  error,
+  fatal,
+  setLogLevel,
+  setLogFileBaseName,
+  setLogDirectoryPath,
+  getLogFileContent
 });
 
 module.exports = log;

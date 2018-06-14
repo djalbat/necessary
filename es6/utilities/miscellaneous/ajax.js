@@ -28,8 +28,8 @@ function post(host, uri, json, parameters, callback) {
 }
 
 module.exports = {
-  get: get,
-  post: post
+  get,
+  post
 };
 
 function request(host, uri, parameters, method, body, callback) {

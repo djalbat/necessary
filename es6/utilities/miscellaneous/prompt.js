@@ -15,9 +15,9 @@ function prompt(options, callback) {
   const value = null,
         { attempts = 3 } = options,
         context = {
-          value: value,
-          attempts: attempts,
-          options: options
+          value,
+          attempts,
+          options
         };
 
   whilst(attempt, function() {
@@ -67,7 +67,7 @@ function attempt(next, done, context) {
       console.log(errorMessage);
 
       Object.assign(context, {
-        attempts: attempts
+        attempts
       });
 
       next();

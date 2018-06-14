@@ -9,10 +9,10 @@ const rc = require('./miscellaneous/rc'),
 const { get, post } = ajax;
 
 module.exports = {
-  log: log,
-  rc: rc,
-  get: get,
-  post: post,
-  onETX: onETX,
-  prompt: prompt
+  log,
+  rc,
+  get,
+  post,
+  onETX,
+  prompt
 };

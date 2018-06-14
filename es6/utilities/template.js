@@ -30,9 +30,9 @@ function parseLine(line, args) {
 }
 
 module.exports = {
-  parseFile: parseFile,
-  parseContent: parseContent,
-  parseLine: parseLine
+  parseFile,
+  parseContent,
+  parseLine
 };
 
 function parseLines(lines, args) {

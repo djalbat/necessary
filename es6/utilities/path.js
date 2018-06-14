@@ -141,15 +141,15 @@ function pathWithoutTopmostDirectoryNameFromPath(path) {
 }
 
 module.exports = {
-  isPathRelativePath: isPathRelativePath,
-  isPathAbsolutePath: isPathAbsolutePath,
-  isPathTopmostDirectoryName: isPathTopmostDirectoryName,
-  isTopmostDirectoryNameContainedInPath: isTopmostDirectoryNameContainedInPath,
-  combinePaths: combinePaths,
-  concatenatePaths: concatenatePaths,
-  bottommostNameFromPath: bottommostNameFromPath,
-  topmostDirectoryPathFromPath: topmostDirectoryPathFromPath,
-  topmostDirectoryNameFromPath: topmostDirectoryNameFromPath,
-  pathWithoutBottommostNameFromPath: pathWithoutBottommostNameFromPath,
-  pathWithoutTopmostDirectoryNameFromPath: pathWithoutTopmostDirectoryNameFromPath
+  isPathRelativePath,
+  isPathAbsolutePath,
+  isPathTopmostDirectoryName,
+  isTopmostDirectoryNameContainedInPath,
+  combinePaths,
+  concatenatePaths,
+  bottommostNameFromPath,
+  topmostDirectoryPathFromPath,
+  topmostDirectoryNameFromPath,
+  pathWithoutBottommostNameFromPath,
+  pathWithoutTopmostDirectoryNameFromPath
 };
