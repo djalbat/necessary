@@ -234,6 +234,26 @@ function backwardsEvery(array, callback) {
   return true;
 }
 
+function forwardsReduce(array, callback, initialValue) {
+	let value = initialValue;
+
+	forwardsForEach(array, function(element, index) {
+		value = callback(value, element, index);
+	});
+
+	return value;
+}
+
+function backwardsReduce(array, callback, initialValue) {
+	let value = initialValue;
+
+	backwardsForEach(array, function(element, index) {
+		value = callback(value, element, index);
+	});
+
+	return value;
+}
+
 function forwardsForEach(array, callback) {
   const arrayLength = array.length;
 
@@ -284,6 +304,8 @@ module.exports = {
   backwardsSome,
   forwardsEvery,
   backwardsEvery,
+	forwardsReduce,
+	backwardsReduce,
   forwardsForEach,
   backwardsForEach
 };
