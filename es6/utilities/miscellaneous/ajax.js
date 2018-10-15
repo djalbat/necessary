@@ -53,6 +53,8 @@ function request(host, uri, parameters, method, body, callback) {
 
   xmlHttpRequest.open(method, url, true);
 
+  xmlHttpRequest.setRequestHeader('content-type', 'application/json;charset=UTF-8');
+
   xmlHttpRequest.send(body);
 }
 
