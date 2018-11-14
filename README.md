@@ -149,7 +149,7 @@ find([1, 2, -1, -2], function(element, index) {
 
 ```js
 prune([1, 2, -1, -2], function(element, index) {
-  return element > 0;
+  return element < 0;
 }); // the first array argument becomes [1, 2, -2] 
     // the return value is -1 
 ```
