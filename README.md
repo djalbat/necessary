@@ -145,11 +145,11 @@ find([1, 2, -1, -2], function(element, index) {
 }); // the return value will be [1, 2]
 ```
 
-* The `prune()` function is much like the `filter()` function, however it will terminate the first time that the test callback function returns a truthy value:
+* The `prune()` function is much like the `filter()` function, however it will terminate the first time that the test callback function does not return a truthy value:
 
 ```js
 prune([1, 2, -1, -2], function(element, index) {
-  return element < 0;
+  return element > 0;
 }); // the first array argument becomes [1, 2, -2] 
     // the return value is -1 
 ```

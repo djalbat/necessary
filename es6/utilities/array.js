@@ -122,7 +122,7 @@ function prune(array, test) {
   array.some(function(element, index) {
     const passed = test(element, index);
 
-    if (passed) {
+    if (!passed) {
       const start = index,  ///
             deleteCount = 1,
             deletedElements = array.splice(start, deleteCount),
