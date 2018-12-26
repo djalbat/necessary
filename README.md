@@ -178,7 +178,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
 }); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
 
-* The `forwardsSome()`, `backwardsSome()`, `forwardsEvery()`, `backwardsEvery()`, `forwardsReduce()`, `backwardsReduce()`, `forwardsForEach()` and `backwardsForEach()` functions work as their names suggest.
+* The `forwardsSome()`, `backwardsSome()`, `forwardsEvery()`, `backwardsEvery()`, `forwardsReduce()`, `backwardsReduce()`, `forwardsForEach()` and `backwardsForEach()` functions work as their names suggest. However, they are not as robust as their native counterparts, and rely on the array remaining immutable.
 
 ## Path functions
 
