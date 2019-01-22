@@ -79,7 +79,7 @@ function concatenatePaths(path1, path2) {
 function bottommostNameFromPath(path) {
   let bottommostName = null;
 
-  const matches = path.match(/^.+\/([^\/]+\/?)$/);
+  const matches = path.match(/^.*\/([^\/]+\/?)$/);
 
   if (matches !== null) {
     const secondMatch = second(matches);
