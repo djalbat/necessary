@@ -107,7 +107,7 @@ clear([1, 2, 3]); // the array argument becomes []
 copy([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [4, 5, 6, 7]
 ```
 
-* The `merge()` function copies the second array argument onto to the end of the first array argument:  
+* The `merge()` function copies the second array argument onto to the end of the first array argument, behaving in identical fashion to the `push()` function:
 
 ```js
 merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4, 5, 6, 7]

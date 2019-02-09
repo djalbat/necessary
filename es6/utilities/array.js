@@ -47,12 +47,7 @@ function copy(array1, array2) {
   splice(array1, start, deleteCount, array2);
 }
 
-function merge(array1, array2) {
-  const start = array2.length,  ///
-        deleteCount = 0;
-
-  splice(array1, start, deleteCount, array2);
-}
+function merge(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
 function splice(array1, start, deleteCount = Infinity, array2 = []) {
   const args = [start, deleteCount, ...array2],
