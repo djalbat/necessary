@@ -21,7 +21,7 @@ let logLevel = WARNING,
     logFileBaseName = 'default',
     logDirectoryPath = null;
 
-function log(message, level = '') {
+function log(messageOrError, level = '') {
   let pertinentStackMessageIndex = 2;
 
   const levels = [
@@ -46,13 +46,26 @@ function log(message, level = '') {
     level = `${level} `;  ///
   }
 
-  const error = new Error(),
-        { stack } = error,
+  let error,
+      message;
+
+  if (messageOrError instanceof Error) {
+    error = messageOrError; ///
+
+    ({ message } = error);
+  } else {
+    message = messageOrError; ///
+
+    error = new Error(message);
+  }
+
+  const { stack } = error,
         stackMessages = stack.split(/\r\n|\n/),
         pertinentStackMessage = stackMessages[pertinentStackMessageIndex],
+        stackMessage = pertinentStackMessage, ///
         currentDateAndTimeString = getCurrentDateAndTimeString(),
-        filePath = filePathFromStackMessage(pertinentStackMessage),
-        lineNumber = lineNumberFromStackMessage(pertinentStackMessage),
+        filePath = filePathFromStackMessage(stackMessage),
+        lineNumber = lineNumberFromStackMessage(stackMessage),
         logMessage = `${level}${currentDateAndTimeString} ${filePath}(${lineNumber}) ${message}`;
 
   console.log(logMessage);
