@@ -21,7 +21,7 @@ let logLevel = WARNING,
     logFileBaseName = 'default',
     logDirectoryPath = null;
 
-function log(messageOrError, level = '') {
+function log(messageOrError, level = null) {
   let pertinentStackMessageIndex = 2;
 
   const levels = [

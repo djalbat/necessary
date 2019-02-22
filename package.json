@@ -1,7 +1,7 @@
 {
   "name": "necessary",
   "author": "James Smith",
-  "version": "3.2.11",
+  "version": "3.2.12",
   "license": "MIT",
   "homepage": "https://github.com/djalbat/necessary",
   "description": "A collection of utility functions.",

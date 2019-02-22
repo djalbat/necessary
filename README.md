@@ -491,11 +491,13 @@ const line = '${name}, aged ${age}.',
 
 A small if motley collection of functions for various common tasks.
 
-* The `log()` function provides rudimentary logging functionality, printing its argument to the console by default, prepended with a date and time stamp together with the path of the file containing the callee function and the line number:
+* The `log()` function provides rudimentary logging functionality, printing its argument to the console, prepended with a date and time stamp together with the path of the file containing the callee function and the line number:
 
 ```js
 log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...' being logged.
 ```
+
+You can pass an error instead of a string to `log()`, in which case it will print the file path and line number of the place where the error was thrown along with the error message.
 
 Additionally, it is possible to print to a log file if a log directory and, optionally, a base name for the log file are specified. The base name here means the file name minus the extension and separator. The default is `default`:
 
