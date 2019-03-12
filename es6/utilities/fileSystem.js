@@ -44,8 +44,8 @@ function checkDirectoryExists(absoluteDirectoryPath) {
 
 function isEntryFile(absolutePath) {
   const stat = fs.statSync(absolutePath),
-      entryDirectory = stat.isDirectory(),
-      entryFile = !entryDirectory;
+        entryDirectory = stat.isDirectory(),
+        entryFile = !entryDirectory;
 
   return entryFile;
 }
