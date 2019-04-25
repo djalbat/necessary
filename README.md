@@ -533,7 +533,9 @@ rc();
 
 const { logOptions } = rc;
 
-setLogOptions(logOptions); // Expects a plain old JavaScript object of the form { level, fileBaseName, directoryPath }
+setLogOptions(logOptions); // Expects a plain old JavaScript object of the form { level,
+                           //                                                     fileBaseName,
+                           //                                                     directoryPath }
 ```
 
 By default it will parse a file called `.rc` in the current working directory. This file should have the following format:
