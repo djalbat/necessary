@@ -511,7 +511,7 @@ log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...\n' line be
            // the './log/example.log' file as well as the message being logged.
 ```
 
-Also, a standard set of functions, namely `fatal()`, `error()`, `warning()`, `info()`, `debug()` and `trace()`, are available and these are filtered in the usual way, assuming the log level has been set:
+A standard set of functions, namely `fatal()`, `error()`, `warning()`, `info()`, `debug()` and `trace()`, are available and these are filtered in the usual way, assuming the log level has been set:
 
 ```js
 const { setLogLevel, DEBUG } = log;
@@ -522,6 +522,8 @@ log.error('...') // Printed to the console and optionally, to the log file.
 log.trace('...') // Ignored, because the trace level is lower than the debug level.
 ```
 
+There is also a `setLogOptions()` function which allows you to pass the log level, base file name and directory path as a plain old JavaScript object. See below for a usage example.
+
 Finally, log files are rolled over every night. So `./log/example.log` would become `./log/example.28-01-2018.log` and a new `./log/example.log` file would be started at midnight.
 
 * The `rc()` function parses a JSON runtime configuration file of a certain format and provides the information therein by assigning it to itself:
@@ -529,7 +531,9 @@ Finally, log files are rolled over every night. So `./log/example.log` would bec
 ```js
 rc();
 
-const { logLevel, publicDirectorPath } = rc;
+const { logOptions } = rc;
+
+setLogOptions(logOptions); // Expects a plain old JavaScript object of the form { level, fileBaseName, directoryPath }
 ```
 
 By default it will parse a file called `.rc` in the current working directory. This file should have the following format:
@@ -549,7 +553,7 @@ By default it will parse a file called `.rc` in the current working directory. T
 }
 ```
 
-In the abscence of being passed an environment name, it will parse and return the first element of the `enviromnents` array. It will not try to assign the `name` property of the chosen environment to itself, by the way, because functions already have a `name` property. It can be instructed to a chose a specific environment thus:
+In the absence of being passed an environment name, it will parse and return the first element of the `enviromnents` array. It will not try to assign the `name` property of the chosen environment to itself, by the way, because functions already have a `name` property. It can be instructed to a chose a specific environment thus:
 
 ```js
 rc('production'); // Provides the 'production' environment

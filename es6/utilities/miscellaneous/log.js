@@ -100,6 +100,16 @@ function setLogFileBaseName(fileBaseName) { logFileBaseName = fileBaseName; }
 
 function setLogDirectoryPath(directoryPath) { logDirectoryPath = directoryPath; }
 
+function setLogOptions(logOptions) {
+  const { level, fileBaseName, directoryPath } = logOptions;
+
+  setLogLevel(level);
+
+  setLogFileBaseName(fileBaseName);
+
+  setLogDirectoryPath(directoryPath);
+}
+
 function getLogFileContent() {
   const logFilePath = getLogFilePath(),
         logFileContent = readFile(logFilePath);
@@ -123,6 +133,7 @@ Object.assign(log, {
   setLogLevel,
   setLogFileBaseName,
   setLogDirectoryPath,
+  setLogOptions,
   getLogFileContent
 });
 
