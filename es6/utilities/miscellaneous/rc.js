@@ -8,7 +8,8 @@ const arrayUtilities = require('../../utilities/array'),
 const { first, second } = arrayUtilities,
       { readFile, writeFile, checkFileExists } = fileSystemUtilities;
 
-let rcBaseExtension = '';
+let pathResolver = path.resolve,
+		baseExtension = '';
 
 function rc(environmentNameOrArgv = null) {
   let environment,
@@ -92,7 +93,9 @@ function createVacuousRCFile() {
   writeRCFile(json);
 }
 
-function setRCBaseExtension(baseExtension) { rcBaseExtension = baseExtension; }
+function setRCBaseExtension(rcBaseExtension) { baseExtension = rcBaseExtension; }
+
+function setRCPathResolver(rcPathResolver) { pathResolver = rcPathResolver; }
 
 Object.assign(rc, {
   readRCFile,
@@ -100,7 +103,8 @@ Object.assign(rc, {
   updateRCFile,
   checkRCFileExists,
   createVacuousRCFile,
-  setRCBaseExtension
+  setRCBaseExtension,
+	setRCPathResolver
 });
 
 module.exports = rc;
@@ -125,8 +129,8 @@ function environmentNameFromArgv(argv) {
 }
 
 function absoluteRCFilePathFromNothing() {
-  const filePath = `./.${rcBaseExtension}rc`,
-        absoluteRCFilePath = path.resolve(filePath);
+  const filePath = `./.${baseExtension}rc`,
+        absoluteRCFilePath = pathResolver(filePath);
 
   return absoluteRCFilePath;
 }
