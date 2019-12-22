@@ -41,16 +41,15 @@ function attempt(next, done, context) {
   }
 
   const { options } = context,
-        { description,
+        { hidden = false,
+          encoding = 'utf8',
+          description,
+          initialValue = '',
           errorMessage,
           validationPattern,
-          validationFunction,
-          encoding = 'utf8',
-          hidden = false } = options;
+          validationFunction } = options;
 
-  hidden ? 
-    hiddenInput(description, encoding, callback) :
-      visibleInput(description, encoding, callback);
+  input(description, initialValue, encoding, hidden, callback);
 
   function callback(value) {
     const valid = validationFunction ?  ///
@@ -75,33 +74,9 @@ function attempt(next, done, context) {
   }
 }
 
-function visibleInput(description, encoding, callback) {
-  const rawMode = false;
+function input(description, initialValue, encoding, hidden, callback) {
+  let value = initialValue; ///
 
-  stdout.write(description);
-
-  stdin.setEncoding(encoding);
-
-  stdin.setRawMode(rawMode);
-
-  stdin.resume();
-
-  let value;
-
-  const listener = function(chunk) {
-    value = chunk.trim();
-
-    stdin.removeListener('data', listener);
-
-    stdin.pause();
-
-    callback(value);
-  };
-
-  stdin.on('data', listener);
-}
-
-function hiddenInput(description, encoding, callback) {
   const rawMode = true,
         offETX = onETX(function() {
           console.log('^C');
@@ -109,17 +84,21 @@ function hiddenInput(description, encoding, callback) {
           exit();
         });
 
-  stdout.write(description);
-
   stdin.setEncoding(encoding);
 
   stdin.setRawMode(rawMode);
 
+  stdout.write(description);
+
+  if (!hidden) {
+    stdout.write(value);
+  }
+
   stdin.resume();
 
-  let value = '';
+  stdin.on('data', listener);
 
-  const listener = function(chunk) {
+  function listener(chunk) {
     const character = chunk.toString(encoding);
 
     switch (character) {
@@ -137,22 +116,32 @@ function hiddenInput(description, encoding, callback) {
         break;
 
       case BACKSPACE_CHARACTER :
-        value = truncate(value);
+        value = value.slice(0, value.length - 1);
 
         stdout.clearLine();
 
         stdout.cursorTo(0);
 
         stdout.write(description);
+
+        if (!hidden) {
+          stdout.write(value);
+        }
         break;
 
       default:
         value += character;
+
+        if (!hidden) {
+          stdout.clearLine();
+
+          stdout.cursorTo(0);
+
+          stdout.write(description);
+
+          stdout.write(value);
+        }
         break;
     }
-  };
-
-  stdin.on('data', listener);
+  }
 }
-
-function truncate(value) { return value.slice(0, value.length - 1); }

@@ -441,8 +441,8 @@ const absoluteFilePath = '/etc/var/public/name.html',
       name = 'Joe Bloggs',
       age = 99,
       args = {
-        name: name,
-        age: age
+        name,
+        age
       }
       parsedContent = parseFile(absoluteFilePath, args); 
 ```
@@ -459,8 +459,8 @@ const content = `
       name = 'Joe Bloggs',
       age = 99,
       args = {
-        name: name,
-        age: age
+        name,
+        age
       }
       parsedContent = parseContent(content, args); 
 ```
@@ -472,8 +472,8 @@ const line = '${name}, aged ${age}.',
       name = 'Joe Bloggs',
       age = 99,
       args = {
-        name: name,
-        age: age
+        name,
+        age
       }
       parsedLine = parseLine(line, args); // returns 'Joe Bloggs, aged 99.' 
 ```
@@ -644,13 +644,15 @@ offEXT();
 ```js
 const hidden = true,
       description = ...,
+      initialValue = ...,
       errorMessage = ...,
       validationFunction = ...,
       options = {
-        hidden: hidden,
-        description: description,
-        errorMessage: errorMessage,
-        validationFunction: validationFunction
+        hidden,
+        description,
+        initialValue,
+        errorMessage,
+        validationFunction
       };
 
 prompt(options, function(value) {
