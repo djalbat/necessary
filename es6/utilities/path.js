@@ -115,12 +115,12 @@ function topmostDirectoryNameFromPath(path) {
 function pathWithoutBottommostNameFromPath(path) {
   let pathWithoutBottommostName = null;
 
-  const matches = path.match(/^.*\/[^\/]+\/?$/);
+  const matches = path.match(/^(.*)\/[^\/]+\/?$/);
 
   if (matches !== null) {
-    const firstMatch = first(matches);
+    const secondMatch = second(matches);
 
-    pathWithoutBottommostName = firstMatch; ///
+    pathWithoutBottommostName = secondMatch; ///
   }
 
   return pathWithoutBottommostName;
