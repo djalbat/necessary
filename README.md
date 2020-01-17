@@ -260,6 +260,7 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 - `readFile()`
 - `writeFile()`
 - `appendToFile()`
+- `createDirectory()`
 - `renameFile()`
 - `getStats()`
 
@@ -303,6 +304,12 @@ writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' fi
 
 ```js
 appendToFile('root/etc/init.conf', ''); // appends '' to the 'root/etc/init.conf' file
+```
+
+* The `createDirectory()` function creates a directory, also creating the parent directories if necessary:
+
+```js
+createDirectory('root/etc/init'); // Creates the 'root/etc/init' directory 
 ```
 
 * The `getStats()` function returns an instance of the [fs.Stats](https://nodejs.org/api/fs.html#fs_class_fs_stats) class for a file or a directory:

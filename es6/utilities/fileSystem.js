@@ -88,6 +88,15 @@ function appendToFile(absoluteFilePath, content) {
   fs.appendFileSync(absoluteFilePath, content);
 }
 
+function createDirectory(absoluteDirectoryPath) {
+  const recursive = true,
+    options = {
+      recursive
+    };
+
+  fs.mkdirSync(absoluteDirectoryPath, options);
+}
+
 function renameFile(oldAbsoluteFilePath, newAbsoluteFilePath) {
   fs.renameSync(oldAbsoluteFilePath, newAbsoluteFilePath);
 }
@@ -107,6 +116,7 @@ module.exports = {
   readFile,
   writeFile,
   appendToFile,
+  createDirectory,
   renameFile,
   getStats
 };
