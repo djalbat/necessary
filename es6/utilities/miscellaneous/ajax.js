@@ -40,13 +40,18 @@ function request(host, uri, parameters, method, body, callback) {
     const { readyState, status, responseText } = xmlHttpRequest;
 
     if (readyState == 4) {
+      let json = null;
+
       if (status == 200) {
-        const jsonString = responseText, ///
-              json = JSON.parse(jsonString);
+        const jsonString = responseText; ///
+
+        try {
+          json = JSON.parse(jsonString);
+        } catch (error) {
+          ///
+        }
 
         callback(json);
-      } else {
-        callback(null);
       }
     }
   };
