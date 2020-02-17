@@ -33,8 +33,6 @@ module.exports = {
 };
 
 function request(host, uri, parameters, method, body, callback) {
-  let json = null;
-
   const url = urlFromHostURIAndParameters(host, uri, parameters),
         xmlHttpRequest = new XMLHttpRequest();
 
@@ -42,6 +40,8 @@ function request(host, uri, parameters, method, body, callback) {
     const { readyState, status, responseText } = xmlHttpRequest;
 
     if (readyState == 4) {
+      let json = null;
+
       if (status == 200) {
         const jsonString = responseText; ///
 
@@ -60,11 +60,7 @@ function request(host, uri, parameters, method, body, callback) {
 
   xmlHttpRequest.setRequestHeader('content-type', 'application/json;charset=UTF-8');
 
-  try {
-    xmlHttpRequest.send(body);
-  } catch (error) {
-    callback(json);
-  }
+  xmlHttpRequest.send(body);
 }
 
 function urlFromHostURIAndParameters(host, uri, parameters) {
