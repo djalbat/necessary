@@ -80,7 +80,11 @@ function readFile(absoluteFilePath, encoding = 'utf8') {
   return content;
 }
 
-function writeFile(absoluteFilePath, content) {
+function writeFile(absoluteFilePath, content, recursive) {
+  if (recursive) {
+    createParentDirectory(absoluteFilePath);
+  }
+
   fs.writeFileSync(absoluteFilePath, content);
 }
 
@@ -120,3 +124,13 @@ module.exports = {
   renameFile,
   getStats
 };
+
+function createParentDirectory(absoluteFilePath) {
+  const absoluteFilePathWithoutBottommostName = pathWithoutBottommostNameFromPath(absoluteFilePath),
+        parentAbsoluteDirectoryPath = absoluteFilePathWithoutBottommostName,  ///
+        parentDirectoryExists = checkDirectoryExists(parentAbsoluteDirectoryPath);
+
+  if (!parentDirectoryExists) {
+    createDirectory(parentAbsoluteDirectoryPath);
+  }
+}
