@@ -4,76 +4,80 @@ const array = require('./array');
 
 const { first, second, last } = array;
 
+function isPathName(path) {
+  path = path.replace(/^\//,'').replace(/\/$/, ''); ///
+
+  const pathName = (/\//.test(path) === true);
+
+  return pathName;
+}
+
+function isPathTopmostName(path) {
+  const pathName = isPathName(path),
+        pathAbsolutePath = isPathAbsolutePath(path),
+        pathTopmostName = (pathName && pathAbsolutePath);
+
+  return pathTopmostName;
+}
+
 function isPathRelativePath(path) {
-  const position = path.search(/^\.{1,2}\//),
-        pathRelativePath = (position !== -1);
+  const pathRelativePath = !/^\//.test(path);
 
   return pathRelativePath;
 }
 
 function isPathAbsolutePath(path) {
-  const pathRelativePath = isPathRelativePath(path),
-        pathAbsolutePath = !pathRelativePath; ///
+  const pathAbsolutePath = /^\//.test(path);
 
   return pathAbsolutePath;
 }
 
-function isPathTopmostDirectoryName(path) {
-  const position = path.search(/^[^\/]+\/?$/),
-        pathTopmostDirectoryName = (position !== -1);
+function isTopmostNameInAbsolutePath(topmostName, absolutePath) {
+  const regExp = new RegExp(`^${topmostName}(?:\\/.+)?$`),
+        topmostNameInAbsolutePath = regExp.test(absolutePath);
 
-  return pathTopmostDirectoryName;
+  return topmostNameInAbsolutePath
 }
 
-function isTopmostDirectoryNameContainedInPath(topmostDirectoryName, path) {
-  topmostDirectoryName = topmostDirectoryName.replace(/\/$/, ''); ///
+function combinePaths(path, relativePath) {
+  let combinedPath = null;
 
-  const regExp = new RegExp(`^${topmostDirectoryName}(?:\\/.+)?$`),
-        position = path.search(regExp),
-        topmostDirectoryNameContainedInFilePath = (position !== -1);
+  const pathNames = path.split('/'),
+        relativePathNames = relativePath.split('/');
 
-  return topmostDirectoryNameContainedInFilePath;
-}
+  let lastPath1Name,
+      firstPath2Name = first(relativePathNames);
 
-function combinePaths(directoryPath, relativePath) {
-  let absolutePath = null;
-
-  const directoryPathSubEntryNames = directoryPath.split('/'),
-        relativeFilePathSubEntryNames = relativePath.split('/');
-
-  let firstRelativeFilePathSubEntryName = first(relativeFilePathSubEntryNames),
-      lastDirectoryPathSubEntryName;
-
-  if (firstRelativeFilePathSubEntryName === '.') {
-    relativeFilePathSubEntryNames.shift();
+  if (firstPath2Name === '.') {
+    relativePathNames.shift();
   }
 
-  firstRelativeFilePathSubEntryName = first(relativeFilePathSubEntryNames);
-  lastDirectoryPathSubEntryName = last(directoryPathSubEntryNames);
+  firstPath2Name = first(relativePathNames);
+  lastPath1Name = last(pathNames);
 
-  while ((firstRelativeFilePathSubEntryName === '..') && (lastDirectoryPathSubEntryName !== undefined)) {
-    relativeFilePathSubEntryNames.shift();
-    directoryPathSubEntryNames.pop();
+  while ((firstPath2Name === '..') && (lastPath1Name !== undefined)) {
+    relativePathNames.shift();
+    pathNames.pop();
 
-    firstRelativeFilePathSubEntryName = first(relativeFilePathSubEntryNames);
-    lastDirectoryPathSubEntryName = last(directoryPathSubEntryNames);
+    firstPath2Name = first(relativePathNames);
+    lastPath1Name = last(pathNames);
   }
 
-  if (lastDirectoryPathSubEntryName !== undefined) {
-    const absoluteFilePathSubEntryNames = [].concat(directoryPathSubEntryNames).concat(relativeFilePathSubEntryNames);
+  if (lastPath1Name !== undefined) {
+    const pathNames = [].concat(pathNames).concat(relativePathNames);
 
-    absolutePath = absoluteFilePathSubEntryNames.join('/');
+    combinedPath = pathNames.join('/');
   }
-
-  return absolutePath;
-}
-
-function concatenatePaths(path1, path2) {
-  path1 = path1.replace(/\/$/, '');  ///
-
-  const combinedPath = `${path1}/${path2}`;
 
   return combinedPath;
+}
+
+function concatenatePaths(path, relativePath) {
+  path = path.replace(/\/$/, '');  ///
+
+  const concatenatedPath = `${path}/${relativePath}`;
+
+  return concatenatedPath;
 }
 
 function bottommostNameFromPath(path) {
@@ -93,9 +97,9 @@ function bottommostNameFromPath(path) {
 function topmostDirectoryPathFromPath(path) {
   const matches = path.match(/^(.+)\/[^\/]+\/?$/),
         secondMatch = second(matches),
-        directoryPath = secondMatch; ///
+        topmostDirectoryPath = secondMatch; ///
 
-  return directoryPath;
+  return topmostDirectoryPath;
 }
 
 function topmostDirectoryNameFromPath(path) {
@@ -141,10 +145,11 @@ function pathWithoutTopmostDirectoryNameFromPath(path) {
 }
 
 module.exports = {
+  isPathName,
+  isPathTopmostName,
   isPathRelativePath,
   isPathAbsolutePath,
-  isPathTopmostDirectoryName,
-  isTopmostDirectoryNameContainedInPath,
+  isTopmostNameInAbsolutePath,
   combinePaths,
   concatenatePaths,
   bottommostNameFromPath,

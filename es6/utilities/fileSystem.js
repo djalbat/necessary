@@ -2,20 +2,20 @@
 
 const fs = require('fs');
 
-function checkEntryExists(absolutePath) {
-  const entryExists = fs.existsSync(absolutePath);
+function checkEntryExists(entryPath) {
+  const entryExists = fs.existsSync(entryPath);
 
   return entryExists;
 }
 
-function checkFileExists(absoluteFilePath) {
+function checkFileExists(filePath) {
   let fileExists = false;
   
-  const absolutePath = absoluteFilePath, ///
-        entryExists = checkEntryExists(absolutePath);
+  const entryPath = filePath, ///
+        entryExists = checkEntryExists(entryPath);
   
   if (entryExists) {
-    const entryFile = isEntryFile(absolutePath);
+    const entryFile = isEntryFile(entryPath);
     
     if (entryFile) {
       fileExists = true;
@@ -25,14 +25,14 @@ function checkFileExists(absoluteFilePath) {
   return fileExists;
 }
 
-function checkDirectoryExists(absoluteDirectoryPath) {
+function checkDirectoryExists(directoryPath) {
   let directoryExists = false;
 
-  const absolutePath = absoluteDirectoryPath, ///
-        entryExists = checkEntryExists(absolutePath);
+  const entryPath = directoryPath, ///
+        entryExists = checkEntryExists(entryPath);
 
   if (entryExists) {
-    const entryDirectory = isEntryDirectory(absolutePath);
+    const entryDirectory = isEntryDirectory(entryPath);
 
     if (entryDirectory) {
       directoryExists = true;
@@ -42,67 +42,67 @@ function checkDirectoryExists(absoluteDirectoryPath) {
   return directoryExists;
 }
 
-function isEntryFile(absolutePath) {
-  const stat = fs.statSync(absolutePath),
+function isEntryFile(entryPath) {
+  const stat = fs.statSync(entryPath),
         entryDirectory = stat.isDirectory(),
         entryFile = !entryDirectory;
 
   return entryFile;
 }
 
-function isEntryDirectory(absolutePath) {
-  const stat = fs.statSync(absolutePath),
+function isEntryDirectory(entryPath) {
+  const stat = fs.statSync(entryPath),
         entryDirectory = stat.isDirectory();
 
   return entryDirectory;
 }
 
-function isDirectoryEmpty(absoluteDirectoryPath) {
-  const subEntryNames = readDirectory(absoluteDirectoryPath),
+function isDirectoryEmpty(directoryPath) {
+  const subEntryNames = readDirectory(directoryPath),
         subEntryNamesLength = subEntryNames.length,
         directoryEmpty = (subEntryNamesLength === 0);
 
   return directoryEmpty;
 }
 
-function readDirectory(absoluteDirectoryPath) {
-  const subEntryNames = fs.readdirSync(absoluteDirectoryPath);
+function readDirectory(directoryPath) {
+  const subEntryNames = fs.readdirSync(directoryPath);
 
   return subEntryNames;
 }
 
-function readFile(absoluteFilePath, encoding = 'utf8') {
+function readFile(filePath, encoding = 'utf8') {
   const options = {
           encoding
         },
-        content = fs.readFileSync(absoluteFilePath, options);
+        content = fs.readFileSync(filePath, options);
 
   return content;
 }
 
-function writeFile(absoluteFilePath, content) {
-  fs.writeFileSync(absoluteFilePath, content);
+function writeFile(filePath, content) {
+  fs.writeFileSync(filePath, content);
 }
 
-function appendToFile(absoluteFilePath, content) {
-  fs.appendFileSync(absoluteFilePath, content);
+function appendToFile(filePath, content) {
+  fs.appendFileSync(filePath, content);
 }
 
-function createDirectory(absoluteDirectoryPath) {
+function createDirectory(directoryPath) {
   const recursive = true,
-    options = {
-      recursive
-    };
+        options = {
+          recursive
+        };
 
-  fs.mkdirSync(absoluteDirectoryPath, options);
+  fs.mkdirSync(directoryPath, options);
 }
 
-function renameFile(oldAbsoluteFilePath, newAbsoluteFilePath) {
-  fs.renameSync(oldAbsoluteFilePath, newAbsoluteFilePath);
+function renameFile(oldFilePath, newFilePath) {
+  fs.renameSync(oldFilePath, newFilePath);
 }
 
-function getStats(absoluteFilePath) {
-  return fs.statSync(absoluteFilePath);
+function getStats(filePath) {
+  return fs.statSync(filePath);
 }
 
 module.exports = {

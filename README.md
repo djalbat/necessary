@@ -180,10 +180,11 @@ separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
 
 ## Path functions
 
+- `isPathName()`
+- `isPathTopmostName()`
 - `isPathRelativePath()`
 - `isPathAbsolutePath()`
-- `isPathTopmostDirectoryName()`
-- `isTopmostDirectoryNameContainedInPath()`
+- `isTopmostNameInAbsolutePath()`
 - `combinePaths()`
 - `concatenatePaths()`
 - `bottommostNameFromPath()`
@@ -192,56 +193,86 @@ separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
 - `pathWithoutBottommostNameFromPath()`
 - `pathWithoutTopmostDirectoryNameFromPath()`
 
-These functions manipulate or query strings that represent file and directory paths. Only forward slash '/' delimiters are supported and absolute paths are not expected to start with a delimiter, so be careful. Trailing delimiters are not needed, but tolerated.
+These functions manipulate or query strings that represent file and directory paths. Note that only forward slash `/` delimiters are supported. Trailing delimiters are not needed, but tolerated.
 
-* The `isPathRelativePath()` function returns `true` if the first string argument starts with a period `.` or double period `..`:
+* The `isPathName()` function returns `true` if the string argument contains no forward slash `/` delimiters apart from the first and last characters:
 
 ```js
-isPathRelativePath('../root/etc'); // the return value is true
+isPathName('root/'); // the return value is true
+
+isPathName('/root'); // the return value is true
+
+isPathName('./root'); // the return value is false
+
+isPathName('../etc'); // the return value is false
+
+isPathName('/root/etc'); // the return value is false
 ```
 
-* The `isPathAbsolutePath()` returns `true` if the first string argument does not start with a period `.` or double period `..`:
+* The `isPathTopmostName()` function returns `true` if the string argument is both a name and an absolute path:
 
 ```js
-isPathAbsolutePath('root/etc'); // the return value is true
+isPathTopmostName('/root/'); // the return value is true
+
+isPathTopmostName('/root'); // the return value is true
+
+isPathTopmostName('etc/'); // the return value is false
 ```
 
-Again, note that an absolute path is considered to be a path that is not a relative path, rather than a path that starts with a delimiter.
-
-* The `isPathTopmostDirectoryName()` function returns `true` if the first string argument is a non-empty string containing no delimiters apart from optionally the last character:
+* The `isPathRelativePath()` function returns `true` if the string argument does not start with a forward slash `/`:
 
 ```js
-isPathTopmostDirectoryName('root/') // the return value is true
+isPathRelativePath('etc'); // the return value is true
+
+isPathRelativePath('./etc'); // the return value is true
+
+isPathRelativePath('../etc'); // the return value is true
 ```
 
-* The `isTopmostDirectoryNameContainedInPath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a delimiter and further characters:
+* The `isPathAbsolutePath()` returns `true` if the string argument starts with forward slash `/`:
 
 ```js
-isTopmostDirectoryNameContainedInPath('root', 'root/etc') // the return value is true
+isPathAbsolutePath('/root/etc'); // the return value is true
 ```
 
-Note that this function tolerates a trailing delimiter on the first string argument, removing it before applying the test.
-
-* The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `../` signifier it finds in the latter, returning the result:
+* The `isTopmostNameInAbsolutePath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a forward slash `/` and further characters:
 
 ```js
-combinePaths('root/etc/', '../init'); // the return value is 'root/init'
+isTopmostNameInAbsolutePath('/root', '/root/etc');  // the return value is true
+
+isTopmostNameInAbsolutePath('root', '/root/etc');  // the return value is false
+
+isTopmostNameInAbsolutePath('etc', '/root/etc'); // the return value is false
 ```
 
-* The `concatenatePaths()` function will concatenate the first and second string arguments, removing the trailing delimiter from the first string if it finds one, returning the result:
+Note that the function assumes that the first argument is a topmost name and that the second argument is an abolute path. It does not check, it simply compares the two arguments with a single regex. 
+
+* The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `..` signifier it finds in the latter:
 
 ```js
+combinePaths('/root/etc/', '../init'); // the return value is '/root/init'
+```
+
+Note that the function assumes that the second argument is a relative name or path.
+
+* The `concatenatePaths()` function will concatenate the first and second string arguments, adding the trailing forward slash `/` to the first string if necessary:
+
+```js
+concatenatePaths('root', 'etc/'); // the return value is 'root/etc/'
+
 concatenatePaths('root/', 'etc/'); // the return value is 'root/etc/'
 ```
+
+Note that the function assumes that the second argument is a relative name or path without a leading current directory `./` or parent directory `../` signifier. 
 
 * The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` functions work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
 
 ```js
-bottommostNameFromPath('root/etc'); // the return value is 'etc'
+bottommostNameFromPath('../etc'); // the return value is 'etc'
 
-topmostDirectoryPathFromPath('root/etc/init.conf'); // the return value is 'root/etc'
+topmostDirectoryPathFromPath('/root/etc/init.conf'); // the return value is '/root/etc'
 
-topmostDirectoryNameFromPath('root/etc/init.conf'); // the return value is 'root'
+topmostDirectoryNameFromPath('etc/init.conf'); // the return value is 'etc'
 
 pathWithoutBottommostNameFromPath('root/etc/init.conf'); // the return value is 'root/etc'
 
@@ -264,7 +295,7 @@ pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return val
 - `renameFile()`
 - `getStats()`
 
-An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. Note that the paths passed to all of these functions are considered absolute and that all of the functions will throw native errors upon failure.
+An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. All of the functions will throw native errors upon failure.
 
 * The `checkEntryExists()`, `checkFileExists()`, `checkDirectoryExists()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
 
@@ -441,17 +472,17 @@ repeatedly(callback, length, function() {
 
 These functions parse files, content or single lines, replacing each token of the form `${<name>}` with the value of the corresponding property of a plain old JavaScript object passed as the second argument, or replacing the token with an empty string if no such property exists.
 
-* The `parseFile()` function takes an absolute file path as the first argument:
+* The `parseFile()` function takes a file path as the first argument:
 
 ```js
-const absoluteFilePath = '/etc/var/public/name.html',
+const filePath = '/etc/var/public/name.html',
       name = 'Joe Bloggs',
       age = 99,
       args = {
         name,
         age
       }
-      parsedContent = parseFile(absoluteFilePath, args); 
+      parsedContent = parseFile(filePath, args); 
 ```
 
 * The `parseContent()` function takes content as the first argument, honouring newline `\n` characters:
