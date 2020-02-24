@@ -1,8 +1,8 @@
 'use strict';
 
-const array = require('./array');
+const arrayUtilities = require('../utilities/array');
 
-const { first, second, last } = array;
+const { first, second, last } = arrayUtilities;
 
 function isPathName(path) {
   path = path.replace(/^\//,'').replace(/\/$/, ''); ///

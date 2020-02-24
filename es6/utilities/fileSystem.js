@@ -2,6 +2,10 @@
 
 const fs = require('fs');
 
+const pathUtilities = require('../utilities/path');
+
+const { pathWithoutBottommostNameFromPath } = pathUtilities;
+
 function checkEntryExists(entryPath) {
   const entryExists = fs.existsSync(entryPath);
 
@@ -89,12 +93,18 @@ function appendToFile(filePath, content) {
 }
 
 function createDirectory(directoryPath) {
-  const recursive = true,
-        options = {
-          recursive
-        };
+  const directoryPathWithoutBottommostName = pathWithoutBottommostNameFromPath(directoryPath);
 
-  fs.mkdirSync(directoryPath, options);
+  if ((directoryPathWithoutBottommostName !== '.') && (directoryPathWithoutBottommostName !== null)) {
+    const parentDirectoryPath = directoryPathWithoutBottommostName,  ///
+          parentDirectoryExists = checkDirectoryExists(parentDirectoryPath);
+
+    if (!parentDirectoryExists) {
+      createDirectory(parentDirectoryPath);
+    }
+  }
+
+  fs.mkdirSync(directoryPath);
 }
 
 function renameFile(oldFilePath, newFilePath) {
