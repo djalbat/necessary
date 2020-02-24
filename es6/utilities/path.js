@@ -45,25 +45,25 @@ function combinePaths(path, relativePath) {
   const pathNames = path.split('/'),
         relativePathNames = relativePath.split('/');
 
-  let lastPath1Name,
-      firstPath2Name = first(relativePathNames);
+  let lastPathName,
+      firstRelativePathName = first(relativePathNames);
 
-  if (firstPath2Name === '.') {
+  if (firstRelativePathName === '.') {
     relativePathNames.shift();
   }
 
-  firstPath2Name = first(relativePathNames);
-  lastPath1Name = last(pathNames);
+  firstRelativePathName = first(relativePathNames);
+  lastPathName = last(pathNames);
 
-  while ((firstPath2Name === '..') && (lastPath1Name !== undefined)) {
+  while ((firstRelativePathName === '..') && (lastPathName !== undefined)) {
     relativePathNames.shift();
     pathNames.pop();
 
-    firstPath2Name = first(relativePathNames);
-    lastPath1Name = last(pathNames);
+    firstRelativePathName = first(relativePathNames);
+    lastPathName = last(pathNames);
   }
 
-  if (lastPath1Name !== undefined) {
+  if (lastPathName !== undefined) {
     const pathNames = [].concat(pathNames).concat(relativePathNames);
 
     combinedPath = pathNames.join('/');
