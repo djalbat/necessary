@@ -195,7 +195,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
 
 These functions manipulate or query strings that represent file and directory paths. Note that only forward slash `/` delimiters are supported. Trailing delimiters are not needed, but tolerated.
 
-* The `isPathName()` function returns `true` if the string argument contains no forward slash `/` delimiters apart from the first and last characters:
+* The `isPathName()` function returns `true` if the string argument contains no `/` delimiters apart from the first and last characters:
 
 ```js
 isPathName('root/'); // the return value is true
@@ -219,7 +219,7 @@ isPathTopmostName('/root'); // the return value is true
 isPathTopmostName('etc/'); // the return value is false
 ```
 
-* The `isPathRelativePath()` function returns `true` if the string argument does not start with a forward slash `/`:
+* The `isPathRelativePath()` function returns `true` if the string argument does not start with a delimiter`/`:
 
 ```js
 isPathRelativePath('etc'); // the return value is true
@@ -229,13 +229,13 @@ isPathRelativePath('./etc'); // the return value is true
 isPathRelativePath('../etc'); // the return value is true
 ```
 
-* The `isPathAbsolutePath()` returns `true` if the string argument starts with forward slash `/`:
+* The `isPathAbsolutePath()` returns `true` if the string argument starts with a delimiter`/`:
 
 ```js
 isPathAbsolutePath('/root/etc'); // the return value is true
 ```
 
-* The `isTopmostNameInAbsolutePath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a forward slash `/` and further characters:
+* The `isTopmostNameInAbsolutePath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a delimiter`/` and further characters:
 
 ```js
 isTopmostNameInAbsolutePath('/root', '/root/etc');  // the return value is true
@@ -247,9 +247,11 @@ isTopmostNameInAbsolutePath('etc', '/root/etc'); // the return value is false
 
 Note that the function assumes that the first argument is a topmost name and that the second argument is an abolute path. It does not check, it simply compares the two arguments with a single regex. 
 
-* The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `..` signifier it finds in the latter:
+* The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `..` signifier it finds in the latter. Current directory `.` signifiers are also removed:
 
 ```js
+combinePaths('etc/', './init'); // the return value is 'etc/init'
+
 combinePaths('/root/etc/', '../init'); // the return value is '/root/init'
 ```
 
@@ -263,7 +265,7 @@ concatenatePaths('root', 'etc/'); // the return value is 'root/etc/'
 concatenatePaths('root/', 'etc/'); // the return value is 'root/etc/'
 ```
 
-Note that the function assumes that the second argument is a relative name or path without a leading current directory `./` or parent directory `../` signifier. 
+Note that the function assumes that the second argument is a relative name or path although without a leading current directory `.` or parent directory `..` signifier. 
 
 * The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` functions work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
 
