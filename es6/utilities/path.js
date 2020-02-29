@@ -7,7 +7,7 @@ const { first, second, last } = arrayUtilities;
 function isPathName(path) {
   path = path.replace(/^\//,'').replace(/\/$/, ''); ///
 
-  const pathName = (/\//.test(path) === true);
+  const pathName = (/\//.test(path) === false);
 
   return pathName;
 }
