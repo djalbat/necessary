@@ -20,8 +20,6 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
-If you are building with [Node](http://nodejs.org) the usage is as follows:
-
 ```js
 const necessary = require('necessary'),
       { arrayUtilities, asynchronousUtilities, fileSystemUtilities } = necessary,
