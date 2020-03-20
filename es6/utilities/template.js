@@ -4,23 +4,23 @@ const fileSystemUtilities = require('../utilities/fileSystem');
 
 const { readFile } = fileSystemUtilities;
 
-function parseFile(filePath, args) {
+function parseFile(filePath, args, regex) {
   const content = readFile(filePath),
-        parsedContent = parseContent(content, args);
+        parsedContent = parseContent(content, args, regex);
 
   return parsedContent;
 }
 
-function parseContent(content, args) {
+function parseContent(content, args, regex) {
   const lines = content.split('\n'),
-        parsedLines = parseLines(lines, args),
+        parsedLines = parseLines(lines, args, regex),
         parsedContent = parsedLines.join('\n');
 
   return parsedContent;
 }
 
-function parseLine(line, args) {
-  const parsedLine = line.replace(/\$\{(.+?)\}/g, function(match, token) {
+function parseLine(line, args, regex = /\${(.+?)}/g) {
+  const parsedLine = line.replace(regex, function(match, token) {
     const parsedToken = parseToken(token, args);
 
     return parsedToken;
@@ -35,9 +35,9 @@ module.exports = {
   parseLine
 };
 
-function parseLines(lines, args) {
+function parseLines(lines, args, regex) {
   const parsedLines = lines.map(function(line) {
-    const parsedLine = parseLine(line, args);
+    const parsedLine = parseLine(line, args, regex);
 
     return parsedLine;
   });
