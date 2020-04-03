@@ -60,7 +60,7 @@ function log(messageOrError, level = '') {
   }
 
   const { stack } = error,
-        stackMessages = stack.split(/\r\n|\n/),
+        stackMessages = stackMessagesFromStack(stack),
         pertinentStackMessage = stackMessages[pertinentStackMessageIndex],
         stackMessage = pertinentStackMessage, ///
         currentDateAndTimeString = getCurrentDateAndTimeString(),
@@ -214,8 +214,31 @@ function getCurrentDateAndTimeString() {
   return currentDateAndTimeString;
 }
 
+function stackMessagesFromStack(stack) {
+  const stackMessages = [],
+        stackLines = stack.split(/\r\n|\n/);
+
+  let stackMessage = "";
+
+  stackLines.forEach((stackLine) => {
+    const matches = /^\s*at.*/.test(stackLine);
+
+    stackMessage = (stackMessage === "") ?
+                      stackLine :
+                        `${stackMessage}\n${stackLine}`;
+
+    if (matches) {
+      stackMessages.push(stackMessage);
+
+      stackMessage = "";
+    }
+  });
+
+  return stackMessages;
+}
+
 function filePathFromStackMessage(stackMessage) {
-  const matches = stackMessage.match(/(\/.+)\:\d+\:\d+/),
+  const matches = stackMessage.match(/(\/.+):\d+:\d+/m),
         secondMatch = second(matches),
         absoluteFilePath = secondMatch,  ///
         currentWorkingDirectoryPath = path.resolve('.'),  ///
@@ -227,7 +250,7 @@ function filePathFromStackMessage(stackMessage) {
 }
 
 function lineNumberFromStackMessage(stackMessage) {
-  const matches = stackMessage.match(/\:(\d+)/),
+  const matches = stackMessage.match(/:(\d+)/m),
         secondMatch = second(matches),
         lineNumber = secondMatch; ///
 
