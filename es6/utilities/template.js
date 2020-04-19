@@ -1,17 +1,15 @@
 'use strict';
 
-const fileSystemUtilities = require('../utilities/fileSystem');
+import { readFile } from '../utilities/fileSystem';
 
-const { readFile } = fileSystemUtilities;
-
-function parseFile(filePath, args, regex) {
+export function parseFile(filePath, args, regex) {
   const content = readFile(filePath),
         parsedContent = parseContent(content, args, regex);
 
   return parsedContent;
 }
 
-function parseContent(content, args, regex) {
+export function parseContent(content, args, regex) {
   const lines = content.split('\n'),
         parsedLines = parseLines(lines, args, regex),
         parsedContent = parsedLines.join('\n');
@@ -19,7 +17,7 @@ function parseContent(content, args, regex) {
   return parsedContent;
 }
 
-function parseLine(line, args, regex = /\${(.+?)}/g) {
+export function parseLine(line, args, regex = /\${(.+?)}/g) {
   const parsedLine = line.replace(regex, function(match, token) {
     const parsedToken = parseToken(token, args);
 
@@ -29,7 +27,7 @@ function parseLine(line, args, regex = /\${(.+?)}/g) {
   return parsedLine;
 }
 
-module.exports = {
+export default {
   parseFile,
   parseContent,
   parseLine

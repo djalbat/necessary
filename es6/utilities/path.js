@@ -1,10 +1,8 @@
 'use strict';
 
-const arrayUtilities = require('../utilities/array');
+import { first, second, last } from '../utilities/array';
 
-const { first, second, last } = arrayUtilities;
-
-function isPathName(path) {
+export function isPathName(path) {
   path = path.replace(/^\//,'').replace(/\/$/, ''); ///
 
   const pathName = (/\//.test(path) === false);
@@ -12,7 +10,7 @@ function isPathName(path) {
   return pathName;
 }
 
-function isPathTopmostName(path) {
+export function isPathTopmostName(path) {
   const pathName = isPathName(path),
         pathAbsolutePath = isPathAbsolutePath(path),
         pathTopmostName = (pathName && pathAbsolutePath);
@@ -20,26 +18,26 @@ function isPathTopmostName(path) {
   return pathTopmostName;
 }
 
-function isPathRelativePath(path) {
+export function isPathRelativePath(path) {
   const pathRelativePath = !/^\//.test(path);
 
   return pathRelativePath;
 }
 
-function isPathAbsolutePath(path) {
+export function isPathAbsolutePath(path) {
   const pathAbsolutePath = /^\//.test(path);
 
   return pathAbsolutePath;
 }
 
-function isTopmostNameInAbsolutePath(topmostName, absolutePath) {
+export function isTopmostNameInAbsolutePath(topmostName, absolutePath) {
   const regExp = new RegExp(`^${topmostName}(?:\\/.+)?$`),
         topmostNameInAbsolutePath = regExp.test(absolutePath);
 
   return topmostNameInAbsolutePath
 }
 
-function combinePaths(path, relativePath) {
+export function combinePaths(path, relativePath) {
   let combinedPath = null;
 
   const pathNames = path.split('/'),
@@ -72,7 +70,7 @@ function combinePaths(path, relativePath) {
   return combinedPath;
 }
 
-function concatenatePaths(path, relativePath) {
+export function concatenatePaths(path, relativePath) {
   path = path.replace(/\/$/, '');  ///
 
   const concatenatedPath = `${path}/${relativePath}`;
@@ -80,7 +78,7 @@ function concatenatePaths(path, relativePath) {
   return concatenatedPath;
 }
 
-function bottommostNameFromPath(path) {
+export function bottommostNameFromPath(path) {
   let bottommostName = null;
 
   const matches = path.match(/^.*\/([^\/]+\/?)$/);
@@ -94,7 +92,7 @@ function bottommostNameFromPath(path) {
   return bottommostName;
 }
 
-function topmostDirectoryPathFromPath(path) {
+export function topmostDirectoryPathFromPath(path) {
   const matches = path.match(/^(.+)\/[^\/]+\/?$/),
         secondMatch = second(matches),
         topmostDirectoryPath = secondMatch; ///
@@ -102,7 +100,7 @@ function topmostDirectoryPathFromPath(path) {
   return topmostDirectoryPath;
 }
 
-function topmostDirectoryNameFromPath(path) {
+export function topmostDirectoryNameFromPath(path) {
   let topmostDirectoryName = null;
 
   const matches = path.match(/^([^\/]+)\/.+$/);
@@ -116,7 +114,7 @@ function topmostDirectoryNameFromPath(path) {
   return topmostDirectoryName;
 }
 
-function pathWithoutBottommostNameFromPath(path) {
+export function pathWithoutBottommostNameFromPath(path) {
   let pathWithoutBottommostName = null;
 
   const matches = path.match(/^(.*)\/[^\/]+\/?$/);
@@ -130,7 +128,7 @@ function pathWithoutBottommostNameFromPath(path) {
   return pathWithoutBottommostName;
 }
 
-function pathWithoutTopmostDirectoryNameFromPath(path) {
+export function pathWithoutTopmostDirectoryNameFromPath(path) {
   let pathWithoutTopmostDirectoryName = null;
 
   const matches = path.match(/^[^\/]+\/(.+)$/);
@@ -144,7 +142,7 @@ function pathWithoutTopmostDirectoryNameFromPath(path) {
   return pathWithoutTopmostDirectoryName;
 }
 
-module.exports = {
+export default {
   isPathName,
   isPathTopmostName,
   isPathRelativePath,

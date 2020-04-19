@@ -1,14 +1,10 @@
 'use strict';
 
-const path = require('path');
+import path from 'path';
 
-const pathUtilities = require('../../utilities/path'),
-      arrayUtilities = require('../../utilities/array'),
-      fileSystemUtilities = require('../../utilities/fileSystem');
-
-const { second } = arrayUtilities,
-      { concatenatePaths } = pathUtilities,
-      { checkFileExists, readFile, appendToFile, renameFile, getStats } = fileSystemUtilities;
+import { second } from '../../utilities/array';
+import { concatenatePaths } from '../../utilities/path';
+import { checkFileExists, readFile, appendToFile, renameFile, getStats } from '../../utilities/fileSystem';
 
 const TRACE = 'TRACE',
       DEBUG = 'DEBUG',
@@ -21,8 +17,8 @@ let logLevel = WARNING,
     logFileBaseName = 'default',
     logDirectoryPath = null;
 
-function log(messageOrError, level = '') {
-  let pertinentStackMessageIndex = 2;
+export default function log(messageOrError, level = '') {
+  let pertinentStackMessageIndex = 1;
 
   const levels = [
     TRACE,
@@ -33,7 +29,7 @@ function log(messageOrError, level = '') {
     FATAL
   ];
 
-  if (level) { ///
+  if (level !== '') {
     const levelIndex = levels.indexOf(level),
           logLevelIndex = levels.indexOf(logLevel);
 
@@ -136,8 +132,6 @@ Object.assign(log, {
   setLogOptions,
   getLogFileContent
 });
-
-module.exports = log;
 
 function getLogFilePath() {
   const logFileName = `${logFileBaseName}.log`,
@@ -275,4 +269,3 @@ function padStart(string, targetLength, padString) {
 
   return paddedString;
 }
-

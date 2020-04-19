@@ -3,7 +3,7 @@
 const GET_METHOD = 'GET',
       POST_METHOD = 'POST';
 
-function get(host, uri, parameters, callback) {
+export function get(host, uri, parameters, callback) {
   if (callback === undefined) {
     callback = parameters; ///
     parameters = {};
@@ -15,7 +15,7 @@ function get(host, uri, parameters, callback) {
   request(host, uri, parameters, method, body, callback);
 }
 
-function post(host, uri, json, parameters, callback) {
+export function post(host, uri, json, parameters, callback) {
   if (callback === undefined) {
     callback = parameters; ///
     parameters = {};
@@ -26,11 +26,6 @@ function post(host, uri, json, parameters, callback) {
 
   request(host, uri, parameters, method, body, callback);
 }
-
-module.exports = {
-  get,
-  post
-};
 
 function request(host, uri, parameters, method, body, callback) {
   const url = urlFromHostURIAndParameters(host, uri, parameters),
@@ -63,15 +58,6 @@ function request(host, uri, parameters, method, body, callback) {
   xmlHttpRequest.send(body);
 }
 
-function urlFromHostURIAndParameters(host, uri, parameters) {
-  const queryString = queryStringFromParameters(parameters),
-        url = (queryString === '') ?
-                `${host}${uri}` :
-                  `${host}${uri}?${queryString}`;
-
-  return url;
-}
-
 function queryStringFromParameters(parameters) {
   const names = Object.keys(parameters),
         namesLength = names.length,
@@ -88,4 +74,13 @@ function queryStringFromParameters(parameters) {
         }, '');
 
   return queryString;
+}
+
+function urlFromHostURIAndParameters(host, uri, parameters) {
+  const queryString = queryStringFromParameters(parameters),
+        url = (queryString === '') ?
+              `${host}${uri}` :
+                `${host}${uri}?${queryString}`;
+
+  return url;
 }

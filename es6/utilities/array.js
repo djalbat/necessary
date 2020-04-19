@@ -1,32 +1,34 @@
 'use strict';
 
-function first(array) { return array[0]; }
+export function first(array) {
+  return array[0];
+}
 
-function second(array) { return array[1]; }
+export function second(array) { return array[1]; }
 
-function third(array) { return array[2]; }
+export function third(array) { return array[2]; }
 
-function fourth(array) { return array[3]; }
+export function fourth(array) { return array[3]; }
 
-function fifth(array) { return array[4]; }
+export function fifth(array) { return array[4]; }
 
-function fifthLast(array) { return array[array.length - 5]; }
+export function fifthLast(array) { return array[array.length - 5]; }
 
-function fourthLast(array) { return array[array.length - 4]; }
+export function fourthLast(array) { return array[array.length - 4]; }
 
-function thirdLast(array) { return array[array.length - 3]; }
+export function thirdLast(array) { return array[array.length - 3]; }
 
-function secondLast(array) { return array[array.length - 2]; }
+export function secondLast(array) { return array[array.length - 2]; }
 
-function last(array) { return array[array.length - 1]; }
+export function last(array) { return array[array.length - 1]; }
 
-function tail(array) { return array.slice(1); }
+export function tail(array) { return array.slice(1); }
 
-function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
+export function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
-function unshift(array1, array2) { Array.prototype.unshift.apply(array1, array2); }
+export function unshift(array1, array2) { Array.prototype.unshift.apply(array1, array2); }
 
-function concat(array1, elementOrArray2) {
+export function concat(array1, elementOrArray2) {
   const array2 = (elementOrArray2 instanceof Array) ?
                     elementOrArray2 :
                      [elementOrArray2];
@@ -34,29 +36,29 @@ function concat(array1, elementOrArray2) {
   push(array1, array2);
 }
 
-function clear(array) {
+export function clear(array) {
   const start = 0;
   
   return array.splice(start);
 }
 
-function copy(array1, array2) {
+export function copy(array1, array2) {
   const start = 0,
         deleteCount = array2.length;  ///
   
   splice(array1, start, deleteCount, array2);
 }
 
-function merge(array1, array2) { Array.prototype.push.apply(array1, array2); }
+export function merge(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
-function splice(array1, start, deleteCount = Infinity, array2 = []) {
+export function splice(array1, start, deleteCount = Infinity, array2 = []) {
   const args = [start, deleteCount, ...array2],
         deletedItemsArray = Array.prototype.splice.apply(array1, args);
 
   return deletedItemsArray;
 }
 
-function replace(array, element, test) {
+export function replace(array, element, test) {
   let start = -1;
   
   const found = array.some(function(element, index) {
@@ -78,7 +80,7 @@ function replace(array, element, test) {
   return found;
 }
 
-function filter(array, test) {
+export function filter(array, test) {
   const filteredElements = [];
   
   backwardsForEach(array, function(element, index) {
@@ -97,7 +99,7 @@ function filter(array, test) {
   return filteredElements;
 }
 
-function find(array, test) {
+export function find(array, test) {
   const elements = [];
 
   forwardsForEach(array, function(element, index) {
@@ -111,7 +113,7 @@ function find(array, test) {
   return elements;
 }
 
-function prune(array, test) {
+export function prune(array, test) {
   let prunedElement = undefined;
   
   array.some(function(element, index) {
@@ -132,7 +134,7 @@ function prune(array, test) {
   return prunedElement;
 }
 
-function patch(array, element, test) {
+export function patch(array, element, test) {
   const found = array.some(function(element, index) {
     const passed = test(element, index);
 
@@ -149,7 +151,7 @@ function patch(array, element, test) {
   return found;
 }
 
-function augment(array1, array2, test) {
+export function augment(array1, array2, test) {
   array2.forEach(function(element, index) {
     const passed = test(element, index);
 
@@ -159,7 +161,7 @@ function augment(array1, array2, test) {
   });
 }
 
-function separate(array, array1, array2, test) {
+export function separate(array, array1, array2, test) {
   array.forEach(function(element, index) {
     const passed = test(element, index);
 
@@ -169,7 +171,7 @@ function separate(array, array1, array2, test) {
   });
 }
 
-function forwardsSome(array, callback) {
+export function forwardsSome(array, callback) {
   const arrayLength = array.length;
 
   for (let index = 0; index < arrayLength; index++) {
@@ -184,7 +186,7 @@ function forwardsSome(array, callback) {
   return false;
 }
 
-function backwardsSome(array, callback) {
+export function backwardsSome(array, callback) {
   const arrayLength = array.length;
 
   for (let index = arrayLength - 1; index >= 0; index--) {
@@ -199,7 +201,7 @@ function backwardsSome(array, callback) {
   return false;
 }
 
-function forwardsEvery(array, callback) {
+export function forwardsEvery(array, callback) {
   const arrayLength = array.length;
 
   for (let index = 0; index < arrayLength; index++) {
@@ -214,7 +216,7 @@ function forwardsEvery(array, callback) {
   return true;
 }
 
-function backwardsEvery(array, callback) {
+export function backwardsEvery(array, callback) {
   const arrayLength = array.length;
 
   for (let index = arrayLength - 1; index >= 0; index--) {
@@ -229,7 +231,7 @@ function backwardsEvery(array, callback) {
   return true;
 }
 
-function forwardsReduce(array, callback, initialValue) {
+export function forwardsReduce(array, callback, initialValue) {
 	let value = initialValue;
 
 	forwardsForEach(array, function(element, index) {
@@ -239,7 +241,7 @@ function forwardsReduce(array, callback, initialValue) {
 	return value;
 }
 
-function backwardsReduce(array, callback, initialValue) {
+export function backwardsReduce(array, callback, initialValue) {
 	let value = initialValue;
 
 	backwardsForEach(array, function(element, index) {
@@ -249,7 +251,7 @@ function backwardsReduce(array, callback, initialValue) {
 	return value;
 }
 
-function forwardsForEach(array, callback) {
+export function forwardsForEach(array, callback) {
   const arrayLength = array.length;
 
   for (let index = 0; index < arrayLength; index++) {
@@ -259,7 +261,7 @@ function forwardsForEach(array, callback) {
   }
 }
 
-function backwardsForEach(array, callback) {
+export function backwardsForEach(array, callback) {
   const arrayLength = array.length;
 
   for (let index = arrayLength - 1; index >= 0; index--) {
@@ -269,7 +271,7 @@ function backwardsForEach(array, callback) {
   }
 }
 
-module.exports = {
+export default {
   first,
   second,
   third,

@@ -1,14 +1,13 @@
 'use strict';
 
-const rc = require('./miscellaneous/rc'),
-      log = require('./miscellaneous/log'),
-      ajax = require('./miscellaneous/ajax'),
-      onETX = require('./miscellaneous/onETX'),
-      prompt = require('./miscellaneous/prompt');
+import rc from './miscellaneous/rc';
+import log from './miscellaneous/log';
+import onETX from './miscellaneous/onETX';
+import prompt from './miscellaneous/prompt';
 
-const { get, post } = ajax;
+import { get, post } from './miscellaneous/ajax';
 
-module.exports = {
+export default {
   log,
   rc,
   get,

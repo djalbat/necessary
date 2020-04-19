@@ -1,6 +1,6 @@
 'use strict';
 
-function whilst(callback, done, context) {
+export function whilst(callback, done, context) {
   let count = -1;
 
   function next() {
@@ -17,7 +17,7 @@ function whilst(callback, done, context) {
   next();
 }
 
-function forEach(array, callback, done, context) {
+export function forEach(array, callback, done, context) {
   const length = array.length;  ///
 
   let count = -1;
@@ -40,7 +40,7 @@ function forEach(array, callback, done, context) {
   next();
 }
 
-function sequence(callbacks, done, context) {
+export function sequence(callbacks, done, context) {
   const length = callbacks.length;  ///
 
   let count = -1;
@@ -63,7 +63,7 @@ function sequence(callbacks, done, context) {
   next();
 }
 
-function eventually(callbacks, done, context) {
+export function eventually(callbacks, done, context) {
   const length = callbacks.length;  ///
 
   let count = 0;
@@ -83,7 +83,7 @@ function eventually(callbacks, done, context) {
   });
 }
 
-function repeatedly(callback, length, done, context) {
+export function repeatedly(callback, length, done, context) {
   let count = 0;
 
   function next() {
@@ -101,7 +101,7 @@ function repeatedly(callback, length, done, context) {
   }
 }
 
-function forwardsForEach(array, callback, done, context) {
+export function forwardsForEach(array, callback, done, context) {
   const length = array.length;  ///
 
   let count = -1;
@@ -124,7 +124,7 @@ function forwardsForEach(array, callback, done, context) {
   next();
 }
 
-function backwardsForEach(array, callback, done, context) {
+export function backwardsForEach(array, callback, done, context) {
   const length = array.length;  ///
 
   let count = length;
@@ -147,7 +147,7 @@ function backwardsForEach(array, callback, done, context) {
   next();
 }
 
-module.exports = {
+export default {
   whilst,
   forEach,
   sequence,

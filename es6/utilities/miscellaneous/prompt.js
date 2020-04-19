@@ -1,17 +1,16 @@
 'use strict';
 
-const onETX = require('./onETX'),
-      asynchronousUtilities = require('../../utilities/asynchronous');
+import onETX from './onETX';
 
-const { stdin, stdout } = process,
-      { whilst } = asynchronousUtilities,
-      { exit } = process;
+import { whilst } from '../../utilities/asynchronous';
+
+const { stdin, stdout, exit } = process;
 
 const BACKSPACE_CHARACTER = String.fromCharCode(127),
       LINE_FEED_CHARACTER = '\n',
       CARRIAGE_RETURN_CHARACTER = '\r';
 
-function prompt(options, callback) {
+export default function prompt(options, callback) {
   const value = null,
         { attempts = 3 } = options,
         context = {
@@ -26,8 +25,6 @@ function prompt(options, callback) {
     callback(value);
   }, context);
 }
-
-module.exports = prompt;
 
 function attempt(next, done, context) {
   let { attempts } = context;

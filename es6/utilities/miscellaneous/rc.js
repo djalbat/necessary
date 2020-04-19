@@ -1,17 +1,14 @@
 'use strict';
 
-const path = require('path');
+import path from 'path';
 
-const arrayUtilities = require('../../utilities/array'),
-      fileSystemUtilities = require('../../utilities/fileSystem');
-
-const { first, second } = arrayUtilities,
-      { readFile, writeFile, checkFileExists } = fileSystemUtilities;
+import { first, second } from '../../utilities/array';
+import { readFile, writeFile, checkFileExists } from '../../utilities/fileSystem';
 
 let pathResolver = path.resolve,
-		baseExtension = '';
+    baseExtension = '';
 
-function rc(environmentNameOrArgv = null) {
+export default function rc(environmentNameOrArgv = null) {
   let environment,
       environmentName,
       environmentNameOrArgvArgv = (environmentNameOrArgv instanceof Array);
@@ -104,16 +101,14 @@ Object.assign(rc, {
   checkRCFileExists,
   createVacuousRCFile,
   setRCBaseExtension,
-	setRCPathResolver
+  setRCPathResolver
 });
-
-module.exports = rc;
 
 function environmentNameFromArgv(argv) {
   let environmentName = null;
 
   argv.find(function(argument) {  ///
-    const matches = argument.match(/\-\-environment=(.+)/),
+    const matches = argument.match(/--environment=(.+)/),
           found = (matches !== null);
 
     if (found) {

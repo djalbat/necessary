@@ -1,18 +1,16 @@
 'use strict';
 
-const fs = require('fs');
+import fs from 'fs';
 
-const pathUtilities = require('../utilities/path');
+import { pathWithoutBottommostNameFromPath } from '../utilities/path';
 
-const { pathWithoutBottommostNameFromPath } = pathUtilities;
-
-function checkEntryExists(entryPath) {
+export function checkEntryExists(entryPath) {
   const entryExists = fs.existsSync(entryPath);
 
   return entryExists;
 }
 
-function checkFileExists(filePath) {
+export function checkFileExists(filePath) {
   let fileExists = false;
   
   const entryPath = filePath, ///
@@ -29,7 +27,7 @@ function checkFileExists(filePath) {
   return fileExists;
 }
 
-function checkDirectoryExists(directoryPath) {
+export function checkDirectoryExists(directoryPath) {
   let directoryExists = false;
 
   const entryPath = directoryPath, ///
@@ -46,7 +44,7 @@ function checkDirectoryExists(directoryPath) {
   return directoryExists;
 }
 
-function isEntryFile(entryPath) {
+export function isEntryFile(entryPath) {
   const stat = fs.statSync(entryPath),
         entryDirectory = stat.isDirectory(),
         entryFile = !entryDirectory;
@@ -54,14 +52,14 @@ function isEntryFile(entryPath) {
   return entryFile;
 }
 
-function isEntryDirectory(entryPath) {
+export function isEntryDirectory(entryPath) {
   const stat = fs.statSync(entryPath),
         entryDirectory = stat.isDirectory();
 
   return entryDirectory;
 }
 
-function isDirectoryEmpty(directoryPath) {
+export function isDirectoryEmpty(directoryPath) {
   const subEntryNames = readDirectory(directoryPath),
         subEntryNamesLength = subEntryNames.length,
         directoryEmpty = (subEntryNamesLength === 0);
@@ -69,13 +67,13 @@ function isDirectoryEmpty(directoryPath) {
   return directoryEmpty;
 }
 
-function readDirectory(directoryPath) {
+export function readDirectory(directoryPath) {
   const subEntryNames = fs.readdirSync(directoryPath);
 
   return subEntryNames;
 }
 
-function readFile(filePath, encoding = 'utf8') {
+export function readFile(filePath, encoding = 'utf8') {
   const options = {
           encoding
         },
@@ -84,15 +82,15 @@ function readFile(filePath, encoding = 'utf8') {
   return content;
 }
 
-function writeFile(filePath, content) {
+export function writeFile(filePath, content) {
   fs.writeFileSync(filePath, content);
 }
 
-function appendToFile(filePath, content) {
+export function appendToFile(filePath, content) {
   fs.appendFileSync(filePath, content);
 }
 
-function createDirectory(directoryPath) {
+export function createDirectory(directoryPath) {
   const directoryPathWithoutBottommostName = pathWithoutBottommostNameFromPath(directoryPath);
 
   if ((directoryPathWithoutBottommostName !== '.') && (directoryPathWithoutBottommostName !== null)) {
@@ -107,15 +105,15 @@ function createDirectory(directoryPath) {
   fs.mkdirSync(directoryPath);
 }
 
-function renameFile(oldFilePath, newFilePath) {
+export function renameFile(oldFilePath, newFilePath) {
   fs.renameSync(oldFilePath, newFilePath);
 }
 
-function getStats(filePath) {
+export function getStats(filePath) {
   return fs.statSync(filePath);
 }
 
-module.exports = {
+export default {
   checkEntryExists,
   checkFileExists,
   checkDirectoryExists,
