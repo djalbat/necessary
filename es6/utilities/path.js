@@ -40,8 +40,8 @@ export function isTopmostNameInAbsolutePath(topmostName, absolutePath) {
 export function combinePaths(path, relativePath) {
   let combinedPath = null;
 
-  const pathNames = path.split("/"),
-        relativePathNames = relativePath.split("/");
+  const pathNames = path.split(/\//),
+        relativePathNames = relativePath.split(/\//);
 
   let lastPathName,
       firstRelativePathName = first(relativePathNames);
@@ -64,7 +64,7 @@ export function combinePaths(path, relativePath) {
   if (lastPathName !== undefined) {
     const combinedPathNames = [].concat(pathNames).concat(relativePathNames);
 
-    combinedPath = combinedPathNames.join("/");
+    combinedPath = combinedPathNames.join(/\//);
   }
 
   return combinedPath;

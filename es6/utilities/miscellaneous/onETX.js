@@ -1,27 +1,26 @@
 "use strict";
 
-const ETX_CHARACTER = "\u0003";
+import { DATA_EVENT, ETX_CHARACTER, UTF8_ENCODING } from "../../constants";
 
 export default function onETX(handler) {
-  const { stdin } = process,
-        { setRawMode } = stdin;
+  const event = DATA_EVENT;
 
-  if (setRawMode) {
+  if (process.stdin.setRawMode) {
     const rawMode = true,
-          encoding = "utf8";
+          encoding = UTF8_ENCODING;
 
-    stdin.setRawMode(rawMode);
-    stdin.setEncoding(encoding);
+    process.stdin.setRawMode(rawMode);
+    process.stdin.setEncoding(encoding);
 
-    stdin.resume();
+    process.stdin.resume();
 
-    stdin.addListener("data", dataHandler);
+    process.stdin.addListener(event, dataHandler);
 
     return offExt;
   }
 
   function offExt() {
-    stdin.removeListener("data", dataHandler);
+    process.stdin.removeListener(event, dataHandler);
   }
 
   function dataHandler(character) {

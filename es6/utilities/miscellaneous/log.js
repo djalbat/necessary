@@ -5,20 +5,14 @@ import path from "path";
 import { second } from "../../utilities/array";
 import { concatenatePaths } from "../../utilities/path";
 import { checkFileExists, readFile, appendToFile, renameFile, getStats } from "../../utilities/fileSystem";
+import { TRACE, DEBUG, INFO, WARNING, ERROR, FATAL, DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH } from "../../constants";
 
-const TRACE = "TRACE",
-      DEBUG = "DEBUG",
-      INFO = "INFO",
-      WARNING = "WARNING",
-      ERROR = "ERROR",
-      FATAL = "FATAL";
-
-let logLevel = WARNING,
-    logFileBaseName = "default",
-    logDirectoryPath = null;
+let logLevel = DEFAULT_LOG_LEVEL,
+    logFileBaseName = DEFAULT_LOG_FILE_BASE_NAME,
+    logDirectoryPath = DEFAULT_LOG_DIRECTORY_PATH;
 
 export default function log(messageOrError, level = "") {
-  let pertinentStackMessageIndex = 1;
+  let salientStackMessageIndex = 1;
 
   const levels = [
     TRACE,
@@ -26,7 +20,7 @@ export default function log(messageOrError, level = "") {
     INFO,
     WARNING,
     ERROR,
-    FATAL
+    FATAL,
   ];
 
   if (level !== "") {
@@ -37,7 +31,7 @@ export default function log(messageOrError, level = "") {
       return;
     }
 
-    pertinentStackMessageIndex += 1;
+    salientStackMessageIndex += 1;
 
     level = `${level} `;  ///
   }
@@ -57,7 +51,7 @@ export default function log(messageOrError, level = "") {
 
   const { stack } = error,
         stackMessages = stackMessagesFromStack(stack),
-        pertinentStackMessage = stackMessages[pertinentStackMessageIndex],
+        pertinentStackMessage = stackMessages[salientStackMessageIndex],
         stackMessage = pertinentStackMessage, ///
         currentDateAndTimeString = getCurrentDateAndTimeString(),
         filePath = filePathFromStackMessage(stackMessage),

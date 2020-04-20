@@ -4,11 +4,7 @@ import onETX from "./onETX";
 
 import { whilst } from "../../utilities/asynchronous";
 
-const { stdin, stdout, exit } = process;
-
-const BACKSPACE_CHARACTER = String.fromCharCode(127),
-      LINE_FEED_CHARACTER = "\n",
-      CARRIAGE_RETURN_CHARACTER = "\r";
+import { CTRL_C, DATA_EVENT, BACKSPACE_CHARACTER, LINE_FEED_CHARACTER, CARRIAGE_RETURN_CHARACTER } from "../../constants";
 
 export default function prompt(options, callback) {
   const value = null,
@@ -74,26 +70,27 @@ function attempt(next, done, context) {
 function input(description, initialValue, encoding, hidden, callback) {
   let value = initialValue; ///
 
-  const rawMode = true,
+  const event = DATA_EVENT,
+        rawMode = true,
         offETX = onETX(() => {
-          console.log("^C");
+          console.log(CTRL_C);
 
-          exit();
+          process.exit();
         });
 
-  stdin.setEncoding(encoding);
+  process.stdin.setEncoding(encoding);
 
-  stdin.setRawMode(rawMode);
+  process.stdin.setRawMode(rawMode);
 
-  stdout.write(description);
+  process.stdout.write(description);
 
   if (!hidden) {
-    stdout.write(value);
+    process.stdout.write(value);
   }
 
-  stdin.resume();
+  process.stdin.resume();
 
-  stdin.on("data", listener);
+  process.stdin.on(event, listener);
 
   function listener(chunk) {
     const character = chunk.toString(encoding);
@@ -101,11 +98,11 @@ function input(description, initialValue, encoding, hidden, callback) {
     switch (character) {
       case LINE_FEED_CHARACTER :
       case CARRIAGE_RETURN_CHARACTER :
-        stdout.write(LINE_FEED_CHARACTER);
+        process.stdout.write(LINE_FEED_CHARACTER);
 
-        stdin.removeListener("data", listener);
+        process.stdin.removeListener(event, listener);
 
-        stdin.pause();
+        process.stdin.pause();
 
         offETX();
 
@@ -115,14 +112,14 @@ function input(description, initialValue, encoding, hidden, callback) {
       case BACKSPACE_CHARACTER :
         value = value.slice(0, value.length - 1);
 
-        stdout.clearLine();
+        process.stdout.clearLine();
 
-        stdout.cursorTo(0);
+        process.stdout.cursorTo(0);
 
-        stdout.write(description);
+        process.stdout.write(description);
 
         if (!hidden) {
-          stdout.write(value);
+          process.stdout.write(value);
         }
         break;
 
@@ -130,13 +127,13 @@ function input(description, initialValue, encoding, hidden, callback) {
         value += character;
 
         if (!hidden) {
-          stdout.clearLine();
+          process.stdout.clearLine();
 
-          stdout.cursorTo(0);
+          process.stdout.cursorTo(0);
 
-          stdout.write(description);
+          process.stdout.write(description);
 
-          stdout.write(value);
+          process.stdout.write(value);
         }
         break;
     }

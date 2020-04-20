@@ -3,10 +3,11 @@
 import path from "path";
 
 import { first, second } from "../../utilities/array";
+import { DEFAULT_RC_BASE_EXTENSION } from "../../constants";
 import { readFile, writeFile, checkFileExists } from "../../utilities/fileSystem";
 
 let pathResolver = path.resolve,
-    baseExtension = "";
+    baseExtension = DEFAULT_RC_BASE_EXTENSION;
 
 export default function rc(environmentNameOrArgv = null) {
   let environment,

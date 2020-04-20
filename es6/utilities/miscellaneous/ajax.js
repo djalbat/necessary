@@ -1,7 +1,6 @@
 "use strict";
 
-const GET_METHOD = "GET",
-      POST_METHOD = "POST";
+import { GET_METHOD, POST_METHOD, APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE } from "../../constants";
 
 export function get(host, uri, parameters, callback) {
   if (callback === undefined) {
@@ -51,9 +50,11 @@ function request(host, uri, parameters, method, body, callback) {
     }
   };
 
-  xmlHttpRequest.open(method, url, true);
+  const contentType = APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE;
 
-  xmlHttpRequest.setRequestHeader("content-type", "application/json;charset=UTF-8");
+  xmlHttpRequest.open(method, url);
+
+  xmlHttpRequest.setRequestHeader("content-type", contentType);
 
   xmlHttpRequest.send(body);
 }

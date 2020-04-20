@@ -2,6 +2,7 @@
 
 import fs from "fs";
 
+import { UTF8_ENCODING } from "../constants";
 import { pathWithoutBottommostNameFromPath } from "../utilities/path";
 
 export function checkEntryExists(entryPath) {
@@ -73,7 +74,7 @@ export function readDirectory(directoryPath) {
   return subEntryNames;
 }
 
-export function readFile(filePath, encoding = "utf8") {
+export function readFile(filePath, encoding = UTF8_ENCODING) {
   const options = {
           encoding
         },
