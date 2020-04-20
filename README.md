@@ -20,17 +20,13 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
-```js
-const necessary = require('necessary'),
-      { arrayUtilities, asynchronousUtilities, fileSystemUtilities } = necessary,
-      { first, last } = arrayUtilities,
-      { isDirectory } = fileSystemUtilities;
 ```
+import { arrayUtilities, asynchronousUtilities, fileSystemUtilities } from "necessary";
 
-Using the destructor syntax is often best, however it may lead to conflicts, in which case just call the functions directly against the objects in question:
+const { first, last } = arrayUtilities,
+      { isDirectory } = fileSystemUtilities;
 
-```js
-asynchronousUtilities.forEach(...)
+...
 ```
 
 ## Compiling from source
@@ -86,39 +82,39 @@ Note that none of these functions take or pass on a `thisArg` argument when they
 
 * The `concat()` function is similar to its native counterpart, however it alters the first array argument *in place*. Like its native counterpart it will also take a single element as the second argument and convert it to an array.
 
-```js
+```
 concat([1, 2, 3], 4); // the array argument becomes [1, 2, 3, 4]
 ```
 
 * The `clear()` function removes all the elements in the array argument and returns them as a fresh array:
 
-```js
+```
 clear([1, 2, 3]); // the array argument becomes []
                   // the return value will be [1, 2, 3] 
 ```
 
 * The `copy()` function copies the second array argument over the top of the first array argument, in other words it replaces each element of the first array argument with the corresponding element in the second array argument. If there are more elements in the second array argument that the first, the first is lengthened:  
 
-```js
+```
 copy([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [4, 5, 6, 7]
 ```
 
 * The `merge()` function copies the second array argument onto to the end of the first array argument, behaving in identical fashion to the `push()` function:
 
-```js
+```
 merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4, 5, 6, 7]
 ```
 
 * The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
 
-```js
+```
 splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3] 
                                  // the first array argument becomes [1, 4, 5]
 ```
 
 * The `replace()` function will replace an element in the array with the given element the first time that the test callback function returns a truthy value:
 
-```js
+```
 replace([1, 2, 0, -1, -2], 3, function(element, index) {
   return element === 0;
 }); // the first array argument becomes [1, 2, 3, -1, -2]
@@ -126,7 +122,7 @@ replace([1, 2, 0, -1, -2], 3, function(element, index) {
 
 * The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a test callback function that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
 
-```js
+```
 filter([1, 2, -1, -2], function(element, index) {
   return element > 0;
 }); // the first array argument becomes [1, 2]
@@ -135,7 +131,7 @@ filter([1, 2, -1, -2], function(element, index) {
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the test callback function returns a truthy value, rather than just the first:
 
-```js
+```
 find([1, 2, -1, -2], function(element, index) {
   return element > 0;
 }); // the return value will be [1, 2]
@@ -143,7 +139,7 @@ find([1, 2, -1, -2], function(element, index) {
 
 * The `prune()` function is much like the `filter()` function, however it will terminate the first time that the test callback function does not return a truthy value:
 
-```js
+```
 prune([1, 2, -1, -2], function(element, index) {
   return element > 0;
 }); // the first array argument becomes [1, 2, -2] 
@@ -152,7 +148,7 @@ prune([1, 2, -1, -2], function(element, index) {
 
 * The `patch()` function will append the given element to the first array argument the first time that the test callback function returns a truthy value:
 
-```js
+```
 patch([1, 2, 0, -1, -2], 4, function(element, index) {
   return element === 0;
 }); // the first array argument becomes [1, 2, 0, -1, -2, 4]
@@ -160,7 +156,7 @@ patch([1, 2, 0, -1, -2], 4, function(element, index) {
 
 * The `augment()` function is appends each of the elements of the second array argument to the first array argument whenever the test callback returns a truthy value:
 
-```js
+```
 augment([1, 2, 3], [-1, 4, -2, 5], function(element, index) {
   return element > 0;
 }); // the first array argument becomes [1, 2, 3, 4, 5]
@@ -168,7 +164,7 @@ augment([1, 2, 3], [-1, 4, -2, 5], function(element, index) {
 
 * The `separate()` function separates the first array argument, pushing each of its elements onto either the second or the third array argument depending on whether or not the test callback returns a truthy value:
 
-```js
+```
 separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
   return element > 0;
 }); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
@@ -195,7 +191,7 @@ These functions manipulate or query strings that represent file and directory pa
 
 * The `isPathName()` function returns `true` if the string argument contains no `/` delimiters apart from the first and last characters:
 
-```js
+```
 isPathName('root/'); // the return value is true
 
 isPathName('/root'); // the return value is true
@@ -209,7 +205,7 @@ isPathName('/root/etc'); // the return value is false
 
 * The `isPathTopmostName()` function returns `true` if the string argument is both a name and an absolute path:
 
-```js
+```
 isPathTopmostName('/root/'); // the return value is true
 
 isPathTopmostName('/root'); // the return value is true
@@ -219,7 +215,7 @@ isPathTopmostName('etc/'); // the return value is false
 
 * The `isPathRelativePath()` function returns `true` if the string argument does not start with a delimiter`/`:
 
-```js
+```
 isPathRelativePath('etc'); // the return value is true
 
 isPathRelativePath('./etc'); // the return value is true
@@ -229,13 +225,13 @@ isPathRelativePath('../etc'); // the return value is true
 
 * The `isPathAbsolutePath()` returns `true` if the string argument starts with a delimiter`/`:
 
-```js
+```
 isPathAbsolutePath('/root/etc'); // the return value is true
 ```
 
 * The `isTopmostNameInAbsolutePath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a delimiter`/` and further characters:
 
-```js
+```
 isTopmostNameInAbsolutePath('/root', '/root/etc');  // the return value is true
 
 isTopmostNameInAbsolutePath('root', '/root/etc');  // the return value is false
@@ -247,7 +243,7 @@ Note that the function assumes that the first argument is a topmost name and tha
 
 * The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `..` signifier it finds in the latter. Current directory `.` signifiers are also removed:
 
-```js
+```
 combinePaths('etc/', './init'); // the return value is 'etc/init'
 
 combinePaths('/root/etc/', '../init'); // the return value is '/root/init'
@@ -257,7 +253,7 @@ Note that the function assumes that the second argument is a relative name or pa
 
 * The `concatenatePaths()` function will concatenate the first and second string arguments, adding the trailing forward slash `/` to the first string if necessary:
 
-```js
+```
 concatenatePaths('root', 'etc/'); // the return value is 'root/etc/'
 
 concatenatePaths('root/', 'etc/'); // the return value is 'root/etc/'
@@ -267,7 +263,7 @@ Note that the function assumes that the second argument is a relative name or pa
 
 * The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` functions work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
 
-```js
+```
 bottommostNameFromPath('../etc'); // the return value is 'etc'
 
 topmostDirectoryPathFromPath('/root/etc/init.conf'); // the return value is '/root/etc'
@@ -299,7 +295,7 @@ An inglorious collection of functions which do no more than paper over some of N
 
 * The `checkEntryExists()`, `checkFileExists()`, `checkDirectoryExists()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
 
-```js
+```
 checkEntryExists('root/etc'); // the return value is true if the file or directory exists
 
 checkFileExists('root/etc/init.conf'); // the return value is true if the file exists
@@ -315,37 +311,37 @@ isDirectoryEmpty('root/etc'); // the return value is true if the directory is em
 
 * The `readDirectory()` function returns an array of entry names if the directory exists:
 
-```js
+```
 readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
 ```
 
 * The `readFile()` function takes the file encoding as an optional second string argument. The default is `utf8`. It returns the content of the file upon success:
 
-```js
+```
 readFile('root/etc/init.conf'); // returns the content of the 'root/etc/init.conf' file
 ```
 
 * The `writeFile()` function takes the content of the file as a second string argument. It does not return anything upon success:
 
-```js
+```
 writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' file
 ```
 
 * The `appendToFile()` function takes the content to append file as a second string argument. It will create teh file if necessary and does not return anything upon success:
 
-```js
+```
 appendToFile('root/etc/init.conf', ''); // appends '' to the 'root/etc/init.conf' file
 ```
 
 * The `createDirectory()` function creates a directory, also creating the parent directories if necessary:
 
-```js
+```
 createDirectory('root/etc/init'); // Creates the 'root/etc/init' directory 
 ```
 
 * The `getStats()` function returns an instance of the [fs.Stats](https://nodejs.org/api/fs.html#fs_class_fs_stats) class for a file or a directory:
 
-```js
+```
 const stats = getStats('root/etc'); // returns stats for the 'root/etc' directory
 ```
 
@@ -363,7 +359,7 @@ These functions generally take either a callback or an array of callbacks, follo
 
 * The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function or until the callback invokes the given `done()` function. The callback can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the callback will be exectuted ten times:
 
-```js
+```
 const context = {}; ///
 
 const callback = function(next, done, context, index) {
@@ -385,7 +381,7 @@ whilst(callback, function() {
 
 * The `forEach()` function takes an array as the first argument followed by a single callback, which it calls for each element of the array unless the callback invokes the given `done()` function. If the `done()` function is never invoked by the callback, it is called once each of the array elements has been passed to the callback, provided the callback invokes the given `next ()` function each time. In the example below the callback will be executed four times:
 
-```js
+```
 const context = {};
 
 const callback = function(element, next, done, context, index) {
@@ -409,7 +405,7 @@ forEach(array, callback, function() {
 
 * The `sequence()` function takes an array of callbacks, which it calls in turn unless the callback invokes the given `done()` function. If the `done()` function is never invoked by a callback, it is called once each of the callbacks have been called, provided each callback invokes the given `next ()` function. In the example below each of the callbacks bar the last is executed:
 
-```js
+```
 const context = {};
 
 const firstCallback = function(next, done, context, index) { next(); },
@@ -430,7 +426,7 @@ sequence(callbacks, function() {
 
 * The `eventually()` function takes an array of callbacks, each of which it calls immediately without waiting for the callbacks to invoke the given `next()` functions. When each of the callbacks has invoked the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` function from within a callback will not halt the execution of other callbacks, it is passed as an argument only for the sake of convention. In the example below each of the callbacks is executed:
 
-```js
+```
 const context = {};
 
 const firstCallback = function(next, done, context, index) { next(); },
@@ -448,7 +444,7 @@ eventually(callbacks, function() {
 ```
 * The `repeatedly()` function takes a single callback and a `length` parameter, immediately calling the callback a `length` number of times without waiting for it to invoke the given `next()` function each time. When the callback has invoked the given `next()` function a `length` number of times, it will call the `done()` function. Note that in this case invoking the `done()` function from within the callback will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the callback is executed ten times:
 
-```js
+```
 const context = {};
 
 const callback = function(next, done, context, index) {
@@ -474,7 +470,7 @@ These functions parse files, content or single lines, replacing each token of th
 
 * The `parseFile()` function takes a file path as the first argument:
 
-```js
+```
 const filePath = '/etc/var/public/name.html',
       name = 'Joe Bloggs',
       age = 99,
@@ -487,7 +483,7 @@ const filePath = '/etc/var/public/name.html',
 
 * The `parseContent()` function takes content as the first argument, honouring newline `\n` characters:
 
-```js
+```
 const content = `
 
   name: <strong>${name}</strong><br/>
@@ -505,7 +501,7 @@ const content = `
 
 * The `parseLine()` function takes a single line of content as the first argument:
 
-```js
+```
 const line = '${name}, aged ${age}.',
       name = 'Joe Bloggs',
       age = 99,
@@ -529,7 +525,7 @@ A small if motley collection of functions for various common tasks.
 
 * The `log()` function provides rudimentary logging functionality, printing its argument to the console, prepended with a date and time stamp together with the path of the file containing the callee function and the line number:
 
-```js
+```
 log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...' being logged.
 ```
 
@@ -537,7 +533,7 @@ You can pass an error instead of a string to `log()`, in which case it will prin
 
 Additionally, it is possible to print to a log file if a log directory and, optionally, a base name for the log file are specified. The base name here means the file name minus the extension and separator. The default is `default`:
 
-```js
+```
 const { setLogFileBaseName, setLogDirectoryPath } = log;
 
 setLogFileBaseName('example');
@@ -549,7 +545,7 @@ log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...\n' line be
 
 A standard set of functions, namely `fatal()`, `error()`, `warning()`, `info()`, `debug()` and `trace()`, are available and these are filtered in the usual way, assuming the log level has been set:
 
-```js
+```
 const { setLogLevel, DEBUG } = log;
 
 setLogLevel(DEBUG);
@@ -564,7 +560,7 @@ Finally, log files are rolled over every night. So `./log/example.log` would bec
 
 * The `rc()` function parses a JSON runtime configuration file of a certain format and provides the information therein by assigning it to itself:
 
-```js
+```
 rc();
 
 const { logOptions } = rc;
@@ -576,7 +572,7 @@ setLogOptions(logOptions); // Expects a plain old JavaScript object of the form 
 
 By default it will parse a file called `.rc` in the current working directory. This file should have the following format:
 
-```js
+```
 {
   "environments": [
     {
@@ -593,19 +589,19 @@ By default it will parse a file called `.rc` in the current working directory. T
 
 In the absence of being passed an environment name, it will parse and return the first element of the `enviromnents` array. It will not try to assign the `name` property of the chosen environment to itself, by the way, because functions already have a `name` property. It can be instructed to a chose a specific environment thus:
 
-```js
+```
 rc('production'); // Provides the 'production' environment
 ```
 
 Or you can pass `process.argv` if the command line arguments include something of the form `--environment=...`:
 
-```js
+```
 rc(process.argv); // Provides the 'development' if given '--environment=development'
 ```
 
 You can change the base extension of the file that is parsed, that is the part of the extension between the leading dot and `rc`, by making use of the `setRCBaseExtension()` function:
 
-```js
+```
 const { setRCBaseExtension } = rc;
 
 setRCBaseExtension('default'); 
@@ -617,7 +613,7 @@ Note that the `rc()` function can be included in any file but only needs to be c
 
 Aside from the aforementioned `setRCBaseExtension()` functions, the `checkRCFileExists()`, `createVacuousRCFile()`, `readRCFile()` and `writeRCFile()` functions do as their names suggest. The `updateRCFile()` function, if passed a plain old JavaScript object as the first parameter, will add the properties therein, overwriting any existing properties. Properties to be removed can be given as further arguments. If you do not want to add as well as remove properties, set the first argument to a falsey value.
 
-```js
+```
 const { readRCFile, writeRCFile, updateRCFile, checkRCFileExists, createVacuousRCFile } = rc;
 
 const rcFileExists = checkRCFileExists();  // Returns true if the rc file exists.
@@ -635,7 +631,7 @@ updateRCFile(null, 'example');  // Updates the rc file, removing the 'example' p
 
 * The `get()` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. If the status code is 200 and the response is stringified JSON, this will be parsed and returned by way of the callback, otherwise null will be returned:
 
-```js
+```
 const host = '...',
       uri = '...',
       parameters = {
@@ -653,7 +649,7 @@ Note that the `uri` argument should include a leading forward slash `/` if the `
 
 * The `post()` function behaves similarly to the `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `uri` arguments. This argument is stringified and sent in the request body:
 
-```js
+```
 const host = '...',
       uri = '...',
       json = ...;
@@ -669,7 +665,7 @@ Note that `parameters` argument is missing in the example above but that there i
 
 * The `onETX()` function takes a handler which is invoked whenever the `ETX` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This method is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener at some later point in time:
 
-```js
+```
 const offEXT = onEXT(process.exit);
 
 ...
@@ -679,7 +675,7 @@ offEXT();
 
 * The `prompt()` function is meant for use in terminal applications. It takes a plain old JavaScript object and a callback function as the its first and second arguments, respectively. The plain old JavaScript object is for the options. The callback function is invoked when the user hits return:
 
-```js
+```
 const hidden = true,
       description = ...,
       initialValue = ...,
