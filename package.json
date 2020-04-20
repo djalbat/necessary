@@ -13,7 +13,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.8.6",
-    "watchful-cli": "^1.0.10"
+    "watchful-cli": "^1.4.1"
   },
   "scripts": {
     "clean": "rm -rf ./lib",

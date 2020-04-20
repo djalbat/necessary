@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-import { readFile } from '../utilities/fileSystem';
+import { readFile } from "../utilities/fileSystem";
 
 export function parseFile(filePath, args, regex) {
   const content = readFile(filePath),
@@ -10,9 +10,9 @@ export function parseFile(filePath, args, regex) {
 }
 
 export function parseContent(content, args, regex) {
-  const lines = content.split('\n'),
+  const lines = content.split("\n""),
         parsedLines = parseLines(lines, args, regex),
-        parsedContent = parsedLines.join('\n');
+        parsedContent = parsedLines.join("\n"");
 
   return parsedContent;
 }
@@ -44,7 +44,7 @@ function parseLines(lines, args, regex) {
 }
 
 function parseToken(token, args) {
-  let parsedToken = '';
+  let parsedToken = "";
 
   if (args.hasOwnProperty(token)) {
     parsedToken = args[token];

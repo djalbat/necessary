@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-import { first, second, last } from '../utilities/array';
+import { first, second, last } from "../utilities/array";
 
 export function isPathName(path) {
-  path = path.replace(/^\//,'').replace(/\/$/, ''); ///
+  path = path.replace(/^\//,"").replace(/\/$/, ""); ///
 
   const pathName = (/\//.test(path) === false);
 
@@ -40,20 +40,20 @@ export function isTopmostNameInAbsolutePath(topmostName, absolutePath) {
 export function combinePaths(path, relativePath) {
   let combinedPath = null;
 
-  const pathNames = path.split('/'),
-        relativePathNames = relativePath.split('/');
+  const pathNames = path.split("/"),
+        relativePathNames = relativePath.split("/");
 
   let lastPathName,
       firstRelativePathName = first(relativePathNames);
 
-  if (firstRelativePathName === '.') {
+  if (firstRelativePathName === ".") {
     relativePathNames.shift();
   }
 
   firstRelativePathName = first(relativePathNames);
   lastPathName = last(pathNames);
 
-  while ((firstRelativePathName === '..') && (lastPathName !== undefined)) {
+  while ((firstRelativePathName === "..") && (lastPathName !== undefined)) {
     relativePathNames.shift();
     pathNames.pop();
 
@@ -64,14 +64,14 @@ export function combinePaths(path, relativePath) {
   if (lastPathName !== undefined) {
     const combinedPathNames = [].concat(pathNames).concat(relativePathNames);
 
-    combinedPath = combinedPathNames.join('/');
+    combinedPath = combinedPathNames.join("/");
   }
 
   return combinedPath;
 }
 
 export function concatenatePaths(path, relativePath) {
-  path = path.replace(/\/$/, '');  ///
+  path = path.replace(/\/$/, "");  ///
 
   const concatenatedPath = `${path}/${relativePath}`;
 

@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
-import onETX from './onETX';
+import onETX from "./onETX";
 
-import { whilst } from '../../utilities/asynchronous';
+import { whilst } from "../../utilities/asynchronous";
 
 const { stdin, stdout, exit } = process;
 
 const BACKSPACE_CHARACTER = String.fromCharCode(127),
-      LINE_FEED_CHARACTER = '\n',
-      CARRIAGE_RETURN_CHARACTER = '\r';
+      LINE_FEED_CHARACTER = "\n",
+      CARRIAGE_RETURN_CHARACTER = "\r";
 
 export default function prompt(options, callback) {
   const value = null,
@@ -39,9 +39,9 @@ function attempt(next, done, context) {
 
   const { options } = context,
         { hidden = false,
-          encoding = 'utf8',
+          encoding = "utf8",
           description,
-          initialValue = '',
+          initialValue = "",
           errorMessage,
           validationPattern,
           validationFunction } = options;
@@ -76,7 +76,7 @@ function input(description, initialValue, encoding, hidden, callback) {
 
   const rawMode = true,
         offETX = onETX(function() {
-          console.log('^C');
+          console.log("^C");
 
           exit();
         });
@@ -93,7 +93,7 @@ function input(description, initialValue, encoding, hidden, callback) {
 
   stdin.resume();
 
-  stdin.on('data', listener);
+  stdin.on("data", listener);
 
   function listener(chunk) {
     const character = chunk.toString(encoding);
@@ -103,7 +103,7 @@ function input(description, initialValue, encoding, hidden, callback) {
       case CARRIAGE_RETURN_CHARACTER :
         stdout.write(LINE_FEED_CHARACTER);
 
-        stdin.removeListener('data', listener);
+        stdin.removeListener("data", listener);
 
         stdin.pause();
 

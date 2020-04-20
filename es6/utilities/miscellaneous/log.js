@@ -1,23 +1,23 @@
-'use strict';
+"use strict";
 
-import path from 'path';
+import path from "path";
 
-import { second } from '../../utilities/array';
-import { concatenatePaths } from '../../utilities/path';
-import { checkFileExists, readFile, appendToFile, renameFile, getStats } from '../../utilities/fileSystem';
+import { second } from "../../utilities/array";
+import { concatenatePaths } from "../../utilities/path";
+import { checkFileExists, readFile, appendToFile, renameFile, getStats } from "../../utilities/fileSystem";
 
-const TRACE = 'TRACE',
-      DEBUG = 'DEBUG',
-      INFO = 'INFO',
-      WARNING = 'WARNING',
-      ERROR = 'ERROR',
-      FATAL = 'FATAL';
+const TRACE = "TRACE",
+      DEBUG = "DEBUG",
+      INFO = "INFO",
+      WARNING = "WARNING",
+      ERROR = "ERROR",
+      FATAL = "FATAL";
 
 let logLevel = WARNING,
-    logFileBaseName = 'default',
+    logFileBaseName = "default",
     logDirectoryPath = null;
 
-export default function log(messageOrError, level = '') {
+export default function log(messageOrError, level = "") {
   let pertinentStackMessageIndex = 1;
 
   const levels = [
@@ -29,7 +29,7 @@ export default function log(messageOrError, level = '') {
     FATAL
   ];
 
-  if (level !== '') {
+  if (level !== "") {
     const levelIndex = levels.indexOf(level),
           logLevelIndex = levels.indexOf(logLevel);
 
@@ -235,7 +235,7 @@ function filePathFromStackMessage(stackMessage) {
   const matches = stackMessage.match(/(\/.+):\d+:\d+/m),
         secondMatch = second(matches),
         absoluteFilePath = secondMatch,  ///
-        currentWorkingDirectoryPath = path.resolve('.'),  ///
+        currentWorkingDirectoryPath = path.resolve("."),  ///
         currentWorkingDirectoryPathLength = currentWorkingDirectoryPath.length,
         start = currentWorkingDirectoryPathLength + 1,  ///
         filePath = absoluteFilePath.substr(start);
@@ -252,14 +252,14 @@ function lineNumberFromStackMessage(stackMessage) {
 }
 
 function padStartWithZeroes(string, targetLength) {
-  const padString = '0',
+  const padString = "0",
         paddedString = padStart(string, targetLength, padString);
 
   return paddedString;
 }
 
 function padStart(string, targetLength, padString) {
-  let padding = '';
+  let padding = "";
 
   for (let index = 0; index < targetLength; index++) {
     padding += padString;

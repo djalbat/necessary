@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const GET_METHOD = 'GET',
-      POST_METHOD = 'POST';
+const GET_METHOD = "GET",
+      POST_METHOD = "POST";
 
 export function get(host, uri, parameters, callback) {
   if (callback === undefined) {
@@ -53,7 +53,7 @@ function request(host, uri, parameters, method, body, callback) {
 
   xmlHttpRequest.open(method, url, true);
 
-  xmlHttpRequest.setRequestHeader('content-type', 'application/json;charset=UTF-8');
+  xmlHttpRequest.setRequestHeader("content-type", "application/json;charset=UTF-8");
 
   xmlHttpRequest.send(body);
 }
@@ -66,19 +66,19 @@ function queryStringFromParameters(parameters) {
           const value = parameters[name],
                 encodedName = encodeURIComponent(name),
                 encodedValue = encodeURIComponent(value),
-                ampersandOrNothing = (index !== lastIndex) ? '&' : '';
+                ampersandOrNothing = (index !== lastIndex) ? "&" : "";
   
           queryString += `${encodedName}=${encodedValue}${ampersandOrNothing}`;
   
           return queryString;
-        }, '');
+        }, "");
 
   return queryString;
 }
 
 function urlFromHostURIAndParameters(host, uri, parameters) {
   const queryString = queryStringFromParameters(parameters),
-        url = (queryString === '') ?
+        url = (queryString === """") ?
               `${host}${uri}` :
                 `${host}${uri}?${queryString}`;
 

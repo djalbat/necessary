@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-import path from 'path';
+import path from "path";
 
-import { first, second } from '../../utilities/array';
-import { readFile, writeFile, checkFileExists } from '../../utilities/fileSystem';
+import { first, second } from "../../utilities/array";
+import { readFile, writeFile, checkFileExists } from "../../utilities/fileSystem";
 
 let pathResolver = path.resolve,
-    baseExtension = '';
+    baseExtension = "";
 
 export default function rc(environmentNameOrArgv = null) {
   let environment,

@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const ETX_CHARACTER = '\u0003';
+const ETX_CHARACTER = "\u0003";
 
 export default function onETX(handler) {
   const { stdin } = process,
@@ -8,20 +8,20 @@ export default function onETX(handler) {
 
   if (setRawMode) {
     const rawMode = true,
-          encoding = 'utf8';
+          encoding = "utf8";
 
     stdin.setRawMode(rawMode);
     stdin.setEncoding(encoding);
 
     stdin.resume();
 
-    stdin.addListener('data', dataHandler);
+    stdin.addListener("data", dataHandler);
 
     return offExt;
   }
 
   function offExt() {
-    stdin.removeListener('data', dataHandler);
+    stdin.removeListener("data", dataHandler);
   }
 
   function dataHandler(character) {

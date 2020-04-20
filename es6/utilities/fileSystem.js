@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-import fs from 'fs';
+import fs from "fs";
 
-import { pathWithoutBottommostNameFromPath } from '../utilities/path';
+import { pathWithoutBottommostNameFromPath } from "../utilities/path";
 
 export function checkEntryExists(entryPath) {
   const entryExists = fs.existsSync(entryPath);
@@ -73,7 +73,7 @@ export function readDirectory(directoryPath) {
   return subEntryNames;
 }
 
-export function readFile(filePath, encoding = 'utf8') {
+export function readFile(filePath, encoding = "utf8") {
   const options = {
           encoding
         },
@@ -93,7 +93,7 @@ export function appendToFile(filePath, content) {
 export function createDirectory(directoryPath) {
   const directoryPathWithoutBottommostName = pathWithoutBottommostNameFromPath(directoryPath);
 
-  if ((directoryPathWithoutBottommostName !== '.') && (directoryPathWithoutBottommostName !== null)) {
+  if ((directoryPathWithoutBottommostName !== ".") && (directoryPathWithoutBottommostName !== null)) {
     const parentDirectoryPath = directoryPathWithoutBottommostName,  ///
           parentDirectoryExists = checkDirectoryExists(parentDirectoryPath);
 
