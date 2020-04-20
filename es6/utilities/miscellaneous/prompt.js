@@ -19,7 +19,7 @@ export default function prompt(options, callback) {
           options
         };
 
-  whilst(attempt, function() {
+  whilst(attempt, () => {
     const { value } = context;
     
     callback(value);
@@ -75,7 +75,7 @@ function input(description, initialValue, encoding, hidden, callback) {
   let value = initialValue; ///
 
   const rawMode = true,
-        offETX = onETX(function() {
+        offETX = onETX(() => {
           console.log("^C");
 
           exit();

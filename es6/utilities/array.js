@@ -61,7 +61,7 @@ export function splice(array1, start, deleteCount = Infinity, array2 = []) {
 export function replace(array, element, test) {
   let start = -1;
   
-  const found = array.some(function(element, index) {
+  const found = array.some((element, index) => {
     const passed = test(element, index);
 
     if (passed) {
@@ -83,7 +83,7 @@ export function replace(array, element, test) {
 export function filter(array, test) {
   const filteredElements = [];
   
-  backwardsForEach(array, function(element, index) {
+  backwardsForEach(array, (element, index) => {
     const passed = test(element, index);
 
     if (!passed) {
@@ -102,7 +102,7 @@ export function filter(array, test) {
 export function find(array, test) {
   const elements = [];
 
-  forwardsForEach(array, function(element, index) {
+  forwardsForEach(array, (element, index) => {
     const passed = test(element, index);
 
     if (passed) {
@@ -116,7 +116,7 @@ export function find(array, test) {
 export function prune(array, test) {
   let prunedElement = undefined;
   
-  array.some(function(element, index) {
+  array.some((element, index) => {
     const passed = test(element, index);
 
     if (!passed) {
@@ -135,7 +135,7 @@ export function prune(array, test) {
 }
 
 export function patch(array, element, test) {
-  const found = array.some(function(element, index) {
+  const found = array.some((element, index) => {
     const passed = test(element, index);
 
     if (passed) {
@@ -152,7 +152,7 @@ export function patch(array, element, test) {
 }
 
 export function augment(array1, array2, test) {
-  array2.forEach(function(element, index) {
+  array2.forEach((element, index) => {
     const passed = test(element, index);
 
     if (passed) {
@@ -162,7 +162,7 @@ export function augment(array1, array2, test) {
 }
 
 export function separate(array, array1, array2, test) {
-  array.forEach(function(element, index) {
+  array.forEach((element, index) => {
     const passed = test(element, index);
 
     passed ?
@@ -234,7 +234,7 @@ export function backwardsEvery(array, callback) {
 export function forwardsReduce(array, callback, initialValue) {
 	let value = initialValue;
 
-	forwardsForEach(array, function(element, index) {
+	forwardsForEach(array, (element, index) => {
 		value = callback(value, element, index);
 	});
 
@@ -244,7 +244,7 @@ export function forwardsReduce(array, callback, initialValue) {
 export function backwardsReduce(array, callback, initialValue) {
 	let value = initialValue;
 
-	backwardsForEach(array, function(element, index) {
+	backwardsForEach(array, (element, index) => {
 		value = callback(value, element, index);
 	});
 

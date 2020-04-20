@@ -10,15 +10,15 @@ export function parseFile(filePath, args, regex) {
 }
 
 export function parseContent(content, args, regex) {
-  const lines = content.split("\n""),
+  const lines = content.split("\n"),
         parsedLines = parseLines(lines, args, regex),
-        parsedContent = parsedLines.join("\n"");
+        parsedContent = parsedLines.join("\n");
 
   return parsedContent;
 }
 
 export function parseLine(line, args, regex = /\${(.+?)}/g) {
-  const parsedLine = line.replace(regex, function(match, token) {
+  const parsedLine = line.replace(regex, (match, token) => {
     const parsedToken = parseToken(token, args);
 
     return parsedToken;
@@ -34,7 +34,7 @@ export default {
 };
 
 function parseLines(lines, args, regex) {
-  const parsedLines = lines.map(function(line) {
+  const parsedLines = lines.map((line) => {
     const parsedLine = parseLine(line, args, regex);
 
     return parsedLine;

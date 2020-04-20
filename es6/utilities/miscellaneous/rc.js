@@ -29,7 +29,7 @@ export default function rc(environmentNameOrArgv = null) {
 
     environment = firstEnvironment; ///
   } else {
-    environment = environments.find(function(environment) {
+    environment = environments.find((environment) => {
       const { name } = environment,
             found = (name === environmentName);
 
@@ -66,7 +66,7 @@ function updateRCFile(addedProperties, ...deletedPropertyNames) {
     Object.assign(json, addedProperties);
   }
 
-  deletedPropertyNames.forEach(function(deletedPropertyName) {
+  deletedPropertyNames.forEach((deletedPropertyName) => {
     delete json[deletedPropertyName];
   });
 
@@ -107,7 +107,7 @@ Object.assign(rc, {
 function environmentNameFromArgv(argv) {
   let environmentName = null;
 
-  argv.find(function(argument) {  ///
+  argv.find((argument) => {  ///
     const matches = argument.match(/--environment=(.+)/),
           found = (matches !== null);
 

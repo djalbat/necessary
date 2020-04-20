@@ -31,7 +31,7 @@ function request(host, uri, parameters, method, body, callback) {
   const url = urlFromHostURIAndParameters(host, uri, parameters),
         xmlHttpRequest = new XMLHttpRequest();
 
-  xmlHttpRequest.onreadystatechange = function() {
+  xmlHttpRequest.onreadystatechange = () => {
     const { readyState, status, responseText } = xmlHttpRequest;
 
     if (readyState == 4) {
@@ -62,7 +62,7 @@ function queryStringFromParameters(parameters) {
   const names = Object.keys(parameters),
         namesLength = names.length,
         lastIndex = namesLength - 1,
-        queryString = names.reduce(function(queryString, name, index) {
+        queryString = names.reduce((queryString, name, index) => {
           const value = parameters[name],
                 encodedName = encodeURIComponent(name),
                 encodedValue = encodeURIComponent(value),
@@ -78,7 +78,7 @@ function queryStringFromParameters(parameters) {
 
 function urlFromHostURIAndParameters(host, uri, parameters) {
   const queryString = queryStringFromParameters(parameters),
-        url = (queryString === """") ?
+        url = (queryString === "") ?
               `${host}${uri}` :
                 `${host}${uri}?${queryString}`;
 

@@ -78,7 +78,7 @@ export function eventually(callbacks, done, context) {
     }
   }
 
-  callbacks.forEach(function(callback, index) {
+  callbacks.forEach((callback, index) => {
     callback(next, done, context, index);
   });
 }
