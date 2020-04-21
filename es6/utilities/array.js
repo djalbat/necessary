@@ -1,8 +1,6 @@
 "use strict";
 
-export function first(array) {
-  return array[0];
-}
+export function first(array) { return array[0];}
 
 export function second(array) { return array[1]; }
 
