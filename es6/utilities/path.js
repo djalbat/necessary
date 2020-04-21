@@ -64,7 +64,7 @@ export function combinePaths(path, relativePath) {
   if (lastPathName !== undefined) {
     const combinedPathNames = [].concat(pathNames).concat(relativePathNames);
 
-    combinedPath = combinedPathNames.join(/\//);
+    combinedPath = combinedPathNames.join("/");
   }
 
   return combinedPath;
