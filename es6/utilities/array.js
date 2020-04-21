@@ -230,23 +230,23 @@ export function backwardsEvery(array, callback) {
 }
 
 export function forwardsReduce(array, callback, initialValue) {
-	let value = initialValue;
+  let value = initialValue;
 
-	forwardsForEach(array, (element, index) => {
-		value = callback(value, element, index);
-	});
+  forwardsForEach(array, (element, index) => {
+    value = callback(value, element, index);
+  });
 
-	return value;
+  return value;
 }
 
 export function backwardsReduce(array, callback, initialValue) {
-	let value = initialValue;
+  let value = initialValue;
 
-	backwardsForEach(array, (element, index) => {
-		value = callback(value, element, index);
-	});
+  backwardsForEach(array, (element, index) => {
+    value = callback(value, element, index);
+  });
 
-	return value;
+  return value;
 }
 
 export function forwardsForEach(array, callback) {
@@ -299,8 +299,8 @@ export default {
   backwardsSome,
   forwardsEvery,
   backwardsEvery,
-	forwardsReduce,
-	backwardsReduce,
+  forwardsReduce,
+  backwardsReduce,
   forwardsForEach,
   backwardsForEach
 };
