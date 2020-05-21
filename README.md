@@ -115,7 +115,7 @@ splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3]
 * The `replace()` function will replace an element in the array with the given element the first time that the test callback function returns a truthy value:
 
 ```
-replace([1, 2, 0, -1, -2], 3, function(element, index) {
+replace([1, 2, 0, -1, -2], 3, (element, index) => {
   return element === 0;
 }); // the first array argument becomes [1, 2, 3, -1, -2]
 ```
@@ -123,7 +123,7 @@ replace([1, 2, 0, -1, -2], 3, function(element, index) {
 * The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a test callback function that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
 
 ```
-filter([1, 2, -1, -2], function(element, index) {
+filter([1, 2, -1, -2], (element, index) => {
   return element > 0;
 }); // the first array argument becomes [1, 2]
     // the return value is [-1, -2]
@@ -132,7 +132,7 @@ filter([1, 2, -1, -2], function(element, index) {
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the test callback function returns a truthy value, rather than just the first:
 
 ```
-find([1, 2, -1, -2], function(element, index) {
+find([1, 2, -1, -2], (element, index) => {
   return element > 0;
 }); // the return value will be [1, 2]
 ```
@@ -140,7 +140,7 @@ find([1, 2, -1, -2], function(element, index) {
 * The `prune()` function is much like the `filter()` function, however it will terminate the first time that the test callback function does not return a truthy value:
 
 ```
-prune([1, 2, -1, -2], function(element, index) {
+prune([1, 2, -1, -2], (element, index) => {
   return element > 0;
 }); // the first array argument becomes [1, 2, -2] 
     // the return value is -1 
@@ -149,7 +149,7 @@ prune([1, 2, -1, -2], function(element, index) {
 * The `patch()` function will append the given element to the first array argument the first time that the test callback function returns a truthy value:
 
 ```
-patch([1, 2, 0, -1, -2], 4, function(element, index) {
+patch([1, 2, 0, -1, -2], 4, (element, index) => {
   return element === 0;
 }); // the first array argument becomes [1, 2, 0, -1, -2, 4]
 ```
@@ -157,7 +157,7 @@ patch([1, 2, 0, -1, -2], 4, function(element, index) {
 * The `augment()` function is appends each of the elements of the second array argument to the first array argument whenever the test callback returns a truthy value:
 
 ```
-augment([1, 2, 3], [-1, 4, -2, 5], function(element, index) {
+augment([1, 2, 3], [-1, 4, -2, 5], (element, index) => {
   return element > 0;
 }); // the first array argument becomes [1, 2, 3, 4, 5]
 ```
@@ -165,7 +165,7 @@ augment([1, 2, 3], [-1, 4, -2, 5], function(element, index) {
 * The `separate()` function separates the first array argument, pushing each of its elements onto either the second or the third array argument depending on whether or not the test callback returns a truthy value:
 
 ```
-separate([1, -1, -2, 2, 3, -3], [], [], function(element, index) {
+separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
   return element > 0;
 }); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
@@ -362,7 +362,7 @@ These functions generally take either a callback or an array of callbacks, follo
 ```
 const context = {}; ///
 
-const callback = function(next, done, context, index) {
+const callback = (next, done, context, index) => {
   const terminate = (index === 9);
 
   if (terminate) {
@@ -374,7 +374,7 @@ const callback = function(next, done, context, index) {
   }
 }
 
-whilst(callback, function() {
+whilst(callback, () => {
   /// done
 }, context);
 ``` 
@@ -384,7 +384,7 @@ whilst(callback, function() {
 ```
 const context = {};
 
-const callback = function(element, next, done, context, index) {
+const callback = (element, next, done, context, index) => {
   const terminate = (element === 3);
 
   if (terminate) {
@@ -398,7 +398,7 @@ const callback = function(element, next, done, context, index) {
 
 const array = [0, 1, 2, 3, 4, 5];
 
-forEach(array, callback, function() {
+forEach(array, callback, () => {
   /// done
 }, context);
 ```
@@ -408,10 +408,10 @@ forEach(array, callback, function() {
 ```
 const context = {};
 
-const firstCallback = function(next, done, context, index) { next(); },
-      secondCallback = function(next, done, context, index) { next(); },
-      thirdCallback = function(next, done, context, index) { done(); },
-      lastCallback = function(next, done, context, index) { next(); },
+const firstCallback = (next, done, context, index) => { next(); },
+      secondCallback = (next, done, context, index) => { next(); },
+      thirdCallback = (next, done, context, index) => { done(); },
+      lastCallback = (next, done, context, index) => { next(); },
       callbacks = [
         firstCallback,
         secondCallback,
@@ -419,7 +419,7 @@ const firstCallback = function(next, done, context, index) { next(); },
         lastCallback
       ];
 
-sequence(callbacks, function() {
+sequence(callbacks, () => {
   /// done
 }, context);
 ```
@@ -429,16 +429,16 @@ sequence(callbacks, function() {
 ```
 const context = {};
 
-const firstCallback = function(next, done, context, index) { next(); },
-      secondCallback = function(next, done, context, index) { next(); },
-      thirdCallback = function(next, done, context, index) { done(); },
+const firstCallback = (next, done, context, index) => { next(); },
+      secondCallback = (next, done, context, index) => { next(); },
+      thirdCallback = (next, done, context, index) => { done(); },
       callbacks = [
         firstCallback,
         secondCallback,
         thirdCallback
       ];
 
-eventually(callbacks, function() {
+eventually(callbacks, () => {
   /// done
 }, context);
 ```
@@ -447,7 +447,7 @@ eventually(callbacks, function() {
 ```
 const context = {};
 
-const callback = function(next, done, context, index) {
+const callback = (next, done, context, index) => {
   ...
 
   next();
@@ -455,7 +455,7 @@ const callback = function(next, done, context, index) {
 
 const length = 10;
 
-repeatedly(callback, length, function() {
+repeatedly(callback, length, () => {
   // done
 }, context);
 ```
@@ -638,7 +638,7 @@ const host = '...',
         ...
       };
 
-get(host, uri, parameters, function(json) {
+get(host, uri, parameters, (json) => {
   if (json !== null) {
     ...
   }
@@ -654,7 +654,7 @@ const host = '...',
       uri = '...',
       json = ...;
 
-post(host, uri, json, function(json) {
+post(host, uri, json, (json) => {
   if (json !== null) {
     ...
   }
@@ -689,7 +689,7 @@ const hidden = true,
         validationFunction
       };
 
-prompt(options, function(value) {
+prompt(options, (value) => {
   ...
 });
 ```
