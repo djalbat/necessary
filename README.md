@@ -192,51 +192,51 @@ These functions manipulate or query strings that represent file and directory pa
 * The `isPathName()` function returns `true` if the string argument contains no `/` delimiters apart from the first and last characters:
 
 ```
-isPathName('root/'); // the return value is true
+isPathName("root/"); // the return value is true
 
-isPathName('/root'); // the return value is true
+isPathName("/root"); // the return value is true
 
-isPathName('./root'); // the return value is false
+isPathName("./root"); // the return value is false
 
-isPathName('../etc'); // the return value is false
+isPathName("../etc"); // the return value is false
 
-isPathName('/root/etc'); // the return value is false
+isPathName("/root/etc"); // the return value is false
 ```
 
 * The `isPathTopmostName()` function returns `true` if the string argument is both a name and an absolute path:
 
 ```
-isPathTopmostName('/root/'); // the return value is true
+isPathTopmostName("/root/"); // the return value is true
 
-isPathTopmostName('/root'); // the return value is true
+isPathTopmostName("/root"); // the return value is true
 
-isPathTopmostName('etc/'); // the return value is false
+isPathTopmostName("etc/"); // the return value is false
 ```
 
 * The `isPathRelativePath()` function returns `true` if the string argument does not start with a delimiter`/`:
 
 ```
-isPathRelativePath('etc'); // the return value is true
+isPathRelativePath("etc"); // the return value is true
 
-isPathRelativePath('./etc'); // the return value is true
+isPathRelativePath("./etc"); // the return value is true
 
-isPathRelativePath('../etc'); // the return value is true
+isPathRelativePath("../etc"); // the return value is true
 ```
 
 * The `isPathAbsolutePath()` returns `true` if the string argument starts with a delimiter`/`:
 
 ```
-isPathAbsolutePath('/root/etc'); // the return value is true
+isPathAbsolutePath("/root/etc"); // the return value is true
 ```
 
 * The `isTopmostNameInAbsolutePath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a delimiter`/` and further characters:
 
 ```
-isTopmostNameInAbsolutePath('/root', '/root/etc');  // the return value is true
+isTopmostNameInAbsolutePath("/root", "/root/etc");  // the return value is true
 
-isTopmostNameInAbsolutePath('root', '/root/etc');  // the return value is false
+isTopmostNameInAbsolutePath("root", "/root/etc");  // the return value is false
 
-isTopmostNameInAbsolutePath('etc', '/root/etc'); // the return value is false
+isTopmostNameInAbsolutePath("etc", "/root/etc"); // the return value is false
 ```
 
 Note that the function assumes that the first argument is a topmost name and that the second argument is an abolute path. It does not check, it simply compares the two arguments with a single regex. 
@@ -244,9 +244,9 @@ Note that the function assumes that the first argument is a topmost name and tha
 * The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `..` signifier it finds in the latter. Current directory `.` signifiers are also removed:
 
 ```
-combinePaths('etc/', './init'); // the return value is 'etc/init'
+combinePaths("etc/", "./init"); // the return value is 'etc/init'
 
-combinePaths('/root/etc/', '../init'); // the return value is '/root/init'
+combinePaths("/root/etc/", "../init"); // the return value is '/root/init'
 ```
 
 Note that the function assumes that the second argument is a relative name or path.
@@ -254,9 +254,9 @@ Note that the function assumes that the second argument is a relative name or pa
 * The `concatenatePaths()` function will concatenate the first and second string arguments, adding the trailing forward slash `/` to the first string if necessary:
 
 ```
-concatenatePaths('root', 'etc/'); // the return value is 'root/etc/'
+concatenatePaths("root", "etc/"); // the return value is 'root/etc/'
 
-concatenatePaths('root/', 'etc/'); // the return value is 'root/etc/'
+concatenatePaths("root/", "etc/"); // the return value is 'root/etc/'
 ```
 
 Note that the function assumes that the second argument is a relative name or path although without a leading current directory `.` or parent directory `..` signifier. 
@@ -264,15 +264,15 @@ Note that the function assumes that the second argument is a relative name or pa
 * The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` functions work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
 
 ```
-bottommostNameFromPath('../etc'); // the return value is 'etc'
+bottommostNameFromPath("../etc"); // the return value is 'etc'
 
-topmostDirectoryPathFromPath('/root/etc/init.conf'); // the return value is '/root/etc'
+topmostDirectoryPathFromPath("/root/etc/init.conf"); // the return value is '/root/etc'
 
-topmostDirectoryNameFromPath('etc/init.conf'); // the return value is 'etc'
+topmostDirectoryNameFromPath("etc/init.conf"); // the return value is 'etc'
 
-pathWithoutBottommostNameFromPath('root/etc/init.conf'); // the return value is 'root/etc'
+pathWithoutBottommostNameFromPath("root/etc/init.conf"); // the return value is 'root/etc'
 
-pathWithoutTopmostDirectoryNameFromPath('root/etc/init.conf'); // the return value is 'etc/init.conf'
+pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // the return value is 'etc/init.conf'
 ```
 
 ## File system functions
@@ -296,53 +296,53 @@ An inglorious collection of functions which do no more than paper over some of N
 * The `checkEntryExists()`, `checkFileExists()`, `checkDirectoryExists()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
 
 ```
-checkEntryExists('root/etc'); // the return value is true if the file or directory exists
+checkEntryExists("root/etc"); // the return value is true if the file or directory exists
 
-checkFileExists('root/etc/init.conf'); // the return value is true if the file exists
+checkFileExists("root/etc/init.conf"); // the return value is true if the file exists
 
-checkDirectoryExists('root/etcconf'); // the return value is true if the directory exists
+checkDirectoryExists("root/etcconf"); // the return value is true if the directory exists
 
-isEntryFile('root/etc/init.conf'); // the return value is true if the entry is a file
+isEntryFile("root/etc/init.conf"); // the return value is true if the entry is a file
 
-isEntryDirectory('root'); // the return value is true if the entry is a directory
+isEntryDirectory("root"); // the return value is true if the entry is a directory
 
-isDirectoryEmpty('root/etc'); // the return value is true if the directory is empty
+isDirectoryEmpty("root/etc"); // the return value is true if the directory is empty
 ```
 
 * The `readDirectory()` function returns an array of entry names if the directory exists:
 
 ```
-readDirectory('root/etc'); // returns the contents of the 'root/etc' directory
+readDirectory("root/etc"); // returns the contents of the 'root/etc' directory
 ```
 
 * The `readFile()` function takes the file encoding as an optional second string argument. The default is `utf8`. It returns the content of the file upon success:
 
 ```
-readFile('root/etc/init.conf'); // returns the content of the 'root/etc/init.conf' file
+readFile("root/etc/init.conf"); // returns the content of the 'root/etc/init.conf' file
 ```
 
 * The `writeFile()` function takes the content of the file as a second string argument. It does not return anything upon success:
 
 ```
-writeFile('root/etc/init.conf', ''); // writes '' to the 'root/etc/init.conf' file
+writeFile("root/etc/init.conf", ""); // writes '' to the 'root/etc/init.conf' file
 ```
 
 * The `appendToFile()` function takes the content to append file as a second string argument. It will create teh file if necessary and does not return anything upon success:
 
 ```
-appendToFile('root/etc/init.conf', ''); // appends '' to the 'root/etc/init.conf' file
+appendToFile("root/etc/init.conf", ""); // appends '' to the 'root/etc/init.conf' file
 ```
 
 * The `createDirectory()` function creates a directory, also creating the parent directories if necessary:
 
 ```
-createDirectory('root/etc/init'); // Creates the 'root/etc/init' directory 
+createDirectory("root/etc/init"); // Creates the 'root/etc/init' directory
 ```
 
 * The `getStats()` function returns an instance of the [fs.Stats](https://nodejs.org/api/fs.html#fs_class_fs_stats) class for a file or a directory:
 
 ```
-const stats = getStats('root/etc'); // returns stats for the 'root/etc' directory
+const stats = getStats("root/etc"); // returns stats for the 'root/etc' directory
 ```
 
 ## Asynchronous functions
@@ -471,8 +471,8 @@ These functions parse files, content or single lines, replacing each token of th
 * The `parseFile()` function takes a file path as the first argument:
 
 ```
-const filePath = '/etc/var/public/name.html',
-      name = 'Joe Bloggs',
+const filePath ="/etc/var/public/name.html",
+      name = "Joe Bloggs",
       age = 99,
       args = {
         name,
@@ -490,7 +490,7 @@ const content = `
   age: <strong>${age}</strong><br/>
   
       `,
-      name = 'Joe Bloggs',
+      name = "Joe Bloggs",
       age = 99,
       args = {
         name,
@@ -502,8 +502,8 @@ const content = `
 * The `parseLine()` function takes a single line of content as the first argument:
 
 ```
-const line = '${name}, aged ${age}.',
-      name = 'Joe Bloggs',
+const line = "${name}, aged ${age}.",
+      name = "Joe Bloggs",
       age = 99,
       args = {
         name,
@@ -526,7 +526,7 @@ A small if motley collection of functions for various common tasks.
 * The `log()` function provides rudimentary logging functionality, printing its argument to the console, prepended with a date and time stamp together with the path of the file containing the callee function and the line number:
 
 ```
-log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...' being logged.
+log("...") // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...' being logged.
 ```
 
 You can pass an error instead of a string to `log()`, in which case it will print the file path and line number of the place where the error was thrown along with the error message.
@@ -536,10 +536,10 @@ Additionally, it is possible to print to a log file if a log directory and, opti
 ```
 const { setLogFileBaseName, setLogDirectoryPath } = log;
 
-setLogFileBaseName('example');
-setLogDirectoryPath('./log');
+setLogFileBaseName("example");
+setLogDirectoryPath("./log");
 
-log('...') // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...\n' line being appended to
+log("...") // Results in '28-01-2018 15:44:47.363 bin/main.js(35) ...\n' line being appended to
            // the './log/example.log' file as well as the message being logged.
 ```
 
@@ -550,8 +550,8 @@ const { setLogLevel, DEBUG } = log;
 
 setLogLevel(DEBUG);
 
-log.error('...') // Printed to the console and optionally, to the log file.
-log.trace('...') // Ignored, because the trace level is lower than the debug level.
+log.error("...") // Printed to the console and optionally, to the log file.
+log.trace("...") // Ignored, because the trace level is lower than the debug level.
 ```
 
 There is also a `setLogOptions()` function which allows you to pass the log level, base file name and directory path as a plain old JavaScript object. See below for a usage example.
@@ -590,7 +590,7 @@ By default it will parse a file called `.rc` in the current working directory. T
 In the absence of being passed an environment name, it will parse and return the first element of the `enviromnents` array. It will not try to assign the `name` property of the chosen environment to itself, by the way, because functions already have a `name` property. It can be instructed to a chose a specific environment thus:
 
 ```
-rc('production'); // Provides the 'production' environment
+rc("production"); // Provides the 'production' environment
 ```
 
 Or you can pass `process.argv` if the command line arguments include something of the form `--environment=...`:
@@ -604,7 +604,7 @@ You can change the base extension of the file that is parsed, that is the part o
 ```
 const { setRCBaseExtension } = rc;
 
-setRCBaseExtension('default'); 
+setRCBaseExtension("default");
 
 rc(); // Provides the first environment in the '.defaultrc' file
 ```
@@ -624,16 +624,16 @@ const json = readRCFile();  // Reads the entire contents of the rc file into a J
 
 writeRCFile(json);  // Stringifies the given JSON object and writes it to the rc file
 
-updateRCFile({example: 'example'});  // Updates the rc file, adding the 'example' property
+updateRCFile({example: "example"});  // Updates the rc file, adding the 'example' property
 
-updateRCFile(null, 'example');  // Updates the rc file, removing the 'example' property
+updateRCFile(null, "example");  // Updates the rc file, removing the 'example' property
 ```
 
 * The `get()` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. If the status code is 200 and the response is stringified JSON, this will be parsed and returned by way of the callback, otherwise null will be returned:
 
 ```
-const host = '...',
-      uri = '...',
+const host = "...",
+      uri = "...",
       parameters = {
         ...
       };
@@ -650,8 +650,8 @@ Note that the `uri` argument should include a leading forward slash `/` if the `
 * The `post()` function behaves similarly to the `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `uri` arguments. This argument is stringified and sent in the request body:
 
 ```
-const host = '...',
-      uri = '...',
+const host = "...",
+      uri = "...",
       json = ...;
 
 post(host, uri, json, (json) => {
