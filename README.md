@@ -32,13 +32,6 @@ const { first, last } = arrayUtilities,
 ```
 The miscellaneous functions are a special case. They can be treated as above but may well have other functions assigned to them. See below.
 
-## Compiling from source
-
-Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the `package.json` file. The pertinent commands are:
-
-    npm run build-debug
-    npm run watch-debug
-
 ## Array functions
 
 - `first()`
@@ -698,6 +691,13 @@ prompt(options, (value) => {
 ```
 
 There are a range of options. Aside from those shown above, the options object can have `attempts` and `encoding` properties with default values `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. Setting it to `true` results in password-style input, that is, the characters remain hidden. The options object can also include a `validatePattern` property, which must be a regular expression. This is used for validation in the absence of a validation function. Lastly, note that the `description` and `errorMessage` properties are mandatory.
+
+## Compiling from source
+
+Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the `package.json` file. The pertinent commands are:
+
+    npm run build-debug
+    npm run watch-debug
 
 ## Contact
 
