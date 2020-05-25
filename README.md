@@ -20,6 +20,8 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
+Each of the collections of utility functions described below is exported as a plain old JavaScript object. To get hold of them, import the requisite object and then destructure it:
+
 ```
 import { arrayUtilities, asynchronousUtilities, fileSystemUtilities } from "necessary";
 
@@ -28,6 +30,7 @@ const { first, last } = arrayUtilities,
 
 ...
 ```
+The miscellaneous functions are a special case. They can be treated as above but may well have other functions assigned to them. See below.
 
 ## Compiling from source
 
