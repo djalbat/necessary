@@ -57,7 +57,7 @@ export function splice(array1, start, deleteCount = Infinity, array2 = []) {
 }
 
 export function replace(array, element, test) {
-  let start = -1;
+  let start;
   
   const found = array.some((element, index) => {
     const passed = test(element, index);
