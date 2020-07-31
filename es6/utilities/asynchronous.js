@@ -10,7 +10,7 @@ export function whilst(callback, done, context) {
           terminate = callback(next, done, context, index);
 
     if (terminate) {
-      done && done();
+      done();
     }
   }
 
@@ -28,7 +28,7 @@ export function forEach(array, callback, done, context) {
     const terminate = (count === length);
 
     if (terminate) {
-      done && done();
+      done();
     } else {
       const index = count,  ///
             element = array[index];
@@ -51,7 +51,7 @@ export function sequence(callbacks, done, context) {
     const terminate = (count === length);
 
     if (terminate) {
-      done && done();
+      done();
     } else {
       const index = count,  ///
             callback = callbacks[index];
@@ -74,7 +74,7 @@ export function eventually(callbacks, done, context) {
     const terminate = (count === length);
 
     if (terminate) {
-      done && done();
+      done();
     }
   }
 
@@ -92,7 +92,7 @@ export function repeatedly(callback, length, done, context) {
     const terminate = (count === length);
 
     if (terminate) {
-      done && done();
+      done();
     }
   }
 
@@ -112,7 +112,7 @@ export function forwardsForEach(array, callback, done, context) {
     const terminate = (count === length);
 
     if (terminate) {
-      done && done();
+      done();
     } else {
       const index = count,  ///
             element = array[index];
@@ -135,7 +135,7 @@ export function backwardsForEach(array, callback, done, context) {
     const terminate = (count === -1);
 
     if (terminate) {
-      done && done();
+      done();
     } else {
       const index = count,  ///
             element = array[index];
