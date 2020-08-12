@@ -20,6 +20,8 @@ export function secondLast(array) { return array[array.length - 2]; }
 
 export function last(array) { return array[array.length - 1]; }
 
+export function head(array) { return array.slice(0, 1); }
+
 export function tail(array) { return array.slice(1); }
 
 export function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
@@ -280,6 +282,7 @@ export default {
   thirdLast,
   secondLast,
   last,
+  head,
   tail,
   push,
   unshift,

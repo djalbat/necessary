@@ -44,6 +44,7 @@ The miscellaneous functions are a special case. They can be treated as above but
 - `thirdLast()`
 - `secondLast()`
 - `last()`
+- `head()`
 - `tail()`
 - `push()`
 - `unshift()`
@@ -70,7 +71,7 @@ The miscellaneous functions are a special case. They can be treated as above but
 
 Note that none of these functions take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
 
-* The functions `first()` through to `last()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `tail()` function returns all but the first element of the array argument.
+* The functions `first()` through to `last()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `head()` function returns the first element of its array argument whilst The `tail()` function returns all but the first element of its array argument.
 
 * The `push()` function is similar to its native counterpart but will push an array rather than a single element.
 
