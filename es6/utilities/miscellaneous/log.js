@@ -7,21 +7,21 @@ import { concatenatePaths } from "../../utilities/path";
 import { checkFileExists, readFile, appendToFile, renameFile, getStats } from "../../utilities/fileSystem";
 import { TRACE, DEBUG, INFO, WARNING, ERROR, FATAL, DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH } from "../../constants";
 
+const levels = [
+  TRACE,
+  DEBUG,
+  INFO,
+  WARNING,
+  ERROR,
+  FATAL,
+];
+
 let logLevel = DEFAULT_LOG_LEVEL,
     logFileBaseName = DEFAULT_LOG_FILE_BASE_NAME,
     logDirectoryPath = DEFAULT_LOG_DIRECTORY_PATH;
 
 export default function log(messageOrError, level = "") {
   let salientStackMessageIndex = 1;
-
-  const levels = [
-    TRACE,
-    DEBUG,
-    INFO,
-    WARNING,
-    ERROR,
-    FATAL,
-  ];
 
   if (level !== "") {
     const levelIndex = levels.indexOf(level),
