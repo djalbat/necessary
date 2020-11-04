@@ -626,32 +626,32 @@ updateRCFile({example: "example"});  // Updates the rc file, adding the 'example
 updateRCFile(null, "example");  // Updates the rc file, removing the 'example' property
 ```
 
-* The `get()` function sends a `GET` request, taking host, URI, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. If the status code is 200 and the response is stringified JSON, this will be parsed and returned by way of the callback, otherwise null will be returned:
+* The `get()` function sends a `GET` request, taking host, path, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. If the status code is 200 and the response is stringified JSON, this will be parsed and returned by way of the callback, otherwise null will be returned:
 
 ```
 const host = "...",
-      uri = "...",
+      path = "...",
       parameters = {
         ...
       };
 
-get(host, uri, parameters, (json) => {
+get(host, path, parameters, (json) => {
   if (json !== null) {
     ...
   }
 });
 ```
 
-Note that the `uri` argument should include a leading forward slash `/` if the `host` argument does not have a trailing one.
+Note that the `path` argument should include a leading forward slash `/` if the `host` argument does not have a trailing one.
 
-* The `post()` function behaves similarly to the `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `uri` arguments. This argument is stringified and sent in the request body:
+* The `post()` function behaves similarly to the `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `path` arguments. This argument is stringified and sent in the request body:
 
 ```
 const host = "...",
-      uri = "...",
+      path = "...",
       json = ...;
 
-post(host, uri, json, (json) => {
+post(host, path, json, (json) => {
   if (json !== null) {
     ...
   }

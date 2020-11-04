@@ -2,7 +2,7 @@
 
 import { GET_METHOD, POST_METHOD, APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE } from "../../constants";
 
-export function get(host, uri, parameters, callback) {
+export function get(host, path, parameters, callback) {
   if (callback === undefined) {
     callback = parameters; ///
     parameters = {};
@@ -11,10 +11,10 @@ export function get(host, uri, parameters, callback) {
   const method = GET_METHOD,
         body = undefined;
 
-  request(host, uri, parameters, method, body, callback);
+  request(host, path, parameters, method, body, callback);
 }
 
-export function post(host, uri, json, parameters, callback) {
+export function post(host, path, json, parameters, callback) {
   if (callback === undefined) {
     callback = parameters; ///
     parameters = {};
@@ -23,11 +23,11 @@ export function post(host, uri, json, parameters, callback) {
   const method = POST_METHOD,
         body = JSON.stringify(json);
 
-  request(host, uri, parameters, method, body, callback);
+  request(host, path, parameters, method, body, callback);
 }
 
-function request(host, uri, parameters, method, body, callback) {
-  const url = urlFromHostURIAndParameters(host, uri, parameters),
+function request(host, path, parameters, method, body, callback) {
+  const url = urlFromHostPathAndParameters(host, path, parameters),
         xmlHttpRequest = new XMLHttpRequest();
 
   xmlHttpRequest.onreadystatechange = () => {
@@ -77,11 +77,11 @@ function queryStringFromParameters(parameters) {
   return queryString;
 }
 
-function urlFromHostURIAndParameters(host, uri, parameters) {
+function urlFromHostPathAndParameters(host, path, parameters) {
   const queryString = queryStringFromParameters(parameters),
         url = (queryString === "") ?
-              `${host}${uri}` :
-                `${host}${uri}?${queryString}`;
+              `${host}${path}` :
+                `${host}${path}?${queryString}`;
 
   return url;
 }
