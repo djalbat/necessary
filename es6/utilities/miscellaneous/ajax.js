@@ -44,9 +44,9 @@ function request(host, uri, parameters, method, body, callback) {
         } catch (error) {
           ///
         }
-
-        callback(json);
       }
+
+      callback(json);
     }
   };
 
