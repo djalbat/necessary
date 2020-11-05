@@ -6,13 +6,14 @@ export const INFO = "INFO";
 export const WARNING = "WARNING";
 export const ERROR = "ERROR";
 export const FATAL = "FATAL";
-export const DEFAULT_LOG_LEVEL = WARNING;
+export const DEFAULT_LOG_LEVEL = WARNING; ///
 export const DEFAULT_LOG_DIRECTORY_PATH = null;
 export const DEFAULT_LOG_FILE_BASE_NAME = "default";
 
 export const GET_METHOD = "GET";
 export const POST_METHOD = "POST";
-export const APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE = "application/json;charset=UTF-8";
+export const APPLICATION_JSON_ACCEPT = "application/json";
+export const APPLICATION_JSON_CONTENT_TYPE = "application/json";
 
 export const DATA_EVENT = "data";
 export const UTF8_ENCODING = "utf8";

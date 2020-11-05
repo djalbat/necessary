@@ -642,7 +642,7 @@ get(host, path, parameters, (json) => {
 });
 ```
 
-Note that the `path` argument should include a leading forward slash `/` if the `host` argument does not have a trailing one.
+Note that the `path` argument should include a leading forward slash `/` since the `host` argument should not have a trailing one.
 
 * The `post()` function behaves similarly to the `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `path` arguments. This argument is stringified and sent in the request body:
 

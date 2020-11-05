@@ -1,6 +1,6 @@
 "use strict";
 
-import { GET_METHOD, POST_METHOD, APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE } from "../../constants";
+import { GET_METHOD, POST_METHOD, APPLICATION_JSON_ACCEPT, APPLICATION_JSON_CONTENT_TYPE } from "../../constants";
 
 export function get(host, path, parameters, callback) {
   if (callback === undefined) {
@@ -28,6 +28,7 @@ export function post(host, path, json, parameters, callback) {
 
 function request(host, path, parameters, method, body, callback) {
   const url = urlFromHostPathAndParameters(host, path, parameters),
+        accept = APPLICATION_JSON_ACCEPT,
         xmlHttpRequest = new XMLHttpRequest();
 
   xmlHttpRequest.onreadystatechange = () => {
@@ -50,11 +51,15 @@ function request(host, path, parameters, method, body, callback) {
     }
   };
 
-  const contentType = APPLICATION_JSON_CHARSET_UTF8_CONTENT_TYPE;
-
   xmlHttpRequest.open(method, url);
 
-  xmlHttpRequest.setRequestHeader("content-type", contentType);
+  xmlHttpRequest.setRequestHeader("accept", accept);
+
+  if (method === POST_METHOD) {
+    const contentType = APPLICATION_JSON_CONTENT_TYPE;
+
+    xmlHttpRequest.setRequestHeader("content-type", contentType);
+  }
 
   xmlHttpRequest.send(body);
 }
