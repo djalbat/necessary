@@ -26,7 +26,7 @@ export function post(host, path, json, parameters, callback) {
   request(host, path, parameters, method, body, callback);
 }
 
-function request(host, path, parameters, method, body, callback) {
+export function request(host, path, parameters, method, body, callback) {
   const url = urlFromHostPathAndParameters(host, path, parameters),
         accept = APPLICATION_JSON_ACCEPT,
         xmlHttpRequest = new XMLHttpRequest();
