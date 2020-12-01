@@ -47,7 +47,7 @@ export function request(host, path, parameters, method, body, callback) {
         }
       }
 
-      callback(json);
+      callback(json, status);
     }
   };
 
