@@ -4,11 +4,21 @@ import onETX from "./onETX";
 
 import { whilst } from "../../utilities/asynchronous";
 
-import { CTRL_C, DATA_EVENT, BACKSPACE_CHARACTER, LINE_FEED_CHARACTER, CARRIAGE_RETURN_CHARACTER } from "../../constants";
+import { CTRL_C, DATA_EVENT, DEFAULT_ATTEMPTS, BACKSPACE_CHARACTER, LINE_FEED_CHARACTER, CARRIAGE_RETURN_CHARACTER } from "../../constants";
 
 export default function prompt(options, callback) {
+  const { force } = options;
+
+  if (force) {
+    const value = force;  ///
+
+    callback(value);
+
+    return;
+  }
+
   const value = null,
-        { attempts = 3 } = options,
+        { attempts = DEFAULT_ATTEMPTS } = options,
         context = {
           value,
           attempts,
@@ -107,6 +117,7 @@ function input(description, initialValue, encoding, hidden, callback) {
         offETX();
 
         callback(value);
+
         break;
 
       case BACKSPACE_CHARACTER :
@@ -121,6 +132,7 @@ function input(description, initialValue, encoding, hidden, callback) {
         if (!hidden) {
           process.stdout.write(value);
         }
+
         break;
 
       default:
@@ -135,6 +147,7 @@ function input(description, initialValue, encoding, hidden, callback) {
 
           process.stdout.write(value);
         }
+
         break;
     }
   }
