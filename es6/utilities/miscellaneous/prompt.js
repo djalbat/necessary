@@ -4,31 +4,37 @@ import onETX from "./onETX";
 
 import { whilst } from "../../utilities/asynchronous";
 
-import { CTRL_C, DATA_EVENT, DEFAULT_ATTEMPTS, BACKSPACE_CHARACTER, LINE_FEED_CHARACTER, CARRIAGE_RETURN_CHARACTER } from "../../constants";
+import { CTRL_C,
+         DATA_EVENT,
+         DEFAULT_ENCODING,
+         DEFAULT_ATTEMPTS,
+         BACKSPACE_CHARACTER,
+         LINE_FEED_CHARACTER,
+         DEFAULT_INITIAL_ANSWER,
+         CARRIAGE_RETURN_CHARACTER } from "../../constants";
 
 export default function prompt(options, callback) {
-  const { force } = options;
+  let { answer } = options;
 
-  if (force) {
-    const value = force;  ///
-
-    callback(value);
+  if (answer !== undefined) {
+    callback(answer);
 
     return;
   }
 
-  const value = null,
-        { attempts = DEFAULT_ATTEMPTS } = options,
+  answer = null;
+
+  const { attempts = DEFAULT_ATTEMPTS } = options,
         context = {
-          value,
+          answer,
           attempts,
           options
         };
 
   whilst(attempt, () => {
-    const { value } = context;
+    const { answer } = context;
     
-    callback(value);
+    callback(answer);
   }, context);
 }
 
@@ -45,23 +51,23 @@ function attempt(next, done, context) {
 
   const { options } = context,
         { hidden = false,
-          encoding = "utf8",
+          encoding = DEFAULT_ENCODING,
           description,
-          initialValue = "",
           errorMessage,
+          initialAnswer = DEFAULT_INITIAL_ANSWER,
           validationPattern,
           validationFunction } = options;
 
-  input(description, initialValue, encoding, hidden, callback);
+  input(description, initialAnswer, encoding, hidden, callback);
 
-  function callback(value) {
+  function callback(answer) {
     const valid = validationFunction ?  ///
-                    validationFunction(value) :
-                      validationPattern.test(value);
+                    validationFunction(answer) :
+                      validationPattern.test(answer);
 
     if (valid) {
       Object.assign(context, {
-        value: value
+        answer
       });
 
       done();
@@ -77,8 +83,8 @@ function attempt(next, done, context) {
   }
 }
 
-function input(description, initialValue, encoding, hidden, callback) {
-  let value = initialValue; ///
+function input(description, initialAnswer, encoding, hidden, callback) {
+  let answer = initialAnswer; ///
 
   const event = DATA_EVENT,
         rawMode = true,
@@ -95,7 +101,7 @@ function input(description, initialValue, encoding, hidden, callback) {
   process.stdout.write(description);
 
   if (!hidden) {
-    process.stdout.write(value);
+    process.stdout.write(answer);
   }
 
   process.stdin.resume();
@@ -116,12 +122,12 @@ function input(description, initialValue, encoding, hidden, callback) {
 
         offETX();
 
-        callback(value);
+        callback(answer);
 
         break;
 
       case BACKSPACE_CHARACTER :
-        value = value.slice(0, value.length - 1);
+        answer = answer.slice(0, answer.length - 1);
 
         process.stdout.clearLine();
 
@@ -130,13 +136,13 @@ function input(description, initialValue, encoding, hidden, callback) {
         process.stdout.write(description);
 
         if (!hidden) {
-          process.stdout.write(value);
+          process.stdout.write(answer);
         }
 
         break;
 
       default:
-        value += character;
+        answer += character;
 
         if (!hidden) {
           process.stdout.clearLine();
@@ -145,7 +151,7 @@ function input(description, initialValue, encoding, hidden, callback) {
 
           process.stdout.write(description);
 
-          process.stdout.write(value);
+          process.stdout.write(answer);
         }
 
         break;
