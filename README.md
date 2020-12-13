@@ -670,7 +670,7 @@ const offEXT = onEXT(process.exit);
 offEXT();
 ```
 
-* The `prompt()` function is meant for use in terminal applications. It takes a plain old JavaScript object and a callback function as the its first and second arguments, respectively. The plain old JavaScript object is for the options. The callback function is invoked when the user hits return:
+* The `prompt()` function is meant for use in terminal applications. It takes a plain old JavaScript `options` object and a `callback` function as the its first and second arguments, respectively:
 
 ```
 const hidden = true,
@@ -691,7 +691,7 @@ prompt(options, (value) => {
 });
 ```
 
-There are a range of options, with the `description` and `errorMessage` properties being mandatory. Aside from those shown above, the options object can have `attempts` and `encoding` properties with default values `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. Setting it to `true` results in password-style input, that is, the characters remain hidden. The options object can also include a `validatePattern` property, which must be a regular expression. This is used for validation in the absence of a validation function. Lastly, setting an `answer` property to anything other than `undefined` causes the callback to be invoked immediately without any prompt being shown. This can be useful for debugging.
+There are a range of properties available for the `options` object, with the `description` and `errorMessage` properties being mandatory. Aside from those shown above, there are `attempts` and `encoding` properties with default values `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. Setting it to `true` results in password-style input, that is, the characters remain hidden. The `options` object can also include a `validatePattern` property, which must be a regular expression. This is used for validation in the absence of a validation function. Lastly, setting an `answer` property to anything other than `undefined` causes the `callback` function to be invoked immediately without any prompt being shown. This can be useful for debugging and for other purposes.
 
 ## Building
 
