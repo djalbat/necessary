@@ -11,6 +11,7 @@ export const DEFAULT_LOG_DIRECTORY_PATH = null;
 export const DEFAULT_LOG_FILE_BASE_NAME = "default";
 
 export const GET_METHOD = "GET";
+export const PUT_METHOD = "PUT";
 export const POST_METHOD = "POST";
 export const APPLICATION_JSON_ACCEPT = "application/json";
 export const APPLICATION_JSON_CONTENT_TYPE = "application/json";
