@@ -14,9 +14,9 @@ import { CTRL_C,
          CARRIAGE_RETURN_CHARACTER } from "../../constants";
 
 export default function prompt(options, callback) {
-  let { answer } = options;
+  let { answer = null } = options;
 
-  if (answer !== undefined) {
+  if (answer !== null) {
     callback(answer);
 
     return;
