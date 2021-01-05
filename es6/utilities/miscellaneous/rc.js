@@ -6,10 +6,18 @@ import { first, second } from "../../utilities/array";
 import { DEFAULT_RC_BASE_EXTENSION } from "../../constants";
 import { readFile, writeFile, checkFileExists } from "../../utilities/fileSystem";
 
+if (!globalThis.rc) {
+  globalThis.rc = _rc;
+}
+
+const { rc } = globalThis;
+
+export default rc;
+
 let pathResolver = path.resolve,
     baseExtension = DEFAULT_RC_BASE_EXTENSION;
 
-export default function rc(environmentNameOrArgv = null) {
+function _rc(environmentNameOrArgv = null) {
   let environment,
       environmentName,
       environmentNameOrArgvArgv = (environmentNameOrArgv instanceof Array);
@@ -95,7 +103,7 @@ function setRCBaseExtension(rcBaseExtension) { baseExtension = rcBaseExtension; 
 
 function setRCPathResolver(rcPathResolver) { pathResolver = rcPathResolver; }
 
-Object.assign(rc, {
+Object.assign(_rc, {
   readRCFile,
   writeRCFile,
   updateRCFile,

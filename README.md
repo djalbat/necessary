@@ -674,15 +674,15 @@ offEXT();
 
 ```
 const hidden = true,
+      answer = ...,
       description = ...,
       errorMessage = ...,
-      initialAnswer = ...,
       validationFunction = ...,
       options = {
         hidden,
+        answer,
         description,
         errorMessage,
-        initialAnswer,
         validationFunction
       };
 
@@ -691,7 +691,7 @@ prompt(options, (value) => {
 });
 ```
 
-There are a range of properties available for the `options` object, with the `description` and `errorMessage` properties being mandatory. Aside from those shown above, there are `attempts` and `encoding` properties with default values `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. Setting it to `true` results in password-style input, that is, the characters remain hidden. The `options` object can also include a `validatePattern` property, which must be a regular expression. This is used for validation in the absence of a validation function. Lastly, setting an `answer` property to anything other than `undefined` causes the `callback` function to be invoked immediately without any prompt being shown. This can be useful for debugging and for other purposes.
+There are a range of properties available for the `options` object, with the `description` and `errorMessage` properties being mandatory. Aside from those shown above, there are `attempts` and `encoding` properties with default values `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. Setting it to `true` results in password-style input, that is, the characters remain hidden. The `options` object can also include a `validatePattern` property, which must be a regular expression. This is used for validation in the absence of a validation function. Lastly, setting an `answer` property to anything other than `null` or `undefined` causes the `callback` function to be invoked immediately without any prompt being shown. This can be useful for debugging or for other purposes.
 
 ## Building
 
