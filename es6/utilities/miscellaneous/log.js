@@ -20,7 +20,7 @@ let logLevel = DEFAULT_LOG_LEVEL,
     logFileBaseName = DEFAULT_LOG_FILE_BASE_NAME,
     logDirectoryPath = DEFAULT_LOG_DIRECTORY_PATH;
 
-export default function log(messageOrError, level = "") {
+export function log(messageOrError, level = "") {
   let salientStackMessageIndex = 1;
 
   if (level !== "") {

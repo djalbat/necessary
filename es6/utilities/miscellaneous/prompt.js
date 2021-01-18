@@ -13,7 +13,7 @@ import { CTRL_C,
          DEFAULT_INITIAL_ANSWER,
          CARRIAGE_RETURN_CHARACTER } from "../../constants";
 
-export default function prompt(options, callback) {
+export function prompt(options, callback) {
   let { answer = null } = options;
 
   if (answer !== null) {

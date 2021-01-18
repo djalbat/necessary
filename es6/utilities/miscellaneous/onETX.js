@@ -2,7 +2,7 @@
 
 import { DATA_EVENT, ETX_CHARACTER, UTF8_ENCODING } from "../../constants";
 
-export default function onETX(handler) {
+export function onETX(handler) {
   const event = DATA_EVENT;
 
   if (process.stdin.setRawMode) {
