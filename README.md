@@ -349,8 +349,6 @@ const stats = getStats("root/etc"); // returns stats for the 'root/etc' director
 - `sequence()`
 - `eventually()`
 - `repeatedly()`
-- `forwardsForEach()`
-- `backwardsForEach()`
 
 These functions generally take either a callback or an array of callbacks, followed by a `done()` function and an optional `context` argument. They all pass a `next()` function to the callbacks followed by the `done()` function, the `context` and then an `index` argument. Callbacks are given access to the `done()` function which can be called instead of the `next()` function in order to terminate early.
 
