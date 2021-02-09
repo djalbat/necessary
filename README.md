@@ -4,7 +4,7 @@ A collection of utility functions.
 
 These utilities can be used both on Node and in the browser:
 
-* [Path utilities](pPath-utilities)
+* [Path utilities](#path-utilities)
 * [Array utilities](#array-utilities)
 * [Asynchronous utilities](#asynchronous-utilities)
 
