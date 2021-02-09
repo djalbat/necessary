@@ -4,21 +4,21 @@ A collection of utility functions.
 
 These utilities can be used both on Node and in the browser:
 
-* [Path utilities]
-* [Array utilities]
-* [Asynchronous utilities]
+* [Path utilities](pPath-utilities)
+* [Array utilities](#array-utilities)
+* [Asynchronous utilities](#asynchronous-utilities)
 
 These utilities cna only be used on Node:
 
-* Shell utilities
-* Logging utilities
-* Template utilities
-* FileSystem utilities
-* Configuration utilities
+* [Shell utilities](#shell-utilities)
+* [Logging utilities](#logging-utilities)
+* [Template utilities](#template-utilities)
+* [File system utilities](#file-system-utilities)
+* [Configuration utilities](#configuration-utilities)
 
 This utilities can only be used in the browser:
 
-* Ajax utilities
+* [Ajax utilities]
 
 ## Installation
 
@@ -606,10 +606,7 @@ const stats = getStats("root/etc"); // returns stats for the 'root/etc' director
 
 ## Configuration utilities
 
-- `get()`
-- `post()`
-- `onETX()`
-- `prompt()`
+- `rc()`
 
 A single `rc()` function for runtime configuration.
 
