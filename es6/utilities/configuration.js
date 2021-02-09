@@ -2,9 +2,9 @@
 
 import path from "path";
 
-import { first, second } from "../../utilities/array";
-import { DEFAULT_RC_BASE_EXTENSION } from "../../constants";
-import { readFile, writeFile, checkFileExists } from "../../utilities/fileSystem";
+import { first, second } from "../utilities/array";
+import { DEFAULT_RC_BASE_EXTENSION } from "../constants";
+import { readFile, writeFile, checkFileExists } from "../utilities/fileSystem";
 
 if (!globalThis.rc) {
   globalThis.rc = _rc;

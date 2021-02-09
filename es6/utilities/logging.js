@@ -2,10 +2,10 @@
 
 import path from "path";
 
-import { second } from "../../utilities/array";
-import { concatenatePaths } from "../../utilities/path";
-import { checkFileExists, readFile, appendToFile, renameFile, getStats } from "../../utilities/fileSystem";
-import { TRACE, DEBUG, INFO, WARNING, ERROR, FATAL, DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH } from "../../constants";
+import { second } from "../utilities/array";
+import { concatenatePaths } from "../utilities/path";
+import { checkFileExists, readFile, appendToFile, renameFile, getStats } from "../utilities/fileSystem";
+import { TRACE, DEBUG, INFO, WARNING, ERROR, FATAL, DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH } from "../constants";
 
 const levels = [
   TRACE,
@@ -70,6 +70,10 @@ export function log(messageOrError, level = "") {
   }
 
   return logMessage;
+}
+
+export default {
+  log
 }
 
 function trace(message) { return log(message, TRACE); }

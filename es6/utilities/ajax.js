@@ -1,6 +1,6 @@
 "use strict";
 
-import { GET_METHOD, PUT_METHOD, POST_METHOD, APPLICATION_JSON_ACCEPT, APPLICATION_JSON_CONTENT_TYPE } from "../../constants";
+import { GET_METHOD, PUT_METHOD, POST_METHOD, APPLICATION_JSON_ACCEPT, APPLICATION_JSON_CONTENT_TYPE } from "../constants";
 
 export function get(host, path, parameters, callback) {
   if (callback === undefined) {
@@ -62,6 +62,12 @@ export function request(host, path, parameters, method, body, callback) {
   }
 
   xmlHttpRequest.send(body);
+}
+
+export default {
+  get,
+  post,
+  request
 }
 
 function queryStringFromParameters(parameters) {

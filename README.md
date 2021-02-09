@@ -2,7 +2,23 @@
 
 A collection of utility functions.
 
-These utility functions were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide functionality that for the most part will be covered far more comprehensibly elsewhere. The idea was only to create a collection that addressed some modest requirements and would result in a relatively small footprint. That said, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging, especially in the case of the asynchronous functions.
+These utilities can be used both on Node and in the browser:
+
+* [Path utilities]
+* [Array utilities]
+* [Asynchronous utilities]
+
+These utilities cna only be used on Node:
+
+* Shell utilities
+* Logging utilities
+* Template utilities
+* FileSystem utilities
+* Configuration utilities
+
+This utilities can only be used in the browser:
+
+* Ajax utilities
 
 ## Installation
 
@@ -32,7 +48,110 @@ const { first, last } = arrayUtilities,
 ```
 The miscellaneous functions are a special case. They can be treated as above but may well have other functions assigned to them. See below.
 
-## Array functions
+## Path utilities
+
+- `isPathName()`
+- `isPathTopmostName()`
+- `isPathRelativePath()`
+- `isPathAbsolutePath()`
+- `isTopmostNameInAbsolutePath()`
+- `combinePaths()`
+- `concatenatePaths()`
+- `bottommostNameFromPath()`
+- `topmostDirectoryPathFromPath()`
+- `topmostDirectoryNameFromPath()`
+- `pathWithoutBottommostNameFromPath()`
+- `pathWithoutTopmostDirectoryNameFromPath()`
+
+These functions manipulate or query strings that represent file and directory paths. Note that only forward slash `/` delimiters are supported. Trailing delimiters are not needed, but tolerated.
+
+* The `isPathName()` function returns `true` if the string argument contains no `/` delimiters apart from the first and last characters:
+
+```
+isPathName("root/"); // the return value is true
+
+isPathName("/root"); // the return value is true
+
+isPathName("./root"); // the return value is false
+
+isPathName("../etc"); // the return value is false
+
+isPathName("/root/etc"); // the return value is false
+```
+
+* The `isPathTopmostName()` function returns `true` if the string argument is both a name and an absolute path:
+
+```
+isPathTopmostName("/root/"); // the return value is true
+
+isPathTopmostName("/root"); // the return value is true
+
+isPathTopmostName("etc/"); // the return value is false
+```
+
+* The `isPathRelativePath()` function returns `true` if the string argument does not start with a delimiter`/`:
+
+```
+isPathRelativePath("etc"); // the return value is true
+
+isPathRelativePath("./etc"); // the return value is true
+
+isPathRelativePath("../etc"); // the return value is true
+```
+
+* The `isPathAbsolutePath()` returns `true` if the string argument starts with a delimiter`/`:
+
+```
+isPathAbsolutePath("/root/etc"); // the return value is true
+```
+
+* The `isTopmostNameInAbsolutePath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a delimiter`/` and further characters:
+
+```
+isTopmostNameInAbsolutePath("/root", "/root/etc");  // the return value is true
+
+isTopmostNameInAbsolutePath("root", "/root/etc");  // the return value is false
+
+isTopmostNameInAbsolutePath("etc", "/root/etc"); // the return value is false
+```
+
+Note that the function assumes that the first argument is a topmost name and that the second argument is an abolute path. It does not check, it simply compares the two arguments with a single regex.
+
+* The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `..` signifier it finds in the latter. Current directory `.` signifiers are also removed:
+
+```
+combinePaths("etc/", "./init"); // the return value is 'etc/init'
+
+combinePaths("/root/etc/", "../init"); // the return value is '/root/init'
+```
+
+Note that the function assumes that the second argument is a relative name or path.
+
+* The `concatenatePaths()` function will concatenate the first and second string arguments, adding the trailing forward slash `/` to the first string if necessary:
+
+```
+concatenatePaths("root", "etc/"); // the return value is 'root/etc/'
+
+concatenatePaths("root/", "etc/"); // the return value is 'root/etc/'
+```
+
+Note that the function assumes that the second argument is a relative name or path although without a leading current directory `.` or parent directory `..` signifier.
+
+* The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` functions work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
+
+```
+bottommostNameFromPath("../etc"); // the return value is 'etc'
+
+topmostDirectoryPathFromPath("/root/etc/init.conf"); // the return value is '/root/etc'
+
+topmostDirectoryNameFromPath("etc/init.conf"); // the return value is 'etc'
+
+pathWithoutBottommostNameFromPath("root/etc/init.conf"); // the return value is 'root/etc'
+
+pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // the return value is 'etc/init.conf'
+```
+
+## Array utilities
 
 - `first()`
 - `second()`
@@ -169,180 +288,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
 
 * The `forwardsXXX()` and `backwardsXXX()` functions work as their names suggest. They are not as robust as their native counterparts, however, and rely on the array remaining immutable.
 
-## Path functions
-
-- `isPathName()`
-- `isPathTopmostName()`
-- `isPathRelativePath()`
-- `isPathAbsolutePath()`
-- `isTopmostNameInAbsolutePath()`
-- `combinePaths()`
-- `concatenatePaths()`
-- `bottommostNameFromPath()`
-- `topmostDirectoryPathFromPath()`
-- `topmostDirectoryNameFromPath()`
-- `pathWithoutBottommostNameFromPath()`
-- `pathWithoutTopmostDirectoryNameFromPath()`
-
-These functions manipulate or query strings that represent file and directory paths. Note that only forward slash `/` delimiters are supported. Trailing delimiters are not needed, but tolerated.
-
-* The `isPathName()` function returns `true` if the string argument contains no `/` delimiters apart from the first and last characters:
-
-```
-isPathName("root/"); // the return value is true
-
-isPathName("/root"); // the return value is true
-
-isPathName("./root"); // the return value is false
-
-isPathName("../etc"); // the return value is false
-
-isPathName("/root/etc"); // the return value is false
-```
-
-* The `isPathTopmostName()` function returns `true` if the string argument is both a name and an absolute path:
-
-```
-isPathTopmostName("/root/"); // the return value is true
-
-isPathTopmostName("/root"); // the return value is true
-
-isPathTopmostName("etc/"); // the return value is false
-```
-
-* The `isPathRelativePath()` function returns `true` if the string argument does not start with a delimiter`/`:
-
-```
-isPathRelativePath("etc"); // the return value is true
-
-isPathRelativePath("./etc"); // the return value is true
-
-isPathRelativePath("../etc"); // the return value is true
-```
-
-* The `isPathAbsolutePath()` returns `true` if the string argument starts with a delimiter`/`:
-
-```
-isPathAbsolutePath("/root/etc"); // the return value is true
-```
-
-* The `isTopmostNameInAbsolutePath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a delimiter`/` and further characters:
-
-```
-isTopmostNameInAbsolutePath("/root", "/root/etc");  // the return value is true
-
-isTopmostNameInAbsolutePath("root", "/root/etc");  // the return value is false
-
-isTopmostNameInAbsolutePath("etc", "/root/etc"); // the return value is false
-```
-
-Note that the function assumes that the first argument is a topmost name and that the second argument is an abolute path. It does not check, it simply compares the two arguments with a single regex. 
-
-* The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `..` signifier it finds in the latter. Current directory `.` signifiers are also removed:
-
-```
-combinePaths("etc/", "./init"); // the return value is 'etc/init'
-
-combinePaths("/root/etc/", "../init"); // the return value is '/root/init'
-```
-
-Note that the function assumes that the second argument is a relative name or path.
-
-* The `concatenatePaths()` function will concatenate the first and second string arguments, adding the trailing forward slash `/` to the first string if necessary:
-
-```
-concatenatePaths("root", "etc/"); // the return value is 'root/etc/'
-
-concatenatePaths("root/", "etc/"); // the return value is 'root/etc/'
-```
-
-Note that the function assumes that the second argument is a relative name or path although without a leading current directory `.` or parent directory `..` signifier. 
-
-* The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` functions work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
-
-```
-bottommostNameFromPath("../etc"); // the return value is 'etc'
-
-topmostDirectoryPathFromPath("/root/etc/init.conf"); // the return value is '/root/etc'
-
-topmostDirectoryNameFromPath("etc/init.conf"); // the return value is 'etc'
-
-pathWithoutBottommostNameFromPath("root/etc/init.conf"); // the return value is 'root/etc'
-
-pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // the return value is 'etc/init.conf'
-```
-
-## File system functions
-
-- `checkEntryExists()`
-- `checkFileExists()`
-- `checkDirectoryExists()`
-- `isEntryFile()`
-- `isEntryDirectory()`
-- `isDirectoryEmpty()`
-- `readDirectory()`
-- `readFile()`
-- `writeFile()`
-- `appendToFile()`
-- `createDirectory()`
-- `renameFile()`
-- `getStats()`
-
-An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. All of the functions will throw native errors upon failure.
-
-* The `checkEntryExists()`, `checkFileExists()`, `checkDirectoryExists()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
-
-```
-checkEntryExists("root/etc"); // the return value is true if the file or directory exists
-
-checkFileExists("root/etc/init.conf"); // the return value is true if the file exists
-
-checkDirectoryExists("root/etcconf"); // the return value is true if the directory exists
-
-isEntryFile("root/etc/init.conf"); // the return value is true if the entry is a file
-
-isEntryDirectory("root"); // the return value is true if the entry is a directory
-
-isDirectoryEmpty("root/etc"); // the return value is true if the directory is empty
-```
-
-* The `readDirectory()` function returns an array of entry names if the directory exists:
-
-```
-readDirectory("root/etc"); // returns the contents of the 'root/etc' directory
-```
-
-* The `readFile()` function takes the file encoding as an optional second string argument. The default is `utf8`. It returns the content of the file upon success:
-
-```
-readFile("root/etc/init.conf"); // returns the content of the 'root/etc/init.conf' file
-```
-
-* The `writeFile()` function takes the content of the file as a second string argument. It does not return anything upon success:
-
-```
-writeFile("root/etc/init.conf", ""); // writes '' to the 'root/etc/init.conf' file
-```
-
-* The `appendToFile()` function takes the content to append file as a second string argument. It will create teh file if necessary and does not return anything upon success:
-
-```
-appendToFile("root/etc/init.conf", ""); // appends '' to the 'root/etc/init.conf' file
-```
-
-* The `createDirectory()` function creates a directory, also creating the parent directories if necessary:
-
-```
-createDirectory("root/etc/init"); // Creates the 'root/etc/init' directory
-```
-
-* The `getStats()` function returns an instance of the [fs.Stats](https://nodejs.org/api/fs.html#fs_class_fs_stats) class for a file or a directory:
-
-```
-const stats = getStats("root/etc"); // returns stats for the 'root/etc' directory
-```
-
-## Asynchronous functions
+## Asynchronous utilities
 
 - `whilst()`
 - `forEach()`
@@ -372,7 +318,7 @@ const callback = (next, done, context, index) => {
 whilst(callback, () => {
   /// done
 }, context);
-``` 
+```
 
 * The `forEach()` function takes an array as the first argument followed by a single callback, which it calls for each element of the array unless the callback invokes the given `done()` function. If the `done()` function is never invoked by the callback, it is called once each of the array elements has been passed to the callback, provided the callback invokes the given `next ()` function each time. In the example below the callback will be executed four times:
 
@@ -455,68 +401,51 @@ repeatedly(callback, length, () => {
 }, context);
 ```
 
-## Template functions
+## Shell utilities
 
-- `parseFile()`
-- `parseContent()`
-- `parseLine()`
-
-These functions parse files, content or single lines, replacing each token of the form `${<name>}` with the value of the corresponding property of a plain old JavaScript object passed as the second argument, or replacing the token with an empty string if no such property exists.
-
-* The `parseFile()` function takes a file path as the first argument:
-
-```
-const filePath ="/etc/var/public/name.html",
-      name = "Joe Bloggs",
-      age = 99,
-      args = {
-        name,
-        age
-      }
-      parsedContent = parseFile(filePath, args); 
-```
-
-* The `parseContent()` function takes content as the first argument, honouring newline `\n` characters:
-
-```
-const content = `
-
-  name: <strong>${name}</strong><br/>
-  age: <strong>${age}</strong><br/>
-  
-      `,
-      name = "Joe Bloggs",
-      age = 99,
-      args = {
-        name,
-        age
-      }
-      parsedContent = parseContent(content, args); 
-```
-
-* The `parseLine()` function takes a single line of content as the first argument:
-
-```
-const line = "${name}, aged ${age}.",
-      name = "Joe Bloggs",
-      age = 99,
-      args = {
-        name,
-        age
-      }
-      parsedLine = parseLine(line, args); // returns 'Joe Bloggs, aged 99.' 
-```
-
-## Miscellaneous functions
-
-- `log()`
-- `rc()`
-- `get()`
-- `post()`
 - `onETX()`
 - `prompt()`
 
-A small if motley collection of functions for various common tasks.
+Functions that can be used for Node applications running in a shell window.
+
+* The `onETX()` function takes a handler which is invoked whenever the `ETX` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This method is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener at some later point in time:
+
+```
+const offEXT = onEXT(process.exit);
+
+...
+
+offEXT();
+```
+
+* The `prompt()` function is meant for use in terminal applications. It takes a plain old JavaScript `options` object and a `callback` function as the its first and second arguments, respectively:
+
+```
+const hidden = true,
+      answer = ...,
+      description = ...,
+      errorMessage = ...,
+      validationFunction = ...,
+      options = {
+        hidden,
+        answer,
+        description,
+        errorMessage,
+        validationFunction
+      };
+
+prompt(options, (value) => {
+  ...
+});
+```
+
+There are a range of properties available for the `options` object, with the `description` and `errorMessage` properties being mandatory. Aside from those shown above, there are `attempts` and `encoding` properties with default values `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. Setting it to `true` results in password-style input, that is, the characters remain hidden. The `options` object can also include a `validatePattern` property, which must be a regular expression. This is used for validation in the absence of a validation function. Lastly, setting an `answer` property to anything other than `null` or `undefined` causes the `callback` function to be invoked immediately without any prompt being shown. This can be useful for debugging or for other purposes.
+
+## Logging utilities
+
+- `log()`
+
+A single `log()` function for basic logging purposes.
 
 * The `log()` function provides rudimentary logging functionality, printing its argument to the console, prepended with a date and time stamp together with the path of the file containing the callee function and the line number:
 
@@ -552,6 +481,137 @@ log.trace("...") // Ignored, because the trace level is lower than the debug lev
 There is also a `setLogOptions()` function which allows you to pass the log level, base file name and directory path as a plain old JavaScript object. See below for a usage example.
 
 Finally, log files are rolled over every night. So `./log/example.log` would become `./log/example.28-01-2018.log` and a new `./log/example.log` file would be started at midnight.
+
+## Template utilities
+
+- `parseFile()`
+- `parseContent()`
+- `parseLine()`
+
+These functions parse files, content or single lines, replacing each token of the form `${<name>}` with the value of the corresponding property of a plain old JavaScript object passed as the second argument, or replacing the token with an empty string if no such property exists.
+
+* The `parseFile()` function takes a file path as the first argument:
+
+```
+const filePath ="/etc/var/public/name.html",
+      name = "Joe Bloggs",
+      age = 99,
+      args = {
+        name,
+        age
+      }
+      parsedContent = parseFile(filePath, args);
+```
+
+* The `parseContent()` function takes content as the first argument, honouring newline `\n` characters:
+
+```
+const content = `
+
+  name: <strong>${name}</strong><br/>
+  age: <strong>${age}</strong><br/>
+
+      `,
+      name = "Joe Bloggs",
+      age = 99,
+      args = {
+        name,
+        age
+      }
+      parsedContent = parseContent(content, args);
+```
+
+* The `parseLine()` function takes a single line of content as the first argument:
+
+```
+const line = "${name}, aged ${age}.",
+      name = "Joe Bloggs",
+      age = 99,
+      args = {
+        name,
+        age
+      }
+      parsedLine = parseLine(line, args); // returns 'Joe Bloggs, aged 99.'
+```
+
+## File system utilities
+
+- `checkEntryExists()`
+- `checkFileExists()`
+- `checkDirectoryExists()`
+- `isEntryFile()`
+- `isEntryDirectory()`
+- `isDirectoryEmpty()`
+- `readDirectory()`
+- `readFile()`
+- `writeFile()`
+- `appendToFile()`
+- `createDirectory()`
+- `renameFile()`
+- `getStats()`
+
+An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. All of the functions will throw native errors upon failure.
+
+* The `checkEntryExists()`, `checkFileExists()`, `checkDirectoryExists()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
+
+```
+checkEntryExists("root/etc"); // the return value is true if the file or directory exists
+
+checkFileExists("root/etc/init.conf"); // the return value is true if the file exists
+
+checkDirectoryExists("root/etcconf"); // the return value is true if the directory exists
+
+isEntryFile("root/etc/init.conf"); // the return value is true if the entry is a file
+
+isEntryDirectory("root"); // the return value is true if the entry is a directory
+
+isDirectoryEmpty("root/etc"); // the return value is true if the directory is empty
+```
+
+* The `readDirectory()` function returns an array of entry names if the directory exists:
+
+```
+readDirectory("root/etc"); // returns the contents of the 'root/etc' directory
+```
+
+* The `readFile()` function takes the file encoding as an optional second string argument. The default is `utf8`. It returns the content of the file upon success:
+
+```
+readFile("root/etc/init.conf"); // returns the content of the 'root/etc/init.conf' file
+```
+
+* The `writeFile()` function takes the content of the file as a second string argument. It does not return anything upon success:
+
+```
+writeFile("root/etc/init.conf", ""); // writes '' to the 'root/etc/init.conf' file
+```
+
+* The `appendToFile()` function takes the content to append file as a second string argument. It will create teh file if necessary and does not return anything upon success:
+
+```
+appendToFile("root/etc/init.conf", ""); // appends '' to the 'root/etc/init.conf' file
+```
+
+* The `createDirectory()` function creates a directory, also creating the parent directories if necessary:
+
+```
+createDirectory("root/etc/init"); // Creates the 'root/etc/init' directory
+```
+
+* The `getStats()` function returns an instance of the [fs.Stats](https://nodejs.org/api/fs.html#fs_class_fs_stats) class for a file or a directory:
+
+```
+const stats = getStats("root/etc"); // returns stats for the 'root/etc' directory
+```
+
+## Configuration utilities
+
+- `get()`
+- `post()`
+- `onETX()`
+- `prompt()`
+
+A single `rc()` function for runtime configuration.
 
 * The `rc()` function parses a JSON runtime configuration file of a certain format and provides the information therein by assigning it to itself:
 
@@ -624,6 +684,14 @@ updateRCFile({example: "example"});  // Updates the rc file, adding the 'example
 updateRCFile(null, "example");  // Updates the rc file, removing the 'example' property
 ```
 
+## Ajax utilities
+
+- `get()`
+- `post()`
+- `request()`
+
+The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for other HTTP request methods.
+
 * The `get()` function sends a `GET` request, taking host, path, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. If the status code is 200 and the response is stringified JSON, this will be parsed and returned by way of the callback, otherwise null will be returned:
 
 ```
@@ -657,39 +725,6 @@ post(host, path, json, (json) => {
 ```
 
 Note that `parameters` argument is missing in the example above but that there is nothing wrong with including it and thereby appending a query string to the request URL.
-
-* The `onETX()` function takes a handler which is invoked whenever the `ETX` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This method is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener at some later point in time:
-
-```
-const offEXT = onEXT(process.exit);
-
-...
-
-offEXT();
-```
-
-* The `prompt()` function is meant for use in terminal applications. It takes a plain old JavaScript `options` object and a `callback` function as the its first and second arguments, respectively:
-
-```
-const hidden = true,
-      answer = ...,
-      description = ...,
-      errorMessage = ...,
-      validationFunction = ...,
-      options = {
-        hidden,
-        answer,
-        description,
-        errorMessage,
-        validationFunction
-      };
-
-prompt(options, (value) => {
-  ...
-});
-```
-
-There are a range of properties available for the `options` object, with the `description` and `errorMessage` properties being mandatory. Aside from those shown above, there are `attempts` and `encoding` properties with default values `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. Setting it to `true` results in password-style input, that is, the characters remain hidden. The `options` object can also include a `validatePattern` property, which must be a regular expression. This is used for validation in the absence of a validation function. Lastly, setting an `answer` property to anything other than `null` or `undefined` causes the `callback` function to be invoked immediately without any prompt being shown. This can be useful for debugging or for other purposes.
 
 ## Building
 
