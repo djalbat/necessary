@@ -18,7 +18,7 @@ These utilities cna only be used on Node:
 
 This utilities can only be used in the browser:
 
-* [Ajax utilities]
+* [Ajax utilities](#ajax-utilities)
 
 ## Installation
 
