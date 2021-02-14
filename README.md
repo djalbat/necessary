@@ -2,6 +2,12 @@
 
 A collection of utility functions.
 
+These utility functions were partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. They provide functionality that for the most part will be covered far more comprehensibly elsewhere. The idea was only to create a collection that addressed some modest requirements and would result in a relatively small footprint. That said, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging, especially in the case of the asynchronous functions.
+
+This utilities can only be used in the browser:
+
+* [Ajax utilities](#ajax-utilities)
+
 These utilities can be used both on Node and in the browser:
 
 * [Path utilities](#path-utilities)
@@ -15,10 +21,6 @@ These utilities cna only be used on Node:
 * [Template utilities](#template-utilities)
 * [File system utilities](#file-system-utilities)
 * [Configuration utilities](#configuration-utilities)
-
-This utilities can only be used in the browser:
-
-* [Ajax utilities](#ajax-utilities)
 
 ## Installation
 
@@ -47,6 +49,48 @@ const { first, last } = arrayUtilities,
 ...
 ```
 The miscellaneous functions are a special case. They can be treated as above but may well have other functions assigned to them. See below.
+
+## Ajax utilities
+
+- `get()`
+- `post()`
+- `request()`
+
+The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for other HTTP request methods.
+
+* The `get()` function sends a `GET` request, taking host, path, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. If the status code is 200 and the response is stringified JSON, this will be parsed and returned by way of the callback, otherwise null will be returned:
+
+```
+const host = "...",
+      path = "...",
+      parameters = {
+        ...
+      };
+
+get(host, path, parameters, (json) => {
+  if (json !== null) {
+    ...
+  }
+});
+```
+
+Note that the `path` argument should include a leading forward slash `/` since the `host` argument should not have a trailing one.
+
+* The `post()` function behaves similarly to the `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `path` arguments. This argument is stringified and sent in the request body:
+
+```
+const host = "...",
+      path = "...",
+      json = ...;
+
+post(host, path, json, (json) => {
+  if (json !== null) {
+    ...
+  }
+});
+```
+
+Note that `parameters` argument is missing in the example above but that there is nothing wrong with including it and thereby appending a query string to the request URL.
 
 ## Path utilities
 
@@ -179,14 +223,6 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // the return val
 - `patch()`
 - `augment()`
 - `separate()`
-- `forwardsSome()`
-- `backwardsSome()`
-- `forwardsEvery()`
-- `backwardsEvery()`
-- `forwardsReduce()`
-- `backwardsReduce()`
-- `forwardsForEach()`
-- `backwardsForEach()`
 
 Note that none of these functions take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
 
@@ -285,8 +321,6 @@ separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
   return element > 0;
 }); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
-
-* The `forwardsXXX()` and `backwardsXXX()` functions work as their names suggest. They are not as robust as their native counterparts, however, and rely on the array remaining immutable.
 
 ## Asynchronous utilities
 
@@ -680,48 +714,6 @@ updateRCFile({example: "example"});  // Updates the rc file, adding the 'example
 
 updateRCFile(null, "example");  // Updates the rc file, removing the 'example' property
 ```
-
-## Ajax utilities
-
-- `get()`
-- `post()`
-- `request()`
-
-The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for other HTTP request methods.
-
-* The `get()` function sends a `GET` request, taking host, path, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. If the status code is 200 and the response is stringified JSON, this will be parsed and returned by way of the callback, otherwise null will be returned:
-
-```
-const host = "...",
-      path = "...",
-      parameters = {
-        ...
-      };
-
-get(host, path, parameters, (json) => {
-  if (json !== null) {
-    ...
-  }
-});
-```
-
-Note that the `path` argument should include a leading forward slash `/` since the `host` argument should not have a trailing one.
-
-* The `post()` function behaves similarly to the `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `path` arguments. This argument is stringified and sent in the request body:
-
-```
-const host = "...",
-      path = "...",
-      json = ...;
-
-post(host, path, json, (json) => {
-  if (json !== null) {
-    ...
-  }
-});
-```
-
-Note that `parameters` argument is missing in the example above but that there is nothing wrong with including it and thereby appending a query string to the request URL.
 
 ## Building
 

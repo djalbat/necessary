@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 export { default as pathUtilities } from "./utilities/path";
 export { default as arrayUtilities } from "./utilities/array";
 export { default as asynchronousUtilities } from "./utilities/asynchronous";
