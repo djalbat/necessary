@@ -1,7 +1,7 @@
 {
   "name": "necessary",
   "author": "James Smith",
-  "version": "6.0.5",
+  "version": "6.0.6",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/necessary",
   "description": "A collection of utility functions.",
@@ -17,10 +17,11 @@
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.12.1",
+    "@swc/core": "^1.2.47",
     "watchful-cli": "^1.4.1"
   },
   "scripts": {
-    "clean": "rm -rf ./lib",
+    "clean": "rm -rf lib.babel",
     "watchful": "watchful --source-directory=./es6 --lib-directory=./lib --pause=100",
     "batch": "npm run watchful batch --",
     "batch-debug": "npm run watchful batch -- --debug",
@@ -32,5 +33,5 @@
     "watch-debug": "npm run clean && npm run batch-debug && npm run incremental-debug"
   },
   "browser": "./lib/browser.js",
-  "main": "./lib/index.js"
+  "main": "lib.babel/index.js"
 }
