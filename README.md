@@ -2,19 +2,19 @@
 
 A collection of utility functions.
 
-This package was partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. The idea was to create utility functions that addressed some modest requirements and would result in a relatively small footprint. That said, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging, especially in the case of the asynchronous functions.
+This package was partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. The idea was to create utility functions that addressed some modest requirements and would result in a relatively small footprint. That said, the bare bones implementations, especially the asynchronous functions, should nonetheless provide some confidence whilst debugging.
 
-This utilities can only be used in the browser:
+These can only be used in the browser:
 
 * [Ajax utilities](#ajax-utilities)
 
-These utilities can be used both on Node and in the browser:
+These can be used both on Node and in the browser:
 
 * [Path utilities](#path-utilities)
 * [Array utilities](#array-utilities)
 * [Asynchronous utilities](#asynchronous-utilities)
 
-These utilities cna only be used on Node:
+These cna only be used on Node:
 
 * [Shell utilities](#shell-utilities)
 * [Logging utilities](#logging-utilities)
