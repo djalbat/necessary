@@ -8,12 +8,6 @@ These can only be used in the browser:
 
 * [Ajax utilities](#ajax-utilities)
 
-These can be used both on Node and in the browser:
-
-* [Path utilities](#path-utilities)
-* [Array utilities](#array-utilities)
-* [Asynchronous utilities](#asynchronous-utilities)
-
 These cna only be used on Node:
 
 * [Shell utilities](#shell-utilities)
@@ -21,6 +15,12 @@ These cna only be used on Node:
 * [Template utilities](#template-utilities)
 * [File system utilities](#file-system-utilities)
 * [Configuration utilities](#configuration-utilities)
+
+These can be used both on Node and in the browser:
+
+* [Path utilities](#path-utilities)
+* [Array utilities](#array-utilities)
+* [Asynchronous utilities](#asynchronous-utilities)
 
 ## Installation
 
@@ -91,349 +91,6 @@ post(host, path, json, (json) => {
 ```
 
 Note that `parameters` argument is missing in the example above but that there is nothing wrong with including it and thereby appending a query string to the request URL.
-
-## Path utilities
-
-- `isPathName()`
-- `isPathTopmostName()`
-- `isPathRelativePath()`
-- `isPathAbsolutePath()`
-- `isTopmostNameInAbsolutePath()`
-- `combinePaths()`
-- `concatenatePaths()`
-- `bottommostNameFromPath()`
-- `topmostDirectoryPathFromPath()`
-- `topmostDirectoryNameFromPath()`
-- `pathWithoutBottommostNameFromPath()`
-- `pathWithoutTopmostDirectoryNameFromPath()`
-
-These functions manipulate or query strings that represent file and directory paths. Note that only forward slash `/` delimiters are supported. Trailing delimiters are not needed, but tolerated.
-
-* The `isPathName()` function returns `true` if the string argument contains no `/` delimiters apart from the first and last characters:
-
-```
-isPathName("root/"); // the return value is true
-
-isPathName("/root"); // the return value is true
-
-isPathName("./root"); // the return value is false
-
-isPathName("../etc"); // the return value is false
-
-isPathName("/root/etc"); // the return value is false
-```
-
-* The `isPathTopmostName()` function returns `true` if the string argument is both a name and an absolute path:
-
-```
-isPathTopmostName("/root/"); // the return value is true
-
-isPathTopmostName("/root"); // the return value is true
-
-isPathTopmostName("etc/"); // the return value is false
-```
-
-* The `isPathRelativePath()` function returns `true` if the string argument does not start with a delimiter`/`:
-
-```
-isPathRelativePath("etc"); // the return value is true
-
-isPathRelativePath("./etc"); // the return value is true
-
-isPathRelativePath("../etc"); // the return value is true
-```
-
-* The `isPathAbsolutePath()` returns `true` if the string argument starts with a delimiter`/`:
-
-```
-isPathAbsolutePath("/root/etc"); // the return value is true
-```
-
-* The `isTopmostNameInAbsolutePath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a delimiter`/` and further characters:
-
-```
-isTopmostNameInAbsolutePath("/root", "/root/etc");  // the return value is true
-
-isTopmostNameInAbsolutePath("root", "/root/etc");  // the return value is false
-
-isTopmostNameInAbsolutePath("etc", "/root/etc"); // the return value is false
-```
-
-Note that the function assumes that the first argument is a topmost name and that the second argument is an abolute path. It does not check, it simply compares the two arguments with a single regex.
-
-* The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `..` signifier it finds in the latter. Current directory `.` signifiers are also removed:
-
-```
-combinePaths("etc/", "./init"); // the return value is 'etc/init'
-
-combinePaths("/root/etc/", "../init"); // the return value is '/root/init'
-```
-
-Note that the function assumes that the second argument is a relative name or path.
-
-* The `concatenatePaths()` function will concatenate the first and second string arguments, adding the trailing forward slash `/` to the first string if necessary:
-
-```
-concatenatePaths("root", "etc/"); // the return value is 'root/etc/'
-
-concatenatePaths("root/", "etc/"); // the return value is 'root/etc/'
-```
-
-Note that the function assumes that the second argument is a relative name or path although without a leading current directory `.` or parent directory `..` signifier.
-
-* The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` functions work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
-
-```
-bottommostNameFromPath("../etc"); // the return value is 'etc'
-
-topmostDirectoryPathFromPath("/root/etc/init.conf"); // the return value is '/root/etc'
-
-topmostDirectoryNameFromPath("etc/init.conf"); // the return value is 'etc'
-
-pathWithoutBottommostNameFromPath("root/etc/init.conf"); // the return value is 'root/etc'
-
-pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // the return value is 'etc/init.conf'
-```
-
-## Array utilities
-
-- `first()`
-- `second()`
-- `third()`
-- `fourth()`
-- `fifth()`
-- `fifthLast()`
-- `fourthLast()`
-- `thirdLast()`
-- `secondLast()`
-- `last()`
-- `head()`
-- `tail()`
-- `push()`
-- `unshift()`
-- `concat()`
-- `clear()`
-- `copy()`
-- `merge()`
-- `splice()`
-- `replace()`
-- `filter()`
-- `find()`
-- `prune()`
-- `patch()`
-- `augment()`
-- `separate()`
-
-Note that none of these functions take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
-
-* The functions `first()` through to `last()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `head()` function returns the first element of its array argument whilst The `tail()` function returns all but the first element of its array argument.
-
-* The `push()` function is similar to its native counterpart but will push an array rather than a single element.
-
-* The `unshift()` function is similar to its native counterpart but will unshift an array rather than a single element.
-
-* The `concat()` function is similar to its native counterpart, however it alters the first array argument *in place*. Like its native counterpart it will also take a single element as the second argument and convert it to an array.
-
-```
-concat([1, 2, 3], 4); // the array argument becomes [1, 2, 3, 4]
-```
-
-* The `clear()` function removes all the elements in the array argument and returns them as a fresh array:
-
-```
-clear([1, 2, 3]); // the array argument becomes []
-                  // the return value will be [1, 2, 3] 
-```
-
-* The `copy()` function copies the second array argument over the top of the first array argument, in other words it replaces each element of the first array argument with the corresponding element in the second array argument. If there are more elements in the second array argument that the first, the first is lengthened:  
-
-```
-copy([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [4, 5, 6, 7]
-```
-
-* The `merge()` function copies the second array argument onto to the end of the first array argument, behaving in identical fashion to the `push()` function:
-
-```
-merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4, 5, 6, 7]
-```
-
-* The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
-
-```
-splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3] 
-                                 // the first array argument becomes [1, 4, 5]
-```
-
-* The `replace()` function will replace an element in the array with the given element the first time that the test callback function returns a truthy value:
-
-```
-replace([1, 2, 0, -1, -2], 3, (element, index) => {
-  return element === 0;
-}); // the first array argument becomes [1, 2, 3, -1, -2]
-```
-
-* The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a test callback function that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
-
-```
-filter([1, 2, -1, -2], (element, index) => {
-  return element > 0;
-}); // the first array argument becomes [1, 2]
-    // the return value is [-1, -2]
-```
-
-* The `find()` function is like its native counterpart, however it returns an array of all the elements for which the test callback function returns a truthy value, rather than just the first:
-
-```
-find([1, 2, -1, -2], (element, index) => {
-  return element > 0;
-}); // the return value will be [1, 2]
-```
-
-* The `prune()` function is much like the `filter()` function, however it will terminate the first time that the test callback function does not return a truthy value:
-
-```
-prune([1, 2, -1, -2], (element, index) => {
-  return element > 0;
-}); // the first array argument becomes [1, 2, -2] 
-    // the return value is -1 
-```
-
-* The `patch()` function will append the given element to the first array argument the first time that the test callback function returns a truthy value:
-
-```
-patch([1, 2, 0, -1, -2], 4, (element, index) => {
-  return element === 0;
-}); // the first array argument becomes [1, 2, 0, -1, -2, 4]
-```
-
-* The `augment()` function is appends each of the elements of the second array argument to the first array argument whenever the test callback returns a truthy value:
-
-```
-augment([1, 2, 3], [-1, 4, -2, 5], (element, index) => {
-  return element > 0;
-}); // the first array argument becomes [1, 2, 3, 4, 5]
-```
-
-* The `separate()` function separates the first array argument, pushing each of its elements onto either the second or the third array argument depending on whether or not the test callback returns a truthy value:
-
-```
-separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
-  return element > 0;
-}); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
-```
-
-## Asynchronous utilities
-
-- `whilst()`
-- `forEach()`
-- `sequence()`
-- `eventually()`
-- `repeatedly()`
-
-These functions generally take either a callback or an array of callbacks, followed by a `done()` function and an optional `context` argument. They all pass a `next()` function to the callbacks followed by the `done()` function, the `context` and then an `index` argument. Callbacks are given access to the `done()` function which can be called instead of the `next()` function in order to terminate early.
-
-* The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function or until the callback invokes the given `done()` function. The callback can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the callback will be exectuted ten times:
-
-```
-const context = {}; ///
-
-const callback = (next, done, context, index) => {
-  const terminate = (index === 9);
-
-  if (terminate) {
-    done();
-  } else {
-    ...
-
-    next();
-  }
-}
-
-whilst(callback, () => {
-  /// done
-}, context);
-```
-
-* The `forEach()` function takes an array as the first argument followed by a single callback, which it calls for each element of the array unless the callback invokes the given `done()` function. If the `done()` function is never invoked by the callback, it is called once each of the array elements has been passed to the callback, provided the callback invokes the given `next ()` function each time. In the example below the callback will be executed four times:
-
-```
-const context = {};
-
-const callback = (element, next, done, context, index) => {
-  const terminate = (element === 3);
-
-  if (terminate) {
-    done();
-  } else {
-    ...
-
-    next();
-  }
-}
-
-const array = [0, 1, 2, 3, 4, 5];
-
-forEach(array, callback, () => {
-  /// done
-}, context);
-```
-
-* The `sequence()` function takes an array of callbacks, which it calls in turn unless the callback invokes the given `done()` function. If the `done()` function is never invoked by a callback, it is called once each of the callbacks have been called, provided each callback invokes the given `next ()` function. In the example below each of the callbacks bar the last is executed:
-
-```
-const context = {};
-
-const firstCallback = (next, done, context, index) => { next(); },
-      secondCallback = (next, done, context, index) => { next(); },
-      thirdCallback = (next, done, context, index) => { done(); },
-      lastCallback = (next, done, context, index) => { next(); },
-      callbacks = [
-        firstCallback,
-        secondCallback,
-        thirdCallback,
-        lastCallback
-      ];
-
-sequence(callbacks, () => {
-  /// done
-}, context);
-```
-
-* The `eventually()` function takes an array of callbacks, each of which it calls immediately without waiting for the callbacks to invoke the given `next()` functions. When each of the callbacks has invoked the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` function from within a callback will not halt the execution of other callbacks, it is passed as an argument only for the sake of convention. In the example below each of the callbacks is executed:
-
-```
-const context = {};
-
-const firstCallback = (next, done, context, index) => { next(); },
-      secondCallback = (next, done, context, index) => { next(); },
-      thirdCallback = (next, done, context, index) => { done(); },
-      callbacks = [
-        firstCallback,
-        secondCallback,
-        thirdCallback
-      ];
-
-eventually(callbacks, () => {
-  /// done
-}, context);
-```
-* The `repeatedly()` function takes a single callback and a `length` parameter, immediately calling the callback a `length` number of times without waiting for it to invoke the given `next()` function each time. When the callback has invoked the given `next()` function a `length` number of times, it will call the `done()` function. Note that in this case invoking the `done()` function from within the callback will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the callback is executed ten times:
-
-```
-const context = {};
-
-const callback = (next, done, context, index) => {
-  ...
-
-  next();
-};
-
-const length = 10;
-
-repeatedly(callback, length, () => {
-  // done
-}, context);
-```
 
 ## Shell utilities
 
@@ -713,6 +370,349 @@ writeRCFile(json);  // Stringifies the given JSON object and writes it to the rc
 updateRCFile({example: "example"});  // Updates the rc file, adding the 'example' property
 
 updateRCFile(null, "example");  // Updates the rc file, removing the 'example' property
+```
+
+## Path utilities
+
+- `isPathName()`
+- `isPathTopmostName()`
+- `isPathRelativePath()`
+- `isPathAbsolutePath()`
+- `isTopmostNameInAbsolutePath()`
+- `combinePaths()`
+- `concatenatePaths()`
+- `bottommostNameFromPath()`
+- `topmostDirectoryPathFromPath()`
+- `topmostDirectoryNameFromPath()`
+- `pathWithoutBottommostNameFromPath()`
+- `pathWithoutTopmostDirectoryNameFromPath()`
+
+These functions manipulate or query strings that represent file and directory paths. Note that only forward slash `/` delimiters are supported. Trailing delimiters are not needed, but tolerated.
+
+* The `isPathName()` function returns `true` if the string argument contains no `/` delimiters apart from the first and last characters:
+
+```
+isPathName("root/"); // the return value is true
+
+isPathName("/root"); // the return value is true
+
+isPathName("./root"); // the return value is false
+
+isPathName("../etc"); // the return value is false
+
+isPathName("/root/etc"); // the return value is false
+```
+
+* The `isPathTopmostName()` function returns `true` if the string argument is both a name and an absolute path:
+
+```
+isPathTopmostName("/root/"); // the return value is true
+
+isPathTopmostName("/root"); // the return value is true
+
+isPathTopmostName("etc/"); // the return value is false
+```
+
+* The `isPathRelativePath()` function returns `true` if the string argument does not start with a delimiter`/`:
+
+```
+isPathRelativePath("etc"); // the return value is true
+
+isPathRelativePath("./etc"); // the return value is true
+
+isPathRelativePath("../etc"); // the return value is true
+```
+
+* The `isPathAbsolutePath()` returns `true` if the string argument starts with a delimiter`/`:
+
+```
+isPathAbsolutePath("/root/etc"); // the return value is true
+```
+
+* The `isTopmostNameInAbsolutePath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a delimiter`/` and further characters:
+
+```
+isTopmostNameInAbsolutePath("/root", "/root/etc");  // the return value is true
+
+isTopmostNameInAbsolutePath("root", "/root/etc");  // the return value is false
+
+isTopmostNameInAbsolutePath("etc", "/root/etc"); // the return value is false
+```
+
+Note that the function assumes that the first argument is a topmost name and that the second argument is an abolute path. It does not check, it simply compares the two arguments with a single regex.
+
+* The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `..` signifier it finds in the latter. Current directory `.` signifiers are also removed:
+
+```
+combinePaths("etc/", "./init"); // the return value is 'etc/init'
+
+combinePaths("/root/etc/", "../init"); // the return value is '/root/init'
+```
+
+Note that the function assumes that the second argument is a relative name or path.
+
+* The `concatenatePaths()` function will concatenate the first and second string arguments, adding the trailing forward slash `/` to the first string if necessary:
+
+```
+concatenatePaths("root", "etc/"); // the return value is 'root/etc/'
+
+concatenatePaths("root/", "etc/"); // the return value is 'root/etc/'
+```
+
+Note that the function assumes that the second argument is a relative name or path although without a leading current directory `.` or parent directory `..` signifier.
+
+* The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` functions work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
+
+```
+bottommostNameFromPath("../etc"); // the return value is 'etc'
+
+topmostDirectoryPathFromPath("/root/etc/init.conf"); // the return value is '/root/etc'
+
+topmostDirectoryNameFromPath("etc/init.conf"); // the return value is 'etc'
+
+pathWithoutBottommostNameFromPath("root/etc/init.conf"); // the return value is 'root/etc'
+
+pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // the return value is 'etc/init.conf'
+```
+
+## Array utilities
+
+- `first()`
+- `second()`
+- `third()`
+- `fourth()`
+- `fifth()`
+- `fifthLast()`
+- `fourthLast()`
+- `thirdLast()`
+- `secondLast()`
+- `last()`
+- `head()`
+- `tail()`
+- `push()`
+- `unshift()`
+- `concat()`
+- `clear()`
+- `copy()`
+- `merge()`
+- `splice()`
+- `replace()`
+- `filter()`
+- `find()`
+- `prune()`
+- `patch()`
+- `augment()`
+- `separate()`
+
+Note that none of these functions take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
+
+* The functions `first()` through to `last()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `head()` function returns the first element of its array argument whilst The `tail()` function returns all but the first element of its array argument.
+
+* The `push()` function is similar to its native counterpart but will push an array rather than a single element.
+
+* The `unshift()` function is similar to its native counterpart but will unshift an array rather than a single element.
+
+* The `concat()` function is similar to its native counterpart, however it alters the first array argument *in place*. Like its native counterpart it will also take a single element as the second argument and convert it to an array.
+
+```
+concat([1, 2, 3], 4); // the array argument becomes [1, 2, 3, 4]
+```
+
+* The `clear()` function removes all the elements in the array argument and returns them as a fresh array:
+
+```
+clear([1, 2, 3]); // the array argument becomes []
+                  // the return value will be [1, 2, 3]
+```
+
+* The `copy()` function copies the second array argument over the top of the first array argument, in other words it replaces each element of the first array argument with the corresponding element in the second array argument. If there are more elements in the second array argument that the first, the first is lengthened:
+
+```
+copy([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [4, 5, 6, 7]
+```
+
+* The `merge()` function copies the second array argument onto to the end of the first array argument, behaving in identical fashion to the `push()` function:
+
+```
+merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4, 5, 6, 7]
+```
+
+* The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
+
+```
+splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3]
+                                 // the first array argument becomes [1, 4, 5]
+```
+
+* The `replace()` function will replace an element in the array with the given element the first time that the test callback function returns a truthy value:
+
+```
+replace([1, 2, 0, -1, -2], 3, (element, index) => {
+  return element === 0;
+}); // the first array argument becomes [1, 2, 3, -1, -2]
+```
+
+* The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a test callback function that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
+
+```
+filter([1, 2, -1, -2], (element, index) => {
+  return element > 0;
+}); // the first array argument becomes [1, 2]
+    // the return value is [-1, -2]
+```
+
+* The `find()` function is like its native counterpart, however it returns an array of all the elements for which the test callback function returns a truthy value, rather than just the first:
+
+```
+find([1, 2, -1, -2], (element, index) => {
+  return element > 0;
+}); // the return value will be [1, 2]
+```
+
+* The `prune()` function is much like the `filter()` function, however it will terminate the first time that the test callback function does not return a truthy value:
+
+```
+prune([1, 2, -1, -2], (element, index) => {
+  return element > 0;
+}); // the first array argument becomes [1, 2, -2]
+    // the return value is -1
+```
+
+* The `patch()` function will append the given element to the first array argument the first time that the test callback function returns a truthy value:
+
+```
+patch([1, 2, 0, -1, -2], 4, (element, index) => {
+  return element === 0;
+}); // the first array argument becomes [1, 2, 0, -1, -2, 4]
+```
+
+* The `augment()` function is appends each of the elements of the second array argument to the first array argument whenever the test callback returns a truthy value:
+
+```
+augment([1, 2, 3], [-1, 4, -2, 5], (element, index) => {
+  return element > 0;
+}); // the first array argument becomes [1, 2, 3, 4, 5]
+```
+
+* The `separate()` function separates the first array argument, pushing each of its elements onto either the second or the third array argument depending on whether or not the test callback returns a truthy value:
+
+```
+separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
+  return element > 0;
+}); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
+```
+
+## Asynchronous utilities
+
+- `whilst()`
+- `forEach()`
+- `sequence()`
+- `eventually()`
+- `repeatedly()`
+
+These functions generally take either a callback or an array of callbacks, followed by a `done()` function and an optional `context` argument. They all pass a `next()` function to the callbacks followed by the `done()` function, the `context` and then an `index` argument. Callbacks are given access to the `done()` function which can be called instead of the `next()` function in order to terminate early.
+
+* The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function or until the callback invokes the given `done()` function. The callback can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the callback will be exectuted ten times:
+
+```
+const context = {}; ///
+
+const callback = (next, done, context, index) => {
+  const terminate = (index === 9);
+
+  if (terminate) {
+    done();
+  } else {
+    ...
+
+    next();
+  }
+}
+
+whilst(callback, () => {
+  /// done
+}, context);
+```
+
+* The `forEach()` function takes an array as the first argument followed by a single callback, which it calls for each element of the array unless the callback invokes the given `done()` function. If the `done()` function is never invoked by the callback, it is called once each of the array elements has been passed to the callback, provided the callback invokes the given `next ()` function each time. In the example below the callback will be executed four times:
+
+```
+const context = {};
+
+const callback = (element, next, done, context, index) => {
+  const terminate = (element === 3);
+
+  if (terminate) {
+    done();
+  } else {
+    ...
+
+    next();
+  }
+}
+
+const array = [0, 1, 2, 3, 4, 5];
+
+forEach(array, callback, () => {
+  /// done
+}, context);
+```
+
+* The `sequence()` function takes an array of callbacks, which it calls in turn unless the callback invokes the given `done()` function. If the `done()` function is never invoked by a callback, it is called once each of the callbacks have been called, provided each callback invokes the given `next ()` function. In the example below each of the callbacks bar the last is executed:
+
+```
+const context = {};
+
+const firstCallback = (next, done, context, index) => { next(); },
+      secondCallback = (next, done, context, index) => { next(); },
+      thirdCallback = (next, done, context, index) => { done(); },
+      lastCallback = (next, done, context, index) => { next(); },
+      callbacks = [
+        firstCallback,
+        secondCallback,
+        thirdCallback,
+        lastCallback
+      ];
+
+sequence(callbacks, () => {
+  /// done
+}, context);
+```
+
+* The `eventually()` function takes an array of callbacks, each of which it calls immediately without waiting for the callbacks to invoke the given `next()` functions. When each of the callbacks has invoked the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` function from within a callback will not halt the execution of other callbacks, it is passed as an argument only for the sake of convention. In the example below each of the callbacks is executed:
+
+```
+const context = {};
+
+const firstCallback = (next, done, context, index) => { next(); },
+      secondCallback = (next, done, context, index) => { next(); },
+      thirdCallback = (next, done, context, index) => { done(); },
+      callbacks = [
+        firstCallback,
+        secondCallback,
+        thirdCallback
+      ];
+
+eventually(callbacks, () => {
+  /// done
+}, context);
+```
+* The `repeatedly()` function takes a single callback and a `length` parameter, immediately calling the callback a `length` number of times without waiting for it to invoke the given `next()` function each time. When the callback has invoked the given `next()` function a `length` number of times, it will call the `done()` function. Note that in this case invoking the `done()` function from within the callback will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the callback is executed ten times:
+
+```
+const context = {};
+
+const callback = (next, done, context, index) => {
+  ...
+
+  next();
+};
+
+const length = 10;
+
+repeatedly(callback, length, () => {
+  // done
+}, context);
 ```
 
 ## Building
