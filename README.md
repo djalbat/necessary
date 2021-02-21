@@ -2,7 +2,7 @@
 
 A collection of utility functions.
 
-This package was partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. The idea was to create collections of utility functions that addressed some modest requirements and would result in a relatively small footprint. That said, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging, especially in the case of the asynchronous functions.
+This package was partly inspired by [lodash](https://lodash.com/), [async](https://caolan.github.io/async/) and the like. The idea was to create utility functions that addressed some modest requirements and would result in a relatively small footprint. That said, the bare bones implementations should hopefully provide some confidence if stepped in to and out of whilst debugging, especially in the case of the asynchronous functions.
 
 This utilities can only be used in the browser:
 
