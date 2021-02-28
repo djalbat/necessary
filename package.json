@@ -1,7 +1,7 @@
 {
   "name": "necessary",
   "author": "James Smith",
-  "version": "6.0.10",
+  "version": "6.0.11",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/necessary",
   "description": "A collection of utility functions.",
@@ -9,11 +9,7 @@
     "type": "git",
     "url": "https://github.com/djalbat/necessary"
   },
-  "dependencies": {
-    "browserify-fs": "^1.0.0",
-    "path-browserify": "^1.0.1",
-    "stream-browserify": "^3.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.12.1",
