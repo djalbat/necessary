@@ -84,13 +84,7 @@ Note that the `uri` argument must include a leading forward slash `/` since the 
 
 * The `post()` function behaves almost identically to the `get()` function, with the following differences.
 
-It sends a `POST` rather than a `GET` request.
-
-There is an additional `body` argument that comes after the `parameters` argument.
-
-If the `headers` argument does not have a `content-type` property then one will be provided with the value of `application/json`.
-
-If the `content-type` property of the `headers` argument is set to `application/json` the the body argument is assumed to be a plain old JavaScript object and is stringified as JSON.
+It sends a `POST` rather than a `GET` request. There is an additional `body` argument that comes after the `parameters` argument. If the `headers` argument does not have a `content-type` property then one will be provided with the value of `application/json`. If the `content-type` property of the `headers` argument is set to `application/json` then the `body` argument is assumed to be a plain old JavaScript object and is stringified as JSON.
 
 ```
 const host = "...",
