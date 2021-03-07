@@ -58,11 +58,13 @@ The miscellaneous functions are a special case. They can be treated as above but
 
 The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for other HTTP request methods.
 
-* The `get()` function sends a `GET` request, taking `host`, `uri`, `parameters` and `callback` arguments. The `parameters` argument should be a plain old JavaScript object, the names and values of which are encoded and concatenated to form the query string.
+* The `get()` function sends a `GET` request, taking `host`, `uri`, `parameters` and `callback` arguments, together with an optional `headers` argument that can be supplied before the `callback` argument.
 
-An optional `headers` argument can be supplied before the `callback` argument. IF this does not have an `accept` property, one wil be provided with the value `application/json`. If the `accept` property is set to `application/json` then the `body` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such..
+The `parameters` argument should be a plain old JavaScript object, the names and values of which are encoded and concatenated to form the query string.
 
-The `callback` argument is expected to be a function taking `body` and `status` arguments.  The `status` argument will be the response status code number, for example '200' for a successful "OK" response
+IF the `headers` argument should also be a plain old JavaScript object. If it does not have an `accept` property, one wil be provided with the value `application/json`.
+
+The `callback` argument is expected to be a function taking `body` and `status` arguments. If the `accept` property of the main `headers` argument is set to `application/json` then the callback function's `body` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. The `status` argument will be the response status code number, for example '200' for a successful "OK" response
 
 ```
 const host = "...",
