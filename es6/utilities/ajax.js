@@ -1,53 +1,71 @@
 "use strict";
 
-import { GET_METHOD, PUT_METHOD, POST_METHOD, APPLICATION_JSON_ACCEPT, APPLICATION_JSON_CONTENT_TYPE } from "../constants";
+import { GET,
+         POST,
+         ACCEPT,
+         CONTENT_TYPE,
+         APPLICATION_JSON } from "../constants";
 
-export function get(host, path, parameters, callback) {
+export function get(host, uri, parameters, headers, callback) {
   if (callback === undefined) {
-    callback = parameters; ///
-    parameters = {};
+    callback = headers; ///
+    headers = {};
   }
 
-  const method = GET_METHOD,
-        body = undefined;
+  const method = GET,
+        body = null;
 
-  request(host, path, parameters, method, body, callback);
+  guaranteeAccept(headers);
+
+  request(host, uri, parameters, method, body, headers, callback);
 }
 
-export function post(host, path, json, parameters, callback) {
+export function post(host, uri, parameters, body, headers, callback) {
   if (callback === undefined) {
-    callback = parameters; ///
-    parameters = {};
+    callback = headers; ///
+    headers = {};
   }
 
-  const method = POST_METHOD,
-        body = JSON.stringify(json);
+  const method = POST;
 
-  request(host, path, parameters, method, body, callback);
+  guaranteeAccept(headers);
+
+  guaranteeContentType(headers);
+
+  request(host, uri, parameters, method, body, headers, callback);
 }
 
-export function request(host, path, parameters, method, body, callback) {
-  const url = urlFromHostPathAndParameters(host, path, parameters),
-        accept = APPLICATION_JSON_ACCEPT,
+export function request(host, uri, parameters, method, body, headers, callback) {
+  const url = urlFromHostURIAndParameters(host, uri, parameters),
+        accept = headers[ACCEPT],
+        contentType = headers[CONTENT_TYPE],
         xmlHttpRequest = new XMLHttpRequest();
+
+  if (contentType === APPLICATION_JSON) {
+    const json = body,  ///
+          jsonString = JSON.stringify(json);
+
+    body = jsonString;  ///
+  }
 
   xmlHttpRequest.onreadystatechange = () => {
     const { readyState, status, responseText } = xmlHttpRequest;
 
     if (readyState == 4) {
-      let json = null;
+      let body = responseText;
 
-      if (status == 200) {
-        const jsonString = responseText; ///
-
+      if (accept === APPLICATION_JSON) {
         try {
-          json = JSON.parse(jsonString);
-        } catch (error) {
-          ///
-        }
-      }
+          const jsonString = body,  ///
+                json = JSON.parse(jsonString);
 
-      callback(json, status);
+          body = json;  ///
+        } catch (error) {
+          body = null;
+        }
+
+        callback(body, status);
+      }
     }
   };
 
@@ -55,19 +73,46 @@ export function request(host, path, parameters, method, body, callback) {
 
   xmlHttpRequest.setRequestHeader("accept", accept);
 
-  if ((method === PUT_METHOD) || (method === POST_METHOD)) {
-    const contentType = APPLICATION_JSON_CONTENT_TYPE;
+  xmlHttpRequest.setRequestHeader("content-type", contentType);
 
-    xmlHttpRequest.setRequestHeader("content-type", contentType);
-  }
-
-  xmlHttpRequest.send(body);
+  (body !== null) ?
+    xmlHttpRequest.send(body) :
+      xmlHttpRequest.send();
 }
 
 export default {
   get,
   post,
   request
+}
+
+function guarantee(headers, name, value) {
+  const propertyNames = Object.getOwnPropertyNames(headers),
+        names = propertyNames.map((propertyName) => {
+          const lowerCasePropertyName = propertyName.toLowerCase(),
+                name = lowerCasePropertyName; ///
+
+          return name;
+        }),
+        namesIncludesName = names.includes(name);
+
+  if (!namesIncludesName) {
+    headers[name] = value;
+  }
+}
+
+function guaranteeAccept(headers) {
+  const name = ACCEPT,  ///
+        value = APPLICATION_JSON; ///
+
+  guarantee(headers, name, value);
+}
+
+function guaranteeContentType(headers) {
+  const name = CONTENT_TYPE,  ///
+        value = APPLICATION_JSON; ///
+
+  guarantee(headers, name, value);
 }
 
 function queryStringFromParameters(parameters) {
@@ -88,11 +133,11 @@ function queryStringFromParameters(parameters) {
   return queryString;
 }
 
-function urlFromHostPathAndParameters(host, path, parameters) {
+function urlFromHostURIAndParameters(host, uri, parameters) {
   const queryString = queryStringFromParameters(parameters),
         url = (queryString === "") ?
-              `${host}${path}` :
-                `${host}${path}?${queryString}`;
+              `${host}${uri}` :
+                `${host}${uri}?${queryString}`;
 
   return url;
 }

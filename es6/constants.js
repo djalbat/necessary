@@ -10,11 +10,11 @@ export const DEFAULT_LOG_LEVEL = WARNING; ///
 export const DEFAULT_LOG_DIRECTORY_PATH = null;
 export const DEFAULT_LOG_FILE_BASE_NAME = "default";
 
-export const GET_METHOD = "GET";
-export const PUT_METHOD = "PUT";
-export const POST_METHOD = "POST";
-export const APPLICATION_JSON_ACCEPT = "application/json";
-export const APPLICATION_JSON_CONTENT_TYPE = "application/json";
+export const GET = "GET";
+export const POST = "POST";
+export const ACCEPT = "accept";
+export const CONTENT_TYPE = "content-type";
+export const APPLICATION_JSON = "application/json";
 
 export const CTRL_C = "^C";
 export const DATA_EVENT = "data";

@@ -58,39 +58,42 @@ The miscellaneous functions are a special case. They can be treated as above but
 
 The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for other HTTP request methods.
 
-* The `get()` function sends a `GET` request, taking host, path, optional query parameters and callback arguments. The optional `parameters` argument should be a plain old JavaScript object, the names and values of which will be encoded and concatenated to form the query string. If the status code is 200 and the response is stringified JSON, this will be parsed and returned by way of the callback, otherwise null will be returned:
+* The `get()` function sends a `GET` request, taking `host`, `uri`, `parameters` and `callback` arguments. The `parameters` argument should be a plain old JavaScript object, the names and values of which are encoded and concatenated to form the query string. An optional `headers` argument can be supplied before the callback argument. If the `headers` object does not have an `accept` property, one wil be provided with the value `application/json`. The `callback` argument is expected to be a function taking arguments `body` and `status`. If the `accept` property is set to `application/json` then the `body` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. The `status` argument will be the response status code numnber, for example '200' for a successful "OK" response.
 
 ```
 const host = "...",
-      path = "...",
+      uri = "...",
       parameters = {
         ...
       };
 
-get(host, path, parameters, (json) => {
-  if (json !== null) {
+get(host, path, uri, (json, status) => {
+  if (status === 200) {
     ...
   }
 });
 ```
 
-Note that the `path` argument should include a leading forward slash `/` since the `host` argument should not have a trailing one.
+Note that the `uri` argument must include a leading forward slash `/` since the `host` argument should not have a trailing one.
 
-* The `post()` function behaves similarly to the `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `json` argument after the `host` and `path` arguments. This argument is stringified and sent in the request body:
+* The `post()` function behaves similarly to the `get()` function in what it expects both by way of arguments and in the HTTP response. However, it sends a `POST` rather than a `GET` request and takes an additional `body` argument after the `parameters` argument. If the `headers` object does not have an `accept` property, one wil be provided with the value `application/json`. Similarly for the `content-type` property. If the `accept` property is set to `application/json` then the `body` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. If the `content-type` property is set to `application/json` then the `body` argument will be assumed to be JSON and will be stringified as such.
 
 ```
 const host = "...",
-      path = "...",
-      json = ...;
+      uri = "...",
+      parameters = {
+        ...
+      },
+      json = {
+        ...
+      };
 
-post(host, path, json, (json) => {
+post(host, uri, parameters, json, (json, status) => {
   if (json !== null) {
     ...
   }
 });
 ```
-
-Note that `parameters` argument is missing in the example above but that there is nothing wrong with including it and thereby appending a query string to the request URL.
 
 ## Shell utilities
 
