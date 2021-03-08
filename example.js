@@ -4,12 +4,10 @@ const { shellUtilities } = require("./lib/main.js");
 
 const { prompt } = shellUtilities;
 
-const hidden = true,
-      description = "example:",
+const description = "example:",
       errorMessage = "The answer is invalid",
       validationFunction = validateExample,  ///
       options = {
-        hidden,
         description,
         errorMessage,
         validationFunction

@@ -89,7 +89,7 @@ function attempt(next, done, context) {
           validationPattern,
           validationFunction } = options;
 
-  input(description, initialAnswer, encoding, hidden, callback);
+  input(initialAnswer, hidden, description, encoding, callback);
 
   function callback(answer) {
     const valid = validationFunction ?  ///
@@ -114,9 +114,15 @@ function attempt(next, done, context) {
   }
 }
 
-function input(description, initialAnswer, encoding, hidden, callback) {
-  let answer = initialAnswer; ///
+function input(initialAnswer, hidden, description, encoding, callback) {
+  const answer = initialAnswer; ///
 
+  hidden ?
+    hiddenInput(answer, description, encoding, callback) :
+      visibleInput(answer, description, encoding, callback);
+}
+
+function hiddenInput(answer, description, encoding, callback) {
   const event = DATA_EVENT,
         rawMode = true,
         offETX = onETX(() => {
@@ -125,22 +131,18 @@ function input(description, initialAnswer, encoding, hidden, callback) {
           process.exit();
         });
 
+  process.stdout.write(description);
+
   process.stdin.setEncoding(encoding);
 
   process.stdin.setRawMode(rawMode);
-
-  process.stdout.write(description);
-
-  if (!hidden) {
-    process.stdout.write(answer);
-  }
 
   process.stdin.resume();
 
   process.stdin.on(event, listener);
 
-  function listener(chunk) {
-    const character = chunk.toString(encoding);
+  function listener(data) {
+    const character = data.toString(encoding);
 
     switch (character) {
       case LINE_FEED_CHARACTER :
@@ -160,32 +162,32 @@ function input(description, initialAnswer, encoding, hidden, callback) {
       case BACKSPACE_CHARACTER :
         answer = answer.slice(0, answer.length - 1);
 
-        process.stdout.clearLine();
-
-        process.stdout.cursorTo(0);
-
-        process.stdout.write(description);
-
-        if (!hidden) {
-          process.stdout.write(answer);
-        }
-
         break;
 
       default:
         answer += character;
 
-        if (!hidden) {
-          process.stdout.clearLine();
-
-          process.stdout.cursorTo(0);
-
-          process.stdout.write(description);
-
-          process.stdout.write(answer);
-        }
-
         break;
     }
+  }
+}
+
+function visibleInput(answer, description, encoding, callback) {
+  process.stdout.write(description);
+
+  process.stdout.write(answer);
+
+  process.stdin.setEncoding(encoding);
+
+  process.stdin.resume();
+
+  process.stdin.once("data", listener);
+
+  function listener(data) {
+    const answer = data; ///
+
+    process.stdin.pause();
+
+    callback(answer);
   }
 }
