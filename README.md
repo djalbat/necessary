@@ -161,22 +161,18 @@ const hidden = true,
         validationFunction
       };
 
-prompt(options, (value) => {
+prompt(options, (answer) => {
   ...
 });
 ```
 
 There are a range of properties available for the `options` object. The `description` and `errorMessage` properties are mandatory. The remaining properties are optional.
 
-The default values of hte `attempts` and `encoding` properties are `3` and `utf8`, respectively.
-
-The default value of the `hidden` property is `false`. Setting it to `true` results in password-style input, that is, the characters remain hidden.
+The default values of the `attempts` and `encoding` properties are `3` and `utf8`, respectively. The default value of the `hidden` property is `false`. Setting it to `true` results in password-style input, that is, the characters remain hidden.
 
 If no `validateFunction` property is given then you must set a `validatePattern` property instead, which must be a regular expression.
 
-The `initialAnswer` property sets the initial answer at the prompt. You might want to set it to `yes`, for example.
-
-Lastly, setting the `answer` property to anything other than `null` or `undefined` causes the `callback` function to be invoked immediately without any prompt being shown. This can be useful for debugging.
+The `initialAnswer` property sets the initial answer at the prompt. You might want to set it to `yes`, for example. Lastly, setting the `answer` property to anything other than `null` or `undefined` causes the `callback` function to be invoked immediately without any prompt being shown. This can be useful for debugging.
 
 ## Logging utilities
 
