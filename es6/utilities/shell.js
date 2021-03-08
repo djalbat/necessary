@@ -50,13 +50,11 @@ export function prompt(options, callback) {
     return;
   }
 
-  answer = null;
-
   const { attempts = DEFAULT_ATTEMPTS } = options,
         context = {
           answer,
-          attempts,
-          options
+          options,
+          attempts
         };
 
   whilst(attempt, () => {

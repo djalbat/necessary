@@ -14,12 +14,12 @@
     "lively-cli": "^2.0.0"
   },
   "devDependencies": {
-    "@swc/core": "^1.2.47",
-    "watchful-cli": "^1.6.2"
+    "@swc/core": "^1.2.50",
+    "watchful-cli": "^1.6.8"
   },
   "scripts": {
     "clean": "rm -rf lib",
-    "watchful": "watchful -dmp=1 --transpiler=swc --source-directory=./es6 --lib-directory=./lib --pause=100",
+    "watchful": "watchful -mp=1 --transpiler=swc --source-directory=./es6 --lib-directory=./lib --pause=100",
     "batch": "npm run watchful batch --",
     "batch-debug": "npm run watchful batch -- --debug",
     "incremental": "npm run watchful incremental --",
