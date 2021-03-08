@@ -103,7 +103,7 @@ post(host, uri, parameters, json, (json, status) => {
 });
 ```
 
-* The `request()` function behaves similarly to the `post()` function but the `headers` argument is not longer optional and there is a `method` argument that comes before the `body` argument:
+* The `request()` function behaves similarly to the `post()` function but the `headers` argument is no longer optional and there is a `method` argument that comes before the `body` argument:
 
 ```
 const host = "...",
