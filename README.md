@@ -56,7 +56,7 @@ The miscellaneous functions are a special case. They can be treated as above but
 - `post()`
 - `request()`
 
-The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for other HTTP request methods.
+The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for arbitrary HTTP request methods.
 
 * The `get()` function sends a `GET` request, taking `host`, `uri`, `parameters` and `callback` arguments, together with an optional `headers` argument before the `callback` argument.
 
@@ -102,6 +102,31 @@ post(host, uri, parameters, json, (json, status) => {
   }
 });
 ```
+
+* The `request()` function behaves similarly to the `post()` function but the `headers` argument is not longer optional and there is a `method` argument that comes before the `body` argument:
+
+```
+const host = "...",
+      uri = "...",
+      parameters = {
+        ...
+      },
+      method = "PUT"
+      json = {
+        ...
+      },
+      headers = {
+        "accept": "application/json",
+        "content-type": "application/json"
+      };
+
+request(host, uri, parameters, method, json, headers, (json, status) => {
+  if (json !== null) {
+    ...
+  }
+});
+```
+Note that the headers must be explicitly set. There does not necessarily have to be a `content-type` header, of course, although in the vast majority of cases the `accept` header should be set.
 
 ## Shell utilities
 

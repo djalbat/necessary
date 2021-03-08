@@ -37,8 +37,8 @@ export function post(host, uri, parameters, body, headers, callback) {
 
 export function request(host, uri, parameters, method, body, headers, callback) {
   const url = urlFromHostURIAndParameters(host, uri, parameters),
-        accept = headers[ACCEPT],
-        contentType = headers[CONTENT_TYPE],
+        accept = headers[ACCEPT] || null,
+        contentType = headers[CONTENT_TYPE] || null,
         xmlHttpRequest = new XMLHttpRequest();
 
   if (contentType === APPLICATION_JSON) {
@@ -71,9 +71,13 @@ export function request(host, uri, parameters, method, body, headers, callback) 
 
   xmlHttpRequest.open(method, url);
 
-  xmlHttpRequest.setRequestHeader("accept", accept);
+  if (accept !== null) {
+    xmlHttpRequest.setRequestHeader(ACCEPT, accept);
+  }
 
-  xmlHttpRequest.setRequestHeader("content-type", contentType);
+  if (contentType !== null) {
+    xmlHttpRequest.setRequestHeader(CONTENT_TYPE, contentType);
+  }
 
   (body !== null) ?
     xmlHttpRequest.send(body) :
