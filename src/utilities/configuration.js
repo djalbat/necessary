@@ -12,7 +12,9 @@ if (!globalThis.rc) {
 
 const { rc } = globalThis;
 
-export default rc;
+export default {
+  rc
+};
 
 let pathResolver = path.resolve,
     baseExtension = DEFAULT_RC_BASE_EXTENSION;
