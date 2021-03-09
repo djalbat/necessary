@@ -87,8 +87,8 @@ function attempt(next, done, context) {
           description,
           errorMessage,
           initialAnswer = DEFAULT_INITIAL_ANSWER,
-          validationPattern,
-          validationFunction } = options;
+          validationPattern = null,
+          validationFunction = null } = options;
 
   input(initialAnswer, hidden, description, encoding, callback);
 
