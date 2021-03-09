@@ -65,7 +65,7 @@ function readRCFile() {
 
 function writeRCFile(json) {
   const absoluteRCFilePath = absoluteRCFilePathFromNothing(),
-        fileContent = JSON.stringify(json, null, `\t`);
+        fileContent = JSON.stringify(json, null, "  ");
 
   writeFile(absoluteRCFilePath, fileContent);
 }
