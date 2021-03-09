@@ -21,11 +21,12 @@ export function onETX(handler) {
           encoding = UTF8_ENCODING;
 
     process.stdin.setRawMode(rawMode);
+
     process.stdin.setEncoding(encoding);
 
-    process.stdin.resume();
-
     process.stdin.addListener(event, dataHandler);
+
+    process.stdin.resume();
 
     return offExt;
   }
@@ -124,12 +125,7 @@ function input(initialAnswer, hidden, description, encoding, callback) {
 
 function hiddenInput(answer, description, encoding, callback) {
   const event = DATA_EVENT,
-        rawMode = true,
-        offETX = onETX(() => {
-          console.log(CTRL_C);
-
-          process.exit();
-        });
+        rawMode = true;
 
   process.stdout.write(description);
 
@@ -137,9 +133,9 @@ function hiddenInput(answer, description, encoding, callback) {
 
   process.stdin.setRawMode(rawMode);
 
-  process.stdin.resume();
-
   process.stdin.on(event, listener);
+
+  process.stdin.resume();
 
   function listener(data) {
     const character = data.toString(encoding);
@@ -152,8 +148,6 @@ function hiddenInput(answer, description, encoding, callback) {
         process.stdin.removeListener(event, listener);
 
         process.stdin.pause();
-
-        offETX();
 
         callback(answer);
 
@@ -168,6 +162,11 @@ function hiddenInput(answer, description, encoding, callback) {
         answer += character;
 
         break;
+
+      case ETX_CHARACTER :
+        console.log(CTRL_C);
+
+        process.exit();
     }
   }
 }
@@ -179,9 +178,9 @@ function visibleInput(answer, description, encoding, callback) {
 
   process.stdin.setEncoding(encoding);
 
-  process.stdin.resume();
+  process.stdin.once(DATA_EVENT, listener);
 
-  process.stdin.once("data", listener);
+  process.stdin.resume();
 
   function listener(data) {
     const answer = data; ///
