@@ -183,7 +183,7 @@ function visibleInput(answer, description, encoding, callback) {
   process.stdin.resume();
 
   function listener(data) {
-    const answer = data; ///
+    const answer = data.replace(/\n$/, "");
 
     process.stdin.pause();
 
