@@ -1,7 +1,7 @@
 {
   "name": "necessary",
   "author": "James Smith",
-  "version": "7.0.10",
+  "version": "7.1.0",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/necessary",
   "description": "A collection of utility functions.",
@@ -10,7 +10,6 @@
     "url": "https://github.com/djalbat/necessary"
   },
   "dependencies": {
-    "esbuild": "^0.8.53",
     "lively-cli": "^2.0.0"
   },
   "devDependencies": {
