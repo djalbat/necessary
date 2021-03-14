@@ -1,7 +1,7 @@
 {
   "name": "necessary",
   "author": "James Smith",
-  "version": "7.1.5",
+  "version": "7.1.6",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/necessary",
   "description": "A collection of utility functions.",
@@ -9,9 +9,7 @@
     "type": "git",
     "url": "https://github.com/djalbat/necessary"
   },
-  "dependencies": {
-    "lively-cli": "^2.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@swc/core": "^1.2.50",
     "watchful-cli": "^1.6.8"
