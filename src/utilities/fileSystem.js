@@ -3,7 +3,6 @@
 import fs from "fs";
 
 import { UTF8_ENCODING } from "../constants";
-import { pathWithoutBottommostNameFromPath } from "../utilities/path";
 
 export function checkEntryExists(entryPath) {
   const entryExists = fs.existsSync(entryPath);
@@ -92,18 +91,12 @@ export function appendToFile(filePath, content) {
 }
 
 export function createDirectory(directoryPath) {
-  const directoryPathWithoutBottommostName = pathWithoutBottommostNameFromPath(directoryPath);
+  const recursive = true,
+        options = {
+          recursive
+        };
 
-  if ((directoryPathWithoutBottommostName !== ".") && (directoryPathWithoutBottommostName !== null)) {
-    const parentDirectoryPath = directoryPathWithoutBottommostName,  ///
-          parentDirectoryExists = checkDirectoryExists(parentDirectoryPath);
-
-    if (!parentDirectoryExists) {
-      createDirectory(parentDirectoryPath);
-    }
-  }
-
-  fs.mkdirSync(directoryPath);
+  fs.mkdirSync(directoryPath, options);
 }
 
 export function renameFile(oldFilePath, newFilePath) {
