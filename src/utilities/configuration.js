@@ -16,8 +16,7 @@ export default {
   rc
 };
 
-let pathResolver = path.resolve,
-    baseExtension = DEFAULT_RC_BASE_EXTENSION;
+let baseExtension = DEFAULT_RC_BASE_EXTENSION;
 
 function _rc(environmentNameOrArgv = null) {
   let environment,
@@ -56,18 +55,18 @@ function _rc(environmentNameOrArgv = null) {
 }
 
 function readRCFile() {
-  const absoluteRCFilePath = absoluteRCFilePathFromNothing(),
-        fileContent = readFile(absoluteRCFilePath),
-        json = JSON.parse(fileContent);
+  const rcFilePath = rcFilePathFromNothing(),
+        rcFileContent = readFile(rcFilePath),
+        json = JSON.parse(rcFileContent);
 
   return json;      
 }
 
 function writeRCFile(json) {
-  const absoluteRCFilePath = absoluteRCFilePathFromNothing(),
-        fileContent = JSON.stringify(json, null, "  ");
+  const rcFilePath = rcFilePathFromNothing(),
+        rdFileContent = JSON.stringify(json, null, "  ");
 
-  writeFile(absoluteRCFilePath, fileContent);
+  writeFile(rcFilePath, rdFileContent);
 }
 
 function updateRCFile(addedProperties, ...deletedPropertyNames) {
@@ -85,8 +84,8 @@ function updateRCFile(addedProperties, ...deletedPropertyNames) {
 }
 
 function checkRCFileExists() {
-  const absoluteRCFilePath = absoluteRCFilePathFromNothing(),
-        rcFileExists = checkFileExists(absoluteRCFilePath);
+  const rcFilePath = rcFilePathFromNothing(),
+        rcFileExists = checkFileExists(rcFilePath);
 
   return rcFileExists;
 }
@@ -103,16 +102,13 @@ function createVacuousRCFile() {
 
 function setRCBaseExtension(rcBaseExtension) { baseExtension = rcBaseExtension; }
 
-function setRCPathResolver(rcPathResolver) { pathResolver = rcPathResolver; }
-
 Object.assign(_rc, {
   readRCFile,
   writeRCFile,
   updateRCFile,
   checkRCFileExists,
   createVacuousRCFile,
-  setRCBaseExtension,
-  setRCPathResolver
+  setRCBaseExtension
 });
 
 function environmentNameFromArgv(argv) {
@@ -134,9 +130,8 @@ function environmentNameFromArgv(argv) {
   return environmentName;
 }
 
-function absoluteRCFilePathFromNothing() {
-  const filePath = `./.${baseExtension}rc`,
-        absoluteRCFilePath = pathResolver(filePath);
+function rcFilePathFromNothing() {
+  const rcFilePath = `./.${baseExtension}rc`;
 
-  return absoluteRCFilePath;
+  return rcFilePath;
 }
