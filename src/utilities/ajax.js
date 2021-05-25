@@ -91,10 +91,10 @@ export default {
 }
 
 function guarantee(headers, name, value) {
-  const propertyNames = Object.getOwnPropertyNames(headers),
-        names = propertyNames.map((propertyName) => {
-          const lowerCasePropertyName = propertyName.toLowerCase(),
-                name = lowerCasePropertyName; ///
+  const ownPropertyNames = Object.getOwnPropertyNames(headers),
+        names = ownPropertyNames.map((ownPropertyName) => {
+          const lowerCaseOwnPropertyName = ownPropertyName.toLowerCase(),
+                name = lowerCaseOwnPropertyName; ///
 
           return name;
         }),
