@@ -15,7 +15,7 @@ export function get(host, uri, parameters, headers, callback) {
   const method = GET,
         body = null;
 
-  guaranteeAccept(headers);
+  underwriteAccept(headers);
 
   request(host, uri, parameters, method, body, headers, callback);
 }
@@ -28,9 +28,9 @@ export function post(host, uri, parameters, body, headers, callback) {
 
   const method = POST;
 
-  guaranteeAccept(headers);
+  underwriteAccept(headers);
 
-  guaranteeContentType(headers);
+  underwriteContentType(headers);
 
   request(host, uri, parameters, method, body, headers, callback);
 }
@@ -90,33 +90,33 @@ export default {
   request
 }
 
-function guarantee(headers, name, value) {
+function underwrite(headers, name, value) {
   const ownPropertyNames = Object.getOwnPropertyNames(headers),
-        names = ownPropertyNames.map((ownPropertyName) => {
-          const lowerCaseOwnPropertyName = ownPropertyName.toLowerCase(),
-                name = lowerCaseOwnPropertyName; ///
+        lowercaseName = name.toLowerCase(),
+        lowerCaseOwnPropertyNames = ownPropertyNames.map((ownPropertyName) => {
+          const lowerCaseOwnPropertyName = ownPropertyName.toLowerCase();
 
-          return name;
+          return lowerCaseOwnPropertyName;
         }),
-        namesIncludesName = names.includes(name);
+        lowerCaseOwnPropertyNamesIncludesLowercaseName = lowerCaseOwnPropertyNames.includes(lowercaseName);
 
-  if (!namesIncludesName) {
+  if (!lowerCaseOwnPropertyNamesIncludesLowercaseName) {
     headers[name] = value;
   }
 }
 
-function guaranteeAccept(headers) {
+function underwriteAccept(headers) {
   const name = ACCEPT,  ///
         value = APPLICATION_JSON; ///
 
-  guarantee(headers, name, value);
+  underwrite(headers, name, value);
 }
 
-function guaranteeContentType(headers) {
+function underwriteContentType(headers) {
   const name = CONTENT_TYPE,  ///
         value = APPLICATION_JSON; ///
 
-  guarantee(headers, name, value);
+  underwrite(headers, name, value);
 }
 
 function queryStringFromParameters(parameters) {
