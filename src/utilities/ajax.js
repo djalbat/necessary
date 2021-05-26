@@ -1,10 +1,7 @@
 "use strict";
 
-import { GET,
-         POST,
-         ACCEPT,
-         CONTENT_TYPE,
-         APPLICATION_JSON } from "../constants";
+import { underwrite, queryStringFromParameters } from "../utilities/http";
+import { GET, POST, ACCEPT, CONTENT_TYPE, APPLICATION_JSON } from "../constants";
 
 export function get(host, uri, parameters, headers, callback) {
   if (callback === undefined) {
@@ -90,21 +87,6 @@ export default {
   request
 }
 
-function underwrite(headers, name, value) {
-  const ownPropertyNames = Object.getOwnPropertyNames(headers),
-        lowercaseName = name.toLowerCase(),
-        lowerCaseOwnPropertyNames = ownPropertyNames.map((ownPropertyName) => {
-          const lowerCaseOwnPropertyName = ownPropertyName.toLowerCase();
-
-          return lowerCaseOwnPropertyName;
-        }),
-        lowerCaseOwnPropertyNamesIncludesLowercaseName = lowerCaseOwnPropertyNames.includes(lowercaseName);
-
-  if (!lowerCaseOwnPropertyNamesIncludesLowercaseName) {
-    headers[name] = value;
-  }
-}
-
 function underwriteAccept(headers) {
   const name = ACCEPT,  ///
         value = APPLICATION_JSON; ///
@@ -117,24 +99,6 @@ function underwriteContentType(headers) {
         value = APPLICATION_JSON; ///
 
   underwrite(headers, name, value);
-}
-
-function queryStringFromParameters(parameters) {
-  const names = Object.keys(parameters),
-        namesLength = names.length,
-        lastIndex = namesLength - 1,
-        queryString = names.reduce((queryString, name, index) => {
-          const value = parameters[name],
-                encodedName = encodeURIComponent(name),
-                encodedValue = encodeURIComponent(value),
-                ampersandOrNothing = (index !== lastIndex) ? "&" : "";
-  
-          queryString += `${encodedName}=${encodedValue}${ampersandOrNothing}`;
-  
-          return queryString;
-        }, "");
-
-  return queryString;
 }
 
 function urlFromHostURIAndParameters(host, uri, parameters) {
