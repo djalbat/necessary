@@ -19,8 +19,8 @@ These cna only be used on Node:
 These can be used both on Node and in the browser:
 
 * [Path utilities](#path-utilities)
-* [HTTP utilities](#http-utilities)
 * [Array utilities](#array-utilities)
+* [HTTP utilities](#http-utilities)
 * [Asynchronous utilities](#asynchronous-utilities)
 
 ## Installation
@@ -518,48 +518,6 @@ pathWithoutBottommostNameFromPath("root/etc/init.conf"); // the return value is 
 pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // the return value is 'etc/init.conf'
 ```
 
-## HTTP utilities
-
-- `overwrite()`
-- `underwrite()`
-- `queryStringFromParameters()`
-
-These are helper functions to manipulate HTTP headers and build query strings.
-
-* The `overwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. It overwrites the property of the `headers` object corresponding to the `name` argument with the `value` argument, if the property exists, otherwise it creates it. It's utility lies in the fact that it is insensitive to case.
-
-```
-const headers = {
-  "Content-Type": "application/json"
-};
-
-overwrite(headers, "content-type", "text/html"); // headers["Content-Type"] = "text/html"
-```
-
-* The `underwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. If the corresponding property of the \headers\ object exists then it is left in place, otherwise it is given the `value` value. It's utility lies in the fact that it is insensitive to case.
-
-```
-const headers = {
-  "Content-Type": "application/json"
-};
-
-underwrite(headers, "content-type", "text/html"); // headers["Content-Type"] = "application/jon"
-
-const headers = {};
-
-underwrite(headers, "content-type", "text/html"); // headers["content-type"] = "text/html"
-```
-
-* The `queryStringFromParameters()` function takes a plain old JavaScript object `parameters` argument and returns the corresponding URL encoded query string. It uses the [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) to encode the names and values
-
-```
-const parameters = {
-  "name": "John Doe"
-};
-
-const queryString = queryStringFromParameters(parameters); // queryString = name=John%20Doe
-```
-
 ## Array utilities
 
 - `first()`
@@ -685,6 +643,48 @@ augment([1, 2, 3], [-1, 4, -2, 5], (element, index) => {
 separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
   return element > 0;
 }); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
+```
+
+## HTTP utilities
+
+- `overwrite()`
+- `underwrite()`
+- `queryStringFromParameters()`
+
+These are helper functions to manipulate HTTP headers and build query strings.
+
+* The `overwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. It overwrites the property of the `headers` object corresponding to the `name` argument with the `value` argument, if the property exists, otherwise it creates it. It's utility lies in the fact that it is insensitive to case.
+
+```
+const headers = {
+  "Content-Type": "application/json"
+};
+
+overwrite(headers, "content-type", "text/html"); // headers["Content-Type"] = "text/html"
+```
+
+* The `underwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. If the corresponding property of the \headers\ object exists then it is left in place, otherwise it is given the `value` value. It's utility lies in the fact that it is insensitive to case.
+
+```
+const headers = {
+  "Content-Type": "application/json"
+};
+
+underwrite(headers, "content-type", "text/html"); // headers["Content-Type"] = "application/jon"
+
+const headers = {};
+
+underwrite(headers, "content-type", "text/html"); // headers["content-type"] = "text/html"
+```
+
+* The `queryStringFromParameters()` function takes a plain old JavaScript object `parameters` argument and returns the corresponding URL encoded query string. It uses the [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) to encode the names and values
+
+```
+const parameters = {
+  "name": "John Doe"
+};
+
+const queryString = queryStringFromParameters(parameters); // queryString = name=John%20Doe
 ```
 
 ## Asynchronous utilities
