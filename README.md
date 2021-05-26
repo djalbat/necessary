@@ -18,7 +18,7 @@ These cna only be used on Node:
 
 These can be used both on Node and in the browser:
 
-* [http utilities](#http-utilities)
+* [HTTP utilities](#http-utilities)
 * [Path utilities](#path-utilities)
 * [Array utilities](#array-utilities)
 * [Asynchronous utilities](#asynchronous-utilities)
