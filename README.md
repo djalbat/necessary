@@ -18,8 +18,8 @@ These cna only be used on Node:
 
 These can be used both on Node and in the browser:
 
-* [HTTP utilities](#http-utilities)
 * [Path utilities](#path-utilities)
+* [HTTP utilities](#http-utilities)
 * [Array utilities](#array-utilities)
 * [Asynchronous utilities](#asynchronous-utilities)
 
@@ -415,48 +415,6 @@ updateRCFile({example: "example"});  // Updates the rc file, adding the 'example
 updateRCFile(null, "example");  // Updates the rc file, removing the 'example' property
 ```
 
-## HTTP utilities
-
-- `overwrite()`
-- `underwrite()`
-- `queryStringFromParameters()`
-
-These are helper functions to manipulate HTTP headers and build query strings.
-
-* The `overwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. It overwrites the property of the `headers` object corresponding to the `name` argument with the `value` argument, if the property exists, otherwise it creates it. It's utility lies in the fact that it is insensitive to case.
-
-```
-const headers = {
-  "Content-Type": "application/json"
-};
-
-overwrite(headers, "content-type", "text/html"); // headers["Content-Type"] = "text/html"
-```
-
-* The `underwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. If the corresponding property of the \headers\ object exists then it is left in place, otherwise it is given the `value` value. It's utility lies in the fact that it is insensitive to case.
-
-```
-const headers = {
-  "Content-Type": "application/json"
-};
-
-underwrite(headers, "content-type", "text/html"); // headers["Content-Type"] = "application/jon"
-
-const headers = {};
-
-underwrite(headers, "content-type", "text/html"); // headers["content-type"] = "text/html"
-```
-
-* The `queryStringFromParameters()` function takes a plain old JavaScript object `parameters` argument and returns the corresponding URL encoded query string. It uses the [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) to encode the names and values
-
-```
-const parameters = {
-  "name": "John Doe"
-};
-
-const queryString = queryStringFromParameters(parameters); // queryString = name=John%20Doe
-```
-
 ## Path utilities
 
 - `isPathName()`
@@ -558,6 +516,48 @@ topmostDirectoryNameFromPath("etc/init.conf"); // the return value is 'etc'
 pathWithoutBottommostNameFromPath("root/etc/init.conf"); // the return value is 'root/etc'
 
 pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // the return value is 'etc/init.conf'
+```
+
+## HTTP utilities
+
+- `overwrite()`
+- `underwrite()`
+- `queryStringFromParameters()`
+
+These are helper functions to manipulate HTTP headers and build query strings.
+
+* The `overwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. It overwrites the property of the `headers` object corresponding to the `name` argument with the `value` argument, if the property exists, otherwise it creates it. It's utility lies in the fact that it is insensitive to case.
+
+```
+const headers = {
+  "Content-Type": "application/json"
+};
+
+overwrite(headers, "content-type", "text/html"); // headers["Content-Type"] = "text/html"
+```
+
+* The `underwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. If the corresponding property of the \headers\ object exists then it is left in place, otherwise it is given the `value` value. It's utility lies in the fact that it is insensitive to case.
+
+```
+const headers = {
+  "Content-Type": "application/json"
+};
+
+underwrite(headers, "content-type", "text/html"); // headers["Content-Type"] = "application/jon"
+
+const headers = {};
+
+underwrite(headers, "content-type", "text/html"); // headers["content-type"] = "text/html"
+```
+
+* The `queryStringFromParameters()` function takes a plain old JavaScript object `parameters` argument and returns the corresponding URL encoded query string. It uses the [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) to encode the names and values
+
+```
+const parameters = {
+  "name": "John Doe"
+};
+
+const queryString = queryStringFromParameters(parameters); // queryString = name=John%20Doe
 ```
 
 ## Array utilities
@@ -697,7 +697,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
 
 These functions generally take either a callback or an array of callbacks, followed by a `done()` function and an optional `context` argument. They all pass a `next()` function to the callbacks followed by the `done()` function, the `context` and then an `index` argument. Callbacks are given access to the `done()` function which can be called instead of the `next()` function in order to terminate early.
 
-* The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function or until the callback invokes the given `done()` function. The callback can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the callback will be exectuted ten times:
+* The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function or until the callback invokes the given `done()` function. The callback can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the callback will be executed ten times:
 
 ```
 const context = {}; ///
