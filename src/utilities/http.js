@@ -1,5 +1,9 @@
 "use strict";
 
+const http = require("http"),
+      https = require("https");
+
+import { second } from "../utilities/array";
 import { ERROR, EMPTY_STRING, AMPERSAND_CHARACTER } from "../constants";
 
 function get(host, uri, parameters, headers, callback) {
@@ -9,7 +13,7 @@ function get(host, uri, parameters, headers, callback) {
   }
 
   const secure = secureFromHost(host),
-        url = `${host}${uri}`,
+        url = urlFromHostURIAndParameters(host, uri, parameters),
         get = secure ?
                 https.get :
                   http.get;
@@ -62,6 +66,41 @@ export function underwrite(headers, name, value) {
   }
 }
 
+export function portFromHost(host) {
+  let port;
+
+  const matches = host.match(/^https?:\/\/([^\/]+)/),
+        secondMatch = second(matches),
+        index = secondMatch.indexOf(COLON);
+
+  if (index === -1) {
+    const secure = secureFromHost(host);
+
+    port = secure ? 443 : 80; ///
+  } else {
+    const start = index + 1,
+          portString = secondMatch.substring(start);
+
+    port = Number(portString);
+  }
+
+  return port;
+}
+
+export function secureFromHost(host) {
+  const secure = /^https:\/\//.test(host);
+
+  return secure;
+}
+
+export function hostnameFromHost(host) {
+  const matches = host.match(/^https?:\/\/([^:\/]+)/),
+        secondMatch = second(matches),
+        hostname = secondMatch; ///
+
+  return hostname;
+}
+
 export function queryStringFromParameters(parameters) {
   const names = Object.keys(parameters),
         namesLength = names.length,
@@ -92,14 +131,12 @@ export function urlFromHostURIAndParameters(host, uri, parameters) {
 }
 
 export default {
+  get,
   overwrite,
   underwrite,
+  portFromHost,
+  secureFromHost,
+  hostnameFromHost,
   queryStringFromParameters,
   urlFromHostURIAndParameters
 };
-
-function secureFromHost(host) {
-  const secure = /^https:\/\//.test(host);
-
-  return secure;
-}

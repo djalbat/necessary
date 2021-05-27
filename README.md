@@ -289,17 +289,17 @@ An inglorious collection of functions which do no more than paper over some of N
 * The `checkEntryExists()`, `checkFileExists()`, `checkDirectoryExists()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
 
 ```
-checkEntryExists("root/etc"); // the return value is true if the file or directory exists
+checkEntryExists("root/etc"); // returns true if the file or directory exists
 
-checkFileExists("root/etc/init.conf"); // the return value is true if the file exists
+checkFileExists("root/etc/init.conf"); // returns true if the file exists
 
-checkDirectoryExists("root/etcconf"); // the return value is true if the directory exists
+checkDirectoryExists("root/etcconf"); // returns true if the directory exists
 
-isEntryFile("root/etc/init.conf"); // the return value is true if the entry is a file
+isEntryFile("root/etc/init.conf"); // returns true if the entry is a file
 
-isEntryDirectory("root"); // the return value is true if the entry is a directory
+isEntryDirectory("root"); // returns true if the entry is a directory
 
-isDirectoryEmpty("root/etc"); // the return value is true if the directory is empty
+isDirectoryEmpty("root/etc"); // returns true if the directory is empty
 ```
 
 * The `readDirectory()` function returns an array of entry names if the directory exists:
@@ -435,51 +435,51 @@ These functions manipulate or query strings that represent file and directory pa
 * The `isPathName()` function returns `true` if the string argument contains no `/` delimiters apart from the first and last characters:
 
 ```
-isPathName("root/"); // the return value is true
+isPathName("root/"); // returns true
 
-isPathName("/root"); // the return value is true
+isPathName("/root"); // returns true
 
-isPathName("./root"); // the return value is false
+isPathName("./root"); // returns false
 
-isPathName("../etc"); // the return value is false
+isPathName("../etc"); // returns false
 
-isPathName("/root/etc"); // the return value is false
+isPathName("/root/etc"); // returns false
 ```
 
 * The `isPathTopmostName()` function returns `true` if the string argument is both a name and an absolute path:
 
 ```
-isPathTopmostName("/root/"); // the return value is true
+isPathTopmostName("/root/"); // returns true
 
-isPathTopmostName("/root"); // the return value is true
+isPathTopmostName("/root"); // returns true
 
-isPathTopmostName("etc/"); // the return value is false
+isPathTopmostName("etc/"); // returns false
 ```
 
 * The `isPathRelativePath()` function returns `true` if the string argument does not start with a delimiter`/`:
 
 ```
-isPathRelativePath("etc"); // the return value is true
+isPathRelativePath("etc"); // returns true
 
-isPathRelativePath("./etc"); // the return value is true
+isPathRelativePath("./etc"); // returns true
 
-isPathRelativePath("../etc"); // the return value is true
+isPathRelativePath("../etc"); // returns true
 ```
 
 * The `isPathAbsolutePath()` returns `true` if the string argument starts with a delimiter`/`:
 
 ```
-isPathAbsolutePath("/root/etc"); // the return value is true
+isPathAbsolutePath("/root/etc"); // returns true
 ```
 
 * The `isTopmostNameInAbsolutePath()` function returns `true` if the second string argument begins with the first string argument optionally followed by a delimiter`/` and further characters:
 
 ```
-isTopmostNameInAbsolutePath("/root", "/root/etc");  // the return value is true
+isTopmostNameInAbsolutePath("/root", "/root/etc");  // returns true
 
-isTopmostNameInAbsolutePath("root", "/root/etc");  // the return value is false
+isTopmostNameInAbsolutePath("root", "/root/etc");  // returns false
 
-isTopmostNameInAbsolutePath("etc", "/root/etc"); // the return value is false
+isTopmostNameInAbsolutePath("etc", "/root/etc"); // returns false
 ```
 
 Note that the function assumes that the first argument is a topmost name and that the second argument is an abolute path. It does not check, it simply compares the two arguments with a single regex.
@@ -487,9 +487,9 @@ Note that the function assumes that the first argument is a topmost name and tha
 * The `combinePaths()` function will combine the first string argument with the second string argument by successively removing the bottommost directory name of the former for each topmost parent directory `..` signifier it finds in the latter. Current directory `.` signifiers are also removed:
 
 ```
-combinePaths("etc/", "./init"); // the return value is 'etc/init'
+combinePaths("etc/", "./init"); // returns 'etc/init'
 
-combinePaths("/root/etc/", "../init"); // the return value is '/root/init'
+combinePaths("/root/etc/", "../init"); // returns '/root/init'
 ```
 
 Note that the function assumes that the second argument is a relative name or path.
@@ -497,9 +497,9 @@ Note that the function assumes that the second argument is a relative name or pa
 * The `concatenatePaths()` function will concatenate the first and second string arguments, adding the trailing forward slash `/` to the first string if necessary:
 
 ```
-concatenatePaths("root", "etc/"); // the return value is 'root/etc/'
+concatenatePaths("root", "etc/"); // returns 'root/etc/'
 
-concatenatePaths("root/", "etc/"); // the return value is 'root/etc/'
+concatenatePaths("root/", "etc/"); // returns 'root/etc/'
 ```
 
 Note that the function assumes that the second argument is a relative name or path although without a leading current directory `.` or parent directory `..` signifier.
@@ -507,15 +507,15 @@ Note that the function assumes that the second argument is a relative name or pa
 * The `bottommostNameFromPath()`, `topmostDirectoryPathFromPath()`, `topmostDirectoryNameFromPath()`, `pathWithoutBottommostNameFromPath()` and `pathWithoutTopmostDirectoryNameFromPath()` functions work as their names suggest. Each expects there to be at least one delimiter, returning `null` otherwise:
 
 ```
-bottommostNameFromPath("../etc"); // the return value is 'etc'
+bottommostNameFromPath("../etc"); // returns 'etc'
 
-topmostDirectoryPathFromPath("/root/etc/init.conf"); // the return value is '/root/etc'
+topmostDirectoryPathFromPath("/root/etc/init.conf"); // returns '/root/etc'
 
-topmostDirectoryNameFromPath("etc/init.conf"); // the return value is 'etc'
+topmostDirectoryNameFromPath("etc/init.conf"); // returns 'etc'
 
-pathWithoutBottommostNameFromPath("root/etc/init.conf"); // the return value is 'root/etc'
+pathWithoutBottommostNameFromPath("root/etc/init.conf"); // returns 'root/etc'
 
-pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // the return value is 'etc/init.conf'
+pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/init.conf'
 ```
 
 ## Array utilities
@@ -565,7 +565,7 @@ concat([1, 2, 3], 4); // the array argument becomes [1, 2, 3, 4]
 
 ```
 clear([1, 2, 3]); // the array argument becomes []
-                  // the return value will be [1, 2, 3]
+                  // returnsll be [1, 2, 3]
 ```
 
 * The `copy()` function copies the second array argument over the top of the first array argument, in other words it replaces each element of the first array argument with the corresponding element in the second array argument. If there are more elements in the second array argument that the first, the first is lengthened:
@@ -583,7 +583,7 @@ merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4,
 * The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
 
 ```
-splice([1, 2, 3], 1, 2, [4, 5]); // the return value will be [2, 3]
+splice([1, 2, 3], 1, 2, [4, 5]); // returnsll be [2, 3]
                                  // the first array argument becomes [1, 4, 5]
 ```
 
@@ -601,7 +601,7 @@ replace([1, 2, 0, -1, -2], 3, (element, index) => {
 filter([1, 2, -1, -2], (element, index) => {
   return element > 0;
 }); // the first array argument becomes [1, 2]
-    // the return value is [-1, -2]
+    // returns [-1, -2]
 ```
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the test callback function returns a truthy value, rather than just the first:
@@ -609,7 +609,7 @@ filter([1, 2, -1, -2], (element, index) => {
 ```
 find([1, 2, -1, -2], (element, index) => {
   return element > 0;
-}); // the return value will be [1, 2]
+}); // returnsll be [1, 2]
 ```
 
 * The `prune()` function is much like the `filter()` function, however it will terminate the first time that the test callback function does not return a truthy value:
@@ -618,7 +618,7 @@ find([1, 2, -1, -2], (element, index) => {
 prune([1, 2, -1, -2], (element, index) => {
   return element > 0;
 }); // the first array argument becomes [1, 2, -2]
-    // the return value is -1
+    // returns -1
 ```
 
 * The `patch()` function will append the given element to the first array argument the first time that the test callback function returns a truthy value:
@@ -649,10 +649,13 @@ separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
 
 - `overwrite()`
 - `underwrite()`
+- `portFromHost()`
+- `secureFromHost()`
+- `hostnameFromHost()`
 - `queryStringFromParameters()`
 - `urlFromHostURIAndParameters()`
 
-These are helper functions to manipulate HTTP headers and build query strings.
+As well as functions to make GET and POST requests, there are helper functions to manipulate HTTP headers and URLs, build query strings, etc.
 
 * The `overwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. It overwrites the property of the `headers` object corresponding to the `name` argument with the `value` argument, if the property exists, otherwise it creates it. It's utility lies in the fact that it is insensitive to case.
 
@@ -678,6 +681,28 @@ const headers = {};
 underwrite(headers, "content-type", "text/html"); // headers["content-type"] = "text/html"
 ```
 
+* The `portFromHost()` extracts the port from the `host` argument if it is specified explicitly otherwise it returns 443 for secure hosts, 80 otherwise.
+
+```
+portFromHost("http://site.com"); // returns 80
+
+portFromHost("https://site.com"); // returns 443
+
+portFromHost("http://localhost:8080"); // returns 8080
+```
+
+* The `secureFromHost()` returns `true` if the protocol of the given `host` argument is `https://`, `false` otherwise.
+
+```
+secureFromHost("http://site.com"); // returns false
+```
+
+* The `hostnameFromHost()` returns the hostname part of the `host` argument, removing the protocol but leaving the port if present.
+
+```
+hostnameFromHost("http://site.com"); // returns site.com
+```
+
 * The `queryStringFromParameters()` function takes a plain old JavaScript object `parameters` argument and returns the corresponding URL encoded query string. It uses the [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) to encode the names and values
 
 ```
@@ -685,9 +710,7 @@ const parameters = {
   "name": "John Doe"
 };
 
-const queryString = queryStringFromParameters(parameters);
-
-  // queryString = name=John%20Doe
+const queryString = queryStringFromParameters(parameters); // returns John%20Doe
 ```
 
 * The `urlFromHostURIAndParameters()` function takes `host` and `uri` string arguments together with a `parameters` plain old JavaScript object argument. It creates a query string from the `parameters` object and concatenates this with the two other arguments in oder to create a fully qualified HTTP URL.
@@ -699,9 +722,7 @@ const host = "http://site.com",
         "name": "John Doe"
       };
 
-const url = urlFromHostURIAndParameters(host, uri, parameters);
-
-  // host = http://site.com/user?name=John%20Doe
+const url = urlFromHostURIAndParameters(host, uri, parameters); // returns http://site.com/user?name=John%20Doe
 ```
 
 Ideally the `host` argument should not include a trailing forward slash whereas `uri` arguments should always start with a leading forward slash.
