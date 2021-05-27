@@ -5,15 +5,16 @@ import path from "path";
 import { second } from "../utilities/array";
 import { concatenatePaths } from "../utilities/path";
 import { checkFileExists, readFile, appendToFile, renameFile, getStats } from "../utilities/fileSystem";
-import { TRACE, DEBUG, INFO, WARNING, ERROR, FATAL, DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH } from "../constants";
+import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH } from "../constants";
+import { TRACE_LEVEL, DEBUG_LEVEL, INFO_LEVEL, WARNING_LEVEL, ERROR_LEVEL, FATAL_LEVEL } from "../levels";
 
 const levels = [
-  TRACE,
-  DEBUG,
-  INFO,
-  WARNING,
-  ERROR,
-  FATAL,
+  TRACE_LEVEL,
+  DEBUG_LEVEL,
+  INFO_LEVEL,
+  WARNING_LEVEL,
+  ERROR_LEVEL,
+  FATAL_LEVEL,
 ];
 
 let logLevel = DEFAULT_LOG_LEVEL,
@@ -76,17 +77,17 @@ export default {
   log
 }
 
-function trace(message) { return log(message, TRACE); }
+function trace(message) { return log(message, TRACE_LEVEL); }
 
-function debug(message) { return log(message, DEBUG); }
+function debug(message) { return log(message, DEBUG_LEVEL); }
 
-function info(message) { return log(message, INFO); }
+function info(message) { return log(message, INFO_LEVEL); }
 
-function warning(message) { return log(message, WARNING); }
+function warning(message) { return log(message, WARNING_LEVEL); }
 
-function error(message) { return log(message, ERROR); }
+function error(message) { return log(message, ERROR_LEVEL); }
 
-function fatal(message) { return log(message, FATAL); }
+function fatal(message) { return log(message, FATAL_LEVEL); }
 
 function setLogLevel(level) { logLevel = level; }
 
@@ -112,12 +113,12 @@ function getLogFileContent() {
 }
 
 Object.assign(log, {
-  TRACE,
-  DEBUG,
-  INFO,
-  WARNING,
-  ERROR,
-  FATAL,
+  TRACE_LEVEL,
+  DEBUG_LEVEL,
+  INFO_LEVEL,
+  WARNING_LEVEL,
+  ERROR_LEVEL,
+  FATAL_LEVEL,
   trace,
   debug,
   info,

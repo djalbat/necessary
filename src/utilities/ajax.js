@@ -1,6 +1,6 @@
 "use strict";
 
-import { underwrite, queryStringFromParameters } from "../utilities/http";
+import { underwrite, urlFromHostURIAndParameters } from "../utilities/http";
 import { GET, POST, ACCEPT, CONTENT_TYPE, APPLICATION_JSON } from "../constants";
 
 export function get(host, uri, parameters, headers, callback) {
@@ -99,13 +99,4 @@ function underwriteContentType(headers) {
         value = APPLICATION_JSON; ///
 
   underwrite(headers, name, value);
-}
-
-function urlFromHostURIAndParameters(host, uri, parameters) {
-  const queryString = queryStringFromParameters(parameters),
-        url = (queryString === "") ?
-              `${host}${uri}` :
-                `${host}${uri}?${queryString}`;
-
-  return url;
 }

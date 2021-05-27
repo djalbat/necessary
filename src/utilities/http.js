@@ -1,6 +1,33 @@
 "use strict";
 
-import { AMPERSAND_CHARACTER, EMPTY_STRING } from "../constants";
+import { ERROR, EMPTY_STRING, AMPERSAND_CHARACTER } from "../constants";
+
+function get(host, uri, parameters, headers, callback) {
+  if (callback === undefined) {
+    callback = headers; ///
+    headers = {};
+  }
+
+  const secure = secureFromHost(host),
+        url = `${host}${uri}`,
+        get = secure ?
+                https.get :
+                  http.get;
+
+  const request = get(url, (response) => {
+    const error = null;
+
+    callback(error, response);
+  });
+
+  request.on(ERROR, (error) => {
+    const response = null;
+
+    callback(error, response);
+  });
+
+  return request;
+}
 
 export function overwrite(headers, name, value) {
   const ownPropertyNames = Object.getOwnPropertyNames(headers),
@@ -55,8 +82,24 @@ export function queryStringFromParameters(parameters) {
   return queryString;
 }
 
+export function urlFromHostURIAndParameters(host, uri, parameters) {
+  const queryString = queryStringFromParameters(parameters),
+        url = (queryString === "") ?
+                `${host}${uri}` :
+                  `${host}${uri}?${queryString}`;
+
+  return url;
+}
+
 export default {
   overwrite,
   underwrite,
-  queryStringFromParameters
+  queryStringFromParameters,
+  urlFromHostURIAndParameters
 };
+
+function secureFromHost(host) {
+  const secure = /^https:\/\//.test(host);
+
+  return secure;
+}
