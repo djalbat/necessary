@@ -254,6 +254,7 @@ function bodyFromResponse(response, callback) {
   });
 }
 ```
+
 Note that the data returned when the "data" event is handled will be a byte array. It is coerced to string by the "+=" operator which, as already mentioned, will only work in the cases that Unicode data has been returned.
 
 In the following example, the response is assumed to be binary data, an image say, and is piped straight to a file:
@@ -262,11 +263,51 @@ In the following example, the response is assumed to be binary data, an image sa
 const fs = require("fs");
 
 get(host, uri, parameters, (error, response) => {
+  // Check for an error
+
+  const { statusCode } = response;
+
+  // Check the status code
+
   const writeStream = fs.createWriteStream("...");
 
   response.pipe(writeStream);
 });
 ```
+
+* The `post()` function provides a means to make POST requests. Its arguments are identical to the `get()` function.
+
+In the following example the `queryStringFromParameters()` function from the HTTP utilities is used to encoded the content. Note that the `content-type` and `content-length` headers must be set explicitly. Also note that there is no argument for the body, instead an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request:
+
+```
+const { Readable } = require("stream");
+
+const content = queryStringFromParameters({
+        "name": "John Doe"
+      }),
+      headers = {
+        "content-type": "application/x-www-form-urlencoded",
+        "content-length": content.length
+      };
+
+const request = post(host, uri, parameters, headers, (error, response) => {
+        // Check for an error
+
+        const { statusCode } = response;
+
+        // Check the status code
+
+        ...
+      }),
+      readable = Readable.from(content);
+
+readable.pipe(request);
+```
+
+* The `delete()` function provides a means to make arbitrary HTTP requests. Its arguments are identical to the `post()` function bar an additional `method` argument and comes after the `parameters` argument, which in this case is not optional.
+
+
+In the following example the `queryStringFromParameters()` function from the HTTP utilities is used to encoded the content. Note that the `content-type` and `content-length` headers must be set explicitly. Also note that there is no argument for the body, instead an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request:
 
 ## Template utilities
 

@@ -1,30 +1,30 @@
 "use strict";
 
-const fs = require("fs");
+const { Readable } = require("stream");
 
-const { requestUtilities } = require("./lib/main");
+const { httpUtilities, requestUtilities } = require("./lib/main");
 
-const { get } = requestUtilities;
+const { post } = requestUtilities,
+      { queryStringFromParameters } = httpUtilities;
 
-const host = "https://static.djalbat.com",
-      uri = "/image/lovely_s_shaped_slur.jpg",
-      parameters = {};
+const content = queryStringFromParameters({
+        "name": "John Doe"
+      }),
+      contentType = "application/x-www-form-urlencoded",
+      contentLength = content.length,
+      host = "http://localhost:8080/",
+      uri = "/",
+      parameters = {},
+      headers = {
+        "content-type": contentType,
+        "content-length": contentLength
+      };
 
-get(host, uri, parameters, (error, response) => {
-  const writeStream = fs.createWriteStream("lovely_s_shaped_slur.jpg");
+const request = post(host, uri, parameters, headers, (error, response) => {
+        debugger
+      }),
+      readable = Readable.from(content);
 
-  response.pipe(writeStream);
-});
+readable.pipe(request);
 
-function bodyFromResponse(response, callback) {
-  let body = "";
-
-  response.on("data", (data) => {
-    body += data;
-  });
-
-  response.on("end", () => {
-    callback(body);
-  });
-}
 
