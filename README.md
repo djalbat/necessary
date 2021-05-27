@@ -700,7 +700,7 @@ secureFromHost("http://site.com"); // returns false
 * The `hostnameFromHost()` returns the hostname part of the `host` argument, removing the protocol but leaving the port if present.
 
 ```
-hostnameFromHost("http://site.com"); // returns site.com
+hostnameFromHost("http://site.com"); // returns "site.com"
 ```
 
 * The `queryStringFromParameters()` function takes a plain old JavaScript object `parameters` argument and returns the corresponding URL encoded query string. It uses the [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) to encode the names and values
