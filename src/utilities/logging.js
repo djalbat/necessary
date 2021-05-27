@@ -5,8 +5,8 @@ import path from "path";
 import { second } from "../utilities/array";
 import { concatenatePaths } from "../utilities/path";
 import { checkFileExists, readFile, appendToFile, renameFile, getStats } from "../utilities/fileSystem";
-import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH } from "../constants";
 import { TRACE_LEVEL, DEBUG_LEVEL, INFO_LEVEL, WARNING_LEVEL, ERROR_LEVEL, FATAL_LEVEL } from "../levels";
+import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH, EMPTY_STRING } from "../constants";
 
 const levels = [
   TRACE_LEVEL,
@@ -21,10 +21,10 @@ let logLevel = DEFAULT_LOG_LEVEL,
     logFileBaseName = DEFAULT_LOG_FILE_BASE_NAME,
     logDirectoryPath = DEFAULT_LOG_DIRECTORY_PATH;
 
-export function log(messageOrError, level = "") {
+export function log(messageOrError, level = EMPTY_STRING) {
   let salientStackMessageIndex = 1;
 
-  if (level !== "") {
+  if (level !== EMPTY_STRING) {
     const levelIndex = levels.indexOf(level),
           logLevelIndex = levels.indexOf(logLevel);
 
@@ -211,19 +211,19 @@ function stackMessagesFromStack(stack) {
   const stackMessages = [],
         stackLines = stack.split(/\r\n|\n/);
 
-  let stackMessage = "";
+  let stackMessage = EMPTY_STRING;
 
   stackLines.forEach((stackLine) => {
     const matches = /^\s*at.*/.test(stackLine);
 
-    stackMessage = (stackMessage === "") ?
+    stackMessage = (stackMessage === EMPTY_STRING) ?
                       stackLine :
                         `${stackMessage}\n${stackLine}`;
 
     if (matches) {
       stackMessages.push(stackMessage);
 
-      stackMessage = "";
+      stackMessage = EMPTY_STRING;
     }
   });
 
@@ -258,7 +258,7 @@ function padStartWithZeroes(string, targetLength) {
 }
 
 function padStart(string, targetLength, padString) {
-  let padding = "";
+  let padding = EMPTY_STRING;
 
   for (let index = 0; index < targetLength; index++) {
     padding += padString;

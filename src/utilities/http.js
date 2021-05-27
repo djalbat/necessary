@@ -1,37 +1,7 @@
 "use strict";
 
-const http = require("http"),
-      https = require("https");
-
 import { second } from "../utilities/array";
-import { ERROR, EMPTY_STRING, AMPERSAND_CHARACTER } from "../constants";
-
-function get(host, uri, parameters, headers, callback) {
-  if (callback === undefined) {
-    callback = headers; ///
-    headers = {};
-  }
-
-  const secure = secureFromHost(host),
-        url = urlFromHostURIAndParameters(host, uri, parameters),
-        get = secure ?
-                https.get :
-                  http.get;
-
-  const request = get(url, (response) => {
-    const error = null;
-
-    callback(error, response);
-  });
-
-  request.on(ERROR, (error) => {
-    const response = null;
-
-    callback(error, response);
-  });
-
-  return request;
-}
+import { EMPTY_STRING, COLON_CHARACTER, AMPERSAND_CHARACTER } from "../constants";
 
 export function overwrite(headers, name, value) {
   const ownPropertyNames = Object.getOwnPropertyNames(headers),
@@ -71,7 +41,7 @@ export function portFromHost(host) {
 
   const matches = host.match(/^https?:\/\/([^\/]+)/),
         secondMatch = second(matches),
-        index = secondMatch.indexOf(COLON);
+        index = secondMatch.indexOf(COLON_CHARACTER);
 
   if (index === -1) {
     const secure = secureFromHost(host);
@@ -116,14 +86,14 @@ export function queryStringFromParameters(parameters) {
           queryString += `${encodedName}=${encodedValue}${ampersandOrNothing}`;
   
           return queryString;
-        }, "");
+        }, EMPTY_STRING);
 
   return queryString;
 }
 
 export function urlFromHostURIAndParameters(host, uri, parameters) {
   const queryString = queryStringFromParameters(parameters),
-        url = (queryString === "") ?
+        url = (queryString === EMPTY_STRING) ?
                 `${host}${uri}` :
                   `${host}${uri}?${queryString}`;
 
@@ -131,7 +101,6 @@ export function urlFromHostURIAndParameters(host, uri, parameters) {
 }
 
 export default {
-  get,
   overwrite,
   underwrite,
   portFromHost,

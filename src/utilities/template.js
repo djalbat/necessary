@@ -1,6 +1,7 @@
 "use strict";
 
 import { readFile } from "../utilities/fileSystem";
+import { EMPTY_STRING } from "../constants";
 
 export function parseFile(filePath, args, regex) {
   const content = readFile(filePath),
@@ -44,7 +45,7 @@ function parseLines(lines, args, regex) {
 }
 
 function parseToken(token, args) {
-  let parsedToken = "";
+  let parsedToken = EMPTY_STRING;
 
   if (args.hasOwnProperty(token)) {
     parsedToken = args[token];

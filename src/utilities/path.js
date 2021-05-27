@@ -1,9 +1,10 @@
 "use strict";
 
+import { EMPTY_STRING } from "../constants";
 import { first, second, last } from "../utilities/array";
 
 export function isPathName(path) {
-  path = path.replace(/^\//,"").replace(/\/$/, ""); ///
+  path = path.replace(/^\//, EMPTY_STRING).replace(/\/$/, EMPTY_STRING); ///
 
   const pathName = (/\//.test(path) === false);
 
@@ -71,7 +72,7 @@ export function combinePaths(path, relativePath) {
 }
 
 export function concatenatePaths(path, relativePath) {
-  path = path.replace(/\/$/, "");  ///
+  path = path.replace(/\/$/, EMPTY_STRING);  ///
 
   const concatenatedPath = `${path}/${relativePath}`;
 

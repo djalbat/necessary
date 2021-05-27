@@ -10,6 +10,7 @@ export const EMPTY_STRING = "";
 export const CONTENT_TYPE = "content-type";
 export const UTF8_ENCODING = "utf8";
 export const ETX_CHARACTER = "\u0003";
+export const COLON_CHARACTER = ":";
 export const DEFAULT_ATTEMPTS = 3;
 export const APPLICATION_JSON = "application/json";
 export const DEFAULT_ENCODING = UTF8_ENCODING;

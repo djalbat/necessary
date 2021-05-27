@@ -4,6 +4,7 @@ import { whilst } from "../utilities/asynchronous";
 
 import { CTRL_C,
          DATA_EVENT,
+         EMPTY_STRING,
          UTF8_ENCODING,
          ETX_CHARACTER,
          DEFAULT_ENCODING,
@@ -183,7 +184,7 @@ function visibleInput(answer, description, encoding, callback) {
   process.stdin.resume();
 
   function listener(data) {
-    const answer = data.replace(/\n$/, "");
+    const answer = data.replace(/\n$/, EMPTY_STRING);
 
     process.stdin.pause();
 

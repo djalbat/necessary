@@ -11,6 +11,7 @@ These can only be used in the browser:
 These cna only be used on Node:
 
 * [Shell utilities](#shell-utilities)
+* [Request utilities](#request-utilities)
 * [Logging utilities](#logging-utilities)
 * [Template utilities](#template-utilities)
 * [File system utilities](#file-system-utilities)
@@ -174,6 +175,45 @@ The default values of the `attempts` and `encoding` properties are `3` and `utf8
 If no `validateFunction` property is given then you must set a `validatePattern` property instead, which must be a regular expression.
 
 The `initialAnswer` property sets the initial answer at the prompt. You might want to set it to `yes`, for example. Lastly, setting the `answer` property to anything other than `null` or `undefined` causes the `callback` function to be invoked immediately without any prompt being shown. This can be useful for debugging.
+
+## Request utilities
+
+- `get()`
+- `post()`
+- `request()`
+
+Functions that leverage Node's [HTTP](https://nodejs.org/api/http.html) nad []HTTPS](https://nodejs.org/api/https.html) inbuilt modules in order to provide HTTP request functionality. These functions are deliberately for the most part low level. They will take some of the pain of using the aforementioned modules away but will not automatically set headers, parse responses and so on. For all but the most basic of requests you will likely still need some knowledge of streams and Node's inbuilt requiest and response objects.aforementioned
+
+* The `get()` function provides a means to make GET requests. It takes `host`, `uri` and `parameters` arguments, an optional `headers` argument and a `callback` argument. It returns an instance of Node's [ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest) class and the callback function should have an `error` argument, which will be `null` if the request is successful and `response` argument which will be an instance of Node's [IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage) class.success
+
+As mentioned above, the `get()` method will not parse the response. In the following example there is a `bodyFromResponse()` function that will do this for simple cases when the body of the response is Unicode:
+
+```
+get(host, uri, parameters, (error, response) => {
+  // Check for an error
+
+  const { statusCode } = response;
+
+  // Check the status code
+
+  bodyFromResponse(response, (body) => {
+    console.log(body)
+  });
+});
+
+function bodyFromResponse(response, callback) {
+  let body = "";
+
+  response.on("data", (data) => {
+    body += data;
+  });
+
+  response.on("end", () => {
+    callback(body);
+  });
+}
+```
+Note that the date returned in when the "data" event is handled will be a byte array. It is coerced to string by the "+=" operator which, as already mentioned, will only work in the cases that Unicode data is returned.
 
 ## Logging utilities
 
@@ -655,7 +695,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
 - `queryStringFromParameters()`
 - `urlFromHostURIAndParameters()`
 
-As well as functions to make GET and POST requests, there are helper functions to manipulate HTTP headers and URLs, build query strings and so on.
+Helper functions to manipulate HTTP headers and URLs, build query strings and so on.
 
 * The `overwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. It overwrites the property of the `headers` object corresponding to the `name` argument with the `value` argument, if the property exists, otherwise it creates it. It's utility lies in the fact that it is insensitive to case.
 
