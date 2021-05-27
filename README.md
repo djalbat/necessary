@@ -223,9 +223,9 @@ Finally, log files are rolled over every night. So `./log/example.log` would bec
 - `post()`
 - `request()`
 
-Functions that leverage Node's [HTTP](https://nodejs.org/api/http.html) nad []HTTPS](https://nodejs.org/api/https.html) inbuilt modules in order to provide HTTP request functionality. These functions are deliberately for the most part low level. They will take some of the pain of using the aforementioned modules away but will not automatically set headers, parse responses and so on. For all but the most basic of requests you will likely still need some knowledge of streams and Node's inbuilt requiest and response objects.aforementioned
+Functions that leverage Node's [HTTP](https://nodejs.org/api/http.html) nad [HTTPS](https://nodejs.org/api/https.html) inbuilt modules in order to provide HTTP request functionality. These functions are deliberately low level. They will take away some of the pain of using the aforementioned modules but will not automatically set headers, parse responses, etc. For all but the most basic of requests you will likely need some knowledge of streams and Node's inbuilt request and response objects.
 
-* The `get()` function provides a means to make GET requests. It takes `host`, `uri` and `parameters` arguments, an optional `headers` argument and a `callback` argument. It returns an instance of Node's [ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest) class and the callback function should have an `error` argument, which will be `null` if the request is successful and `response` argument which will be an instance of Node's [IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage) class.success
+* The `get()` function provides a means to make GET requests. It takes `host`, `uri` and `parameters` arguments, an optional `headers` argument and a `callback` argument. It returns an instance of Node's [ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest) class and the callback function should have an `error` argument, which will be `null` if the request is successful, and a `response` argument, which will be an instance of Node's [IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage) class.
 
 As mentioned above, the `get()` method will not parse the response. In the following example there is a `bodyFromResponse()` function that will do this for simple cases when the body of the response is Unicode:
 
@@ -254,7 +254,19 @@ function bodyFromResponse(response, callback) {
   });
 }
 ```
-Note that the date returned in when the "data" event is handled will be a byte array. It is coerced to string by the "+=" operator which, as already mentioned, will only work in the cases that Unicode data is returned.
+Note that the data returned when the "data" event is handled will be a byte array. It is coerced to string by the "+=" operator which, as already mentioned, will only work in the cases that Unicode data has been returned.
+
+In the following example, the response is assumed to be binary data, an image say, and is piped straight to a file:
+
+```
+const fs = require("fs");
+
+get(host, uri, parameters, (error, response) => {
+  const writeStream = fs.createWriteStream("...");
+
+  response.pipe(writeStream);
+});
+```
 
 ## Template utilities
 

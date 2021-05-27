@@ -1,17 +1,19 @@
 "use strict";
 
+const fs = require("fs");
+
 const { requestUtilities } = require("./lib/main");
 
 const { get } = requestUtilities;
 
-const host = "https://djalbat.com",
-      uri = "/",
+const host = "https://static.djalbat.com",
+      uri = "/image/lovely_s_shaped_slur.jpg",
       parameters = {};
 
 get(host, uri, parameters, (error, response) => {
-  bodyFromResponse(response, (body) => {
-    console.log(body)
-  });
+  const writeStream = fs.createWriteStream("lovely_s_shaped_slur.jpg");
+
+  response.pipe(writeStream);
 });
 
 function bodyFromResponse(response, callback) {
