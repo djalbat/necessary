@@ -277,7 +277,7 @@ get(host, uri, parameters, (error, response) => {
 
 * The `post()` function provides a means to make POST requests. Its arguments are identical to the `get()` function.
 
-In the following example the `queryStringFromParameters()` function from the HTTP utilities is used to encoded the content. Note that the `content-type` and `content-length` headers must be set explicitly. Also note that there is no argument for the body, instead an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request:
+In the following example the `queryStringFromParameters()` function from the HTTP utilities is used to encode the content. Note that the `content-type` and `content-length` headers must be set explicitly. Also note that there is no argument provided for the content itself, instead an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request:
 
 ```
 const { Readable } = require("stream");
@@ -304,10 +304,7 @@ const request = post(host, uri, parameters, headers, (error, response) => {
 readable.pipe(request);
 ```
 
-* The `delete()` function provides a means to make arbitrary HTTP requests. Its arguments are identical to the `post()` function bar an additional `method` argument and comes after the `parameters` argument, which in this case is not optional.
-
-
-In the following example the `queryStringFromParameters()` function from the HTTP utilities is used to encoded the content. Note that the `content-type` and `content-length` headers must be set explicitly. Also note that there is no argument for the body, instead an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request:
+* The `delete()` function provides a means to make arbitrary HTTP requests. Its arguments are identical to the `post()` function bar an additional `method` argument that comes after the `parameters` argument, which in this case is not optional.
 
 ## Template utilities
 
