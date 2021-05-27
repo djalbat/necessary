@@ -655,7 +655,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
 - `queryStringFromParameters()`
 - `urlFromHostURIAndParameters()`
 
-As well as functions to make GET and POST requests, there are helper functions to manipulate HTTP headers and URLs, build query strings, etc.
+As well as functions to make GET and POST requests, there are helper functions to manipulate HTTP headers and URLs, build query strings and so on.
 
 * The `overwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. It overwrites the property of the `headers` object corresponding to the `name` argument with the `value` argument, if the property exists, otherwise it creates it. It's utility lies in the fact that it is insensitive to case.
 
@@ -694,7 +694,9 @@ portFromHost("http://localhost:8080"); // returns 8080
 * The `secureFromHost()` returns `true` if the protocol of the given `host` argument is `https://`, `false` otherwise.
 
 ```
-secureFromHost("http://site.com"); // returns false
+secureFromHost("http://localhost"); // returns false
+
+secureFromHost("https://site.com"); // returns true
 ```
 
 * The `hostnameFromHost()` returns the hostname part of the `host` argument, removing the protocol but leaving the port if present.
@@ -710,19 +712,19 @@ const parameters = {
   "name": "John Doe"
 };
 
-const queryString = queryStringFromParameters(parameters); // returns John%20Doe
+queryStringFromParameters(parameters); // returns John%20Doe
 ```
 
 * The `urlFromHostURIAndParameters()` function takes `host` and `uri` string arguments together with a `parameters` plain old JavaScript object argument. It creates a query string from the `parameters` object and concatenates this with the two other arguments in oder to create a fully qualified HTTP URL.
 
 ```
-const host = "http://site.com",
+const host = "https://site.com",
       uri = "/user",
       parameters = {
         "name": "John Doe"
       };
 
-const url = urlFromHostURIAndParameters(host, uri, parameters); // returns http://site.com/user?name=John%20Doe
+urlFromHostURIAndParameters(host, uri, parameters); // returns "https://site.com/user?name=John%20Doe"
 ```
 
 Ideally the `host` argument should not include a trailing forward slash whereas `uri` arguments should always start with a leading forward slash.
