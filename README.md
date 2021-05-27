@@ -685,7 +685,9 @@ const parameters = {
   "name": "John Doe"
 };
 
-const queryString = queryStringFromParameters(parameters); // queryString = name=John%20Doe
+const queryString = queryStringFromParameters(parameters);
+
+  // queryString = name=John%20Doe
 ```
 
 * The `urlFromHostURIAndParameters()` function takes `host` and `uri` string arguments together with a `parameters` plain old JavaScript object argument. It creates a query string from the `parameters` object and concatenates this with the two other arguments in oder to create a fully qualified HTTP URL.
@@ -697,7 +699,9 @@ const host = "http://site.com",
         "name": "John Doe"
       };
 
-const url = urlFromHostURIAndParameters(host, uri, parameters); // host = http://site.com/user?name=John%20Doe
+const url = urlFromHostURIAndParameters(host, uri, parameters);
+
+  // host = http://site.com/user?name=John%20Doe
 ```
 
 Ideally the `host` argument should not include a trailing forward slash whereas `uri` arguments should always start with a leading forward slash.
