@@ -304,7 +304,7 @@ const request = post(host, uri, parameters, headers, (error, response) => {
 readable.pipe(request);
 ```
 
-* The `delete()` function provides a means to make arbitrary HTTP requests. Its arguments are identical to the `post()` function bar an additional `method` argument that comes after the `parameters` argument, which in this case is not optional.
+* The `delete()` function provides a means to make arbitrary HTTP requests. Its arguments are identical to the `post()` function bar an additional `method` argument that comes after the `parameters` argument. Unlike the `get()` and `post()` functions, in this case the `headers` argument is not optional.
 
 ## Template utilities
 
