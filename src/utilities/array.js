@@ -24,6 +24,10 @@ export function head(array) { return array.slice(0, 1); }
 
 export function tail(array) { return array.slice(1); }
 
+export function back(array) { return array.slice(array.length - 1); }
+
+export function front(array) { return array.slice(0, array.length - 1); }
+
 export function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
 export function unshift(array1, array2) { Array.prototype.unshift.apply(array1, array2); }
@@ -284,6 +288,8 @@ export default {
   last,
   head,
   tail,
+  back,
+  front,
   push,
   unshift,
   concat,

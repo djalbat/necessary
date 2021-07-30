@@ -639,7 +639,9 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 
 Note that none of these functions take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
 
-* The functions `first()` through to `last()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. The `head()` function returns the first element of its array argument whilst The `tail()` function returns all but the first element of its array argument.
+* The functions `first()` through to `last()` return the requisite element of the array argument, if passed an array of at least the required length. If the array is not long enough they return `undefined`. 
+  
+* The `head()` function returns an array containing the first element of its array argument whilst the `tail()` function returns an array containing all but the first element of its array argument. The `back()` function returns an array containing hte last element of its array argument whilst the `front()` function returns an array returning all but the last element of its array argument.
 
 * The `push()` function is similar to its native counterpart but will push an array rather than a single element.
 
