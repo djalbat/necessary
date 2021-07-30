@@ -622,6 +622,8 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `last()`
 - `head()`
 - `tail()`
+- `back()`
+- `front()`
 - `push()`
 - `unshift()`
 - `concat()`
