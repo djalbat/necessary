@@ -3,10 +3,11 @@
 import path from "path";
 
 import { second } from "../utilities/array";
+import { EMPTY_STRING } from "../constants";
 import { concatenatePaths } from "../utilities/path";
 import { checkFileExists, readFile, appendToFile, renameFile, getStats } from "../utilities/fileSystem";
+import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH } from "../defaults";
 import { TRACE_LEVEL, DEBUG_LEVEL, INFO_LEVEL, WARNING_LEVEL, ERROR_LEVEL, FATAL_LEVEL } from "../levels";
-import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH, EMPTY_STRING } from "../constants";
 
 const levels = [
   TRACE_LEVEL,

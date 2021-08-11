@@ -1,9 +1,7 @@
 "use strict";
 
-import path from "path";
-
 import { first, second } from "../utilities/array";
-import { DEFAULT_RC_BASE_EXTENSION } from "../constants";
+import { DEFAULT_RC_BASE_EXTENSION } from "../defaults";
 import { readFile, writeFile, checkFileExists } from "../utilities/fileSystem";
 
 if (!globalThis.rc) {

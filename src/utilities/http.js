@@ -1,7 +1,8 @@
 "use strict";
 
 import { second } from "../utilities/array";
-import { EMPTY_STRING, COLON_CHARACTER, AMPERSAND_CHARACTER } from "../constants";
+import { EMPTY_STRING } from "../constants";
+import { COLON_CHARACTER, AMPERSAND_CHARACTER } from "../characters";
 
 export function overwrite(headers, name, value) {
   const ownPropertyNames = Object.getOwnPropertyNames(headers),

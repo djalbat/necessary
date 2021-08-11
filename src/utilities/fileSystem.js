@@ -2,7 +2,7 @@
 
 import fs from "fs";
 
-import { UTF8_ENCODING } from "../constants";
+import { DEFAULT_ENCODING } from "../defaults";
 
 export function checkEntryExists(entryPath) {
   const entryExists = fs.existsSync(entryPath);
@@ -73,7 +73,7 @@ export function readDirectory(directoryPath) {
   return subEntryNames;
 }
 
-export function readFile(filePath, encoding = UTF8_ENCODING) {
+export function readFile(filePath, encoding = DEFAULT_ENCODING) {
   const options = {
           encoding
         },

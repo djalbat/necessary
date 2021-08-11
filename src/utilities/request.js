@@ -3,7 +3,8 @@
 const http = require("http"),
       https = require("https");
 
-import { GET, POST, ERROR, EMPTY_STRING } from "../constants";
+import { ERROR, EMPTY_STRING } from "../constants";
+import { GET_METHOD, POST_METHOD } from "../methods";
 import { portFromHost, secureFromHost, hostnameFromHost, queryStringFromParameters } from "../utilities/http";
 
 function get(host, uri, parameters, headers, callback) {
@@ -12,7 +13,7 @@ function get(host, uri, parameters, headers, callback) {
     headers = {};
   }
 
-  const method = GET,
+  const method = GET_METHOD,
         _request = request(host, uri, parameters, method, headers, callback);
 
   _request.end();
@@ -26,7 +27,7 @@ function post(host, uri, parameters, headers, callback) {
     headers = {};
   }
 
-  const method = POST,
+  const method = POST_METHOD,
         _request = request(host, uri, parameters, method, headers, callback);
 
   return _request;

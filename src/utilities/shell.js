@@ -2,30 +2,21 @@
 
 import { whilst } from "../utilities/asynchronous";
 
-import { CTRL_C,
-         DATA_EVENT,
-         EMPTY_STRING,
-         UTF8_ENCODING,
-         ETX_CHARACTER,
-         DEFAULT_ENCODING,
-         DEFAULT_ATTEMPTS,
-         BACKSPACE_CHARACTER,
-         LINE_FEED_CHARACTER,
-         DEFAULT_INITIAL_ANSWER,
-         CARRIAGE_RETURN_CHARACTER } from "../constants";
+import { DATA_EVENT_TYPE } from "../eventTypes";
+import { UTF8, CTRL_C, EMPTY_STRING } from "../constants";
+import { DEFAULT_ENCODING, DEFAULT_ATTEMPTS, DEFAULT_INITIAL_ANSWER } from "../defaults";
+import { ETX_CHARACTER, BACKSPACE_CHARACTER, LINE_FEED_CHARACTER, CARRIAGE_RETURN_CHARACTER } from "../characters";
 
 export function onETX(handler) {
-  const event = DATA_EVENT;
-
   if (process.stdin.setRawMode) {
     const rawMode = true,
-          encoding = UTF8_ENCODING;
+          encoding = UTF8;
 
     process.stdin.setRawMode(rawMode);
 
     process.stdin.setEncoding(encoding);
 
-    process.stdin.addListener(event, dataHandler);
+    process.stdin.addListener(DATA_EVENT_TYPE, dataHandler);
 
     process.stdin.resume();
 
@@ -33,7 +24,7 @@ export function onETX(handler) {
   }
 
   function offExt() {
-    process.stdin.removeListener(event, dataHandler);
+    process.stdin.removeListener(DATA_EVENT_TYPE, dataHandler);
   }
 
   function dataHandler(character) {
@@ -125,8 +116,7 @@ function input(initialAnswer, hidden, description, encoding, callback) {
 }
 
 function hiddenInput(answer, description, encoding, callback) {
-  const event = DATA_EVENT,
-        rawMode = true;
+  const rawMode = true;
 
   process.stdout.write(description);
 
@@ -134,7 +124,7 @@ function hiddenInput(answer, description, encoding, callback) {
 
   process.stdin.setRawMode(rawMode);
 
-  process.stdin.on(event, listener);
+  process.stdin.on(DATA_EVENT_TYPE, listener);
 
   process.stdin.resume();
 
@@ -146,7 +136,7 @@ function hiddenInput(answer, description, encoding, callback) {
       case CARRIAGE_RETURN_CHARACTER :
         process.stdout.write(LINE_FEED_CHARACTER);
 
-        process.stdin.removeListener(event, listener);
+        process.stdin.removeListener(DATA_EVENT_TYPE, listener);
 
         process.stdin.pause();
 
@@ -179,7 +169,7 @@ function visibleInput(answer, description, encoding, callback) {
 
   process.stdin.setEncoding(encoding);
 
-  process.stdin.once(DATA_EVENT, listener);
+  process.stdin.once(DATA_EVENT_TYPE, listener);
 
   process.stdin.resume();
 

@@ -1,7 +1,9 @@
 "use strict";
 
+import { ACCEPT, CONTENT_TYPE } from "../constants";
+import { GET_METHOD, POST_METHOD } from "../methods";
+import { APPLICATION_JSON_CONTENT_TYPE } from "../contentTypes";
 import { underwrite, urlFromHostURIAndParameters } from "../utilities/http";
-import { GET, POST, ACCEPT, CONTENT_TYPE, APPLICATION_JSON } from "../constants";
 
 export function get(host, uri, parameters, headers, callback) {
   if (callback === undefined) {
@@ -9,7 +11,7 @@ export function get(host, uri, parameters, headers, callback) {
     headers = {};
   }
 
-  const method = GET,
+  const method = GET_METHOD,
         body = null;
 
   underwriteAccept(headers);
@@ -23,7 +25,7 @@ export function post(host, uri, parameters, body, headers, callback) {
     headers = {};
   }
 
-  const method = POST;
+  const method = POST_METHOD;
 
   underwriteAccept(headers);
 
@@ -38,7 +40,7 @@ export function request(host, uri, parameters, method, body, headers, callback) 
         contentType = headers[CONTENT_TYPE] || null,
         xmlHttpRequest = new XMLHttpRequest();
 
-  if (contentType === APPLICATION_JSON) {
+  if (contentType === APPLICATION_JSON_CONTENT_TYPE) {
     const json = body,  ///
           jsonString = JSON.stringify(json);
 
@@ -51,7 +53,7 @@ export function request(host, uri, parameters, method, body, headers, callback) 
     if (readyState == 4) {
       let body = responseText;
 
-      if (accept === APPLICATION_JSON) {
+      if (accept === APPLICATION_JSON_CONTENT_TYPE) {
         try {
           const jsonString = body,  ///
                 json = JSON.parse(jsonString);
@@ -89,14 +91,14 @@ export default {
 
 function underwriteAccept(headers) {
   const name = ACCEPT,  ///
-        value = APPLICATION_JSON; ///
+        value = APPLICATION_JSON_CONTENT_TYPE; ///
 
   underwrite(headers, name, value);
 }
 
 function underwriteContentType(headers) {
   const name = CONTENT_TYPE,  ///
-        value = APPLICATION_JSON; ///
+        value = APPLICATION_JSON_CONTENT_TYPE; ///
 
   underwrite(headers, name, value);
 }
