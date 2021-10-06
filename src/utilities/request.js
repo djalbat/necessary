@@ -49,8 +49,8 @@ function request(host, uri, parameters, method, headers, callback) {
           path
         },
         request = secure ?
-                     https.request : ///
-                       http.request; ///
+                    https.request : ///
+                      http.request; ///
 
   const _request = request(options, (response) => {
     const error = null;
