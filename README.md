@@ -260,18 +260,19 @@ Note that the data returned when the "data" event is handled will be a byte arra
 In the following example, the response is assumed to be binary data, an image say, and is piped straight to a file:
 
 ```
-const fs = require("fs");
+const { pipeline } = require("stream"),
+      { createWriteStream } = require("fs");
 
 get(host, uri, parameters, (error, response) => {
   // Check for an error
 
   const { statusCode } = response;
 
-  // Check the status code
+  const writeStream = createWriteStream("...");
 
-  const writeStream = fs.createWriteStream("...");
-
-  response.pipe(writeStream);
+  pipeline(response, writeStream, (error) => {
+    ///
+  });
 });
 ```
 
@@ -280,7 +281,7 @@ get(host, uri, parameters, (error, response) => {
 In the following example the `queryStringFromParameters()` function from the HTTP utilities is used to encode the content. Note that the `content-type` and `content-length` headers must be set explicitly. Also note that there is no argument provided for the content itself, instead an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request:
 
 ```
-const { Readable } = require("stream");
+const { pipeline, Readable } = require("stream");
 
 const content = queryStringFromParameters({
         "name": "John Doe"
@@ -288,20 +289,19 @@ const content = queryStringFromParameters({
       headers = {
         "content-type": "application/x-www-form-urlencoded",
         "content-length": content.length
-      };
-
-const request = post(host, uri, parameters, headers, (error, response) => {
+      },
+      request = post(host, uri, parameters, headers, (error, response) => {
         // Check for an error
 
         const { statusCode } = response;
-
-        // Check the status code
 
         ...
       }),
       readable = Readable.from(content);
 
-readable.pipe(request);
+pipeline(readable, request, (error) => {
+  ///
+});
 ```
 
 * The `delete()` function provides a means to make arbitrary HTTP requests. Its arguments are identical to the `post()` function bar an additional `method` argument that comes after the `parameters` argument. Unlike the `get()` and `post()` functions, in this case the `headers` argument is not optional.
