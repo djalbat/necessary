@@ -72,12 +72,12 @@ export function hostnameFromHost(host) {
   return hostname;
 }
 
-export function queryStringFromParameters(parameters) {
-  const names = Object.keys(parameters),
+export function queryStringFromQuery(query) {
+  const names = Object.keys(query),
         namesLength = names.length,
         lastIndex = namesLength - 1,
         queryString = names.reduce((queryString, name, index) => {
-          const value = parameters[name],
+          const value = query[name],
                 encodedName = encodeURIComponent(name),
                 encodedValue = encodeURIComponent(value),
                 ampersandOrNothing = (index !== lastIndex) ?
@@ -92,8 +92,8 @@ export function queryStringFromParameters(parameters) {
   return queryString;
 }
 
-export function urlFromHostURIAndParameters(host, uri, parameters) {
-  const queryString = queryStringFromParameters(parameters),
+export function urlFromHostURIAndQuery(host, uri, query) {
+  const queryString = queryStringFromQuery(query),
         url = (queryString === EMPTY_STRING) ?
                 `${host}${uri}` :
                   `${host}${uri}?${queryString}`;
@@ -107,6 +107,6 @@ export default {
   portFromHost,
   secureFromHost,
   hostnameFromHost,
-  queryStringFromParameters,
-  urlFromHostURIAndParameters
+  queryStringFromQuery,
+  urlFromHostURIAndQuery
 };

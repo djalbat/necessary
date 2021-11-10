@@ -60,9 +60,9 @@ The miscellaneous functions are a special case. They can be treated as above but
 
 The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for arbitrary HTTP request methods.
 
-* The `get()` function sends a `GET` request, taking `host`, `uri`, `parameters` and `callback` arguments, together with an optional `headers` argument before the `callback` argument.
+* The `get()` function sends a `GET` request, taking `host`, `uri`, `query` and `callback` arguments, together with an optional `headers` argument before the `callback` argument.
 
-The `parameters` argument should be a plain old JavaScript object, the names and values of which are encoded and concatenated to form the query string.
+The `query` argument should be a plain old JavaScript object, the names and values of which are encoded and concatenated to form the query string.
 
 The `headers` argument should also be a plain old JavaScript object. If it does not have an `accept` property then one wil be provided with the value `application/json`.
 
@@ -71,11 +71,11 @@ The `callback` argument is expected to be a function taking `body` and `status` 
 ```
 const host = "...",
       uri = "...",
-      parameters = {
+      query = {
         ...
       };
 
-get(host, uri, parameters, (json, status) => {
+get(host, uri, query, (json, status) => {
   if (status === 200) {
     ...
   }
@@ -86,19 +86,19 @@ Note that the `uri` argument must include a leading forward slash `/` since the 
 
 * The `post()` function behaves almost identically to the `get()` function, with the following differences.
 
-It sends a `POST` rather than a `GET` request. There is an additional `body` argument that comes after the `parameters` argument. If the `headers` argument does not have a `content-type` property then one will be provided with the value of `application/json`. If the `content-type` property of the `headers` argument is set to `application/json` then the `body` argument is assumed to be a plain old JavaScript object and is stringified as JSON.
+It sends a `POST` rather than a `GET` request. There is an additional `body` argument that comes after the `query` argument. If the `headers` argument does not have a `content-type` property then one will be provided with the value of `application/json`. If the `content-type` property of the `headers` argument is set to `application/json` then the `body` argument is assumed to be a plain old JavaScript object and is stringified as JSON.
 
 ```
 const host = "...",
       uri = "...",
-      parameters = {
+      query = {
         ...
       },
       json = {
         ...
       };
 
-post(host, uri, parameters, json, (json, status) => {
+post(host, uri, query, json, (json, status) => {
   if (json !== null) {
     ...
   }
@@ -110,7 +110,7 @@ post(host, uri, parameters, json, (json, status) => {
 ```
 const host = "...",
       uri = "...",
-      parameters = {
+      query = {
         ...
       },
       method = "PUT"
@@ -122,7 +122,7 @@ const host = "...",
         "content-type": "application/json"
       };
 
-request(host, uri, parameters, method, json, headers, (json, status) => {
+request(host, uri, query, method, json, headers, (json, status) => {
   if (json !== null) {
     ...
   }
@@ -225,12 +225,12 @@ Finally, log files are rolled over every night. So `./log/example.log` would bec
 
 Functions that leverage Node's [HTTP](https://nodejs.org/api/http.html) nad [HTTPS](https://nodejs.org/api/https.html) inbuilt modules in order to provide HTTP request functionality. These functions are deliberately low level. They will take away some of the pain of using the aforementioned modules but will not automatically set headers, parse responses, etc. For all but the most basic of requests you will likely need some knowledge of streams and Node's inbuilt request and response objects.
 
-* The `get()` function provides a means to make GET requests. It takes `host`, `uri` and `parameters` arguments, an optional `headers` argument and a `callback` argument. It returns an instance of Node's [ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest) class and the callback function should have an `error` argument, which will be `null` if the request is successful, and a `response` argument, which will be an instance of Node's [IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage) class.
+* The `get()` function provides a means to make GET requests. It takes `host`, `uri` and `query` arguments, an optional `headers` argument and a `callback` argument. It returns an instance of Node's [ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest) class and the callback function should have an `error` argument, which will be `null` if the request is successful, and a `response` argument, which will be an instance of Node's [IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage) class.
 
 As mentioned above, the `get()` method will not parse the response. In the following example there is a `bodyFromResponse()` function that will do this for simple cases when the body of the response is Unicode:
 
 ```
-get(host, uri, parameters, (error, response) => {
+get(host, uri, query, (error, response) => {
   // Check for an error
 
   const { statusCode } = response;
@@ -263,7 +263,7 @@ In the following example, the response is assumed to be binary data, an image sa
 const { pipeline } = require("stream"),
       { createWriteStream } = require("fs");
 
-get(host, uri, parameters, (error, response) => {
+get(host, uri, query, (error, response) => {
   // Check for an error
 
   const { statusCode } = response;
@@ -278,19 +278,19 @@ get(host, uri, parameters, (error, response) => {
 
 * The `post()` function provides a means to make POST requests. Its arguments are identical to the `get()` function.
 
-In the following example the `queryStringFromParameters()` function from the HTTP utilities is used to encode the content. Note that the `content-type` and `content-length` headers must be set explicitly. Also note that there is no argument provided for the content itself, instead an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request:
+In the following example the `queryStringFromQuery()` function from the HTTP utilities is used to encode the content. Note that the `content-type` and `content-length` headers must be set explicitly. Also note that there is no argument provided for the content itself, instead an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request:
 
 ```
 const { pipeline, Readable } = require("stream");
 
-const content = queryStringFromParameters({
+const content = queryStringFromQuery({
         "name": "John Doe"
       }),
       headers = {
         "content-type": "application/x-www-form-urlencoded",
         "content-length": content.length
       },
-      request = post(host, uri, parameters, headers, (error, response) => {
+      request = post(host, uri, query, headers, (error, response) => {
         // Check for an error
 
         const { statusCode } = response;
@@ -304,7 +304,7 @@ pipeline(readable, request, (error) => {
 });
 ```
 
-* The `delete()` function provides a means to make arbitrary HTTP requests. Its arguments are identical to the `post()` function bar an additional `method` argument that comes after the `parameters` argument. Unlike the `get()` and `post()` functions, in this case the `headers` argument is not optional.
+* The `delete()` function provides a means to make arbitrary HTTP requests. Its arguments are identical to the `post()` function bar an additional `method` argument that comes after the `query` argument. Unlike the `get()` and `post()` functions, in this case the `headers` argument is not optional.
 
 ## Template utilities
 
@@ -746,8 +746,8 @@ separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
 - `portFromHost()`
 - `secureFromHost()`
 - `hostnameFromHost()`
-- `queryStringFromParameters()`
-- `urlFromHostURIAndParameters()`
+- `queryStringFromQuery()`
+- `urlFromHostURIAndQuery()`
 
 Helper functions to manipulate HTTP headers and URLs, build query strings and so on.
 
@@ -799,26 +799,26 @@ secureFromHost("https://site.com"); // returns true
 hostnameFromHost("http://site.com"); // returns "site.com"
 ```
 
-* The `queryStringFromParameters()` function takes a plain old JavaScript object `parameters` argument and returns the corresponding URL encoded query string. It uses the [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) to encode the names and values
+* The `queryStringFromQuery()` function takes a plain old JavaScript object `query` argument and returns the corresponding URL encoded query string. It uses the [`encodeURIComponent`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) to encode the names and values
 
 ```
-const parameters = {
+const query = {
   "name": "John Doe"
 };
 
-queryStringFromParameters(parameters); // returns John%20Doe
+queryStringFromQuery(query); // returns John%20Doe
 ```
 
-* The `urlFromHostURIAndParameters()` function takes `host` and `uri` string arguments together with a `parameters` plain old JavaScript object argument. It creates a query string from the `parameters` object and concatenates this with the two other arguments in oder to create a fully qualified HTTP URL.
+* The `urlFromHostURIAndQuery()` function takes `host` and `uri` string arguments together with a `query` plain old JavaScript object argument. It creates a query string from the `query` object and concatenates this with the two other arguments in oder to create a fully qualified HTTP URL.
 
 ```
 const host = "https://site.com",
       uri = "/user",
-      parameters = {
+      query = {
         "name": "John Doe"
       };
 
-urlFromHostURIAndParameters(host, uri, parameters); // returns "https://site.com/user?name=John%20Doe"
+urlFromHostURIAndQuery(host, uri, query); // returns "https://site.com/user?name=John%20Doe"
 ```
 
 Ideally the `host` argument should not include a trailing forward slash whereas `uri` arguments should always start with a leading forward slash.

@@ -5,39 +5,39 @@ const http = require("http"),
 
 import { ERROR, EMPTY_STRING } from "../constants";
 import { GET_METHOD, POST_METHOD } from "../methods";
-import { portFromHost, secureFromHost, hostnameFromHost, queryStringFromParameters } from "../utilities/http";
+import { portFromHost, secureFromHost, hostnameFromHost, queryStringFromQuery } from "../utilities/http";
 
-function get(host, uri, parameters, headers, callback) {
+function get(host, uri, query, headers, callback) {
   if (callback === undefined) {
     callback = headers; ///
     headers = {};
   }
 
   const method = GET_METHOD,
-        _request = request(host, uri, parameters, method, headers, callback);
+        _request = request(host, uri, query, method, headers, callback);
 
   _request.end();
 
   return _request;
 }
 
-function post(host, uri, parameters, headers, callback) {
+function post(host, uri, query, headers, callback) {
   if (callback === undefined) {
     callback = headers; ///
     headers = {};
   }
 
   const method = POST_METHOD,
-        _request = request(host, uri, parameters, method, headers, callback);
+        _request = request(host, uri, query, method, headers, callback);
 
   return _request;
 }
 
-function request(host, uri, parameters, method, headers, callback) {
+function request(host, uri, query, method, headers, callback) {
   const port = portFromHost(host),
         secure = secureFromHost(host),
         hostname = hostnameFromHost(host),
-        queryString = queryStringFromParameters(parameters),
+        queryString = queryStringFromQuery(query),
         path = (queryString === EMPTY_STRING) ?
                  uri :
                   `${uri}?${queryString}`,

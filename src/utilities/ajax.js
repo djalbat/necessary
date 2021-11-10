@@ -3,9 +3,9 @@
 import { ACCEPT, CONTENT_TYPE } from "../constants";
 import { GET_METHOD, POST_METHOD } from "../methods";
 import { APPLICATION_JSON_CONTENT_TYPE } from "../contentTypes";
-import { underwrite, urlFromHostURIAndParameters } from "../utilities/http";
+import { underwrite, urlFromHostURIAndQuery } from "../utilities/http";
 
-export function get(host, uri, parameters, headers, callback) {
+export function get(host, uri, query, headers, callback) {
   if (callback === undefined) {
     callback = headers; ///
     headers = {};
@@ -16,10 +16,10 @@ export function get(host, uri, parameters, headers, callback) {
 
   underwriteAccept(headers);
 
-  request(host, uri, parameters, method, body, headers, callback);
+  request(host, uri, query, method, body, headers, callback);
 }
 
-export function post(host, uri, parameters, body, headers, callback) {
+export function post(host, uri, query, body, headers, callback) {
   if (callback === undefined) {
     callback = headers; ///
     headers = {};
@@ -31,11 +31,11 @@ export function post(host, uri, parameters, body, headers, callback) {
 
   underwriteContentType(headers);
 
-  request(host, uri, parameters, method, body, headers, callback);
+  request(host, uri, query, method, body, headers, callback);
 }
 
-export function request(host, uri, parameters, method, body, headers, callback) {
-  const url = urlFromHostURIAndParameters(host, uri, parameters),
+export function request(host, uri, query, method, body, headers, callback) {
+  const url = urlFromHostURIAndQuery(host, uri, query),
         accept = headers[ACCEPT] || null,
         contentType = headers[CONTENT_TYPE] || null,
         xmlHttpRequest = new XMLHttpRequest();
