@@ -16,12 +16,13 @@ export function get(host, uri, query, headers, callback) {
 
   underwriteAccept(headers);
 
-  request(host, uri, query, method, body, headers, callback);
+  request(host, uri, query, method, headers, body, callback);
 }
 
-export function post(host, uri, query, body, headers, callback) {
+export function post(host, uri, query, headers, body, callback) {
   if (callback === undefined) {
-    callback = headers; ///
+    callback = body;
+    body = headers;
     headers = {};
   }
 
@@ -31,10 +32,10 @@ export function post(host, uri, query, body, headers, callback) {
 
   underwriteContentType(headers);
 
-  request(host, uri, query, method, body, headers, callback);
+  request(host, uri, query, method, headers, body, callback);
 }
 
-export function request(host, uri, query, method, body, headers, callback) {
+export function request(host, uri, query, method, headers, body, callback) {
   const url = urlFromHostURIAndQuery(host, uri, query),
         accept = headers[ACCEPT] || null,
         contentType = headers[CONTENT_TYPE] || null,

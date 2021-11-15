@@ -60,7 +60,7 @@ The miscellaneous functions are a special case. They can be treated as above but
 
 The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for arbitrary HTTP request methods.
 
-* The `get()` function sends a `GET` request, taking `host`, `uri`, `query` and `callback` arguments, together with an optional `headers` argument before the `callback` argument.
+* The `get()` function sends a `GET` request, taking `host`, `uri`, `query` and `callback` arguments, together with an optional `headers` argument after the `query` argument.
 
 The `query` argument should be a plain old JavaScript object, the names and values of which are encoded and concatenated to form the query string.
 
@@ -86,7 +86,7 @@ Note that the `uri` argument must include a leading forward slash `/` since the 
 
 * The `post()` function behaves almost identically to the `get()` function, with the following differences.
 
-It sends a `POST` rather than a `GET` request. There is an additional `body` argument that comes after the `query` argument. If the `headers` argument does not have a `content-type` property then one will be provided with the value of `application/json`. If the `content-type` property of the `headers` argument is set to `application/json` then the `body` argument is assumed to be a plain old JavaScript object and is stringified as JSON.
+It sends a `POST` rather than a `GET` request. There is an additional `body` argument that comes before the `callabck` argument and after the `headers` argument, which is again optional. . If the `headers` argument does not have a `content-type` property then one will be provided with the value of `application/json`. If the `content-type` property of the `headers` argument is set to `application/json` then the `body` argument is assumed to be a plain old JavaScript object and is stringified as JSON.
 
 ```
 const host = "...",
@@ -114,21 +114,21 @@ const host = "...",
         ...
       },
       method = "PUT"
-      json = {
-        ...
-      },
       headers = {
         "accept": "application/json",
         "content-type": "application/json"
+      },
+     json = {
+        ...
       };
 
-request(host, uri, query, method, json, headers, (json, status) => {
+request(host, uri, query, method, headers, json, (json, status) => {
   if (json !== null) {
     ...
   }
 });
 ```
-Note that the headers must be explicitly set. There does not necessarily have to be a `content-type` header, of course, although in the vast majority of cases the `accept` header should be set.
+Note that the `headerst` argument is not optional. There does not necessarily have to be a `content-type` header, of course, although in the vast majority of cases the `accept` header should be set.
 
 ## Shell utilities
 
