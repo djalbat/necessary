@@ -6,3 +6,4 @@ export const CTRL_C = "^C";
 export const ACCEPT = "accept";
 export const EMPTY_STRING = "";
 export const CONTENT_TYPE = "content-type";
+export const CONTENT_LENGTH = 'content-length';

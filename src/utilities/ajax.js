@@ -1,9 +1,9 @@
 "use strict";
 
-import { ACCEPT, CONTENT_TYPE } from "../constants";
 import { GET_METHOD, POST_METHOD } from "../methods";
 import { APPLICATION_JSON_CONTENT_TYPE } from "../contentTypes";
 import { underwrite, urlFromHostURIAndQuery } from "../utilities/http";
+import { ACCEPT, CONTENT_TYPE, CONTENT_LENGTH } from "../constants";
 
 export function get(host, uri, query, headers, callback) {
   if (callback === undefined) {
@@ -11,10 +11,11 @@ export function get(host, uri, query, headers, callback) {
     headers = {};
   }
 
-  const method = GET_METHOD,
-        body = null;
+  const body = null,
+        method = GET_METHOD,
+        accept = APPLICATION_JSON_CONTENT_TYPE;
 
-  underwriteAccept(headers);
+  underwriteAccept(headers, accept);
 
   request(host, uri, query, method, headers, body, callback);
 }
@@ -26,11 +27,13 @@ export function post(host, uri, query, headers, body, callback) {
     headers = {};
   }
 
-  const method = POST_METHOD;
+  const method = POST_METHOD,
+        accept = APPLICATION_JSON_CONTENT_TYPE,
+        contentType = APPLICATION_JSON_CONTENT_TYPE;
 
-  underwriteAccept(headers);
+  underwriteAccept(headers, accept);
 
-  underwriteContentType(headers);
+  underwriteContentType(headers, contentType);
 
   request(host, uri, query, method, headers, body, callback);
 }
@@ -43,7 +46,11 @@ export function request(host, uri, query, method, headers, body, callback) {
 
   if (contentType === APPLICATION_JSON_CONTENT_TYPE) {
     const json = body,  ///
-          jsonString = JSON.stringify(json);
+          jsonString = JSON.stringify(json),
+          content = jsonString, ///
+          contentLength = content.length;
+
+    underwriteContentLength(headers, contentLength);
 
     body = jsonString;  ///
   }
@@ -90,16 +97,23 @@ export default {
   request
 }
 
-function underwriteAccept(headers) {
+function underwriteAccept(headers, accept) {
   const name = ACCEPT,  ///
-        value = APPLICATION_JSON_CONTENT_TYPE; ///
+        value = accept; ///
 
   underwrite(headers, name, value);
 }
 
-function underwriteContentType(headers) {
+function underwriteContentType(headers, contentTYpe) {
   const name = CONTENT_TYPE,  ///
-        value = APPLICATION_JSON_CONTENT_TYPE; ///
+        value = contentTYpe; ///
+
+  underwrite(headers, name, value);
+}
+
+function underwriteContentLength(headers, contentLength) {
+  const name = CONTENT_LENGTH,  ///
+        value = contentLength; ///
 
   underwrite(headers, name, value);
 }
