@@ -58,7 +58,7 @@ The miscellaneous functions are a special case. They can be treated as above but
 - `post()`
 - `request()`
 
-The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for arbitrary HTTP request methods.
+The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for arbitrary HTTP requests.
 
 * The `get()` function sends a `GET` request, taking `host`, `uri`, `query` and `callback` arguments, together with an optional `headers` argument after the `query` argument.
 
@@ -66,7 +66,7 @@ The `query` argument should be a plain old JavaScript object, the names and valu
 
 The `headers` argument should also be a plain old JavaScript object. If it does not have an `accept` property then one wil be provided with the value `application/json`.
 
-The `callback` argument is expected to be a function taking `body` and `status` arguments. If the `accept` property of the main `headers` argument is set to `application/json` then the callback function's `body` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. The `status` argument will be the response status code, for example `200` for a successful `OK` response.
+The `callback` argument is expected to be a function taking `contnet` and `statusCode` arguments. If the `accept` property of the main `headers` argument is set to `application/json` then the callback function's `content` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. The `statusCode` argument will be the response status code, for example `200` for a successful `OK` response.
 
 ```
 const host = "...",
@@ -75,8 +75,8 @@ const host = "...",
         ...
       };
 
-get(host, uri, query, (json, status) => {
-  if (status === 200) {
+get(host, uri, query, (json, statusCode) => {
+  if (statusCode === 200) {
     ...
   }
 });
@@ -86,7 +86,7 @@ Note that the `uri` argument must include a leading forward slash `/` since the 
 
 * The `post()` function behaves almost identically to the `get()` function, with the following differences.
 
-It sends a `POST` rather than a `GET` request. There is an additional `body` argument that comes before the `callabck` argument and after the `headers` argument, which is again optional. If the `headers` argument does not have a `content-type` property then one will be provided with the value of `application/json`. If the `content-type` property of the `headers` argument is set to `application/json` then the `body` argument is assumed to be a plain old JavaScript object and is stringified as JSON. In these cases the `content-length` header will also be set if one is not present already.
+It sends a `POST` rather than a `GET` request. There is an additional `content` argument that comes before the `callabck` argument and after the `headers` argument, which is again optional. If the `headers` argument does not have a `content-type` property then one will be provided with the value of `application/json`. If the `content-type` property of the `headers` argument is set to `application/json` then the `content` argument is assumed to be a plain old JavaScript object and is stringified as JSON.
 
 ```
 const host = "...",
@@ -98,14 +98,14 @@ const host = "...",
         ...
       };
 
-post(host, uri, query, json, (json, status) => {
+post(host, uri, query, json, (json, statusCode) => {
   if (json !== null) {
     ...
   }
 });
 ```
 
-* The `request()` function behaves similarly to the `post()` function but the `headers` argument is no longer optional and there is a `method` argument that comes before the `body` argument:
+* The `request()` function behaves similarly to the `post()` function but the `headers` argument is no longer optional and there is a `method` argument that comes before the `content` argument:
 
 ```
 const host = "...",
@@ -122,7 +122,7 @@ const host = "...",
         ...
       };
 
-request(host, uri, query, method, headers, json, (json, status) => {
+request(host, uri, query, method, headers, json, (json, statusCode) => {
   if (json !== null) {
     ...
   }
@@ -227,30 +227,30 @@ Functions that leverage Node's [HTTP](https://nodejs.org/api/http.html) nad [HTT
 
 * The `get()` function provides a means to make GET requests. It takes `host`, `uri` and `query` arguments, an optional `headers` argument and a `callback` argument. It returns an instance of Node's [ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest) class and the callback function should have an `error` argument, which will be `null` if the request is successful, and a `response` argument, which will be an instance of Node's [IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage) class.
 
-As mentioned above, the `get()` method will not parse the response. In the following example there is a `bodyFromResponse()` function that will do this for simple cases when the body of the response is Unicode:
+As mentioned above, the `get()` method will not parse the response. In the following example there is a `contentFromResponse()` function that will do this for simple cases when the body of the response is Unicode:
 
 ```
 get(host, uri, query, (error, response) => {
   // Check for an error
 
-  const { statusCode } = response;
+  const { status } = response;
 
   // Check the status code
 
-  bodyFromResponse(response, (body) => {
-    console.log(body)
+  contentFromResponse(response, (content) => {
+    console.log(content)
   });
 });
 
-function bodyFromResponse(response, callback) {
-  let body = "";
+function contentFromResponse(response, callback) {
+  let content = "";
 
   response.on("data", (data) => {
-    body += data;
+    content += data;
   });
 
   response.on("end", () => {
-    callback(body);
+    callback(content);
   });
 }
 ```

@@ -1,9 +1,9 @@
 "use strict";
 
+import { ACCEPT, CONTENT_TYPE } from "../constants";
 import { GET_METHOD, POST_METHOD } from "../methods";
 import { APPLICATION_JSON_CONTENT_TYPE } from "../contentTypes";
 import { underwrite, urlFromHostURIAndQuery } from "../utilities/http";
-import { ACCEPT, CONTENT_TYPE, CONTENT_LENGTH } from "../constants";
 
 export function get(host, uri, query, headers, callback) {
   if (callback === undefined) {
@@ -11,19 +11,19 @@ export function get(host, uri, query, headers, callback) {
     headers = {};
   }
 
-  const body = null,
-        method = GET_METHOD,
-        accept = APPLICATION_JSON_CONTENT_TYPE;
+  const method = GET_METHOD,
+        accept = APPLICATION_JSON_CONTENT_TYPE,
+        content = null;
 
   underwriteAccept(headers, accept);
 
-  request(host, uri, query, method, headers, body, callback);
+  request(host, uri, query, method, headers, content, callback);
 }
 
-export function post(host, uri, query, headers, body, callback) {
+export function post(host, uri, query, headers, content, callback) {
   if (callback === undefined) {
-    callback = body;
-    body = headers;
+    callback = content;
+    content = headers;
     headers = {};
   }
 
@@ -35,43 +35,40 @@ export function post(host, uri, query, headers, body, callback) {
 
   underwriteContentType(headers, contentType);
 
-  request(host, uri, query, method, headers, body, callback);
+  request(host, uri, query, method, headers, content, callback);
 }
 
-export function request(host, uri, query, method, headers, body, callback) {
+export function request(host, uri, query, method, headers, content, callback) {
   const url = urlFromHostURIAndQuery(host, uri, query),
         accept = headers[ACCEPT] || null,
         contentType = headers[CONTENT_TYPE] || null,
         xmlHttpRequest = new XMLHttpRequest();
 
   if (contentType === APPLICATION_JSON_CONTENT_TYPE) {
-    const json = body,  ///
-          jsonString = JSON.stringify(json),
-          content = jsonString, ///
-          contentLength = content.length;
+    const json = content,  ///
+          jsonString = JSON.stringify(json);
 
-    underwriteContentLength(headers, contentLength);
-
-    body = jsonString;  ///
+    content = jsonString;  ///
   }
 
   xmlHttpRequest.onreadystatechange = () => {
-    const { readyState, status, responseText } = xmlHttpRequest;
+    const { readyState, status, responseText } = xmlHttpRequest,
+          statusCode = status;
 
     if (readyState == 4) {
-      let body = responseText;
+      let content = responseText;
 
       if (accept === APPLICATION_JSON_CONTENT_TYPE) {
         try {
-          const jsonString = body,  ///
+          const jsonString = content,  ///
                 json = JSON.parse(jsonString);
 
-          body = json;  ///
+          content = json;  ///
         } catch (error) {
-          body = null;
+          content = null;
         }
 
-        callback(body, status);
+        callback(content, statusCode);
       }
     }
   };
@@ -86,8 +83,8 @@ export function request(host, uri, query, method, headers, body, callback) {
     xmlHttpRequest.setRequestHeader(CONTENT_TYPE, contentType);
   }
 
-  (body !== null) ?
-    xmlHttpRequest.send(body) :
+  (content !== null) ?
+    xmlHttpRequest.send(content) :
       xmlHttpRequest.send();
 }
 
@@ -107,13 +104,6 @@ function underwriteAccept(headers, accept) {
 function underwriteContentType(headers, contentTYpe) {
   const name = CONTENT_TYPE,  ///
         value = contentTYpe; ///
-
-  underwrite(headers, name, value);
-}
-
-function underwriteContentLength(headers, contentLength) {
-  const name = CONTENT_LENGTH,  ///
-        value = contentLength; ///
 
   underwrite(headers, name, value);
 }
