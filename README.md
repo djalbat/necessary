@@ -118,7 +118,7 @@ const host = "...",
         "accept": "application/json",
         "content-type": "application/json"
       },
-     json = {
+      json = {
         ...
       };
 
