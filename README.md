@@ -260,8 +260,7 @@ Note that the data returned when the "data" event is handled will be a byte arra
 In the following example, the response is assumed to be binary data, an image say, and is piped straight to a file:
 
 ```
-const { pipeline } = require("stream"),
-      { createWriteStream } = require("fs");
+const { createWriteStream } = require("fs");
 
 get(host, uri, query, (error, response) => {
   // Check for an error
@@ -270,9 +269,7 @@ get(host, uri, query, (error, response) => {
 
   const writeStream = createWriteStream("...");
 
-  pipeline(response, writeStream, (error) => {
-    ///
-  });
+  response.pipe(writeStream);
 });
 ```
 
@@ -281,7 +278,7 @@ get(host, uri, query, (error, response) => {
 In the following example the `queryStringFromQuery()` function from the HTTP utilities is used to encode the content. Note that the `content-type` and `content-length` headers must be set explicitly. Also note that there is no argument provided for the content itself, instead an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request:
 
 ```
-const { pipeline, Readable } = require("stream");
+const { Readable } = require("stream");
 
 const content = queryStringFromQuery({
         "name": "John Doe"
@@ -299,9 +296,7 @@ const content = queryStringFromQuery({
       }),
       readable = Readable.from(content);
 
-pipeline(readable, request, (error) => {
-  ///
-});
+  readable.pope(request);
 ```
 
 * The `delete()` function provides a means to make arbitrary HTTP requests. Its arguments are identical to the `post()` function bar an additional `method` argument that comes after the `query` argument. Unlike the `get()` and `post()` functions, in this case the `headers` argument is not optional.
