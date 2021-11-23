@@ -223,13 +223,11 @@ Finally, log files are rolled over every night. So `./log/example.log` would bec
 - `createGetRequest()`
 - `createPostRequest()`
 
-Functions that leverage Node's [HTTP](https://nodejs.org/api/http.html) nad [HTTPS](https://nodejs.org/api/https.html) inbuilt modules in order to provide HTTP request functionality. These functions are deliberately low level. They will take away some of the pain of using the aforementioned modules but will not automatically set headers, parse responses, etc.
+Functions that leverage Node's [HTTP](https://nodejs.org/api/http.html) nad [HTTPS](https://nodejs.org/api/https.html) inbuilt modules in order to provide HTTP request functionality. These functions are deliberately low level. They will take away some of the pain of using the aforementioned modules but will not automatically set headers, parse responses, etc. Specifically, methods have to be called on the instance of the [ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest) class that they each return in order to make the request and on the instance of the [IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage) passed to the callback function in order to parse the response.
 
-Note that none of these functions will actually make the request and nor will they parse the response. Methods have to be called on the instance of the [ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest) class that they each return in order to make the request and on the instance of the [IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage) passed to the callback function in order to parse the response.
+* The `createRequest()` function provides a means to make arbitrary requests. It takes `host`, `uri`, `query`, `method`, `headers` and `callback` arguments. It returns an instance of Node's ClientRequest class. The callback function must have an `error` argument, which will be `null` if the request is successful, and a `response` argument, which will be an instance of Node's IncomingMessage class. The `query` and `headers` arguments should be plain old JavaScript objects, with the former being converted into a query string. The other arguments bar the last callback argument should be strings.
 
-* The `createRequest()` function provides a means to make arbitrary requests. It takes `host`, `uri`, `query`, `method`, `headers` and `callback` arguments. It returns an instance of Node's ClientRequest class. The callback function should have an `error` argument, which will be `null` if the request is successful, and a `response` argument, which will be an instance of Node's IncomingMessage class. The `query` and `headers` arguments should be plain old JavaScript objects, with the former being converted into a query string.
-
-In the following example a GET request is made. Note that because the request body is empty, it is enough to call the response's `end()` most. Note also that the response is piped directly to a file.
+In the following example a GET request is made. Note that because the request body is empty, it is enough to call the request object's `end()` method in order to make the request. Note also that the response is piped directly to a file.
 
 ```
 const { createWriteStream } = require("fs");
@@ -254,7 +252,7 @@ const host = ...,
 request.end();
 ```
 
-In the following example the `queryStringFromQuery()` function from the HTTP utilities is used to encode the body of the request. Note that the `content-type` header is set explicitly. Also note that an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request. Finally, note the use of the Readable class and the `pipe()` method on the response:
+In the following example the `queryStringFromQuery()` function from the HTTP utilities is used to encode the body of the request. Note that the `content-type` header is set explicitly. Also note that an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request object in order to make the request.
 
 ```
 const { Readable } = require("stream");
