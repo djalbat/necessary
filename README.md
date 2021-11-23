@@ -219,28 +219,83 @@ Finally, log files are rolled over every night. So `./log/example.log` would bec
 
 ## Request utilities
 
-- `get()`
-- `post()`
-- `request()`
+- `createRequest()`
+- `createGetRequest()`
+- `createPostRequest()`
 
-Functions that leverage Node's [HTTP](https://nodejs.org/api/http.html) nad [HTTPS](https://nodejs.org/api/https.html) inbuilt modules in order to provide HTTP request functionality. These functions are deliberately low level. They will take away some of the pain of using the aforementioned modules but will not automatically set headers, parse responses, etc. For all but the most basic of requests you will likely need some knowledge of streams and Node's inbuilt request and response objects.
+Functions that leverage Node's [HTTP](https://nodejs.org/api/http.html) nad [HTTPS](https://nodejs.org/api/https.html) inbuilt modules in order to provide HTTP request functionality. These functions are deliberately low level. They will take away some of the pain of using the aforementioned modules but will not automatically set headers, parse responses, etc.
 
-* The `get()` function provides a means to make GET requests. It takes `host`, `uri` and `query` arguments, an optional `headers` argument and a `callback` argument. It returns an instance of Node's [ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest) class and the callback function should have an `error` argument, which will be `null` if the request is successful, and a `response` argument, which will be an instance of Node's [IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage) class.
+Note that none of these functions will actually make the request and nor will they parse the response. Methods have to be called on the instance of the [ClientRequest](https://nodejs.org/api/http.html#http_class_http_clientrequest) class that they each return in order to make the request and on the instance of the [IncomingMessage](https://nodejs.org/api/http.html#class-httpincomingmessage) passed to the callback function in order to parse the response.
 
-As mentioned above, the `get()` method will not parse the response. In the following example there is a `contentFromResponse()` function that will do this for simple cases when the body of the response is Unicode:
+* The `createRequest()` function provides a means to make arbitrary requests. It takes `host`, `uri`, `query`, `method`, `headers` and `callback` arguments. It returns an instance of Node's ClientRequest class. The callback function should have an `error` argument, which will be `null` if the request is successful, and a `response` argument, which will be an instance of Node's IncomingMessage class. The `query` and `headers` arguments should be plain old JavaScript objects, with the former being converted into a query string.
+
+In the following example a GET request is made. Note that because the request body is empty, it is enough to call the response's `end()` most. Note also that the response is piped directly to a file.
 
 ```
-get(host, uri, query, (error, response) => {
-  // Check for an error
+const { createWriteStream } = require("fs");
 
-  const { status } = response;
+const host = ...,
+      uri = ...,
+      query = {
+        ...
+      },
+      method = "GET",
+      headers = {
+        ...
+      },
+      request = createRequest(host, uri, query, method, headers, (error, response) => {
+        ...
 
-  // Check the status code
+        const writeStream = createWriteStream("...");
 
-  contentFromResponse(response, (content) => {
-    console.log(content)
-  });
-});
+        response.pipe(writeStream);
+      });
+
+request.end();
+```
+
+In the following example the `queryStringFromQuery()` function from the HTTP utilities is used to encode the body of the request. Note that the `content-type` header is set explicitly. Also note that an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request. Finally, note the use of the Readable class and the `pipe()` method on the response:
+
+```
+const { Readable } = require("stream");
+
+const host = ...,
+      uri = ...,
+      query = {},
+      method = "POST",
+      headers = {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      request = createRequest(host, uri, query, method, headers, (error, response) => {
+        ...
+      }),
+      content = queryStringFromQuery({
+        "name": "John Doe"
+      }),
+      readable = Readable.from(content);
+
+readable.pipe(request);
+```
+
+Finally, in the following example a `contentFromResponse()` function has been written in order to parse the response to a string in preference to piping it to a file, say:
+
+```
+const { Readable } = require("stream");
+
+const host = ...,
+      uri = ...,
+      query = {
+        ...
+      },
+      method = "GET",
+      headers = {
+        ...
+      },
+      request = createRequest(host, uri, query, method, headers, (error, response) => {
+        contentFromResponse(response, (content) => {
+          console.log(content)
+        });
+      });
 
 function contentFromResponse(response, callback) {
   let content = "";
@@ -255,49 +310,9 @@ function contentFromResponse(response, callback) {
 }
 ```
 
-Note that the data returned when the "data" event is handled will be a byte array. It is coerced to string by the "+=" operator which, as already mentioned, will only work in the cases that Unicode data has been returned.
+* The `createGetRequest()` function is identical to the `createRequest()` function except that the `method` argument is omitted and the `headers` argument is optional.
 
-In the following example, the response is assumed to be binary data, an image say, and is piped straight to a file:
-
-```
-const { createWriteStream } = require("fs");
-
-get(host, uri, query, (error, response) => {
-  // Check for an error
-
-  const { statusCode } = response;
-
-  const writeStream = createWriteStream("...");
-
-  response.pipe(writeStream);
-});
-```
-
-* The `post()` function provides a means to make POST requests. Its arguments are identical to the `get()` function.
-
-In the following example the `queryStringFromQuery()` function from the HTTP utilities is used to encode the content. Note that the `content-type` and `content-length` headers must be set explicitly. Also note that there is no argument provided for the content itself, instead an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request:
-
-```
-const { Readable } = require("stream");
-
-const content = queryStringFromQuery({
-        "name": "John Doe"
-      }),
-      headers = {
-        "content-type": "application/x-www-form-urlencoded",
-        "content-length": content.length
-      },
-      request = post(host, uri, query, headers, (error, response) => {
-        // Check for an error
-
-        const { statusCode } = response;
-
-        ...
-      }),
-      readable = Readable.from(content);
-
-readable.pope(request);
-```
+* The `createPostRequest()` function is identical to the `createRequest()` function except that the `method` argument is omitted and the `headers` argument is optional.
 
 ## Template utilities
 
