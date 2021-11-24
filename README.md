@@ -244,7 +244,7 @@ const host = ...,
       request = createRequest(host, uri, query, method, headers, (error, response) => {
         ...
 
-        const writeStream = createWriteStream("...");
+        const writeStream = createWriteStream(...);
 
         response.pipe(writeStream);
       });
@@ -252,34 +252,29 @@ const host = ...,
 request.end();
 ```
 
-In the following example the `queryStringFromQuery()` function from the HTTP utilities is used to encode the body of the request. Note that the `content-type` header is set explicitly. Also note that an instance of Node's [`Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) class is created and piped to the request object in order to make the request.
+In the following example the `queryStringFromQuery()` function from the HTTP utilities is used to encode the body of the request. Note that the `content-type` header is set explicitly. Note that the request body is piped directly from a file:
 
 ```
-const { Readable } = require("stream");
+const { createReadStream } = require("fs");
 
 const host = ...,
       uri = ...,
       query = {},
       method = "POST",
       headers = {
-        "content-type": "application/x-www-form-urlencoded"
+        "content-type": "image/png"
       },
       request = createRequest(host, uri, query, method, headers, (error, response) => {
         ...
       }),
-      content = queryStringFromQuery({
-        "name": "John Doe"
-      }),
-      readable = Readable.from(content);
+      readStream = createReadStream(...);
 
-readable.pipe(request);
+readStream.pipe(request);
 ```
 
 Finally, in the following example a `contentFromResponse()` function has been written in order to parse the response to a string in preference to piping it to a file, say:
 
 ```
-const { Readable } = require("stream");
-
 const host = ...,
       uri = ...,
       query = {
@@ -294,6 +289,8 @@ const host = ...,
           console.log(content)
         });
       });
+
+request.end();
 
 function contentFromResponse(response, callback) {
   let content = "";
