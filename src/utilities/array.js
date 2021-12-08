@@ -18,6 +18,8 @@ export function thirdLast(array) { return array[array.length - 3]; }
 
 export function secondLast(array) { return array[array.length - 2]; }
 
+export function firstLast(array) { return array[array.length - 1]; }
+
 export function last(array) { return array[array.length - 1]; }
 
 export function head(array) { return array.slice(0, 1); }
@@ -285,6 +287,7 @@ export default {
   fourthLast,
   thirdLast,
   secondLast,
+  firstLast,
   last,
   head,
   tail,
