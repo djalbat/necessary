@@ -1,13 +1,13 @@
 "use strict";
 
-export function whilst(callback, done, context) {
+export function whilst(operation, done, context) {
   let count = -1;
 
   function next() {
     count++;
 
     const index = count,  ///
-          terminate = callback(next, done, context, index);
+          terminate = operation(next, done, context, index);
 
     if (terminate) {
       done();
@@ -17,7 +17,7 @@ export function whilst(callback, done, context) {
   next();
 }
 
-export function forEach(array, callback, done, context) {
+export function forEach(array, operation, done, context) {
   const length = array.length;  ///
 
   let count = -1;
@@ -33,15 +33,15 @@ export function forEach(array, callback, done, context) {
       const index = count,  ///
             element = array[index];
 
-      callback(element, next, done, context, index);
+      operation(element, next, done, context, index);
     }
   }
 
   next();
 }
 
-export function sequence(callbacks, done, context) {
-  const length = callbacks.length;  ///
+export function sequence(operations, done, context) {
+  const length = operations.length;  ///
 
   let count = -1;
 
@@ -54,17 +54,17 @@ export function sequence(callbacks, done, context) {
       done();
     } else {
       const index = count,  ///
-            callback = callbacks[index];
+            operation = operations[index];
 
-      callback(next, done, context, index);
+      operation(next, done, context, index);
     }
   }
 
   next();
 }
 
-export function eventually(callbacks, done, context) {
-  const length = callbacks.length;  ///
+export function eventually(operations, done, context) {
+  const length = operations.length;  ///
 
   let count = 0;
 
@@ -78,12 +78,12 @@ export function eventually(callbacks, done, context) {
     }
   }
 
-  callbacks.forEach((callback, index) => {
-    callback(next, done, context, index);
+  operations.forEach((operation, index) => {
+    operation(next, done, context, index);
   });
 }
 
-export function repeatedly(callback, length, done, context) {
+export function repeatedly(operation, length, done, context) {
   let count = 0;
 
   function next() {
@@ -97,11 +97,11 @@ export function repeatedly(callback, length, done, context) {
   }
 
   for (let index = 0; index < length; index++) {
-    callback(next, done, context, index);
+    operation(next, done, context, index);
   }
 }
 
-export function forwardsForEach(array, callback, done, context) {
+export function forwardsForEach(array, operation, done, context) {
   const length = array.length;  ///
 
   let count = -1;
@@ -117,14 +117,14 @@ export function forwardsForEach(array, callback, done, context) {
       const index = count,  ///
             element = array[index];
 
-      callback(element, next, done, context, index);
+      operation(element, next, done, context, index);
     }
   }
 
   next();
 }
 
-export function backwardsForEach(array, callback, done, context) {
+export function backwardsForEach(array, operation, done, context) {
   const length = array.length;  ///
 
   let count = length;
@@ -140,7 +140,7 @@ export function backwardsForEach(array, callback, done, context) {
       const index = count,  ///
             element = array[index];
 
-      callback(element, next, done, context, index);
+      operation(element, next, done, context, index);
     }
   }
 

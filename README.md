@@ -60,13 +60,13 @@ The miscellaneous functions are a special case. They can be treated as above but
 
 The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for arbitrary HTTP requests.
 
-* The `get()` function sends a `GET` request, taking `host`, `uri`, `query` and `callback` arguments, together with an optional `headers` argument after the `query` argument.
+* The `get()` function sends a `GET` request, taking `host`, `uri`, `query` and `operation` arguments, together with an optional `headers` argument after the `query` argument.
 
 The `query` argument should be a plain old JavaScript object, the names and values of which are encoded and concatenated to form the query string.
 
 The `headers` argument should also be a plain old JavaScript object. If it does not have an `accept` property then one wil be provided with the value `application/json`.
 
-The `callback` argument is expected to be a function taking `contnet` and `statusCode` arguments. If the `accept` property of the main `headers` argument is set to `application/json` then the callback function's `content` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. The `statusCode` argument will be the response status code, for example `200` for a successful `OK` response.
+The `operation` argument is expected to be a function taking `contnet` and `statusCode` arguments. If the `accept` property of the main `headers` argument is set to `application/json` then the operation's `content` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. The `statusCode` argument will be the response status code, for example `200` for a successful `OK` response.
 
 ```
 const host = "...",
@@ -147,7 +147,7 @@ const offEXT = onEXT(process.exit);
 offEXT();
 ```
 
-* The `prompt()` function is meant for use in shell applications. It takes a plain old JavaScript `options` object and a `callback` function as the its first and second arguments, respectively:
+* The `prompt()` function is meant for use in shell applications. It takes a plain old JavaScript `options` object and a `callback` function as its first and second arguments, respectively:
 
 ```
 const hidden = true,
@@ -835,14 +835,14 @@ Ideally the `host` argument should not include a trailing forward slash whereas 
 - `eventually()`
 - `repeatedly()`
 
-These functions generally take either a callback or an array of callbacks, followed by a `done()` function and an optional `context` argument. They all pass a `next()` function to the callbacks followed by the `done()` function, the `context` and then an `index` argument. Callbacks are given access to the `done()` function which can be called instead of the `next()` function in order to terminate early.
+These functions generally take either a operatio or an array of operations, functions that mutate a context essentially, rather than returning a value, followed by a `done()` function and an optional `context` argument. They all pass a `next()` function to the operations followed by the `done()` function, the `context` and then an `index` argument. Operations are given access to the `done()` function which can be called instead of the `next()` function in order to terminate early.
 
-* The `whilst()` function takes a single callback, which it calls each time the callback invokes the given `next()` function or until the callback invokes the given `done()` function. The callback can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the callback will be executed ten times:
+* The `whilst()` function takes a single operation, which it calls each time the operation invokes the given `next()` function or until the operation invokes the given `done()` function. The operation can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the operation will be executed ten times:
 
 ```
 const context = {}; ///
 
-const callback = (next, done, context, index) => {
+const operation = (next, done, context, index) => {
   const terminate = (index === 9);
 
   if (terminate) {
@@ -854,17 +854,17 @@ const callback = (next, done, context, index) => {
   }
 }
 
-whilst(callback, () => {
+whilst(operation, () => {
   /// done
 }, context);
 ```
 
-* The `forEach()` function takes an array as the first argument followed by a single callback, which it calls for each element of the array unless the callback invokes the given `done()` function. If the `done()` function is never invoked by the callback, it is called once each of the array elements has been passed to the callback, provided the callback invokes the given `next ()` function each time. In the example below the callback will be executed four times:
+* The `forEach()` function takes an array as the first argument followed by a single operation, which it calls for each element of the array unless the operation invokes the given `done()` function. If the `done()` function is never invoked by the operation, it is called once each of the array elements has been passed to the operation, provided the operationinvokes the given `next ()` function each time. In the example below the operation will be executed four times:
 
 ```
 const context = {};
 
-const callback = (element, next, done, context, index) => {
+const operation = (element, next, done, context, index) => {
   const terminate = (element === 3);
 
   if (terminate) {
@@ -878,56 +878,56 @@ const callback = (element, next, done, context, index) => {
 
 const array = [0, 1, 2, 3, 4, 5];
 
-forEach(array, callback, () => {
+forEach(array, operation, () => {
   /// done
 }, context);
 ```
 
-* The `sequence()` function takes an array of callbacks, which it calls in turn unless the callback invokes the given `done()` function. If the `done()` function is never invoked by a callback, it is called once each of the callbacks have been called, provided each callback invokes the given `next ()` function. In the example below each of the callbacks bar the last is executed:
+* The `sequence()` function takes an array of operations, which it calls in turn unless the operation invokes the given `done()` function. If the `done()` function is never invoked by a operation, it is called once each of the operations have been called, provided each operation invokes the given `next ()` function. In the example below each of the operations bar the last is executed:
 
 ```
 const context = {};
 
-const firstCallback = (next, done, context, index) => { next(); },
-      secondCallback = (next, done, context, index) => { next(); },
-      thirdCallback = (next, done, context, index) => { done(); },
-      lastCallback = (next, done, context, index) => { next(); },
-      callbacks = [
-        firstCallback,
-        secondCallback,
-        thirdCallback,
-        lastCallback
+const firstOperation = (next, done, context, index) => { next(); },
+      secondOperation = (next, done, context, index) => { next(); },
+      thirdOperation = (next, done, context, index) => { done(); },
+      lastOperation = (next, done, context, index) => { next(); },
+      operation = [
+        firstOperation,
+        secondOperation,
+        thirdOperation,
+        lastOperation
       ];
 
-sequence(callbacks, () => {
+sequence(operations, () => {
   /// done
 }, context);
 ```
 
-* The `eventually()` function takes an array of callbacks, each of which it calls immediately without waiting for the callbacks to invoke the given `next()` functions. When each of the callbacks has invoked the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` function from within a callback will not halt the execution of other callbacks, it is passed as an argument only for the sake of convention. In the example below each of the callbacks is executed:
+* The `eventually()` function takes an array of operations, each of which it calls immediately without waiting for the operations to invoke the given `next()` functions. When each of the operations has invoked the given `next()` function, it will call the `done()` function. Note that in this case invoking the `done()` function from within a operation will not halt the execution of other operations, it is passed as an argument only for the sake of convention. In the example below each of the operations is executed:
 
 ```
 const context = {};
 
-const firstCallback = (next, done, context, index) => { next(); },
-      secondCallback = (next, done, context, index) => { next(); },
-      thirdCallback = (next, done, context, index) => { done(); },
-      callbacks = [
-        firstCallback,
-        secondCallback,
-        thirdCallback
+const firstOperation = (next, done, context, index) => { next(); },
+      secondOperation = (next, done, context, index) => { next(); },
+      thirdOperation = (next, done, context, index) => { done(); },
+      operations = [
+        firstOperation,
+        secondOperation,
+        thirdOperation
       ];
 
-eventually(callbacks, () => {
+eventually(operations, () => {
   /// done
 }, context);
 ```
-* The `repeatedly()` function takes a single callback and a `length` parameter, immediately calling the callback a `length` number of times without waiting for it to invoke the given `next()` function each time. When the callback has invoked the given `next()` function a `length` number of times, it will call the `done()` function. Note that in this case invoking the `done()` function from within the callback will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the callback is executed ten times:
+* The `repeatedly()` function takes a single operation and a `length` parameter, immediately calling the operation a `length` number of times without waiting for it to invoke the given `next()` function each time. When the operation has invoked the given `next()` function a `length` number of times, it will call the `done()` function. Note that in this case invoking the `done()` function from within the operation will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the operation is executed ten times:
 
 ```
 const context = {};
 
-const callback = (next, done, context, index) => {
+const operation = (next, done, context, index) => {
   ...
 
   next();
@@ -935,7 +935,7 @@ const callback = (next, done, context, index) => {
 
 const length = 10;
 
-repeatedly(callback, length, () => {
+repeatedly(operation, length, () => {
   // done
 }, context);
 ```
