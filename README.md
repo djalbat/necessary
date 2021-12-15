@@ -66,7 +66,7 @@ The `query` argument should be a plain old JavaScript object, the names and valu
 
 The `headers` argument should also be a plain old JavaScript object. If it does not have an `accept` property then one wil be provided with the value `application/json`.
 
-The `operation` argument is expected to be a function taking `contnet` and `statusCode` arguments. If the `accept` property of the main `headers` argument is set to `application/json` then the operation's `content` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. The `statusCode` argument will be the response status code, for example `200` for a successful `OK` response.
+The `callback` argument is expected to be a function taking `content` and `statusCode` arguments. If the `accept` property of the main `headers` argument is set to `application/json` then the operation's `content` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. The `statusCode` argument will be the response status code, for example `200` for a successful `OK` response.
 
 ```
 const host = "...",

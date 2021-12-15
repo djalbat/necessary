@@ -52,11 +52,11 @@ export function request(host, uri, query, method, headers, content, callback) {
   }
 
   xmlHttpRequest.onreadystatechange = () => {
-    const { readyState, status, responseText } = xmlHttpRequest,
+    const { readyState, status, response } = xmlHttpRequest,
           statusCode = status;
 
     if (readyState == 4) {
-      let content = responseText;
+      let content = response;
 
       if (accept === APPLICATION_JSON_CONTENT_TYPE) {
         try {
@@ -67,9 +67,9 @@ export function request(host, uri, query, method, headers, content, callback) {
         } catch (error) {
           content = null;
         }
-
-        callback(content, statusCode);
       }
+
+      callback(content, statusCode);
     }
   };
 
