@@ -2,6 +2,7 @@
 
 import { first, second } from "../utilities/array";
 import { DEFAULT_RC_BASE_EXTENSION } from "../defaults";
+import { STRING, NUMBER, BOOLEAN, ENVIRONMENT } from "../constants";
 import { readFile, writeFile, checkFileExists } from "../utilities/fileSystem";
 
 if (!globalThis.rc) {
@@ -16,40 +17,18 @@ export default {
 
 let baseExtension = DEFAULT_RC_BASE_EXTENSION;
 
-function _rc(environmentNameOrArgv = null) {
-  let environment,
-      environmentName,
-      environmentNameOrArgvArgv = (environmentNameOrArgv instanceof Array);
+function _rc(environmentName) {
+  environmentName = environmentName || environmentNameFromArgv() || environmentNameFromEnv(); ///
 
-  if (environmentNameOrArgvArgv) {
-    const argv = environmentNameOrArgv; ///
+  let json = readRCFile();
 
-    environmentName = environmentNameFromArgv(argv);
-  } else {
-    environmentName = environmentNameOrArgv;  ///
-  }
+  const environment = findEnvironment(json, environmentName);
 
-  const json = readRCFile(),
-        { environments } = json;
+  json = environment; ///
 
-  if (environmentName === null) {
-    const firstEnvironment = first(environments);
-
-    environment = firstEnvironment; ///
-  } else {
-    environment = environments.find((environment) => {
-      const { name } = environment,
-            found = (name === environmentName);
-
-      return found;
-    });
-  }
-
-  delete environment.name;
+  replaceEnvironmentVariables(json);
 
   Object.assign(rc, environment);
-
-  return environment;
 }
 
 function readRCFile() {
@@ -109,10 +88,45 @@ Object.assign(_rc, {
   setRCBaseExtension
 });
 
-function environmentNameFromArgv(argv) {
+function findEnvironment(json, environmentName) {
+  let environment;
+  const { environments } = json;
+
+  if (environmentName === null) {
+    const firstEnvironment = first(environments);
+
+    environment = firstEnvironment; ///
+  } else {
+    environment = environments.find((environment) => {
+      const { name } = environment;
+
+      if(name === environmentName) {
+        return true;
+      }
+    });
+  }
+
+  delete environment.name
+
+  return environment;
+}
+
+function rcFilePathFromNothing() {
+  const rcFilePath = `./.${baseExtension}rc`;
+
+  return rcFilePath;
+}
+
+function environmentNameFromEnv() {
+  const environmentName = process.env[ENVIRONMENT] || null;
+
+  return environmentName;
+}
+
+function environmentNameFromArgv() {
   let environmentName = null;
 
-  argv.find((argument) => {  ///
+  process.argv.find((argument) => {  ///
     const matches = argument.match(/--environment=(.+)/),
           found = (matches !== null);
 
@@ -128,8 +142,110 @@ function environmentNameFromArgv(argv) {
   return environmentName;
 }
 
-function rcFilePathFromNothing() {
-  const rcFilePath = `./.${baseExtension}rc`;
+function replaceEnvironmentVariable(string) {
+  let value = null;
 
-  return rcFilePath;
+  const stringUpperCase = isStringUpperCase(string);
+
+  if (stringUpperCase) {
+    const name = string;  ///
+
+    value = process.env[name] || null;
+  }
+
+  return value;
+}
+
+function replaceEnvironmentVariables(environment) {
+  let json = environment;
+
+  const jsonArray = isJSONArray(json),
+        jsonObject = isJSONObject(json);
+
+  if (false) {
+    ///
+  } else if (jsonArray) {
+    const array = json,
+          length = array.length;
+
+    for (let index = 0; index < length; index++) {
+      const json = array[index],
+            jsonString = isJSONString(json);
+
+      if (jsonString) {
+        const string = json,
+              value = replaceEnvironmentVariable(string);
+
+        if (value !== null) {
+          array[index] = value;
+        }
+      }
+    }
+  } else if (jsonObject) {
+    const object = json;  ///
+
+    for (let name in object) {
+      const json = object[name],
+            jsonString = isJSONString(json);
+
+      if (jsonString) {
+        const string = json,  ///
+              value = replaceEnvironmentVariable(string);  ///
+
+        if (value !== null) {
+          object[name] = value;
+        }
+      } else  {
+        replaceEnvironmentVariables(json);
+      }
+    }
+  }
+}
+
+function isJSONArray(json) {
+  const jsonArray = (json instanceof Array);
+
+  return jsonArray;
+}
+
+function isJSONObject(json) {
+  const jsonArray = isJSONArray(json),
+        jsonPrimitive = isJSONPrimitive(json),
+        jsonObject = (!jsonArray && ! jsonPrimitive);
+
+  return jsonObject;
+}
+
+function isJSONString(json) {
+  const jsonString = (typeof json === STRING);
+
+  return jsonString;
+}
+
+function isJSONNumber(json) {
+  const jsonNumber = (typeof json === NUMBER);
+
+  return jsonNumber;
+}
+
+function isJSONBoolean(json) {
+  const jsonBoolean = (typeof json === BOOLEAN);
+
+  return jsonBoolean;
+}
+
+function isJSONPrimitive(json) {
+  const jsonString = isJSONString(json),
+        jsonNumber = isJSONNumber(json),
+        jsonBoolean = isJSONBoolean(json),
+        jsonPrimitive = (jsonString || jsonNumber || jsonBoolean);
+
+  return jsonPrimitive;
+}
+
+function isStringUpperCase(string) {
+  const upperCaseString = string.toUpperCase(),
+        stringUpperCase = (string === upperCaseString);
+
+  return stringUpperCase;
 }

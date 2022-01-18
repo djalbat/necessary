@@ -449,7 +449,7 @@ setLogOptions(logOptions); // Expects a plain old JavaScript object of the form 
                            //                                                     directoryPath }
 ```
 
-By default it will parse a file called `.rc` in the current working directory. This file should have the following format:
+It will parse a file called `.rc` in the current working directory by default. This file should have the following format:
 
 ```
 {
@@ -466,17 +466,16 @@ By default it will parse a file called `.rc` in the current working directory. T
 }
 ```
 
-In the absence of being passed an environment name, it will parse and return the first element of the `enviromnents` array. It will not try to assign the `name` property of the chosen environment to itself, by the way, because functions already have a `name` property. It can be instructed to a chose a specific environment thus:
+In the absence of being passed an environment name, it will try to find the environment name by the following means:
 
-```
-rc("production"); // Provides the 'production' environment
-```
+1. Checking the `process.argv` array for an `--environment` argument. 
+2. Checking the `proxess.env` object for an `ENVIRONMENT` environment variable.
 
-Or you can pass `process.argv` if the command line arguments include something of the form `--environment=...`:
+If neither of these checks are successful then it will return the first element of the `enviromnents` array. 
 
-```
-rc(process.argv); // Provides the 'development' if given '--environment=development'
-```
+Note that it will not try to assign the `name` property of the chosen environment to itself, because functions already have a `name` property.
+
+Before returning the JSON, it will search for uppercase strings. If a string is the name of an environment variable, it will be replaced by the environment variable's value. This means that you can choose to keep sensitive information out of the runtime configuration and therefore, for instance, safely commit it to the repository. 
 
 You can change the base extension of the file that is parsed, that is the part of the extension between the leading dot and `rc`, by making use of the `setRCBaseExtension()` function:
 
