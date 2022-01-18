@@ -437,19 +437,17 @@ const stats = getStats("root/etc"); // returns stats for the 'root/etc' director
 
 A single `rc()` function for runtime configuration.
 
-* The `rc()` function parses a JSON runtime configuration file of a certain format and provides the information therein by assigning it to itself:
+* The `rc()` function parses a JSON runtime configuration file of a certain format and provides the information therein by assigning it to itself. For example:
 
 ```
 rc();
 
 const { logOptions } = rc;
 
-setLogOptions(logOptions); // Expects a plain old JavaScript object of the form { level,
-                           //                                                     fileBaseName,
-                           //                                                     directoryPath }
+setLogOptions(logOptions);
 ```
 
-It will parse a file called `.rc` in the current working directory by default. This file should have the following format:
+The default name for the file is `.rc` and it must be present in the current working directory. It should have the following format:
 
 ```
 {
