@@ -447,7 +447,7 @@ const { logOptions } = rc;
 setLogOptions(logOptions);
 ```
 
-The default name for the file is `.rc` and it must be present in the current working directory. It should have the following format:
+The default name for the file is `.rc` and it must be present in the current working directory. It must have the following format:
 
 ```
 {
@@ -464,7 +464,7 @@ The default name for the file is `.rc` and it must be present in the current wor
 }
 ```
 
-In the absence of being passed an environment name, it will try to find the environment name by the following means:
+If an environment name is not passed as the `rc()` function's argument then it will try to find the environment name by the following means:
 
 1. Checking the `process.argv` array for an `--environment` argument. 
 2. Checking the `proxess.env` object for an `ENVIRONMENT` environment variable.
@@ -473,7 +473,7 @@ If neither of these checks are successful then it will return the first element 
 
 Note that it will not try to assign the `name` property of the chosen environment to itself, because functions already have a `name` property.
 
-Before returning the JSON, it will search for uppercase strings. If a string is the name of an environment variable, it will be replaced by the environment variable's value. This means that you can choose to keep sensitive information out of the runtime configuration and therefore, for instance, safely commit it to the repository. 
+Before returning the JSON, it will search for uppercase strings. If such a string is the name of an environment variable, it will be replaced by the environment variable's value. This means that you can choose to keep sensitive information out of the runtime configuration and therefore, for instance, safely commit it to the repository. 
 
 You can change the base extension of the file that is parsed, that is the part of the extension between the leading dot and `rc`, by making use of the `setRCBaseExtension()` function:
 
