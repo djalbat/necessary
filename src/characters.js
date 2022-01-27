@@ -2,6 +2,7 @@
 
 export const ETX_CHARACTER = "\u0003";
 export const COLON_CHARACTER = ":";
+export const CTRL_C_CHARACTER = "^C";
 export const AMPERSAND_CHARACTER = "&";
 export const LINE_FEED_CHARACTER = "\n";
 export const BACKSPACE_CHARACTER = String.fromCharCode(127);

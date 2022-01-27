@@ -15,7 +15,7 @@ export function get(host, uri, query, headers, callback) {
         accept = APPLICATION_JSON_CONTENT_TYPE,
         content = null;
 
-  underwriteAccept(headers, accept);
+  underwriteAcceptHeader(headers, accept);
 
   request(host, uri, query, method, headers, content, callback);
 }
@@ -31,9 +31,9 @@ export function post(host, uri, query, headers, content, callback) {
         accept = APPLICATION_JSON_CONTENT_TYPE,
         contentType = APPLICATION_JSON_CONTENT_TYPE;
 
-  underwriteAccept(headers, accept);
+  underwriteAcceptHeader(headers, accept);
 
-  underwriteContentType(headers, contentType);
+  underwriteContentTypeHeader(headers, contentType);
 
   request(host, uri, query, method, headers, content, callback);
 }
@@ -94,14 +94,14 @@ export default {
   request
 }
 
-function underwriteAccept(headers, accept) {
+function underwriteAcceptHeader(headers, accept) {
   const name = ACCEPT,  ///
         value = accept; ///
 
   underwrite(headers, name, value);
 }
 
-function underwriteContentType(headers, contentTYpe) {
+function underwriteContentTypeHeader(headers, contentTYpe) {
   const name = CONTENT_TYPE,  ///
         value = contentTYpe; ///
 

@@ -5,34 +5,33 @@ import { EMPTY_STRING } from "../constants";
 import { COLON_CHARACTER, AMPERSAND_CHARACTER } from "../characters";
 
 export function overwrite(headers, name, value) {
-  const ownPropertyNames = Object.getOwnPropertyNames(headers),
-        lowerCaseName = name.toLowerCase(),
-        overwritten = ownPropertyNames.some((ownPropertyName) => {
-          const lowerCaseOwnPropertyName = ownPropertyName.toLowerCase();
+  const lowerCaseName = name.toLowerCase(),
+        existingNames = Object.getOwnPropertyNames(headers),  ///
+        existingName = existingNames.find((existingName) => {
+          const existingLowerCaseName = existingName.toLowerCase();
 
-          if (lowerCaseOwnPropertyName === lowerCaseName) {
-            headers[ownPropertyName] = value;
-
+          if (existingLowerCaseName === lowerCaseName) {
             return true;
           }
-        });
+        }) || null;
 
-  if (!overwritten) {
-    headers[name] = value;
+  if (existingName !== null) {
+    headers[existingName] = value;
   }
 }
 
 export function underwrite(headers, name, value) {
-  const ownPropertyNames = Object.getOwnPropertyNames(headers),
-        lowercaseName = name.toLowerCase(),
-        lowerCaseOwnPropertyNames = ownPropertyNames.map((ownPropertyName) => {
-          const lowerCaseOwnPropertyName = ownPropertyName.toLowerCase();
+  const lowerCaseName = name.toLowerCase(),
+        existingNames = Object.getOwnPropertyNames(headers),  ///
+        existingName = existingNames.find((existingName) => {
+          const existingLowerCaseName = existingName.toLowerCase();
 
-          return lowerCaseOwnPropertyName;
-        }),
-        lowerCaseOwnPropertyNamesIncludesLowercaseName = lowerCaseOwnPropertyNames.includes(lowercaseName);
+          if (existingLowerCaseName === lowerCaseName) {
+            return true;
+          }
+        }) || null;
 
-  if (!lowerCaseOwnPropertyNamesIncludesLowercaseName) {
+  if (existingName === null) {
     headers[name] = value;
   }
 }

@@ -2,7 +2,6 @@
 
 export const UTF8 = "utf8";
 export const ERROR = "error";
-export const CTRL_C = "^C";
 export const STRING = "string";
 export const ACCEPT = "accept";
 export const NUMBER = "number";

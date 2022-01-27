@@ -752,7 +752,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
 
 Helper functions to manipulate HTTP headers and URLs, build query strings and so on.
 
-* The `overwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. It overwrites the property of the `headers` object corresponding to the `name` argument with the `value` argument, if the property exists, otherwise it creates it. It's utility lies in the fact that it is insensitive to case.
+* The `overwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. If the corresponding property of the `headers` object exists then it is replaced with the `value` value. This function's utility lies in the fact that the name comparisons are case insensitive.
 
 ```
 const headers = {
@@ -762,7 +762,7 @@ const headers = {
 overwrite(headers, "content-type", "text/html"); // headers["Content-Type"] = "text/html"
 ```
 
-* The `underwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. If the corresponding property of the \headers\ object exists then it is left in place, otherwise it is given the `value` value. It's utility lies in the fact that it is insensitive to case.
+* The `underwrite()` function takes a plain old JavaScript object `headers` argument together with `name` and `value` string arguments. If the corresponding property of the `headers` object does not exist then it is created with the `value` value. This function's utility lies in the fact that the name comparisons are case insensitive.
 
 ```
 const headers = {
