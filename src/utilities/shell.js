@@ -2,21 +2,21 @@
 
 import { whilst } from "../utilities/asynchronous";
 
-import { DATA_EVENT_TYPE } from "../eventTypes";
-import { UTF8, EMPTY_STRING } from "../constants";
+import { UTF8_ENCODING } from "../encodings";
+import { DATA, EMPTY_STRING } from "../constants";
 import { DEFAULT_ENCODING, DEFAULT_ATTEMPTS, DEFAULT_INITIAL_ANSWER } from "../defaults";
 import { ETX_CHARACTER, CTRL_C_CHARACTER, BACKSPACE_CHARACTER, LINE_FEED_CHARACTER, CARRIAGE_RETURN_CHARACTER } from "../characters";
 
 export function onETX(handler) {
   if (process.stdin.setRawMode) {
     const rawMode = true,
-          encoding = UTF8;
+          encoding = UTF8_ENCODING;
 
     process.stdin.setRawMode(rawMode);
 
     process.stdin.setEncoding(encoding);
 
-    process.stdin.addListener(DATA_EVENT_TYPE, dataHandler);
+    process.stdin.addListener(DATA, listener);
 
     process.stdin.resume();
 
@@ -24,10 +24,10 @@ export function onETX(handler) {
   }
 
   function offExt() {
-    process.stdin.removeListener(DATA_EVENT_TYPE, dataHandler);
+    process.stdin.removeListener(DATA, listener);
   }
 
-  function dataHandler(character) {
+  function listener(character) {
     if (character === ETX_CHARACTER) {
       handler();
     }
@@ -124,7 +124,7 @@ function hiddenInput(answer, description, encoding, callback) {
 
   process.stdin.setRawMode(rawMode);
 
-  process.stdin.on(DATA_EVENT_TYPE, listener);
+  process.stdin.on(DATA, listener);
 
   process.stdin.resume();
 
@@ -136,7 +136,7 @@ function hiddenInput(answer, description, encoding, callback) {
       case CARRIAGE_RETURN_CHARACTER :
         process.stdout.write(LINE_FEED_CHARACTER);
 
-        process.stdin.removeListener(DATA_EVENT_TYPE, listener);
+        process.stdin.removeListener(DATA, listener);
 
         process.stdin.pause();
 
@@ -155,7 +155,7 @@ function hiddenInput(answer, description, encoding, callback) {
         break;
 
       case ETX_CHARACTER :
-        console.log(CTRL_C);
+        console.log(CTRL_C_CHARACTER);
 
         process.exit();
     }
@@ -169,7 +169,7 @@ function visibleInput(answer, description, encoding, callback) {
 
   process.stdin.setEncoding(encoding);
 
-  process.stdin.once(DATA_EVENT_TYPE, listener);
+  process.stdin.once(DATA, listener);
 
   process.stdin.resume();
 

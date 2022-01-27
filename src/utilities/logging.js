@@ -55,10 +55,11 @@ export function log(messageOrError, level = EMPTY_STRING) {
         stackMessages = stackMessagesFromStack(stack),
         pertinentStackMessage = stackMessages[salientStackMessageIndex],
         stackMessage = pertinentStackMessage, ///
+        upperCaseLevel = level.toUpperCase(),
         currentDateAndTimeString = getCurrentDateAndTimeString(),
         filePath = filePathFromStackMessage(stackMessage),
         lineNumber = lineNumberFromStackMessage(stackMessage),
-        logMessage = `${level}${currentDateAndTimeString} ${filePath}(${lineNumber}) ${message}`;
+        logMessage = `${upperCaseLevel}${currentDateAndTimeString} ${filePath}(${lineNumber}) ${message}`;
 
   console.log(logMessage);
 

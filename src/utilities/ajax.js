@@ -1,8 +1,8 @@
 "use strict";
 
-import { ACCEPT, CONTENT_TYPE } from "../constants";
 import { GET_METHOD, POST_METHOD } from "../methods";
 import { APPLICATION_JSON_CONTENT_TYPE } from "../contentTypes";
+import { ACCEPT_HEADER, CONTENT_TYPE_HEADER } from "../headers";
 import { underwrite, urlFromHostURIAndQuery } from "../utilities/http";
 
 export function get(host, uri, query, headers, callback) {
@@ -40,8 +40,8 @@ export function post(host, uri, query, headers, content, callback) {
 
 export function request(host, uri, query, method, headers, content, callback) {
   const url = urlFromHostURIAndQuery(host, uri, query),
-        accept = headers[ACCEPT] || null,
-        contentType = headers[CONTENT_TYPE] || null,
+        accept = headers[ACCEPT_HEADER] || null,
+        contentType = headers[CONTENT_TYPE_HEADER] || null,
         xmlHttpRequest = new XMLHttpRequest();
 
   if (contentType === APPLICATION_JSON_CONTENT_TYPE) {
@@ -76,11 +76,11 @@ export function request(host, uri, query, method, headers, content, callback) {
   xmlHttpRequest.open(method, url);
 
   if (accept !== null) {
-    xmlHttpRequest.setRequestHeader(ACCEPT, accept);
+    xmlHttpRequest.setRequestHeader(ACCEPT_HEADER, accept);
   }
 
   if (contentType !== null) {
-    xmlHttpRequest.setRequestHeader(CONTENT_TYPE, contentType);
+    xmlHttpRequest.setRequestHeader(CONTENT_TYPE_HEADER, contentType);
   }
 
   (content !== null) ?
@@ -95,14 +95,14 @@ export default {
 }
 
 function underwriteAcceptHeader(headers, accept) {
-  const name = ACCEPT,  ///
+  const name = ACCEPT_HEADER,  ///
         value = accept; ///
 
   underwrite(headers, name, value);
 }
 
 function underwriteContentTypeHeader(headers, contentTYpe) {
-  const name = CONTENT_TYPE,  ///
+  const name = CONTENT_TYPE_HEADER,  ///
         value = contentTYpe; ///
 
   underwrite(headers, name, value);
