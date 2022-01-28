@@ -1,6 +1,7 @@
 "use strict";
 
 export { default as levels } from "./levels";
+export { default as methods } from "./methods";
 export { default as headers } from "./headers";
 export { default as encodings } from "./encodings";
 export { default as characters } from "./characters";
