@@ -3,6 +3,7 @@
 export { default as levels } from "./levels";
 export { default as methods } from "./methods";
 export { default as headers } from "./headers";
+export { default as keyCodes } from "./keyCodes";
 export { default as encodings } from "./encodings";
 export { default as characters } from "./characters";
 export { default as statusCodes } from "./statusCodes";
