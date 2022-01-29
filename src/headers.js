@@ -6,6 +6,7 @@ export const USER_AGENT_HEADER = "user-agent";
 export const CONTENT_TYPE_HEADER = "content-type";
 export const CONTENT_LENGTH_HEADER = "content-length";
 export const TRANSFER_ENCODING_HEADER = "transfer-encoding";
+export const CONTENT_DISPOSITION_HEADER = "content-disposition";
 export const ACCESS_CONTROL_ALLOW_ORIGIN_HEADER = "access-control-allow-origin";
 export const ACCESS_CONTROL_ALLOW_METHODS_HEADER = "access-control-allow-methods";
 export const ACCESS_CONTROL_ALLOW_HEADERS_HEADER = "access-control-allow-headers";
@@ -18,6 +19,7 @@ export default {
   CONTENT_TYPE_HEADER,
   CONTENT_LENGTH_HEADER,
   TRANSFER_ENCODING_HEADER,
+  CONTENT_DISPOSITION_HEADER,
   ACCESS_CONTROL_ALLOW_ORIGIN_HEADER,
   ACCESS_CONTROL_ALLOW_METHODS_HEADER,
   ACCESS_CONTROL_ALLOW_HEADERS_HEADER,
