@@ -2,6 +2,7 @@
 
 export const ETX_CHARACTER = "\u0003";
 export const COLON_CHARACTER = ":";
+export const PERIOD_CHARACTER = ".";
 export const CTRL_C_CHARACTER = "^C";
 export const WILDCARD_CHARACTER = "*";
 export const NEW_LINE_CHARACTER = "\n";
@@ -17,6 +18,7 @@ export const EXCLAMATION_MARK_CHARACTER = "!";
 export default {
   ETX_CHARACTER,
   COLON_CHARACTER,
+  PERIOD_CHARACTER,
   CTRL_C_CHARACTER,
   WILDCARD_CHARACTER,
   NEW_LINE_CHARACTER,
