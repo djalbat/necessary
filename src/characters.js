@@ -9,6 +9,7 @@ export const PERIOD_CHARACTER = ".";
 export const CTRL_C_CHARACTER = "^C";
 export const WILDCARD_CHARACTER = "*";
 export const NEW_LINE_CHARACTER = "\n";
+export const BACKSPACE_CHARACTER = String.fromCharCode(127);
 export const AMPERSAND_CHARACTER = "&";
 export const LESS_THAN_CHARACTER = "&lt;";
 export const GREATER_THAN_CHARACTER = "&gt;";
