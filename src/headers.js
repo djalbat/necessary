@@ -2,8 +2,6 @@
 
 export const PRAGMA_HEADER = "pragma";
 export const ACCEPT_HEADER = "accept";
-export const NO_CACHE_HEADER = "no-cache";
-export const NO_STORE_HEADER = "no-store";
 export const LOCATION_HEADER = "location";
 export const USER_AGENT_HEADER = "user-agent";
 export const CONTENT_TYPE_HEADER = "content-type";
@@ -19,8 +17,6 @@ export const ACCESS_CONTROL_REQUEST_METHOD_HEADER = "access-control-request-meth
 export default {
   PRAGMA_HEADER,
   ACCEPT_HEADER,
-  NO_CACHE_HEADER,
-  NO_STORE_HEADER,
   LOCATION_HEADER,
   USER_AGENT_HEADER,
   CONTENT_TYPE_HEADER,
