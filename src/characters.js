@@ -4,6 +4,7 @@ export const ETX_CHARACTER = "\u0003";
 export const BAR_CHARACTER = "|";
 export const DASH_CHARACTER = "-";
 export const SPACE_CHARACTER = " ";
+export const COMMA_CHARACTER = ",";
 export const COLON_CHARACTER = ":";
 export const PERIOD_CHARACTER = ".";
 export const CTRL_C_CHARACTER = "^C";
@@ -23,6 +24,7 @@ export default {
   BAR_CHARACTER,
   DASH_CHARACTER,
   SPACE_CHARACTER,
+  COMMA_CHARACTER,
   COLON_CHARACTER,
   PERIOD_CHARACTER,
   CTRL_C_CHARACTER,
