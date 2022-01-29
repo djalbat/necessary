@@ -1,9 +1,13 @@
 "use strict";
 
+export const PRAGMA_HEADER = "pragma";
 export const ACCEPT_HEADER = "accept";
+export const NO_CACHE_HEADER = "no-cache";
+export const NO_STORE_HEADER = "no-store";
 export const LOCATION_HEADER = "location";
 export const USER_AGENT_HEADER = "user-agent";
 export const CONTENT_TYPE_HEADER = "content-type";
+export const CACHE_CONTROL_HEADER = "cache-control";
 export const CONTENT_LENGTH_HEADER = "content-length";
 export const TRANSFER_ENCODING_HEADER = "transfer-encoding";
 export const CONTENT_DISPOSITION_HEADER = "content-disposition";
@@ -13,10 +17,14 @@ export const ACCESS_CONTROL_ALLOW_HEADERS_HEADER = "access-control-allow-headers
 export const ACCESS_CONTROL_REQUEST_METHOD_HEADER = "access-control-request-method";
 
 export default {
+  PRAGMA_HEADER,
   ACCEPT_HEADER,
+  NO_CACHE_HEADER,
+  NO_STORE_HEADER,
   LOCATION_HEADER,
   USER_AGENT_HEADER,
   CONTENT_TYPE_HEADER,
+  CACHE_CONTROL_HEADER,
   CONTENT_LENGTH_HEADER,
   TRANSFER_ENCODING_HEADER,
   CONTENT_DISPOSITION_HEADER,
