@@ -6,6 +6,7 @@ export const CTRL_C_CHARACTER = "^C";
 export const AMPERSAND_CHARACTER = "&";
 export const LINE_FEED_CHARACTER = "\n";
 export const BACKSPACE_CHARACTER = String.fromCharCode(127);
+export const FORWARD_SLASH_CHARACTER = "/";
 export const CARRIAGE_RETURN_CHARACTER = "\r";
 
 export default {
@@ -15,5 +16,6 @@ export default {
   AMPERSAND_CHARACTER,
   LINE_FEED_CHARACTER,
   BACKSPACE_CHARACTER,
+  FORWARD_SLASH_CHARACTER,
   CARRIAGE_RETURN_CHARACTER
 };
