@@ -8,6 +8,7 @@ export { default as encodings } from "./encodings";
 export { default as characters } from "./characters";
 export { default as statusCodes } from "./statusCodes";
 export { default as contentTypes } from "./contentTypes";
+export { default as statusMessages } from "./statusMessages";
 
 export { default as pathUtilities } from "./utilities/path";
 export { default as httpUtilities } from "./utilities/http";
