@@ -8,6 +8,7 @@ export const COLON_CHARACTER = ":";
 export const PERIOD_CHARACTER = ".";
 export const CTRL_C_CHARACTER = "^C";
 export const WILDCARD_CHARACTER = "*";
+export const BACKTICK_DELIMITER = "`";
 export const NEW_LINE_CHARACTER = "\n";
 export const BACKSPACE_CHARACTER = String.fromCharCode(127);
 export const AMPERSAND_CHARACTER = "&";
@@ -26,6 +27,7 @@ export default {
   PERIOD_CHARACTER,
   CTRL_C_CHARACTER,
   WILDCARD_CHARACTER,
+  BACKTICK_DELIMITER,
   NEW_LINE_CHARACTER,
   AMPERSAND_CHARACTER,
   BACKSPACE_CHARACTER,
