@@ -5,7 +5,7 @@ import { whilst } from "../utilities/asynchronous";
 import { UTF8_ENCODING } from "../encodings";
 import { DATA, EMPTY_STRING } from "../constants";
 import { DEFAULT_ENCODING, DEFAULT_ATTEMPTS, DEFAULT_INITIAL_ANSWER } from "../defaults";
-import { ETX_CHARACTER, CTRL_C_CHARACTER, BACKSPACE_CHARACTER, LINE_FEED_CHARACTER, CARRIAGE_RETURN_CHARACTER } from "../characters";
+import { ETX_CHARACTER, CTRL_C_CHARACTER, BACKSPACE_CHARACTER, NEW_LINE_CHARACTER, CARRIAGE_RETURN_CHARACTER } from "../characters";
 
 export function onETX(handler) {
   if (process.stdin.setRawMode) {
@@ -132,9 +132,9 @@ function hiddenInput(answer, description, encoding, callback) {
     const character = data.toString(encoding);
 
     switch (character) {
-      case LINE_FEED_CHARACTER :
+      case NEW_LINE_CHARACTER :
       case CARRIAGE_RETURN_CHARACTER :
-        process.stdout.write(LINE_FEED_CHARACTER);
+        process.stdout.write(NEW_LINE_CHARACTER);
 
         process.stdin.removeListener(DATA, listener);
 
