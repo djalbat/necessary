@@ -1,5 +1,6 @@
 "use strict";
 
+export const ZERO_0_STATUS_MESSAGE = "";
 export const OK_200_STATUS_MESSAGE = "OK";
 export const FOUND_302_STATUS_MESSAGE = "Found";
 export const CREATED_201_STATUS_MESSAGE = "Created";
@@ -15,6 +16,7 @@ export const TOO_MANY_REQUESTS_429_STATUS_MESSAGE = "Too many requests";
 export const INTERNAL_SERVER_ERROR_500_STATUS_MESSAGE = "Internal server error";
 
 export default {
+  ZERO_0_STATUS_MESSAGE,
   OK_200_STATUS_MESSAGE,
   FOUND_302_STATUS_MESSAGE,
   CREATED_201_STATUS_MESSAGE,
