@@ -13,7 +13,6 @@ These cna only be used on Node:
 * [Shell utilities](#shell-utilities)
 * [Logging utilities](#logging-utilities)
 * [Request utilities](#request-utilities)
-* [Template utilities](#template-utilities)
 * [File system utilities](#file-system-utilities)
 * [Configuration utilities](#configuration-utilities)
 
@@ -22,6 +21,7 @@ These can be used both on Node and in the browser:
 * [Path utilities](#path-utilities)
 * [Array utilities](#array-utilities)
 * [HTTP utilities](#http-utilities)
+* [Template utilities](#template-utilities)
 * [Asynchronous utilities](#asynchronous-utilities)
 
 ## Installation
@@ -308,58 +308,6 @@ function contentFromResponse(response, callback) {
 * The `createGetRequest()` function is identical to the `createRequest()` function except that the `method` argument is omitted and the `headers` argument is optional.
 
 * The `createPostRequest()` function is identical to the `createRequest()` function except that the `method` argument is omitted and the `headers` argument is optional.
-
-## Template utilities
-
-- `parseFile()`
-- `parseContent()`
-- `parseLine()`
-
-These functions parse files, content or single lines, replacing each token of the form `${<name>}` with the value of the corresponding property of a plain old JavaScript object passed as the second argument, or replacing the token with an empty string if no such property exists.
-
-* The `parseFile()` function takes a file path as the first argument:
-
-```
-const filePath = "/etc/var/public/name.html",
-      name = "Joe Bloggs",
-      age = 99,
-      args = {
-        name,
-        age
-      }
-      parsedContent = parseFile(filePath, args);
-```
-
-* The `parseContent()` function takes content as the first argument, honouring newline `\n` characters:
-
-```
-const content = `
-
-  name: <strong>${name}</strong><br/>
-  age: <strong>${age}</strong><br/>
-
-      `,
-      name = "Joe Bloggs",
-      age = 99,
-      args = {
-        name,
-        age
-      }
-      parsedContent = parseContent(content, args);
-```
-
-* The `parseLine()` function takes a single line of content as the first argument:
-
-```
-const line = "${name}, aged ${age}.",
-      name = "Joe Bloggs",
-      age = 99,
-      args = {
-        name,
-        age
-      }
-      parsedLine = parseLine(line, args); // returns 'Joe Bloggs, aged 99.'
-```
 
 ## File system utilities
 
@@ -823,6 +771,58 @@ urlFromHostURIAndQuery(host, uri, query); // returns "https://site.com/user?name
 ```
 
 Ideally the `host` argument should not include a trailing forward slash whereas `uri` arguments should always start with a leading forward slash.
+
+## Template utilities
+
+- `parseFile()`
+- `parseContent()`
+- `parseLine()`
+
+These functions parse files, content or single lines, replacing each token of the form `${<name>}` with the value of the corresponding property of a plain old JavaScript object passed as the second argument, or replacing the token with an empty string if no such property exists.
+
+* The `parseFile()` function takes a file path as the first argument:
+
+```
+const filePath = "/etc/var/public/name.html",
+      name = "Joe Bloggs",
+      age = 99,
+      args = {
+        name,
+        age
+      }
+      parsedContent = parseFile(filePath, args);
+```
+
+* The `parseContent()` function takes content as the first argument, honouring newline `\n` characters:
+
+```
+const content = `
+
+  name: <strong>${name}</strong><br/>
+  age: <strong>${age}</strong><br/>
+
+      `,
+      name = "Joe Bloggs",
+      age = 99,
+      args = {
+        name,
+        age
+      }
+      parsedContent = parseContent(content, args);
+```
+
+* The `parseLine()` function takes a single line of content as the first argument:
+
+```
+const line = "${name}, aged ${age}.",
+      name = "Joe Bloggs",
+      age = 99,
+      args = {
+        name,
+        age
+      }
+      parsedLine = parseLine(line, args); // returns 'Joe Bloggs, aged 99.'
+```
 
 ## Asynchronous utilities
 
