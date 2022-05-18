@@ -832,7 +832,7 @@ const line = "${name}, aged ${age}.",
 - `eventually()`
 - `repeatedly()`
 
-These functions generally take either a operatio or an array of operations, functions that mutate a context essentially, rather than returning a value, followed by a `done()` function and an optional `context` argument. They all pass a `next()` function to the operations followed by the `done()` function, the `context` and then an `index` argument. Operations are given access to the `done()` function which can be called instead of the `next()` function in order to terminate early.
+These functions generally take either an operation or an array of operations, an operation being a function that mutates a context rather than returning a value. They also take a `done()` function and an optional `context` argument. They all pass a `next()` function to the operations followed by the `done()` function, the `context` and then an `index` argument. Operations can call the `done()` function instead of the `next()` function in order to terminate early.
 
 * The `whilst()` function takes a single operation, which it calls each time the operation invokes the given `next()` function or until the operation invokes the given `done()` function. The operation can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. In the example below the operation will be executed ten times:
 
