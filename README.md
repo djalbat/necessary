@@ -672,7 +672,7 @@ patch([1, 2, 0, -1, -2], 4, (element, index) => {
 }); // the first array argument becomes [1, 2, 0, -1, -2, 4]
 ```
 
-* The `augment()` function is appends each of the elements of the second array argument to the first array argument whenever the test callback returns a truthy value:
+* The `augment()` function appends each of the elements of the second array argument to the first array argument whenever the test callback returns a truthy value:
 
 ```
 augment([1, 2, 3], [-1, 4, -2, 5], (element, index) => {
