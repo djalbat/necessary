@@ -177,6 +177,36 @@ export function separate(array, array1, array2, test) {
   });
 }
 
+export function forwardsFine(array, callback) {
+  const arrayLength = array.length;
+
+  for (let index = 0; index < arrayLength; index++) {
+    const element = array[index],
+          result = callback(element, index);
+
+    if (result) {
+      return element;
+    }
+  }
+
+  return false;
+}
+
+export function backwardsFine(array, callback) {
+  const arrayLength = array.length;
+
+  for (let index = arrayLength - 1; index >= 0; index--) {
+    const element = array[index],
+          result = callback(element, index);
+
+    if (result) {
+      return element;
+    }
+  }
+
+  return false;
+}
+
 export function forwardsSome(array, callback) {
   const arrayLength = array.length;
 
@@ -238,21 +268,29 @@ export function backwardsEvery(array, callback) {
 }
 
 export function forwardsReduce(array, callback, initialValue) {
-  let value = initialValue;
+  let value = initialValue; ///
 
-  forwardsForEach(array, (element, index) => {
+  const arrayLength = array.length;
+
+  for (let index = 0; index < arrayLength; index++) {
+    const element = array[index];
+
     value = callback(value, element, index);
-  });
+  }
 
   return value;
 }
 
 export function backwardsReduce(array, callback, initialValue) {
-  let value = initialValue;
+  let value = initialValue; ///
 
-  backwardsForEach(array, (element, index) => {
+  const arrayLength = array.length;
+
+  for (let index = arrayLength - 1; index >= 0; index--) {
+    const element = array[index];
+
     value = callback(value, element, index);
-  });
+  }
 
   return value;
 }
@@ -307,6 +345,8 @@ export default {
   patch,
   augment,
   separate,
+  forwardsFind,
+  backwardsFind,
   forwardsSome,
   backwardsSome,
   forwardsEvery,

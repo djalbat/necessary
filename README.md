@@ -587,6 +587,16 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `patch()`
 - `augment()`
 - `separate()`
+- `forwardsFind()`
+- `backwardsFind()`
+- `forwardsSome()`
+- `backwardsSome()`
+- `forwardsEvery()`
+- `backwardsEvery()`
+- `forwardsReduce()`
+- `backwardsReduce()`
+- `forwardsForEach()`
+- `backwardsForEach()`
 
 Note that none of these functions take or pass on a `thisArg` argument when they might otherwise have done. Use `bind()`.
 
@@ -687,6 +697,8 @@ separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
   return element > 0;
 }); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
+
+The `forwardsFind()`, `backwardsFind()`, `forwardsSome()`, `backwardsSome()`, `forwardsEvery()`, `backwardsEvery()`, `forwardsReduce()`, `backwardsReduce()`, `forwardsForEach()` and `backwardsForEach()` functions do as their names suggest. The `fowardsXXX()` take an array for their first argument but otherwise are identical to their native counterparts. The `backwardsXXX()` functions behave similarly, only backwards.
 
 ## HTTP utilities
 
