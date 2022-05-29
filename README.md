@@ -698,7 +698,7 @@ separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
 }); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
 
-The `forwardsFind()`, `backwardsFind()`, `forwardsSome()`, `backwardsSome()`, `forwardsEvery()`, `backwardsEvery()`, `forwardsReduce()`, `backwardsReduce()`, `forwardsForEach()` and `backwardsForEach()` functions do as their names suggest. The `fowardsXXX()` take an array for their first argument but otherwise are identical to their native counterparts. The `backwardsXXX()` functions behave similarly, only backwards.
+The `forwardsXXX()` and `backwardsXXX()`functions do as their names suggest. The `fowardsXXX()` function take an array for their first argument but otherwise behave identically to their native counterparts. The `backwardsXXX()` functions behave similarly, only backwards.
 
 ## HTTP utilities
 
