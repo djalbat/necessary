@@ -177,7 +177,7 @@ export function separate(array, array1, array2, test) {
   });
 }
 
-export function forwardsFine(array, callback) {
+export function forwardsFind(array, callback) {
   const arrayLength = array.length;
 
   for (let index = 0; index < arrayLength; index++) {
@@ -192,7 +192,7 @@ export function forwardsFine(array, callback) {
   return false;
 }
 
-export function backwardsFine(array, callback) {
+export function backwardsFind(array, callback) {
   const arrayLength = array.length;
 
   for (let index = arrayLength - 1; index >= 0; index--) {
