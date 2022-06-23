@@ -163,11 +163,15 @@ function hiddenInput(answer, description, encoding, callback) {
 }
 
 function visibleInput(answer, description, encoding, callback) {
+  const rawMode = false;
+
   process.stdout.write(description);
 
   process.stdout.write(answer);
 
   process.stdin.setEncoding(encoding);
+
+  process.stdin.setRawMode(rawMode);
 
   process.stdin.once(DATA, listener);
 
