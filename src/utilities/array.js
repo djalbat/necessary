@@ -28,7 +28,7 @@ export function tail(array) { return array.slice(1); }
 
 export function back(array) { return array.slice(array.length - 1); }
 
-export function front(array) { return array.slice(0, array.length - 1); }
+export function front(array) { return array.slice(0, Math.min(1, array.length - 1)); }
 
 export function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
