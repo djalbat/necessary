@@ -64,11 +64,11 @@ export function splice(array1, start, deleteCount = Infinity, array2 = []) {
   return deletedItemsArray;
 }
 
-export function replace(array, element, test) {
+export function replace(array, element, callback) {
   let start;
   
   const found = array.some((element, index) => {
-    const passed = test(element, index);
+    const passed = callback(element, index);
 
     if (passed) {
       start = index;  ///
@@ -86,11 +86,11 @@ export function replace(array, element, test) {
   return found;
 }
 
-export function filter(array, test) {
+export function filter(array, callback) {
   const filteredElements = [];
   
   backwardsForEach(array, (element, index) => {
-    const passed = test(element, index);
+    const passed = callback(element, index);
 
     if (!passed) {
       const start = index,  ///
@@ -105,11 +105,11 @@ export function filter(array, test) {
   return filteredElements;
 }
 
-export function find(array, test) {
+export function find(array, callback) {
   const elements = [];
 
   forwardsForEach(array, (element, index) => {
-    const passed = test(element, index);
+    const passed = callback(element, index);
 
     if (passed) {
       elements.push(element);
@@ -119,11 +119,11 @@ export function find(array, test) {
   return elements;
 }
 
-export function prune(array, test) {
+export function prune(array, callback) {
   let prunedElement = undefined;
   
   array.some((element, index) => {
-    const passed = test(element, index);
+    const passed = callback(element, index);
 
     if (!passed) {
       const start = index,  ///
@@ -140,9 +140,9 @@ export function prune(array, test) {
   return prunedElement;
 }
 
-export function patch(array, element, test) {
+export function patch(array, element, callback) {
   const found = array.some((element, index) => {
-    const passed = test(element, index);
+    const passed = callback(element, index);
 
     if (passed) {
       return true;
@@ -157,9 +157,9 @@ export function patch(array, element, test) {
   return found;
 }
 
-export function augment(array1, array2, test) {
+export function augment(array1, array2, callback) {
   array2.forEach((element, index) => {
-    const passed = test(element, index);
+    const passed = callback(element, index);
 
     if (passed) {
       array1.push(element);
@@ -167,9 +167,9 @@ export function augment(array1, array2, test) {
   });
 }
 
-export function separate(array, array1, array2, test) {
+export function separate(array, array1, array2, callback) {
   array.forEach((element, index) => {
-    const passed = test(element, index);
+    const passed = callback(element, index);
 
     passed ?
       array1.push(element) :

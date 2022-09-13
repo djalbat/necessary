@@ -640,7 +640,7 @@ splice([1, 2, 3], 1, 2, [4, 5]); // returnsll be [2, 3]
                                  // the first array argument becomes [1, 4, 5]
 ```
 
-* The `replace()` function will replace an element in the array with the given element the first time that the test callback function returns a truthy value:
+* The `replace()` function will replace an element in the array with the given element the first time that the callback function returns a truthy value:
 
 ```
 replace([1, 2, 0, -1, -2], 3, (element, index) => {
@@ -648,7 +648,7 @@ replace([1, 2, 0, -1, -2], 3, (element, index) => {
 }); // the first array argument becomes [1, 2, 3, -1, -2]
 ```
 
-* The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a test callback function that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
+* The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a callback function that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
 
 ```
 filter([1, 2, -1, -2], (element, index) => {
@@ -657,7 +657,7 @@ filter([1, 2, -1, -2], (element, index) => {
     // returns [-1, -2]
 ```
 
-* The `find()` function is like its native counterpart, however it returns an array of all the elements for which the test callback function returns a truthy value, rather than just the first:
+* The `find()` function is like its native counterpart, however it returns an array of all the elements for which the callback function returns a truthy value, rather than just the first:
 
 ```
 find([1, 2, -1, -2], (element, index) => {
@@ -665,7 +665,7 @@ find([1, 2, -1, -2], (element, index) => {
 }); // returnsll be [1, 2]
 ```
 
-* The `prune()` function is much like the `filter()` function, however it will terminate the first time that the test callback function does not return a truthy value:
+* The `prune()` function is much like the `filter()` function, however it will terminate the first time that the callback function does not return a truthy value:
 
 ```
 prune([1, 2, -1, -2], (element, index) => {
@@ -674,7 +674,7 @@ prune([1, 2, -1, -2], (element, index) => {
     // returns -1
 ```
 
-* The `patch()` function will append the given element to the first array argument the first time that the test callback function returns a truthy value:
+* The `patch()` function will append the given element to the first array argument the first time that the callback function returns a truthy value:
 
 ```
 patch([1, 2, 0, -1, -2], 4, (element, index) => {
@@ -682,7 +682,7 @@ patch([1, 2, 0, -1, -2], 4, (element, index) => {
 }); // the first array argument becomes [1, 2, 0, -1, -2, 4]
 ```
 
-* The `augment()` function appends each of the elements of the second array argument to the first array argument whenever the test callback returns a truthy value:
+* The `augment()` function appends each of the elements of the second array argument to the first array argument whenever the callback returns a truthy value:
 
 ```
 augment([1, 2, 3], [-1, 4, -2, 5], (element, index) => {
@@ -690,7 +690,7 @@ augment([1, 2, 3], [-1, 4, -2, 5], (element, index) => {
 }); // the first array argument becomes [1, 2, 3, 4, 5]
 ```
 
-* The `separate()` function separates the first array argument, pushing each of its elements onto either the second or the third array argument depending on whether or not the test callback returns a truthy value:
+* The `separate()` function separates the first array argument, pushing each of its elements onto either the second or the third array argument depending on whether or not the callback returns a truthy value:
 
 ```
 separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
