@@ -182,9 +182,9 @@ export function forwardsFind(array, callback) {
 
   for (let index = 0; index < arrayLength; index++) {
     const element = array[index],
-          result = callback(element, index);
+          passed = callback(element, index);
 
-    if (result) {
+    if (passed) {
       return element;
     }
   }
@@ -197,9 +197,9 @@ export function backwardsFind(array, callback) {
 
   for (let index = arrayLength - 1; index >= 0; index--) {
     const element = array[index],
-          result = callback(element, index);
+          passed = callback(element, index);
 
-    if (result) {
+    if (passed) {
       return element;
     }
   }
@@ -212,9 +212,9 @@ export function forwardsSome(array, callback) {
 
   for (let index = 0; index < arrayLength; index++) {
     const element = array[index],
-          result = callback(element, index);
+          passed = callback(element, index);
     
-    if (result) {
+    if (passed) {
       return true;
     }
   }
@@ -227,9 +227,9 @@ export function backwardsSome(array, callback) {
 
   for (let index = arrayLength - 1; index >= 0; index--) {
     const element = array[index],
-          result = callback(element, index);
+          passed = callback(element, index);
 
-    if (result) {
+    if (passed) {
       return true;
     }
   }
@@ -242,9 +242,9 @@ export function forwardsEvery(array, callback) {
 
   for (let index = 0; index < arrayLength; index++) {
     const element = array[index],
-          result = callback(element, index);
+          passed = callback(element, index);
 
-    if (!result) {
+    if (!passed) {
       return false;
     }
   }
@@ -257,9 +257,9 @@ export function backwardsEvery(array, callback) {
 
   for (let index = arrayLength - 1; index >= 0; index--) {
     const element = array[index],
-          result = callback(element, index);
+          passed = callback(element, index);
 
-    if (!result) {
+    if (!passed) {
       return false;
     }
   }
