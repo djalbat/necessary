@@ -35,7 +35,7 @@ export function log(messageOrError, level = EMPTY_STRING) {
 
     salientStackMessageIndex += 1;
 
-    level = `${level} `;  ///
+    level = `${level}`;  ///
   }
 
   let error,
@@ -59,7 +59,7 @@ export function log(messageOrError, level = EMPTY_STRING) {
         currentDateAndTimeString = getCurrentDateAndTimeString(),
         filePath = filePathFromStackMessage(stackMessage),
         lineNumber = lineNumberFromStackMessage(stackMessage),
-        logMessage = `${upperCaseLevel}${currentDateAndTimeString} ${filePath}(${lineNumber}) ${message}`;
+        logMessage = `${upperCaseLevel} ${currentDateAndTimeString} ${filePath}(${lineNumber}) ${message}`;
 
   console.log(logMessage);
 
