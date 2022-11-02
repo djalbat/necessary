@@ -3,8 +3,8 @@
 import path from "path";
 
 import { second } from "../utilities/array";
-import { EMPTY_STRING } from "../constants";
 import { concatenatePaths } from "../utilities/path";
+import { ZERO, EMPTY_STRING } from "../constants";
 import { checkFileExists, readFile, appendToFile, renameFile, getStats } from "../utilities/fileSystem";
 import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_FILE_BASE_NAME, DEFAULT_LOG_DIRECTORY_PATH } from "../defaults";
 import { TRACE_LEVEL, DEBUG_LEVEL, INFO_LEVEL, WARNING_LEVEL, ERROR_LEVEL, FATAL_LEVEL } from "../levels";
@@ -253,7 +253,7 @@ function lineNumberFromStackMessage(stackMessage) {
 }
 
 function padStartWithZeroes(string, targetLength) {
-  const padString = "0",
+  const padString = ZERO, ///
         paddedString = padStart(string, targetLength, padString);
 
   return paddedString;

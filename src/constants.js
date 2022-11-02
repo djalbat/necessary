@@ -1,5 +1,6 @@
 "use strict";
 
+export const ZERO = "0";
 export const DATA = "data";
 export const ERROR = "error";
 export const STRING = "string";
