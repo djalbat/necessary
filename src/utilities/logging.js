@@ -93,10 +93,6 @@ function fatal(message) { return log(message, FATAL_LEVEL); }
 
 function setLogLevel(level) { logLevel = level; }
 
-function setLogFileBaseName(fileBaseName) { logFileBaseName = fileBaseName; }
-
-function setLogDirectoryPath(directoryPath) { logDirectoryPath = directoryPath; }
-
 function setLogOptions(logOptions) {
   const { level, fileBaseName, directoryPath } = logOptions;
 
@@ -114,13 +110,11 @@ function getLogFileContent() {
   return logFileContent;
 }
 
+function setLogFileBaseName(fileBaseName) { logFileBaseName = fileBaseName; }
+
+function setLogDirectoryPath(directoryPath) { logDirectoryPath = directoryPath; }
+
 Object.assign(log, {
-  TRACE_LEVEL,
-  DEBUG_LEVEL,
-  INFO_LEVEL,
-  WARNING_LEVEL,
-  ERROR_LEVEL,
-  FATAL_LEVEL,
   trace,
   debug,
   info,
@@ -128,10 +122,10 @@ Object.assign(log, {
   error,
   fatal,
   setLogLevel,
-  setLogFileBaseName,
-  setLogDirectoryPath,
   setLogOptions,
-  getLogFileContent
+  getLogFileContent,
+  setLogFileBaseName,
+  setLogDirectoryPath
 });
 
 function getLogFilePath() {
