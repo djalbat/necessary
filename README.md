@@ -323,6 +323,7 @@ function contentFromResponse(response, callback) {
 - `appendToFile()`
 - `createDirectory()`
 - `renameFile()`
+- `removeEntry()`
 - `getStats()`
 
 An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. All of the functions will throw native errors upon failure.
@@ -372,6 +373,20 @@ appendToFile("root/etc/init.conf", ""); // appends '' to the 'root/etc/init.conf
 ```
 createDirectory("root/etc/init"); // Creates the 'root/etc/init' directory
 ```
+
+* The `renameFile()` function renames a file:
+
+```
+renameFile("hosts", "host"); // Renames the 'hosts' file to 'host'
+```
+
+* The `removeEntry()` function removes a file or directory:
+
+```
+removeEntry("/root/etc/init"); // Removes the '/root/etc/init' directory and all of its sub-entries
+```
+
+Note that in the case of a directory, all of its sub-entries will be removed as well.
 
 * The `getStats()` function returns an instance of the [fs.Stats](https://nodejs.org/api/fs.html#fs_class_fs_stats) class for a file or a directory:
 

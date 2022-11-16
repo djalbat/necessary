@@ -103,6 +103,17 @@ export function renameFile(oldFilePath, newFilePath) {
   fs.renameSync(oldFilePath, newFilePath);
 }
 
+export function removeEntry(entryPath) {
+  const force = true,
+        recursive = true,
+        options = {
+          force,
+          recursive
+        };
+
+  fs.rmSync(entryPath, options);
+}
+
 export function getStats(filePath) {
   return fs.statSync(filePath);
 }
@@ -120,5 +131,6 @@ export default {
   appendToFile,
   createDirectory,
   renameFile,
+  removeEntry,
   getStats
 };
