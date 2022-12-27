@@ -33,7 +33,7 @@ export function log(messageOrError, level = EMPTY_STRING) {
       return;
     }
 
-    salientStackMessageIndex += 1;
+    salientStackMessageIndex += 2;
 
     level = `${level}`;  ///
   }
@@ -53,8 +53,8 @@ export function log(messageOrError, level = EMPTY_STRING) {
 
   const { stack } = error,
         stackMessages = stackMessagesFromStack(stack),
-        pertinentStackMessage = stackMessages[salientStackMessageIndex],
-        stackMessage = pertinentStackMessage, ///
+        salientStackMessage = stackMessages[salientStackMessageIndex],
+        stackMessage = salientStackMessage, ///
         upperCaseLevel = level.toUpperCase(),
         currentDateAndTimeString = getCurrentDateAndTimeString(),
         filePath = filePathFromStackMessage(stackMessage),
