@@ -2,10 +2,18 @@
 
 import { whilst } from "../utilities/asynchronous";
 
+import { DATA } from "../constants";
 import { UTF8_ENCODING } from "../encodings";
-import { DATA, EMPTY_STRING } from "../constants";
 import { DEFAULT_ENCODING, DEFAULT_ATTEMPTS, DEFAULT_INITIAL_ANSWER } from "../defaults";
-import { ETX_CHARACTER, CTRL_C_CHARACTER, BACKSPACE_CHARACTER, NEW_LINE_CHARACTER, CARRIAGE_RETURN_CHARACTER } from "../characters";
+import { UP_CHARACTER,
+         ETX_CHARACTER,
+         DOWN_CHARACTER,
+         LEFT_CHARACTER,
+         RIGHT_CHARACTER,
+         CTRL_C_CHARACTER,
+         NEW_LINE_CHARACTER,
+         BACKSPACE_CHARACTER,
+         CARRIAGE_RETURN_CHARACTER } from "../characters";
 
 export function onETX(handler) {
   if (process.stdin.setRawMode) {
@@ -108,23 +116,21 @@ function attempt(next, done, context) {
 }
 
 function input(initialAnswer, hidden, description, encoding, callback) {
-  const answer = initialAnswer; ///
+  let answer = initialAnswer; ///
 
-  hidden ?
-    hiddenInput(answer, description, encoding, callback) :
-      visibleInput(answer, description, encoding, callback);
-}
-
-function hiddenInput(answer, description, encoding, callback) {
   const rawMode = true;
 
   process.stdout.write(description);
 
-  process.stdin.setEncoding(encoding);
+  if (!hidden) {
+    process.stdout.write(initialAnswer);
+  }
 
   process.stdin.setRawMode(rawMode);
 
-  process.stdin.on(DATA, listener);
+  process.stdin.setEncoding(encoding);
+
+  process.stdin.addListener(DATA, listener);
 
   process.stdin.resume();
 
@@ -132,8 +138,8 @@ function hiddenInput(answer, description, encoding, callback) {
     const character = data.toString(encoding);
 
     switch (character) {
-      case NEW_LINE_CHARACTER :
-      case CARRIAGE_RETURN_CHARACTER :
+      case NEW_LINE_CHARACTER:
+      case CARRIAGE_RETURN_CHARACTER: {
         process.stdout.write(NEW_LINE_CHARACTER);
 
         process.stdin.removeListener(DATA, listener);
@@ -143,45 +149,50 @@ function hiddenInput(answer, description, encoding, callback) {
         callback(answer);
 
         break;
+      }
 
-      case BACKSPACE_CHARACTER :
-        answer = answer.slice(0, answer.length - 1);
+      case UP_CHARACTER:
+      case DOWN_CHARACTER:
+      case LEFT_CHARACTER:
+      case RIGHT_CHARACTER: {
+        ///
 
         break;
+      }
+
+      case BACKSPACE_CHARACTER: {
+        const answerLength = answer.length,
+          start = 0,
+          end = answerLength - 1;
+
+        answer = answer.slice(start, end);
+
+        if (!hidden) {
+          process.stdout.clearLine();
+
+          process.stdout.cursorTo(0);
+
+          process.stdout.write(description);
+
+          process.stdout.write(answer);
+        }
+
+        break;
+      }
 
       default:
         answer += character;
 
+        if (!hidden) {
+          process.stdout.write(character);
+        }
+
         break;
 
-      case ETX_CHARACTER :
+      case ETX_CHARACTER:
         console.log(CTRL_C_CHARACTER);
 
         process.exit();
     }
-  }
-}
-
-function visibleInput(answer, description, encoding, callback) {
-  const rawMode = false;
-
-  process.stdout.write(description);
-
-  process.stdout.write(answer);
-
-  process.stdin.setEncoding(encoding);
-
-  process.stdin.setRawMode(rawMode);
-
-  process.stdin.once(DATA, listener);
-
-  process.stdin.resume();
-
-  function listener(data) {
-    const answer = data.replace(/\n$/, EMPTY_STRING);
-
-    process.stdin.pause();
-
-    callback(answer);
   }
 }

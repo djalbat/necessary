@@ -1,8 +1,12 @@
 "use strict";
 
+export const UP_CHARACTER = "[A";
 export const ETX_CHARACTER = "\u0003";
 export const BAR_CHARACTER = "|";
 export const DASH_CHARACTER = "-";
+export const DOWN_CHARACTER = "[B";
+export const LEFT_CHARACTER = "[D";
+export const RIGHT_CHARACTER = "[C";
 export const SPACE_CHARACTER = " ";
 export const COMMA_CHARACTER = ",";
 export const COLON_CHARACTER = ":";
@@ -20,9 +24,13 @@ export const CARRIAGE_RETURN_CHARACTER = "\r";
 export const EXCLAMATION_MARK_CHARACTER = "!";
 
 export default {
+  UP_CHARACTER,
   ETX_CHARACTER,
   BAR_CHARACTER,
   DASH_CHARACTER,
+  DOWN_CHARACTER,
+  LEFT_CHARACTER,
+  RIGHT_CHARACTER,
   SPACE_CHARACTER,
   COMMA_CHARACTER,
   COLON_CHARACTER,
