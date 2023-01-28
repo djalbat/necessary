@@ -58,21 +58,22 @@ export function log(messageOrError, level = EMPTY_STRING) {
         upperCaseLevel = level.toUpperCase(),
         currentDateAndTimeString = getCurrentDateAndTimeString(),
         filePath = filePathFromStackMessage(stackMessage),
-        lineNumber = lineNumberFromStackMessage(stackMessage),
-        logMessage = `${upperCaseLevel} ${currentDateAndTimeString} ${filePath}(${lineNumber}) ${message}`;
+        lineNumber = lineNumberFromStackMessage(stackMessage);
 
-  console.log(logMessage);
+  message = `${upperCaseLevel} ${currentDateAndTimeString} ${filePath}(${lineNumber}) ${message}`;
+
+  console.log(message);
 
   if (logDirectoryPath !== null) {
     rollOverLogFile();
 
     const logFilePath = getLogFilePath(),
-          logFileContent = `${logMessage}\n`;
+          logFileContent = `${message}\n`;
 
     appendToFile(logFilePath, logFileContent);
   }
 
-  return logMessage;
+  return message;
 }
 
 export default {
