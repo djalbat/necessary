@@ -1,9 +1,9 @@
 "use strict";
 
 export const SHIFT_KEY_CODE = 16;
-export const ESCAPE_KEYCODE = 27;
+export const ESCAPE_KEY_CODE = 27;
 
 export default {
   SHIFT_KEY_CODE,
-  ESCAPE_KEYCODE
+  ESCAPE_KEY_CODE
 };
