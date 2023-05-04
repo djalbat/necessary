@@ -634,7 +634,6 @@ concat([1, 2, 3], 4); // the array argument becomes [1, 2, 3, 4]
 
 ```
 clear([1, 2, 3]); // the array argument becomes []
-                  // returnsll be [1, 2, 3]
 ```
 
 * The `copy()` function copies the second array argument over the top of the first array argument, in other words it replaces each element of the first array argument with the corresponding element in the second array argument. If there are more elements in the second array argument that the first, the first is lengthened:
@@ -652,74 +651,55 @@ merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4,
 * The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. It mutates the first array argument and returns an array of the elements that have been removed from it:
 
 ```
-splice([1, 2, 3], 1, 2, [4, 5]); // returnsll be [2, 3]
-                                 // the first array argument becomes [1, 4, 5]
+splice([1, 2, 3], 1, 2, [4, 5]); // the first array argument becomes [1, 4, 5]
 ```
 
 * The `replace()` function will replace an element in the array with the given element the first time that the callback function returns a truthy value:
 
 ```
-replace([1, 2, 0, -1, -2], 3, (element, index) => {
-  return element === 0;
-}); // the first array argument becomes [1, 2, 3, -1, -2]
+replace([1, 0, -2], 3, (element, index) => (element === 0)); // the array argument becomes [1, 3, -2]
 ```
 
 * The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a callback function that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
 
 ```
-filter([1, 2, -1, -2], (element, index) => {
-  return element > 0;
-}); // the first array argument becomes [1, 2]
-    // returns [-1, -2]
+filter([1, 2, -2], (element, index) => (element > 0)); // the array argument becomes [1, 2]
 ```
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the callback function returns a truthy value, rather than just the first:
 
 ```
-find([1, 2, -1, -2], (element, index) => {
-  return element > 0;
-}); // returnsll be [1, 2]
+find([1, 2, -1, -2], (element, index) => (element > 0)); // returns [1, 2]
 ```
 
 * The `prune()` function is much like the `filter()` function, however it will terminate the first time that the callback function does not return a truthy value:
 
 ```
-prune([1, 2, -1, -2], (element, index) => {
-  return element > 0;
-}); // the first array argument becomes [1, 2, -2]
-    // returns -1
+prune([1, 2, -1, -2], (element, index) => (element > 0)); // the array argument becomes [1, 2]
 ```
 
 * The `patch()` function will append the given element to the array argument the first time that the callback function returns a truthy value:
 
 ```
-patch([1, 2, 0, -1, -2], 4, (element, index) => {
-  return element === 0;
-}); // the array argument becomes [1, 2, 0, -1, -2, 4]
+patch([1, 2, 0, -1, -2], 4, (element, index) => (element === 0)); // the array argument becomes [1, 2, 0, -1, -2, 4]
 ```
 
 * The `compress()` function will remove elements from the array argument whenever the callback function returns a truthy value:
 
 ```
-compress([1, 2, 1], (element1, element2) => {
-  return element1 === element2;
-}); // the array argument becomes [1, 2]
+compress([1, 2, 1], (element1, element2) => (element1 === element2)); // the array argument becomes [1, 2]
 ```
 
 * The `augment()` function appends each of the elements of the second array argument to the first array argument whenever the callback returns a truthy value:
 
 ```
-augment([1, 2, 3], [-1, 4, -2, 5], (element, index) => {
-  return element > 0;
-}); // the first array argument becomes [1, 2, 3, 4, 5]
+augment([1, 2, 3], [-1, 4, -2, 5], (element, index) => (element > 0)); // the array argument becomes [1, 2, 3, 4, 5]
 ```
 
 * The `separate()` function separates the first array argument, pushing each of its elements onto either the second or the third array argument depending on whether or not the callback returns a truthy value:
 
 ```
-separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {
-  return element > 0;
-}); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
+separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {(element > 0)); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
 
 The `forwardsXXX()` and `backwardsXXX()`functions do as their names suggest. The `fowardsXXX()` function take an array for their first argument but otherwise behave identically to their native counterparts. The `backwardsXXX()` functions behave similarly, only backwards.
