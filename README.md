@@ -600,6 +600,7 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `find()`
 - `prune()`
 - `patch()`
+- `compressƒ()`
 - `augment()`
 - `separate()`
 - `forwardsFind()`
@@ -695,6 +696,14 @@ prune([1, 2, -1, -2], (element, index) => {
 patch([1, 2, 0, -1, -2], 4, (element, index) => {
   return element === 0;
 }); // the first array argument becomes [1, 2, 0, -1, -2, 4]
+```
+
+* The `compress()` function will remove elements from the first array argument whenever the callback function returns a truthy value:
+
+```
+compress([1, 2, 1], (element1, element2) => {
+  return element1 === element2;
+}); // the first array argument becomes [1, 2]
 ```
 
 * The `augment()` function appends each of the elements of the second array argument to the first array argument whenever the callback returns a truthy value:

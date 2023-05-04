@@ -157,6 +157,31 @@ export function patch(array, element, callback) {
   return found;
 }
 
+export function compress(array, callback) {
+  let index1 = 0,
+      length = array.length;
+
+  while (index1 < length) {
+    const element1 = array[index1];
+
+    for (let index2 = length - 1; index2 > index1; index2--) {
+      const element2 = array[index2],
+            passed = callback(element2, element1);
+
+      if (passed) {
+        const start = index2, ///
+              deleteCount = 1;
+
+        array.splice(start, deleteCount);
+      }
+    }
+
+    index1++;
+
+    length = array.length;
+  }
+}
+
 export function augment(array1, array2, callback) {
   array2.forEach((element, index) => {
     const passed = callback(element, index);
@@ -343,6 +368,7 @@ export default {
   find,
   prune,
   patch,
+  compress,
   augment,
   separate,
   forwardsFind,
