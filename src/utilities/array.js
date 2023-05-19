@@ -37,7 +37,7 @@ export function unshift(array1, array2) { Array.prototype.unshift.apply(array1, 
 export function concat(array1, elementOrArray2) {
   const array2 = (elementOrArray2 instanceof Array) ?
                     elementOrArray2 :
-                     [elementOrArray2];
+                     [ elementOrArray2 ];
   
   push(array1, array2);
 }
@@ -180,6 +180,17 @@ export function compress(array, callback) {
 
     length = array.length;
   }
+}
+
+export function combine(array1, array2, callback) {
+  const array = [
+    ...array1,
+    ...array2
+  ];
+
+  compress(array, callback);
+
+  return array;
 }
 
 export function augment(array1, array2, callback) {
@@ -369,6 +380,7 @@ export default {
   prune,
   patch,
   compress,
+  combine,
   augment,
   separate,
   forwardsFind,

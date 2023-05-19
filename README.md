@@ -601,6 +601,7 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `prune()`
 - `patch()`
 - `compress()`
+- `combine()`
 - `augment()`
 - `separate()`
 - `forwardsFind()`
@@ -688,6 +689,12 @@ patch([1, 2, 0, -1, -2], 4, (element, index) => (element === 0)); // the array a
 
 ```
 compress([1, 2, 1], (element1, element2) => (element1 === element2)); // the array argument becomes [1, 2]
+```
+
+* The `combine()` function will concatenate the two array arguments, combine them and and return the result
+
+```
+combine([1, 2, 1], [2, 3], (element1, element2) => (element1 === element2)); // returns [1, 2, 3]
 ```
 
 * The `augment()` function appends each of the elements of the second array argument to the first array argument whenever the callback returns a truthy value:
