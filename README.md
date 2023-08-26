@@ -323,6 +323,7 @@ function contentFromResponse(response, callback) {
 - `createFile()`
 - `appendToFile()`
 - `createDirectory()`
+- `renameDirectory()`
 - `renameFile()`
 - `removeEntry()`
 - `getStats()`
@@ -379,6 +380,12 @@ appendToFile("root/etc/init.conf", ""); // appends '' to the 'root/etc/init.conf
 
 ```
 createDirectory("root/etc/init"); // Creates the 'root/etc/init' directory
+```
+
+* The `renameDirectory()` function renames a directory:
+
+```
+renameDirectory("/root/usr", "/root/lib"); // Renames the '/root/usr' directory to '/root/lib'
 ```
 
 * The `renameFile()` function renames a file:

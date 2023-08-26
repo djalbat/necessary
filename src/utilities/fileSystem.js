@@ -106,6 +106,10 @@ export function createDirectory(directoryPath) {
   fs.mkdirSync(directoryPath, options);
 }
 
+export function renameDirectory(oldDirectoryPath, newDirectoryPath) {
+  fs.renameSync(oldDirectoryPath, newDirectoryPath);
+}
+
 export function renameFile(oldFilePath, newFilePath) {
   fs.renameSync(oldFilePath, newFilePath);
 }
@@ -138,6 +142,7 @@ export default {
   createFile,
   appendToFile,
   createDirectory,
+  reanmeDirectory,
   renameFile,
   removeEntry,
   getStats
