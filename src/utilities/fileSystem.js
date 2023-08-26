@@ -2,6 +2,7 @@
 
 import fs from "fs";
 
+import { EMPTY_STRING } from "../constants";
 import { DEFAULT_ENCODING } from "../defaults";
 
 export function checkEntryExists(entryPath) {
@@ -86,6 +87,12 @@ export function writeFile(filePath, content) {
   fs.writeFileSync(filePath, content);
 }
 
+export function createFile(filePath) {
+  const content = EMPTY_STRING;
+
+  fs.writeFileSync(filePath, content);
+}
+
 export function appendToFile(filePath, content) {
   fs.appendFileSync(filePath, content);
 }
@@ -128,6 +135,7 @@ export default {
   readDirectory,
   readFile,
   writeFile,
+  createFile,
   appendToFile,
   createDirectory,
   renameFile,

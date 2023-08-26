@@ -320,6 +320,7 @@ function contentFromResponse(response, callback) {
 - `readDirectory()`
 - `readFile()`
 - `writeFile()`
+- `createFile()`
 - `appendToFile()`
 - `createDirectory()`
 - `renameFile()`
@@ -360,6 +361,12 @@ readFile("root/etc/init.conf"); // returns the content of the 'root/etc/init.con
 
 ```
 writeFile("root/etc/init.conf", ""); // writes '' to the 'root/etc/init.conf' file
+```
+
+* The `createFile()` creates an empty file. It does not return anything upon success:
+
+```
+createFile("root/etc/init.conf"); // writes '' to the 'root/etc/init.conf' file
 ```
 
 * The `appendToFile()` function takes the content to append file as a second string argument. It will create teh file if necessary and does not return anything upon success:
