@@ -142,7 +142,7 @@ export default {
   createFile,
   appendToFile,
   createDirectory,
-  reanmeDirectory,
+  renameDirectory,
   renameFile,
   removeEntry,
   getStats
