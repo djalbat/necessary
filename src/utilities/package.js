@@ -43,9 +43,9 @@ export function getPackageJSON() {
           secondMatch = second(matches),
           applicationDirectoryName = secondMatch, ///
           packageJSONFilePath = concatenatePaths(applicationDirectoryName, PACKAGE_JSON),
-          packageJSONFile = readFile(packageJSONFilePath);
+          packageJSONFileContent = readFile(packageJSONFilePath);
 
-    packageJSON = JSON.parse(packageJSONFile);
+    packageJSON = JSON.parse(packageJSONFileContent);
   }
 
   return packageJSON;
