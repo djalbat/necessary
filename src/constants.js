@@ -9,3 +9,4 @@ export const BOOLEAN = "boolean";
 export const DEFAULT = "default";
 export const ENVIRONMENT = "ENVIRONMENT";
 export const EMPTY_STRING = "";
+export const PACKAGE_JSON = "package.json";

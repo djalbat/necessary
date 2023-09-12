@@ -13,6 +13,7 @@ export { default as statusMessages } from "./statusMessages";
 export { default as pathUtilities } from "./utilities/path";
 export { default as httpUtilities } from "./utilities/http";
 export { default as arrayUtilities } from "./utilities/array";
+export { default as packageUtilities } from "./utilities/package";
 export { default as asynchronousUtilities } from "./utilities/asynchronous";
 
 export { default as shellUtilities } from "./utilities/shell";
