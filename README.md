@@ -193,6 +193,8 @@ A `getPackageJSON()` function for retrieving the contents of the `package.json` 
 const version = getVersion(); // Returns the package version.
 ```
 
+From here the package's JSON can be destructured to recover specific entries not covered by the above helper functions.
+
 * The `getPackageJSON()` function returns the contents of `pakcage.json` file in JSON form.
 
 ```
