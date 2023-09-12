@@ -39,7 +39,7 @@ export function getLicense() {
 export function getPackageJSON() {
   if (packageJSON === null) {
     const utilitiesDirectoryName = __dirname, ///
-          matches = utilitiesDirectoryName.match(/^(.+)[\/\\]node_modules$/),
+          matches = utilitiesDirectoryName.match(/^(.+)[\/\\]node_modules/),
           secondMatch = second(matches),
           applicationDirectoryName = secondMatch, ///
           packageJSONFilePath = concatenatePaths(applicationDirectoryName, PACKAGE_JSON),
