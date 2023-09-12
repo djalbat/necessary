@@ -10,28 +10,28 @@ let packageJSON = null;
 
 export function getName() {
   const packageJSON = getPackageJSON(),
-    { name = null } = packageJSON;
+        { name = null } = packageJSON;
 
   return name;
 }
 
 export function getAuthor() {
   const packageJSON = getPackageJSON(),
-    { author = null } = packageJSON;
+        { author = null } = packageJSON;
 
   return author;
 }
 
 export function getVersion() {
   const packageJSON = getPackageJSON(),
-    { version = null } = packageJSON;
+        { version = null } = packageJSON;
 
   return version;
 }
 
 export function getLicense() {
   const packageJSON = getPackageJSON(),
-    { license = null } = packageJSON;
+        { license = null } = packageJSON;
 
   return license;
 }
