@@ -841,7 +841,7 @@ Ideally the `host` argument should not include a trailing forward slash whereas 
 
 A single `migrate()` function to handle the migration of JSON files with a required `version` entry. This function can be used in conjunction with the configuration utilities but does not have to be.
 
-* The `migrate` function takes `json`, `migrationMap` and `latestVersion` arguments. The easiest way to demonstrate its use is by an extensive example.
+* The `migrate` function takes `json`, `migrationMap` and `latestVersion` arguments. Perhaps the easiest way to demonstrate its use is by way of an extensive example.
 
 Your application should maintain a list of version numbers. A new version number should be used every time the format of the requisite JSON file needs to be migrated:
 
@@ -859,7 +859,7 @@ module.exports = {
 };
 ```
 
-These version numbers, together with their corresponding migration functions should then be required or imported for use by the function that handles the migration:
+These version numbers, together with their corresponding migration functions, should then be required or imported for use by the function that handles the migration:
 
 ```
 const { migrateConfigurationToVersion_2_0 } = require("./configuration/version_2_0"),
