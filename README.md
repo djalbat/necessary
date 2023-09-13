@@ -22,6 +22,7 @@ These can be used both on Node and in the browser:
 * [Path utilities](#path-utilities)
 * [Array utilities](#array-utilities)
 * [HTTP utilities](#http-utilities)
+* [Version utilities](#version-utilities)
 * [Template utilities](#template-utilities)
 * [Asynchronous utilities](#asynchronous-utilities)
 
