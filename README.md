@@ -835,6 +835,78 @@ urlFromHostURIAndQuery(host, uri, query); // returns "https://site.com/user?name
 
 Ideally the `host` argument should not include a trailing forward slash whereas `uri` arguments should always start with a leading forward slash.
 
+## Version utilities
+
+- `migrate()`
+
+A single `migrate()` function to handle the migration of JSON files with a required `version` entry. This function can be used in conjunction with the configuration utilities but does not have to be.
+
+* The `migrate` function takes `json`, `migrationMap` and `latestVersion` arguments. The easiest way to demonstrate its use is by an extensive example.
+
+Your application should maintain a list of version numbers. A new version number should be used every time the format of the requisite JSON file needs to be migrated:
+
+```
+const VERSION_1_5 = "1.5",
+      VERSION_2_0 = "2.0",
+      VERSION_5_0 = "5.0",
+      VERSION_5_1 = "5.1";
+
+module.exports = {
+  VERSION_1_5,
+  VERSION_2_0,
+  VERSION_5_0,
+  VERSION_5_1
+};
+```
+
+These version numbers, together with their corresponding migration functions should then be required or imported for use by the function that handles the migration:
+
+```
+const { migrateConfigurationToVersion_2_0 } = require("./configuration/version_2_0"),
+      { migrateConfigurationToVersion_5_0 } = require("./configuration/version_5_0"),
+      { migrateConfigurationToVersion_5_1 } = require("./configuration/version_5_1"),
+      { VERSION_1_5, VERSION_2_0, VERSION_5_0, VERSION_5_1 } = require("./versions");
+```
+
+A map must then be created that is passed to the `migrate()` function along with the JSON and the latest version:
+
+```
+function migrateConfigurationFile() {
+  let json = readRCFile();
+
+  const migrationMap = {
+          [ VERSION_1_5 ]: migrateConfigurationToVersion_2_0,
+          [ VERSION_2_0 ]: migrateConfigurationToVersion_5_0,
+          [ VERSION_5_0 ] :migrateConfigurationToVersion_5_1
+        },
+        latestVersion = VERSION_5_1;
+
+  json = migrate(json, migrationMap, latestVersion);
+
+  writeRCFile(json);
+}
+```
+
+Note carefully the matching of the keys to their corresponding values. Each key matches the version that the `migrate()` function finds in the JSON. It therefore must apply the requisite migration function to migrate the JSON to the next version. 
+
+Lastly, the migration function must have the prescribed signature and return the migrated JSON. Again an example will suffice:
+
+```
+const { VERSION_2_0 } = require("../versions");
+
+function migrateConfigurationToVersion_2_0(configuration) {
+  const version = VERSION_2_0;
+
+  Object.assign(configuration, {
+    version
+  });
+
+  return configuration;
+}
+```
+
+In this admittedly somewhat trivial example, all the migration function does is to update the version number. Exactly how the JSON otherwise changes is immaterial but the version number must be updated in this way otherwise the `migrate()` function will loop indefinitely.
+
 ## Template utilities
 
 - `parseFile()`
