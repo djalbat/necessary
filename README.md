@@ -11,9 +11,9 @@ These can only be used in the browser:
 These cna only be used on Node:
 
 * [Shell utilities](#shell-utilities)
-* [Package utilities](#package-utilities)
 * [Logging utilities](#logging-utilities)
 * [Request utilities](#request-utilities)
+* [Package utilities](#package-utilities)
 * [File system utilities](#file-system-utilities)
 * [Configuration utilities](#configuration-utilities)
 
@@ -177,30 +177,6 @@ If no `validateFunction` property is given then you must set a `validatePattern`
 
 The `initialAnswer` property sets the initial answer at the prompt. You might want to set it to `yes`, for example. Lastly, setting the `answer` property to anything other than `null` or `undefined` causes the `callback` function to be invoked immediately without any prompt being shown. This can be useful for debugging.
 
-## Package utilities
-
-- `getName()`
-- `getAuthor()`
-- `getVersion()`
-- `getLicense()`
-- `getPackageJSON()`
-
-A `getPackageJSON()` function for retrieving the contents of the `package.json` file together with a few helper functions to retrieve the more common entries.
-
-* The `getName()`, `getAuthor()`, `getVersion()` and `getLicense()` functions return the value of the requisite entries in the `package.json` file. 
-
-```
-const version = getVersion(); // Returns the package version.
-```
-
-From here the package's JSON can be destructured to recover specific entries not covered by the above helper functions.
-
-* The `getPackageJSON()` function returns the contents of `pakcage.json` file in JSON form.
-
-```
-const packageJSON = getPackageJSON(); // Returns the contents of the package.json file.
-```
-
 ## Logging utilities
 
 - `log()`
@@ -333,6 +309,30 @@ function contentFromResponse(response, callback) {
 * The `createGetRequest()` function is identical to the `createRequest()` function except that the `method` argument is omitted and the `headers` argument is optional.
 
 * The `createPostRequest()` function is identical to the `createRequest()` function except that the `method` argument is omitted and the `headers` argument is optional.
+
+## Package utilities
+
+- `getName()`
+- `getAuthor()`
+- `getVersion()`
+- `getLicense()`
+- `getPackageJSON()`
+
+A `getPackageJSON()` function for retrieving the contents of the `package.json` file together with a few helper functions to retrieve the more common entries.
+
+* The `getName()`, `getAuthor()`, `getVersion()` and `getLicense()` functions return the value of the requisite entries in the `package.json` file.
+
+```
+const version = getVersion(); // Returns the package version.
+```
+
+From here the package's JSON can be destructured to recover specific entries not covered by the above helper functions.
+
+* The `getPackageJSON()` function returns the contents of `pakcage.json` file in JSON form.
+
+```
+const packageJSON = getPackageJSON(); // Returns the contents of the package.json file.
+```
 
 ## File system utilities
 
