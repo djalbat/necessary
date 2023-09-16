@@ -52,6 +52,18 @@ const { first, last } = arrayUtilities,
 
 ...
 ```
+
+Or the `require()` function can be used where appropriate:
+
+```
+const { arrayUtilities, asynchronousUtilities, fileSystemUtilities } = require("necessary");
+
+const { first, last } = arrayUtilities,
+      { isDirectory } = fileSystemUtilities;
+
+...
+```
+
 The miscellaneous functions are a special case. They can be treated as above but may well have other functions assigned to them. See below.
 
 ## Ajax utilities
