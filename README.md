@@ -69,7 +69,7 @@ The miscellaneous functions are a special case. They can be treated as above but
 ## Ajax utilities
 
 - `get()`
-- `post()`
+- `post()`cp 
 - `request()`
 
 The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for arbitrary HTTP requests.
@@ -502,7 +502,7 @@ rc(); // Provides the first environment in the '.defaultrc' file
 
 Note that the `rc()` function can be included in any file but only needs to be called once. But be careful that it is called before it is ever destructured.
 
-Aside from the aforementioned `setRCBaseExtension()` functions, the `checkRCFileExists()`, `createVacuousRCFile()`, `readRCFile()` and `writeRCFile()` functions do as their names suggest. The `updateRCFile()` function, if passed a plain old JavaScript object as the first parameter, will add the properties therein, overwriting any existing properties. Properties to be removed can be given as further arguments. If you do not want to add as well as remove properties, set the first argument to a falsey value.
+Aside from the aforementioned `setRCBaseExtension()` functions, the `checkRCFileExists()`, `createVacuousRCFile()`, `readRCFile()` and `writeRCFile()` functions do as their names suggest. The `updateRCFile()` function, if passed a plain old JavaScript object as the first argument, will add the properties therein, overwriting any existing properties. Properties to be removed can be given as further arguments. If you do not want to add as well as remove properties, set the first argument to a falsey value.
 
 ```
 const { readRCFile, writeRCFile, updateRCFile, checkRCFileExists, createVacuousRCFile } = rc;
@@ -1066,7 +1066,7 @@ eventually(operations, () => {
   /// done
 }, context);
 ```
-* The `repeatedly()` function takes a single operation and a `length` parameter, immediately calling the operation a `length` number of times without waiting for it to invoke the given `next()` function each time. When the operation has invoked the given `next()` function a `length` number of times, it will call the `done()` function. Note that in this case invoking the `done()` function from within the operation will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the operation is executed ten times:
+* The `repeatedly()` function takes a single operation and a `length` argument, immediately calling the operation a `length` number of times without waiting for it to invoke the given `next()` function each time. When the operation has invoked the given `next()` function a `length` number of times, it will call the `done()` function. Note that in this case invoking the `done()` function from within the operation will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. In the example below the operation is executed ten times:
 
 ```
 const context = {};
