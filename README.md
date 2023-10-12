@@ -358,12 +358,14 @@ const packageJSON = getPackageJSON(); // Returns the contents of the package.jso
 - `readDirectory()`
 - `readFile()`
 - `writeFile()`
-- `createFile()`
 - `appendToFile()`
 - `createDirectory()`
 - `renameDirectory()`
+- `moveDirectory()`
+- `createFile()`
 - `renameFile()`
 - `removeEntry()`
+- `moveFile()`
 - `getStats()`
 
 An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. All of the functions will throw native errors upon failure.
@@ -402,12 +404,6 @@ readFile("root/etc/init.conf"); // returns the content of the 'root/etc/init.con
 writeFile("root/etc/init.conf", ""); // writes '' to the 'root/etc/init.conf' file
 ```
 
-* The `createFile()` creates an empty file. It does not return anything upon success:
-
-```
-createFile("root/etc/init.conf"); // writes '' to the 'root/etc/init.conf' file
-```
-
 * The `appendToFile()` function takes the content to append file as a second string argument. It will create teh file if necessary and does not return anything upon success:
 
 ```
@@ -426,10 +422,34 @@ createDirectory("root/etc/init"); // Creates the 'root/etc/init' directory
 renameDirectory("/root/usr", "/root/lib"); // Renames the '/root/usr' directory to '/root/lib'
 ```
 
+Note that if the parent directory of the newly named directory does not exist then this function will fail. Inside use the `moveDirectory()` method.
+
+* The `moveDirectory()` function moves a directory:
+
+```
+moveDirectory("/root/usr", "/etc/lib"); // Moves the '/root/usr' directory to '/etc/lib'
+```
+
+Note that if the parent directory of the newly named directory does not exist then this function will fail. Inside use the `moveDirectory()` method.
+
+* The `createFile()` creates an empty file. It does not return anything upon success:
+
+```
+createFile("root/etc/init.conf"); // writes '' to the 'root/etc/init.conf' file
+```
+
 * The `renameFile()` function renames a file:
 
 ```
 renameFile("hosts", "host"); // Renames the 'hosts' file to 'host'
+```
+
+Note that if the parent directory of the newly named file does not exist then this function will fail. Inside use the `moveFile()` method.
+
+* The `moveFile()` function moves a file:
+
+```
+moveFile("/root/usr/init.conf", "/etc/lib/init.conf"); // Moves the '/root/usr/init.conf' file to '/etc/lib/init.conf'
 ```
 
 * The `removeEntry()` function removes a file or directory:

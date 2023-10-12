@@ -1,6 +1,7 @@
 "use strict";
 
 import fs from "fs";
+import path from "path";
 
 import { EMPTY_STRING } from "../constants";
 import { DEFAULT_ENCODING } from "../defaults";
@@ -87,21 +88,14 @@ export function writeFile(filePath, content) {
   fs.writeFileSync(filePath, content);
 }
 
-export function createFile(filePath) {
-  const content = EMPTY_STRING;
-
-  fs.writeFileSync(filePath, content);
-}
-
 export function appendToFile(filePath, content) {
   fs.appendFileSync(filePath, content);
 }
 
-export function createDirectory(directoryPath) {
-  const recursive = true,
-        options = {
-          recursive
-        };
+export function createDirectory(directoryPath, recursive = true) {
+  const options = {
+    recursive
+  };
 
   fs.mkdirSync(directoryPath, options);
 }
@@ -110,8 +104,26 @@ export function renameDirectory(oldDirectoryPath, newDirectoryPath) {
   fs.renameSync(oldDirectoryPath, newDirectoryPath);
 }
 
+export function moveDirectory(oldDirectoryPath, newDirectoryPath) {
+  ensureParentDirectoryExists(newDirectoryPath);
+
+  renameDirectory(oldDirectoryPath, newDirectoryPath);
+}
+
+export function createFile(filePath) {
+  const content = EMPTY_STRING;
+
+  fs.writeFileSync(filePath, content);
+}
+
 export function renameFile(oldFilePath, newFilePath) {
   fs.renameSync(oldFilePath, newFilePath);
+}
+
+export function moveFile(oldFilePath, newFilePath) {
+  ensureParentFileExists(newFilePath);
+
+  renameFile(oldFilePath, newFilePath);
 }
 
 export function removeEntry(entryPath) {
@@ -139,11 +151,22 @@ export default {
   readDirectory,
   readFile,
   writeFile,
-  createFile,
   appendToFile,
   createDirectory,
   renameDirectory,
+  moveDirectory,
+  createFile,
   renameFile,
   removeEntry,
+  moveFile,
   getStats
 };
+
+function ensureParentDirectoryExists(filePath) {
+  const parentDirectoryPath = path.dirname(filePath), ///
+        parentDirectoryExists = checkDirectoryExists(parentDirectoryPath);
+
+  if (!parentDirectoryExists) {
+    createDirectory(parentDirectoryPath);
+  }
+}
