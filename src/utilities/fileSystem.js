@@ -157,8 +157,8 @@ export default {
   moveDirectory,
   createFile,
   renameFile,
-  removeEntry,
   moveFile,
+  removeEntry,
   getStats
 };
 
