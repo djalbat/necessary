@@ -121,7 +121,7 @@ export function renameFile(oldFilePath, newFilePath) {
 }
 
 export function moveFile(oldFilePath, newFilePath) {
-  ensureParentFileExists(newFilePath);
+  ensureParentDirectoryExists(newFilePath);
 
   renameFile(oldFilePath, newFilePath);
 }
