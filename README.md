@@ -151,7 +151,7 @@ Note that the `headers` argument is not optional this time.
 
 Functions that can be used for Node applications running in a shell window.
 
-* The `onETX()` function takes a handler which is invoked whenever the `ETX` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This method is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener at some later point in time:
+* The `onETX()` function takes a handler which is invoked whenever the `ETX` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This function is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener at some later point in time:
 
 ```
 const offEXT = onEXT(process.exit);
@@ -422,7 +422,7 @@ createDirectory("root/etc/init"); // Creates the 'root/etc/init' directory
 renameDirectory("/root/usr", "/root/lib"); // Renames the '/root/usr' directory to '/root/lib'
 ```
 
-Note that if the parent directory of the newly named directory does not exist then this function will fail. Inside use the `moveDirectory()` method.
+Note that if the parent directory of the newly named directory does not exist then this function will fail. Instead use the `moveDirectory()` function.
 
 * The `moveDirectory()` function moves a directory:
 
@@ -442,7 +442,7 @@ createFile("root/etc/init.conf"); // writes '' to the 'root/etc/init.conf' file
 renameFile("hosts", "host"); // Renames the 'hosts' file to 'host'
 ```
 
-Note that if the parent directory of the newly named file does not exist then this function will fail. Inside use the `moveFile()` method.
+Note that if the parent directory of the newly named file does not exist then this function will fail. Instead use the `moveFile()` function.
 
 * The `moveFile()` function moves a file:
 
