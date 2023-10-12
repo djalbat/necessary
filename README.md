@@ -430,8 +430,6 @@ Note that if the parent directory of the newly named directory does not exist th
 moveDirectory("/root/usr", "/etc/lib"); // Moves the '/root/usr' directory to '/etc/lib'
 ```
 
-Note that if the parent directory of the newly named directory does not exist then this function will fail. Inside use the `moveDirectory()` method.
-
 * The `createFile()` creates an empty file. It does not return anything upon success:
 
 ```
