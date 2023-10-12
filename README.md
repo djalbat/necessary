@@ -364,8 +364,8 @@ const packageJSON = getPackageJSON(); // Returns the contents of the package.jso
 - `moveDirectory()`
 - `createFile()`
 - `renameFile()`
-- `removeEntry()`
 - `moveFile()`
+- `removeEntry()`
 - `getStats()`
 
 An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. All of the functions will throw native errors upon failure.
