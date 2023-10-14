@@ -6,6 +6,12 @@ import path from "path";
 import { EMPTY_STRING } from "../constants";
 import { DEFAULT_ENCODING } from "../defaults";
 
+export function getEntryStats(entryPath) {
+  const entryStats = fs.statSync(entryPath);
+
+  return entryStats;
+}
+
 export function checkEntryExists(entryPath) {
   const entryExists = fs.existsSync(entryPath);
 
@@ -47,16 +53,15 @@ export function checkDirectoryExists(directoryPath) {
 }
 
 export function isEntryFile(entryPath) {
-  const stat = fs.statSync(entryPath),
-        entryDirectory = stat.isDirectory(),
-        entryFile = !entryDirectory;
+  const stats = getEntryStats(entryPath),
+        entryFile = stats.isFile(); ///
 
   return entryFile;
 }
 
 export function isEntryDirectory(entryPath) {
-  const stat = fs.statSync(entryPath),
-        entryDirectory = stat.isDirectory();
+  const stats = getEntryStats(entryPath),
+        entryDirectory = stats.isDirectory(); ///
 
   return entryDirectory;
 }
@@ -100,30 +105,16 @@ export function createDirectory(directoryPath, recursive = true) {
   fs.mkdirSync(directoryPath, options);
 }
 
-export function renameDirectory(oldDirectoryPath, newDirectoryPath) {
-  fs.renameSync(oldDirectoryPath, newDirectoryPath);
-}
-
-export function moveDirectory(oldDirectoryPath, newDirectoryPath) {
-  ensureParentDirectoryExists(newDirectoryPath);
-
-  renameDirectory(oldDirectoryPath, newDirectoryPath);
-}
-
 export function createFile(filePath) {
   const content = EMPTY_STRING;
 
   fs.writeFileSync(filePath, content);
 }
 
-export function renameFile(oldFilePath, newFilePath) {
-  fs.renameSync(oldFilePath, newFilePath);
-}
+export function moveEntry(oldEntryPath, newEntryPath) {
+  ensureParentDirectoryExists(newEntryPath);
 
-export function moveFile(oldFilePath, newFilePath) {
-  ensureParentDirectoryExists(newFilePath);
-
-  renameFile(oldFilePath, newFilePath);
+  renameEntry(oldEntryPath, newEntryPath);
 }
 
 export function removeEntry(entryPath) {
@@ -137,11 +128,12 @@ export function removeEntry(entryPath) {
   fs.rmSync(entryPath, options);
 }
 
-export function getStats(filePath) {
-  return fs.statSync(filePath);
+export function renameEntry(oldEntryPath, newEntryPath) {
+  fs.renameSync(oldEntryPath, newEntryPath);
 }
 
 export default {
+  getEntryStats,
   checkEntryExists,
   checkFileExists,
   checkDirectoryExists,
@@ -153,20 +145,19 @@ export default {
   writeFile,
   appendToFile,
   createDirectory,
-  renameDirectory,
-  moveDirectory,
   createFile,
-  renameFile,
-  moveFile,
-  removeEntry,
-  getStats
+  moveEntry,
+  renameEntry,
+  removeEntry
 };
 
-function ensureParentDirectoryExists(filePath) {
-  const parentDirectoryPath = path.dirname(filePath), ///
+function ensureParentDirectoryExists(entryPath) {
+  const parentDirectoryPath = path.dirname(entryPath), ///
         parentDirectoryExists = checkDirectoryExists(parentDirectoryPath);
 
   if (!parentDirectoryExists) {
-    createDirectory(parentDirectoryPath);
+    const recursive = true;
+
+    createDirectory(parentDirectoryPath, recursive);
   }
 }

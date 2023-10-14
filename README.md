@@ -349,6 +349,7 @@ const packageJSON = getPackageJSON(); // Returns the contents of the package.jso
 
 ## File system utilities
 
+- `getEntryStats()`
 - `checkEntryExists()`
 - `checkFileExists()`
 - `checkDirectoryExists()`
@@ -360,15 +361,18 @@ const packageJSON = getPackageJSON(); // Returns the contents of the package.jso
 - `writeFile()`
 - `appendToFile()`
 - `createDirectory()`
-- `renameDirectory()`
-- `moveDirectory()`
 - `createFile()`
-- `renameFile()`
-- `moveFile()`
+- `moveEntry()`
+- `renameEntry()`
 - `removeEntry()`
-- `getStats()`
 
 An inglorious collection of functions which do no more than paper over some of Node's synchronous [native file system API](https://nodejs.org/api/fs.html) functions. All of the functions will throw native errors upon failure.
+
+* The `getEntryStats()` function returns an instance of the [fs.Stats](https://nodejs.org/api/fs.html#fs_class_fs_stats) class:
+
+```
+const stats = getStats("root/etc"); // returns stats for the 'root/etc' entry
+```
 
 * The `checkEntryExists()`, `checkFileExists()`, `checkDirectoryExists()`, `isEntryFile()`, `isEntryDirectory()` and `isDirectoryEmpty()` functions work as their names suggest, returning a boolean value.
 
@@ -416,38 +420,16 @@ appendToFile("root/etc/init.conf", ""); // appends '' to the 'root/etc/init.conf
 createDirectory("root/etc/init"); // Creates the 'root/etc/init' directory
 ```
 
-* The `renameDirectory()` function renames a directory:
-
-```
-renameDirectory("/root/usr", "/root/lib"); // Renames the '/root/usr' directory to '/root/lib'
-```
-
-Note that if the parent directory of the newly named directory does not exist then this function will fail. Instead use the `moveDirectory()` function.
-
-* The `moveDirectory()` function moves a directory:
-
-```
-moveDirectory("/root/usr", "/etc/lib"); // Moves the '/root/usr' directory to '/etc/lib'
-```
-
 * The `createFile()` creates an empty file. It does not return anything upon success:
 
 ```
 createFile("root/etc/init.conf"); // writes '' to the 'root/etc/init.conf' file
 ```
 
-* The `renameFile()` function renames a file:
+* The `moveEntry()` function moves a file or directory:
 
 ```
-renameFile("hosts", "host"); // Renames the 'hosts' file to 'host'
-```
-
-Note that if the parent directory of the newly named file does not exist then this function will fail. Instead use the `moveFile()` function.
-
-* The `moveFile()` function moves a file:
-
-```
-moveFile("/root/usr/init.conf", "/etc/lib/init.conf"); // Moves the '/root/usr/init.conf' file to '/etc/lib/init.conf'
+moveEntry("/root/usr", "/etc/lib"); // Moves the '/root/usr' directory to '/etc/lib'
 ```
 
 * The `removeEntry()` function removes a file or directory:
@@ -458,11 +440,13 @@ removeEntry("/root/etc/init"); // Removes the '/root/etc/init' directory and all
 
 Note that in the case of a directory, all of its sub-entries will be removed as well.
 
-* The `getStats()` function returns an instance of the [fs.Stats](https://nodejs.org/api/fs.html#fs_class_fs_stats) class for a file or a directory:
+* The `renameEntry()` function renames a file or directory:
 
 ```
-const stats = getStats("root/etc"); // returns stats for the 'root/etc' directory
+renameFile("hosts", "host"); // Renames the 'hosts' file to 'host'
 ```
+
+Note that if the parent directory of the newly named file or directory does not exist then this function will fail. Instead use the `moveEntry()` function.
 
 ## Configuration utilities
 
