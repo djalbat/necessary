@@ -140,6 +140,27 @@ export function prune(array, callback) {
   return prunedElement;
 }
 
+export function extract(array, callback) {
+  let extractedElement = undefined;
+
+  array.some((element, index) => {
+    const passed = callback(element, index);
+
+    if (passed) {
+      const start = index,  ///
+            deleteCount = 1,
+            deletedElements = array.splice(start, deleteCount),
+            firstDeletedElement = first(deletedElements);
+
+      extractedElement = firstDeletedElement;  ///
+
+      return true;
+    }
+  });
+
+  return extractedElement;
+}
+
 export function patch(array, element, callback) {
   const found = array.some((element, index) => {
     const passed = callback(element, index);
@@ -378,6 +399,7 @@ export default {
   filter,
   find,
   prune,
+  extract,
   patch,
   compress,
   combine,
