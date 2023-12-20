@@ -653,6 +653,7 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `filter()`
 - `find()`
 - `prune()`
+- `extract()`
 - `patch()`
 - `compress()`
 - `combine()`
@@ -718,7 +719,7 @@ replace([1, 0, -2], 3, (element, index) => (element === 0)); // the array argume
 * The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. The second argument should be a callback function that will be invoked for each element of the array. If it does not return a truthy value, the corresponding element will be removed.
 
 ```
-filter([1, 2, -2], (element, index) => (element > 0)); // the array argument becomes [1, 2]
+filter([1, 2, -2], (element, index) => (element > 0)); // returns [-2] and the array argument becomes [1, 2] 
 ```
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the callback function returns a truthy value, rather than just the first:
@@ -730,7 +731,13 @@ find([1, 2, -1, -2], (element, index) => (element > 0)); // returns [1, 2]
 * The `prune()` function is much like the `filter()` function, however it will terminate the first time that the callback function does not return a truthy value:
 
 ```
-prune([1, 2, -1, -2], (element, index) => (element > 0)); // the array argument becomes [1, 2]
+prune([1, 2, -1, -2], (element, index) => (element > 0)); // returns -1 and the array argument becomes [1, 2, -2]
+```
+
+* The `extract()` function is identical to the `preune()` function, however the callback should return a truthy value in order to extract an element:
+
+```
+extract([1, 2, -1, -2], (element, index) => (element === 2)); // returns 2 and the array argument becomes [1, -1, -2]
 ```
 
 * The `patch()` function will append the given element to the array argument the first time that the callback function returns a truthy value:
