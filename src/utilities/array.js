@@ -57,11 +57,18 @@ export function copy(array1, array2) {
 
 export function merge(array1, array2) { Array.prototype.push.apply(array1, array2); }
 
-export function splice(array1, start, deleteCount = Infinity, array2 = []) {
-  const args = [start, deleteCount, ...array2],
-        deletedItemsArray = Array.prototype.splice.apply(array1, args);
+export function find(array, callback) {
+  const elements = [];
 
-  return deletedItemsArray;
+  forwardsForEach(array, (element, index) => {
+    const passed = callback(element, index);
+
+    if (passed) {
+      elements.push(element);
+    }
+  });
+
+  return elements;
 }
 
 export function replace(array, element, callback) {
@@ -86,8 +93,15 @@ export function replace(array, element, callback) {
   return found;
 }
 
+export function splice(array1, start, deleteCount = Infinity, array2 = []) {
+  const args = [ start, deleteCount, ...array2 ],
+        deletedElements = Array.prototype.splice.apply(array1, args);
+
+  return deletedElements;
+}
+
 export function filter(array, callback) {
-  const filteredElements = [];
+  const deletedElements = [];
   
   backwardsForEach(array, (element, index) => {
     const passed = callback(element, index);
@@ -98,29 +112,15 @@ export function filter(array, callback) {
             deletedElements = array.splice(start, deleteCount),
             firstDeletedElement = first(deletedElements);
       
-      filteredElements.unshift(firstDeletedElement);  ///
+      deletedElements.unshift(firstDeletedElement);  ///
     }
   });
   
-  return filteredElements;
-}
-
-export function find(array, callback) {
-  const elements = [];
-
-  forwardsForEach(array, (element, index) => {
-    const passed = callback(element, index);
-
-    if (passed) {
-      elements.push(element);
-    }
-  });
-
-  return elements;
+  return deletedElements;
 }
 
 export function prune(array, callback) {
-  let prunedElement = undefined;
+  let deletedElement = undefined;
   
   array.some((element, index) => {
     const passed = callback(element, index);
@@ -131,17 +131,17 @@ export function prune(array, callback) {
             deletedElements = array.splice(start, deleteCount),
             firstDeletedElement = first(deletedElements);
       
-      prunedElement = firstDeletedElement;  ///
+      deletedElement = firstDeletedElement;  ///
 
       return true;
     }
   });
   
-  return prunedElement;
+  return deletedElement;
 }
 
 export function extract(array, callback) {
-  let extractedElement = undefined;
+  let deletedElement = undefined;
 
   array.some((element, index) => {
     const passed = callback(element, index);
@@ -152,13 +152,13 @@ export function extract(array, callback) {
             deletedElements = array.splice(start, deleteCount),
             firstDeletedElement = first(deletedElements);
 
-      extractedElement = firstDeletedElement;  ///
+      deletedElement = firstDeletedElement;  ///
 
       return true;
     }
   });
 
-  return extractedElement;
+  return deletedElement;
 }
 
 export function patch(array, element, callback) {
@@ -394,10 +394,10 @@ export default {
   clear,
   copy,
   merge,
-  splice,
-  replace,
-  filter,
   find,
+  replace,
+  splice,
+  filter,
   prune,
   extract,
   patch,
