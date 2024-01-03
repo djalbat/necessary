@@ -14,6 +14,7 @@ These cna only be used on Node:
 * [Logging utilities](#logging-utilities)
 * [Request utilities](#request-utilities)
 * [Package utilities](#package-utilities)
+* [Template utilities](#template-utilities)
 * [File system utilities](#file-system-utilities)
 * [Configuration utilities](#configuration-utilities)
 
@@ -24,7 +25,6 @@ These can be used both on Node and in the browser:
 * [HTTP utilities](#http-utilities)
 * [String utilities](#string-utilities)
 * [Version utilities](#version-utilities)
-* [Template utilities](#template-utilities)
 * [Asynchronous utilities](#asynchronous-utilities)
 
 ## Installation
@@ -346,6 +346,58 @@ From here the package's JSON can be destructured to recover specific entries not
 
 ```
 const packageJSON = getPackageJSON(); // Returns the contents of the package.json file.
+```
+
+## Template utilities
+
+- `parseFile()`
+- `parseContent()`
+- `parseLine()`
+
+These functions parse files, content or single lines, replacing each token of the form `${<name>}` with the value of the corresponding property of a plain old JavaScript object passed as the second argument, or replacing the token with an empty string if no such property exists.
+
+* The `parseFile()` function takes a file path as the first argument:
+
+```
+const filePath = "/etc/var/public/name.html",
+      name = "Joe Bloggs",
+      age = 99,
+      args = {
+        name,
+        age
+      }
+      parsedContent = parseFile(filePath, args);
+```
+
+* The `parseContent()` function takes content as the first argument, honouring newline `\n` characters:
+
+```
+const content = `
+
+  name: <strong>${name}</strong><br/>
+  age: <strong>${age}</strong><br/>
+
+      `,
+      name = "Joe Bloggs",
+      age = 99,
+      args = {
+        name,
+        age
+      }
+      parsedContent = parseContent(content, args);
+```
+
+* The `parseLine()` function takes a single line of content as the first argument:
+
+```
+const line = "${name}, aged ${age}.",
+      name = "Joe Bloggs",
+      age = 99,
+      args = {
+        name,
+        age
+      }
+      parsedLine = parseLine(line, args); // returns 'Joe Bloggs, aged 99.'
 ```
 
 ## File system utilities
@@ -977,58 +1029,6 @@ function migrateConfigurationToVersion_2_0(configuration) {
 ```
 
 In this admittedly somewhat trivial example, all the migration function does is to update the version number. Exactly how the JSON otherwise changes is immaterial but the version number must be updated in this way otherwise the `migrate()` function will loop indefinitely.
-
-## Template utilities
-
-- `parseFile()`
-- `parseContent()`
-- `parseLine()`
-
-These functions parse files, content or single lines, replacing each token of the form `${<name>}` with the value of the corresponding property of a plain old JavaScript object passed as the second argument, or replacing the token with an empty string if no such property exists.
-
-* The `parseFile()` function takes a file path as the first argument:
-
-```
-const filePath = "/etc/var/public/name.html",
-      name = "Joe Bloggs",
-      age = 99,
-      args = {
-        name,
-        age
-      }
-      parsedContent = parseFile(filePath, args);
-```
-
-* The `parseContent()` function takes content as the first argument, honouring newline `\n` characters:
-
-```
-const content = `
-
-  name: <strong>${name}</strong><br/>
-  age: <strong>${age}</strong><br/>
-
-      `,
-      name = "Joe Bloggs",
-      age = 99,
-      args = {
-        name,
-        age
-      }
-      parsedContent = parseContent(content, args);
-```
-
-* The `parseLine()` function takes a single line of content as the first argument:
-
-```
-const line = "${name}, aged ${age}.",
-      name = "Joe Bloggs",
-      age = 99,
-      args = {
-        name,
-        age
-      }
-      parsedLine = parseLine(line, args); // returns 'Joe Bloggs, aged 99.'
-```
 
 ## Asynchronous utilities
 
