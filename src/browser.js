@@ -10,10 +10,12 @@ export { default as statusCodes } from "./statusCodes";
 export { default as contentTypes } from "./contentTypes";
 export { default as statusMessages } from "./statusMessages";
 
-export { default as ajaxUtilities } from "./utilities/ajax";
-
 export { default as pathUtilities } from "./utilities/path";
 export { default as httpUtilities } from "./utilities/http";
 export { default as arrayUtilities } from "./utilities/array";
+export { default as stringUtilities } from "./utilities/string";
 export { default as versionUtilities } from "./utilities/version";
+export { default as templateUtilities } from "./utilities/template";
 export { default as asynchronousUtilities } from "./utilities/asynchronous";
+
+export { default as ajaxUtilities } from "./utilities/ajax";
