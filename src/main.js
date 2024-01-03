@@ -24,5 +24,5 @@ export { default as shellUtilities } from "./utilities/shell";
 export { default as requestUtilities } from "./utilities/request";
 export { default as loggingUtilities } from "./utilities/logging";
 export { default as packageUtilities } from "./utilities/package";
-export { default as fileSystemUtilities } from "./utilities/fileSystem";
+// export { default as fileSystemUtilities } from "./utilities/fileSystem";
 export { default as configurationUtilities } from "./utilities/configuration";
