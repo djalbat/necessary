@@ -911,11 +911,20 @@ Ideally the `host` argument should not include a trailing forward slash whereas 
 
 ## String utilities
 
-- `strcmp()`
 - `strlen()`
+- `strcmp()`
 - `substring()`
 
-Substitute functions with support for Unicode. Specifically, characters in Unicode astral plains are counted twice in native functions. These functions fix this issue by converting strings to arrays and if necessary back again. Be warned that for this reason they are nowhere near as fast as their native counterparts.  
+Substitute functions with support for Unicode. Specifically, characters in Unicode astral plains are counted twice in native functions. Note that although the `strlen()` function uses a regular expression to count the number of astral Unicode characters and is therefore relatively fast, the other two functions convert strings to arrays and if necessary back again. Be warned that for this reason they are nowhere near as fast as their native counterparts.  
+
+* The `strlen()` function takes a single `string` argument. It works in much the same way as the `length` property of the `String` prototype, however it is Unicode safe:
+
+```
+"𝔸𝔹C".length = 5  // The 𝔹 and C characters are in an astral plane and count as two each.
+
+strlen("𝔸𝔹C") = 3 // The string is converted to an array whose length is 3.
+
+```
 
 * The `strcmp` function takes `stringA` and `stringB` arguments. It compares them character by character in order to find the lexicographically lesser of the two. Its return value is the difference between the code points of the first differing characters, with the code point of either string given as zero if it is empty. Some examples should clarify:
 
@@ -938,15 +947,6 @@ strcmp("C", "𝔸") > 0;
 Note that, conceptually speaking, the first argument is taken away from the second argument in order to compute the difference and not the other way around.
 
 Note also that the double-struck `C` is in the basic multilingual plane and has code point `0x02102` whereas the double-struck `𝔸` is in an astral plane and has code point `0x1D538`, therefore their difference is positive.
-
-* The `strlen()` function takes a single `string` argument. It works in much the same way as the `length` property of the `String` prototype, however it is Unicode safe:
-
-```
-"𝔸𝔹C".length = 5  // The 𝔹 and C characters are in an astral plane and count as two each.
-
-strlen("𝔸𝔹C") = 3 // The string is converted to an array whose length is 3.
-
-```
 
 * The `substring()` function takes `string` and `start` arguments and an optional `end` argument. It works in much the same way as the `substring()` method of the `String` prototype, however it is Unicode safe:
 
