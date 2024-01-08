@@ -1,6 +1,5 @@
 "use strict";
 
-export const UG = "ug";
 export const ZERO = "0";
 export const DATA = "data";
 export const ERROR = "error";

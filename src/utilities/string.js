@@ -1,18 +1,18 @@
 "use strict";
 
-import { EMPTY_STRING, UG } from "../constants";
-
-const astralCharactersRegExp = new RegExp("[\\u{10000}-\\u{10ffff}]", UG);
+import { EMPTY_STRING } from "../constants";
 
 export function strlen(string) {
-  let length = string.length;
+  let length = 0;
 
-  const matches = string.match(astralCharactersRegExp);
+  const iterator = string[Symbol.iterator]();
 
-  if (matches !== null) {
-    const { length: astralCharactersLength } = matches;
+  let character = iterator.next();
 
-    length -= astralCharactersLength;
+  while (!character.done) {
+    character = iterator.next();
+
+    length++
   }
 
   return length;
@@ -21,27 +21,65 @@ export function strlen(string) {
 export function strcmp(stringA, stringB) {
   let difference;
 
-  const codePointA = (stringA === EMPTY_STRING) ?
-      0 :
-      stringA.codePointAt(0),
-    codePointB = (stringB === EMPTY_STRING) ?
-      0 :
-      stringB.codePointAt(0);
+  const iteratorA = stringA[Symbol.iterator](), ///
+        iteratorB = stringB[Symbol.iterator](); ///
 
-  difference = codePointB - codePointA;
+  let characterA = iteratorA.next(),
+      characterB = iteratorB.next(),
+      codePointA,
+      codePointB;
 
-  if ((difference === 0) && (codePointA !==0) && (codePointB !==0)) {
-    stringA = substring(stringA, 1); ///
+  while (true) {
+    codePointA = characterA.value ? ///
+                   characterA.value.codePointAt(0) :
+                     0;
+    codePointB = characterB.value ? ///
+                   characterB.value.codePointAt(0) :
+                     0;
 
-    stringB = substring(stringB, 1); ///
+    difference = codePointB - codePointA;
 
-    difference = strcmp(stringA, stringB);
+    if (difference !== 0) {
+      break;
+    }
+
+    if (characterA.done || characterB.done) {
+      break;
+    }
+
+    characterA = iteratorA.next();
+    characterB = iteratorB.next();
   }
 
   return difference;
 }
 
-export function substring(string, start, end) { return [...string].slice(start, end).join(""); }  ///
+export function substring(string, start, end = Infinity) {
+  let index = 0;
+
+  const iterator = string[Symbol.iterator](),
+        characters = [];
+
+  let character = iterator.next();
+
+  while (!character.done) {
+    if (index >= start) {
+      characters.push(character.value); ///
+    }
+
+    index++
+
+    if (index === end) {
+      break;
+    }
+
+    character = iterator.next();
+  }
+
+  const substring = characters.join(EMPTY_STRING);
+
+  return substring;
+}
 
 export default {
   strcmp,
