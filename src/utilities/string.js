@@ -63,15 +63,15 @@ export function substring(string, start, end = Infinity) {
   let character = iterator.next();
 
   while (!character.done) {
+    if (index === end) {
+      break;
+    }
+
     if (index >= start) {
       characters.push(character.value); ///
     }
 
     index++
-
-    if (index === end) {
-      break;
-    }
 
     character = iterator.next();
   }
