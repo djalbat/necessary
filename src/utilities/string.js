@@ -54,6 +54,50 @@ export function strcmp(stringA, stringB) {
   return difference;
 }
 
+export function indexOf(string, searchString) {
+  let index = -1,
+      found = false;
+
+  const searchStringLength = strlen(searchString);
+
+  if (searchStringLength > 0) {
+    let character;
+
+    const iterator = string[Symbol.iterator](),
+          searchIterator = searchString[Symbol.iterator](),
+          searchCharacter = searchIterator.next();
+
+    character = iterator.next();
+
+    index++;
+
+    while (!character.done) {
+      if (character.value === searchCharacter.value) {
+        const start = index,  ///
+              end = start + searchStringLength,
+              subString = substring(string, start, end),
+              difference = strcmp(subString, searchString);
+
+        if (difference === 0) {
+          found = true;
+
+          break;
+        }
+      }
+
+      character = iterator.next();
+
+      index++
+    }
+  }
+
+  if (!found) {
+    index = -1;
+  }
+
+  return index;
+}
+
 export function substring(string, start, end = Infinity) {
   let index = 0;
 
@@ -84,5 +128,6 @@ export function substring(string, start, end = Infinity) {
 export default {
   strcmp,
   strlen,
+  indexOf,
   substring
 };
