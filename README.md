@@ -949,7 +949,7 @@ Note that, conceptually speaking, the first argument is taken away from the seco
 
 Note also that the double-struck `C` is in the basic multilingual plane and has code point `0x02102` whereas the double-struck `𝔸` is in an astral plane and has code point `0x1D538`, therefore their difference is positive.
 
-* The `index()` function takes `string` and `searchString` and works in identical fashion to the `String` class' `indexOf()` method, however it is Unicode safe:
+* The `indexOf()` function takes `string` and `searchString` and works in identical fashion to the `String` class' `indexOf()` method, however it is Unicode safe:
 
 ```
 indexOf("𝔸b", "b"); // Returns 1. 
