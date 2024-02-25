@@ -701,6 +701,7 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `clear()`
 - `copy()`
 - `merge()`
+- `match()`
 - `find()`
 - `replace()`
 - `splice()`
@@ -755,6 +756,12 @@ copy([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [4, 5, 6, 7]
 
 ```
 merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4, 5, 6, 7]
+```
+
+* The `match()` function compares the first and second array arguments. If they are of the same length and the callback argument supplied returns a truthy value when invoked with each pair of elements then it returns true:
+
+```
+match([1, 2, 3], [-1, -2, -3], (valueA, valueB) => (valueA === -valueB)); // returns true
 ```
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the callback function returns a truthy value, rather than just the first:

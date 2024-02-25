@@ -30,16 +30,16 @@ export function back(array) { return array.slice(array.length - 1); }
 
 export function front(array) { return array.slice(0, Math.max(1, array.length - 1)); }
 
-export function push(array1, array2) { Array.prototype.push.apply(array1, array2); }
+export function push(arrayA, arrayB) { Array.prototype.push.apply(arrayA, arrayB); }
 
-export function unshift(array1, array2) { Array.prototype.unshift.apply(array1, array2); }
+export function unshift(arrayA, arrayB) { Array.prototype.unshift.apply(arrayA, arrayB); }
 
-export function concat(array1, elementOrArray2) {
-  const array2 = (elementOrArray2 instanceof Array) ?
+export function concat(arrayA, elementOrArray2) {
+  const arrayB = (elementOrArray2 instanceof Array) ?
                     elementOrArray2 :
                      [ elementOrArray2 ];
   
-  push(array1, array2);
+  push(arrayA, arrayB);
 }
 
 export function clear(array) {
@@ -48,14 +48,34 @@ export function clear(array) {
   return array.splice(start);
 }
 
-export function copy(array1, array2) {
+export function copy(arrayA, arrayB) {
   const start = 0,
-        deleteCount = array2.length;  ///
+        deleteCount = arrayB.length;  ///
   
-  splice(array1, start, deleteCount, array2);
+  splice(arrayA, start, deleteCount, arrayB);
 }
 
-export function merge(array1, array2) { Array.prototype.push.apply(array1, array2); }
+export function merge(arrayA, arrayB) { Array.prototype.push.apply(arrayA, arrayB); }
+
+export function match(arrayA, arrayB, callback) {
+  let matches = false;
+
+  const arrayALength = arrayA.length,
+        arrayBLength = arrayB.length;
+
+  if (arrayALength === arrayBLength) {
+    matches = arrayA.every((elementA, index) => {
+      const elementB = arrayB[index],
+            passed = callback(elementA, elementB, index);
+
+      if (passed) {
+        return true;
+      }
+    });
+  }
+
+  return matches;
+}
 
 export function find(array, callback) {
   const elements = [];
@@ -93,9 +113,9 @@ export function replace(array, element, callback) {
   return found;
 }
 
-export function splice(array1, start, deleteCount = Infinity, array2 = []) {
-  const args = [ start, deleteCount, ...array2 ],
-        deletedElements = Array.prototype.splice.apply(array1, args);
+export function splice(arrayA, start, deleteCount = Infinity, arrayB = []) {
+  const args = [ start, deleteCount, ...arrayB ],
+        deletedElements = Array.prototype.splice.apply(arrayA, args);
 
   return deletedElements;
 }
@@ -183,11 +203,11 @@ export function compress(array, callback) {
       length = array.length;
 
   while (index1 < length) {
-    const element1 = array[index1];
+    const elementB = array[index1];
 
     for (let index2 = length - 1; index2 > index1; index2--) {
-      const element2 = array[index2],
-            passed = callback(element2, element1);
+      const elementA = array[index2],
+            passed = callback(elementA, elementB);
 
       if (passed) {
         const start = index2, ///
@@ -203,10 +223,10 @@ export function compress(array, callback) {
   }
 }
 
-export function combine(array1, array2, callback) {
+export function combine(arrayA, arrayB, callback) {
   const array = [
-    ...array1,
-    ...array2
+    ...arrayA,
+    ...arrayB
   ];
 
   compress(array, callback);
@@ -214,23 +234,23 @@ export function combine(array1, array2, callback) {
   return array;
 }
 
-export function augment(array1, array2, callback) {
-  array2.forEach((element, index) => {
+export function augment(arrayA, arrayB, callback) {
+  arrayB.forEach((element, index) => {
     const passed = callback(element, index);
 
     if (passed) {
-      array1.push(element);
+      arrayA.push(element);
     }
   });
 }
 
-export function separate(array, array1, array2, callback) {
+export function separate(array, arrayA, arrayB, callback) {
   array.forEach((element, index) => {
     const passed = callback(element, index);
 
     passed ?
-      array1.push(element) :
-        array2.push(element);
+      arrayA.push(element) :
+        arrayB.push(element);
   });
 }
 
@@ -394,6 +414,7 @@ export default {
   clear,
   copy,
   merge,
+  match,
   find,
   replace,
   splice,
