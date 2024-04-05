@@ -10,15 +10,33 @@ export function fourth(array) { return array[3]; }
 
 export function fifth(array) { return array[4]; }
 
-export function fifthLast(array) { return array[array.length - 5]; }
+export function sixth(array) { return array[5]; }
 
-export function fourthLast(array) { return array[array.length - 4]; }
+export function seventh(array) { return array[6]; }
 
-export function thirdLast(array) { return array[array.length - 3]; }
+export function eighth(array) { return array[7]; }
+
+export function ninth(array) { return array[8]; }
+
+export function tenth(array) { return array[9]; }
+
+export function firstLast(array) { return array[array.length - 1]; }
 
 export function secondLast(array) { return array[array.length - 2]; }
 
-export function firstLast(array) { return array[array.length - 1]; }
+export function thirdLast(array) { return array[array.length - 3]; }
+
+export function fourthLast(array) { return array[array.length - 4]; }
+
+export function fifthLast(array) { return array[array.length - 5]; }
+
+export function sixthLast(array) { return array[array.length - 6]; }
+
+export function seventhLast(array) { return array[array.length - 7]; }
+
+export function eighthLast(array) { return array[array.length - 8]; }
+
+export function ninthLast(array) { return array[array.length - 9]; }
 
 export function last(array) { return array[array.length - 1]; }
 
