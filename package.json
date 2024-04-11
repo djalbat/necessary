@@ -1,7 +1,7 @@
 {
   "name": "necessary",
   "author": "James Smith",
-  "version": "13.6.2",
+  "version": "13.6.3",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/necessary",
   "description": "A collection of utility functions.",

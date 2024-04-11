@@ -36,8 +36,9 @@ export function getLicense() {
   return license;
 }
 
-export function getPackagePath(dirname = __dirname) {
-  const matches = dirname.match(/^(.+)[\/\\]node_modules/),
+export function getPackagePath() {
+  const utilitiesDirectoryName = __dirname, ///
+        matches = utilitiesDirectoryName.match(/^(.+)[\/\\]node_modules/),
         secondMatch = second(matches),
         packagePath = secondMatch; ///
 
