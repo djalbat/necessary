@@ -247,21 +247,21 @@ function lineNumberFromStackMessage(stackMessage) {
   return lineNumber;
 }
 
-function padStartWithZeroes(string, targetLength) {
+function padStartWithZeroes(string, length) {
   const padString = ZERO, ///
-        paddedString = padStart(string, targetLength, padString);
+        paddedString = padStart(string, length, padString);
 
   return paddedString;
 }
 
-function padStart(string, targetLength, padString) {
+function padStart(string, length, padString) {
   let padding = EMPTY_STRING;
 
-  for (let index = 0; index < targetLength; index++) {
+  for (let index = 0; index < length; index++) {
     padding += padString;
   }
 
-  const paddedString = `${padding}${string}`.substr(-targetLength);
+  const paddedString = `${padding}${string}`.substr(-length);
 
   return paddedString;
 }

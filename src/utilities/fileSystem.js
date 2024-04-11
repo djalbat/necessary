@@ -89,8 +89,8 @@ export function readFile(filePath, encoding = DEFAULT_ENCODING) {
   return content;
 }
 
-export function copyFile(sourceFilePath, destinationFilepath) {
-  fs.copyFileSync(sourceFilePath, destinationFilepath);
+export function copyFile(sourceFilePath, targetFilepath) {
+  fs.copyFileSync(sourceFilePath, targetFilepath);
 }
 
 export function writeFile(filePath, content) {
