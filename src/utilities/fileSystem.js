@@ -89,6 +89,10 @@ export function readFile(filePath, encoding = DEFAULT_ENCODING) {
   return content;
 }
 
+export function copyFile(sourceFilePath, destinationFilepath) {
+  fs.copyFileSync(sourceFilePath, destinationFilepath);
+}
+
 export function writeFile(filePath, content) {
   fs.writeFileSync(filePath, content);
 }
@@ -141,6 +145,7 @@ export default {
   isEntryDirectory,
   isDirectoryEmpty,
   readDirectory,
+  copyFile,
   readFile,
   writeFile,
   appendToFile,

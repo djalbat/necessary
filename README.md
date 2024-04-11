@@ -411,6 +411,7 @@ const line = "${name}, aged ${age}.",
 - `isDirectoryEmpty()`
 - `readDirectory()`
 - `readFile()`
+- `copyFile()`
 - `writeFile()`
 - `appendToFile()`
 - `createDirectory()`
@@ -453,6 +454,12 @@ readDirectory("root/etc"); // returns the contents of the 'root/etc' directory
 
 ```
 readFile("root/etc/init.conf"); // returns the content of the 'root/etc/init.conf' file
+```
+
+* The `copyFile()` function takes as arguments the source and target file paths. It will overwrite an existing file without throwing an error. It does not return anything upon success:
+
+```
+copyFile("root/etc/init.conf", "tmp/init.conf"); // copies the 'init.conf' file in the '/root/etc' folder to the '/tmp' folder
 ```
 
 * The `writeFile()` function takes the content of the file as a second string argument. It does not return anything upon success:
