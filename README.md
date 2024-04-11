@@ -330,9 +330,10 @@ function contentFromResponse(response, callback) {
 - `getAuthor()`
 - `getVersion()`
 - `getLicense()`
+- `getPackagePath()`
 - `getPackageJSON()`
 
-A `getPackageJSON()` function for retrieving the contents of the `package.json` file together with a few helper functions to retrieve the more common entries.
+A `getPackageJSON()` function for retrieving the contents of the `package.json` file together with a few helper functions to retrieve the more common entries and a `packagePath()` function that returns the package's path.
 
 * The `getName()`, `getAuthor()`, `getVersion()` and `getLicense()` functions return the value of the requisite entries in the `package.json` file.
 
@@ -341,6 +342,12 @@ const version = getVersion(); // Returns the package version.
 ```
 
 From here the package's JSON can be destructured to recover specific entries not covered by the above helper functions.
+
+* The `getPackagePath()` function returns the path of the package, that is, the full path of the directory that contains the package in any `node_modules` directory.
+
+```
+const packagePath = getPackagePath(); // Returns the package's path.
+```
 
 * The `getPackageJSON()` function returns the contents of `pakcage.json` file in JSON form.
 

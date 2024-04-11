@@ -36,13 +36,19 @@ export function getLicense() {
   return license;
 }
 
+export function getPackagePath() {
+  const utilitiesDirectoryName = __dirname, ///
+        matches = utilitiesDirectoryName.match(/^(.+)[\/\\]node_modules/),
+        secondMatch = second(matches),
+        packagePath = secondMatch; ///
+
+  return packagePath;
+}
+
 export function getPackageJSON() {
   if (packageJSON === null) {
-    const utilitiesDirectoryName = __dirname, ///
-          matches = utilitiesDirectoryName.match(/^(.+)[\/\\]node_modules/),
-          secondMatch = second(matches),
-          applicationDirectoryName = secondMatch, ///
-          packageJSONFilePath = concatenatePaths(applicationDirectoryName, PACKAGE_JSON),
+    const packagePath = getPackagePath(),
+          packageJSONFilePath = concatenatePaths(packagePath, PACKAGE_JSON),
           packageJSONFileContent = readFile(packageJSONFilePath);
 
     packageJSON = JSON.parse(packageJSONFileContent);
@@ -56,5 +62,6 @@ export default {
   getAuthor,
   getVersion,
   getLicense,
+  getPackagePath,
   getPackageJSON
 };
