@@ -147,20 +147,10 @@ Note that the `headers` argument is not optional this time.
 
 ## Shell utilities
 
-- `onETX()`
 - `prompt()`
 
-Functions that can be used for Node applications running in a shell window.
-
-* The `onETX()` function takes a handler which is invoked whenever the `ETX` character code is encountered in the `stdin` stream, which typically happens when the user presses `Ctrl-C`. This function is therefore useful for exiting a console application immediately upon the user's behest, if it is passed `process.exit`. It also returns a function that can be called to remove the listener at some later point in time:
-
-```
-const offEXT = onEXT(process.exit);
-
-...
-
-offEXT();
-```
+Functions for applications running on a shell such as Bash or ZSH. 
+In fact there is only one currently. 
 
 * The `prompt()` function is meant for use in shell applications. It takes a plain old JavaScript `options` object and a `callback` function as its first and second arguments, respectively:
 

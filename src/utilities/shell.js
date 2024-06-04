@@ -3,7 +3,6 @@
 import { whilst } from "../utilities/asynchronous";
 
 import { DATA } from "../constants";
-import { UTF8_ENCODING } from "../encodings";
 import { DEFAULT_ENCODING, DEFAULT_ATTEMPTS, DEFAULT_INITIAL_ANSWER } from "../defaults";
 import { UP_CHARACTER,
          ETX_CHARACTER,
@@ -14,33 +13,6 @@ import { UP_CHARACTER,
          NEW_LINE_CHARACTER,
          BACKSPACE_CHARACTER,
          CARRIAGE_RETURN_CHARACTER } from "../characters";
-
-export function onETX(handler) {
-  if (process.stdin.setRawMode) {
-    const rawMode = true,
-          encoding = UTF8_ENCODING;
-
-    process.stdin.setRawMode(rawMode);
-
-    process.stdin.setEncoding(encoding);
-
-    process.stdin.addListener(DATA, listener);
-
-    process.stdin.resume();
-
-    return offExt;
-  }
-
-  function offExt() {
-    process.stdin.removeListener(DATA, listener);
-  }
-
-  function listener(character) {
-    if (character === ETX_CHARACTER) {
-      handler();
-    }
-  }
-}
 
 export function prompt(options, callback) {
   let { answer = null } = options;
@@ -66,7 +38,6 @@ export function prompt(options, callback) {
 }
 
 export default {
-  onETX,
   prompt
 }
 
