@@ -71,10 +71,21 @@ export function combinePaths(path, relativePath) {
   return combinedPath;
 }
 
-export function concatenatePaths(path, relativePath) {
+export function concatenatePaths(path, relativePath, ...remainingArguments) {
+  let concatenatedPath;
+
   path = path.replace(/\/$/, EMPTY_STRING);  ///
 
-  const concatenatedPath = `${path}/${relativePath}`;
+  concatenatedPath = `${path}/${relativePath}`;
+
+  const remainingAArgumentsLength = remainingArguments.length;
+
+  if (remainingAArgumentsLength > 0) {
+    const path = concatenatedPath,  ///
+          relativePath = remainingArguments.shift();
+
+    concatenatedPath = concatenatePaths(path, relativePath, ...remainingArguments);
+  }
 
   return concatenatedPath;
 }
