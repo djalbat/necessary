@@ -692,7 +692,7 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `sixth()`
 - `seventh()`
 - `eighth()`
-- `nineth()`
+- `ninth()`
 - `firstLast()`
 - `secondLast()`
 - `thirdLast()`
@@ -701,7 +701,7 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `sixthLast()`
 - `seventhLast()`
 - `eighthLast()`
-- `ninethLast()`
+- `ninthLast()`
 - `last()`
 - `head()`
 - `tail()`
