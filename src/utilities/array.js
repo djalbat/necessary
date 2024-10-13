@@ -117,6 +117,54 @@ export function correlate(arrayA, arrayB, callback) {
   return correlates;
 }
 
+export function resolve(arrayA, arrayB, callback) {
+  let resolved;
+
+  arrayA = [  ///
+    ...arrayA
+  ];
+
+  for (;;) {
+    const arrayALength = arrayA.length;
+
+    if (arrayALength === 0) {
+      break;
+    }
+
+    let resolved = false;
+
+    arrayA.forEach((elementA) => {
+      const passed = callback(elementA);
+
+      if (passed) {
+        const elementB = elementA;  ///
+
+        arrayB.push(elementB);
+
+        resolved = true;
+      }
+    });
+
+    if (!resolved) {
+      break;
+    }
+
+    filter(arrayA, (elementA) => {
+      const arrayBIncludesElementA = arrayB.includes(elementA);
+
+      if (!arrayBIncludesElementA) {
+        return true;
+      }
+    });
+  }
+
+  const arrayALength = arrayA.length;
+
+  resolved = (arrayALength === 0);
+
+  return resolved;
+}
+
 export function find(array, callback) {
   const elements = [];
 
@@ -472,6 +520,7 @@ export default {
   merge,
   match,
   correlate,
+  resolve,
   find,
   replace,
   splice,

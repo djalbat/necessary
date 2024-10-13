@@ -715,6 +715,7 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `merge()`
 - `match()`
 - `correlate()`
+- `resolve()`
 - `find()`
 - `replace()`
 - `splice()`
@@ -783,6 +784,16 @@ match([1, 2, 3], [-1, -2, -3], (valueA, valueB) => (valueA === -valueB)); // ret
 ```
 correlate([1, 2, 3], [-4, -2, -3, -1], (valueA, valueB) => (valueA === -valueB)); // returns true
 ```
+
+* The `resolve()` function repeatedly iterates over the elements of the first array argument, removing them and adding them to the second argument if the callback function returns a truthy value. If the callback function does not return a truthy value for any of the elements of the first array argument or the length of the first array is zero, it terminates. 
+
+```
+resolve([1, 2, 3], [], (value) => true); // moves the elemnts of the first array argument into the second array argument and returns true
+```
+
+The above code snippet is perhaps not very helpful so it is worth explaining this function's utility in the context of a use case. Suppose a compiler has to compile all the files in a given directory. There are inter-dependencies between the files, however, so some files will not compile until their dependents have compiled. If there are orderings of files that allow them to all be compiled, this function will find one of them by trial and error, so to speak. The second array argument will contain the elements according to this ordering.
+
+The first array argument is left untouched whether or not the function succeeds. The second array argument may contain elements if it has only been partially successful, however.
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the callback function returns a truthy value, rather than just the first:
 
