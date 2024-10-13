@@ -95,6 +95,28 @@ export function match(arrayA, arrayB, callback) {
   return matches;
 }
 
+export function correlate(arrayA, arrayB, callback) {
+  arrayB = [  ///
+    ...arrayB
+  ];
+
+  const correlates = arrayA.every((elementA) => {
+    const elementB = extract(arrayB, (elementB) => {
+      const result = callback(elementA, elementB);
+
+      if (result) {
+        return true;
+      }
+    }) || null;
+
+    if (elementB !== null) {
+      return true;
+    }
+  });
+
+  return correlates;
+}
+
 export function find(array, callback) {
   const elements = [];
 
@@ -248,6 +270,14 @@ export function combine(arrayA, arrayB, callback) {
   ];
 
   compress(array, callback);
+
+  return array;
+}
+
+export function reverse(array) {
+  array = [ ///
+    ...array
+  ].reverse();
 
   return array;
 }
@@ -441,6 +471,7 @@ export default {
   copy,
   merge,
   match,
+  corrlate,
   find,
   replace,
   splice,
@@ -450,6 +481,7 @@ export default {
   patch,
   compress,
   combine,
+  reverse,
   augment,
   separate,
   forwardsFind,

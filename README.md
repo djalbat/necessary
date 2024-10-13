@@ -714,6 +714,7 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `copy()`
 - `merge()`
 - `match()`
+- `correlate()`
 - `find()`
 - `replace()`
 - `splice()`
@@ -723,6 +724,7 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `patch()`
 - `compress()`
 - `combine()`
+- `reverse()`
 - `augment()`
 - `separate()`
 - `forwardsFind()`
@@ -774,6 +776,12 @@ merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4,
 
 ```
 match([1, 2, 3], [-1, -2, -3], (valueA, valueB) => (valueA === -valueB)); // returns true
+```
+
+* The `correlate()` works similarly to the `match()` function, however it does not require the elements to be in order nor does it require the arrays to be of the same length. It is asymmetric in the sense that the second array argument can contain additional elements that are not matched. Elements can match once only, however.
+
+```
+correlate([1, 2, 3], [-4, -2, -3, -1], (valueA, valueB) => (valueA === -valueB)); // returns true
 ```
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the callback function returns a truthy value, rather than just the first:
@@ -828,6 +836,12 @@ compress([1, 2, 1], (element1, element2) => (element1 === element2)); // the arr
 
 ```
 combine([1, 2, 1], [2, 3], (element1, element2) => (element1 === element2)); // returns [1, 2, 3]
+```
+
+* The `reverse()` function returns the array argument reversed, as opposed to its native counterpart which reverses an array in place 
+
+```
+reverse([1, 2, 3]); // returns [3, 2, 1]
 ```
 
 * The `augment()` function appends each of the elements of the second array argument to the first array argument whenever the callback returns a truthy value:
