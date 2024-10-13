@@ -471,7 +471,7 @@ export default {
   copy,
   merge,
   match,
-  corrlate,
+  correlate,
   find,
   replace,
   splice,

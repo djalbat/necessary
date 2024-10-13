@@ -778,7 +778,7 @@ merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4,
 match([1, 2, 3], [-1, -2, -3], (valueA, valueB) => (valueA === -valueB)); // returns true
 ```
 
-* The `correlate()` works similarly to the `match()` function, however it does not require the elements to be in order nor does it require the arrays to be of the same length. It is asymmetric in the sense that the second array argument can contain additional elements that are not matched. Elements can match once only, however.
+* The `correlate()` function works similarly to the `match()` function. However, it does not require the elements to be in order nor does it require the arrays to be the same length. It is asymmetric in the sense that the second array argument can contain additional elements that are not matched. Elements in the second array can match once only, however.
 
 ```
 correlate([1, 2, 3], [-4, -2, -3, -1], (valueA, valueB) => (valueA === -valueB)); // returns true
