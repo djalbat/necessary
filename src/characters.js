@@ -15,6 +15,7 @@ export const COLON_CHARACTER = ":";
 export const PERIOD_CHARACTER = ".";
 export const DOLLAR_CHARACTER = "$";
 export const CTRL_C_CHARACTER = "^C";
+export const ESCAPE_CHARACTER = "\u001b";
 export const ASTERISK_CHARACTER = "*";
 export const WILDCARD_CHARACTER = "*";
 export const BACKTICK_DELIMITER = "`";
@@ -49,6 +50,7 @@ export default {
   PERIOD_CHARACTER,
   DOLLAR_CHARACTER,
   CTRL_C_CHARACTER,
+  ESCAPE_CHARACTER,
   ASTERISK_CHARACTER,
   WILDCARD_CHARACTER,
   BACKTICK_DELIMITER,

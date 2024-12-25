@@ -151,7 +151,15 @@ function input(initialAnswer, hidden, description, encoding, callback) {
         break;
       }
 
-      default:
+      case ETX_CHARACTER: {
+        console.log(CTRL_C_CHARACTER);
+
+        process.exit();
+
+        break;
+      }
+
+      default: {
         answer += character;
 
         if (!hidden) {
@@ -159,11 +167,7 @@ function input(initialAnswer, hidden, description, encoding, callback) {
         }
 
         break;
-
-      case ETX_CHARACTER:
-        console.log(CTRL_C_CHARACTER);
-
-        process.exit();
+      }
     }
   }
 }
