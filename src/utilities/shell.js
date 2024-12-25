@@ -133,8 +133,8 @@ function input(initialAnswer, hidden, description, encoding, callback) {
 
       case BACKSPACE_CHARACTER: {
         const answerLength = answer.length,
-          start = 0,
-          end = answerLength - 1;
+              start = 0,
+              end = answerLength - 1;
 
         answer = answer.slice(start, end);
 
