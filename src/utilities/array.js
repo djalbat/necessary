@@ -95,6 +95,35 @@ export function match(arrayA, arrayB, callback) {
   return matches;
 }
 
+export function compare(arrayA, arrayB, callback) {
+  let coupled = false;
+
+  const arrayALength = arrayA.length,
+        arrayBLength = arrayB.length;
+
+  if (arrayALength === arrayBLength) {
+    arrayB = [  ///
+      ...arrayB
+    ];
+
+    coupled = arrayA.every((elementA, index) => {
+      const elementB = extract(arrayB, (elementB) => {
+        const result = callback(elementA, elementB);
+
+        if (result) {
+          return true;
+        }
+      }) || null;
+
+      if (elementB !== null) {
+        return true;
+      }
+    });
+  }
+
+  return coupled;
+}
+
 export function correlate(arrayA, arrayB, callback) {
   arrayB = [  ///
     ...arrayB
@@ -519,6 +548,7 @@ export default {
   copy,
   merge,
   match,
+  compare,
   correlate,
   resolve,
   find,

@@ -714,6 +714,7 @@ pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/i
 - `copy()`
 - `merge()`
 - `match()`
+- `compare()`
 - `correlate()`
 - `resolve()`
 - `find()`
@@ -773,19 +774,29 @@ copy([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [4, 5, 6, 7]
 merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4, 5, 6, 7]
 ```
 
-* The `match()` function compares the first and second array arguments. If they are of the same length and the callback argument supplied returns a truthy value when invoked with each pair of elements then it returns true:
+* The `match()` function compares the first and second array arguments in order. If they are of the same length and the callback argument supplied returns a truthy value when invoked with each pair of elements then it returns true:
 
 ```
 match([1, 2, 3], [-1, -2, -3], (valueA, valueB) => (valueA === -valueB)); // returns true
 ```
 
-* The `correlate()` function works similarly to the `match()` function. However, it does not require the elements to be in order nor does it require the arrays to be the same length. It is asymmetric in the sense that the second array argument can contain additional elements that are not matched. Elements in the second array can match once only, however.
+* The `compare()` function is like the `match()` function but the elements can match in any order:
+
+```
+compare([1, 2, 3], [-2, -1, -3], (valueA, valueB) => (valueA === -valueB)); // returns true
+```
+
+Note that pairs of elements can match once and once only. 
+
+* The `correlate()` function is like the `compare()` function but the second array argument can contain extraneous elements.
 
 ```
 correlate([1, 2, 3], [-4, -2, -3, -1], (valueA, valueB) => (valueA === -valueB)); // returns true
 ```
 
-* The `resolve()` function repeatedly iterates over the elements of the first array argument, removing them and adding them to the second argument if the callback function returns a truthy value. If the callback function does not return a truthy value for any of the elements of the first array argument or the length of the first array is zero, it terminates. 
+Again note that pairs of elements can match once and once only.
+ 
+* The `resolve()` function repeatedly iterates over the elements of the first array argument, removing them and adding them to the second array argument if the callback function returns a truthy value. If the callback function does not return a truthy value for any of the elements of the first array argument or the length of the first array is zero, it terminates. 
 
 ```
 resolve([1, 2, 3], [], (value) => true); // moves the elemnts of the first array argument into the second array argument and returns true
