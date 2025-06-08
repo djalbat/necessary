@@ -517,6 +517,36 @@ export function backwardsForEach(array, callback) {
   }
 }
 
+export function forwardsFindIndex(array, callback) {
+  const arrayLength = array.length;
+
+  for (let index = 0; index < arrayLength; index++) {
+    const element = array[index],
+          passed = callback(element, index);
+
+    if (passed) {
+      return index;
+    }
+  }
+
+  return -1;
+}
+
+export function backwardsFindIndex(array, callback) {
+  const arrayLength = array.length;
+
+  for (let index = arrayLength - 1; index >= 0; index--) {
+    const element = array[index],
+          passed = callback(element, index);
+
+    if (passed) {
+      return index;
+    }
+  }
+
+  return -1;
+}
+
 export default {
   first,
   second,
@@ -572,5 +602,7 @@ export default {
   forwardsReduce,
   backwardsReduce,
   forwardsForEach,
-  backwardsForEach
+  backwardsForEach,
+  forwardsFindIndex,
+  backwardsFindIndex
 };
