@@ -86,7 +86,7 @@ The `query` argument should be a plain old JavaScript object, the names and valu
 
 The `headers` argument should also be a plain old JavaScript object. 
 If it does not have an `accept` property then one wil be provided with the value `application/json`.
-The `reponseType` argument can be left null, which is the default, or set to a value such as `ArrayBuffer`.
+The `reponseType` argument can be left null, which is the default, or set to a value such as `arraybuffer`.
 
 The `callback` argument is expected to be a function taking `content` and `statusCode` arguments. 
 If the `accept` property of the main `headers` argument is set to `application/json` then the function's `content` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. 
