@@ -80,12 +80,13 @@ See below.
 
 The first two `get()` and `post()` functions make use of the third `request()` function, which is more generic and can be used for arbitrary HTTP requests.
 
-* The `get()` function sends a `GET` request, taking `host`, `uri` and `query` arguments, together with an optional `headers` argument after the `query` argument.
+* The `get()` function sends a `GET` request, taking `host`, `uri` and `query` arguments, together with optional `headers` and `responseType` arguments after the `query` argument.
 
 The `query` argument should be a plain old JavaScript object, the names and values of which are encoded and concatenated to form the query string.
 
 The `headers` argument should also be a plain old JavaScript object. 
 If it does not have an `accept` property then one wil be provided with the value `application/json`.
+The `reponseType` argument can be left null, which is the default, or set to a value such as `ArrayBuffer`.
 
 The `callback` argument is expected to be a function taking `content` and `statusCode` arguments. 
 If the `accept` property of the main `headers` argument is set to `application/json` then the function's `content` argument can be assumed to be JSON, or `null` if the request body cannot be parsed as such. 
@@ -110,7 +111,7 @@ Note that the `uri` argument must include a leading forward slash `/` since the 
 * The `post()` function behaves almost identically to the `get()` function, with the following differences.
 
 It sends a `POST` rather than a `GET` request. 
-There is an additional `content` argument that comes before the `headers` argument, which is again optional. 
+There is an additional `content` argument that comes before the `headers` and `reponseType` arguments, which are again optional. 
 If the `headers` argument does not have a `content-type` property then one will be provided with the value of `application/json`. 
 If the `content-type` property of the `headers` argument is set to `application/json` then the `content` argument is assumed to be a plain old JavaScript object and is stringified as JSON.
 
@@ -131,7 +132,7 @@ post(host, uri, query, json, (json, statusCode) => {
 });
 ```
 
-* The `request()` function behaves similarly to the `post()` function but the `headers` argument is no longer optional and there is a `method` argument that comes before the `content` argument:
+* The `request()` function behaves similarly to the `post()` function but the `headers` and `respnoseType` argumenta are no longer optional and there is a `method` argument that comes before the `content` argument:
 
 ```
 const host = "...",
