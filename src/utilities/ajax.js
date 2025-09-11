@@ -1,14 +1,30 @@
 "use strict";
 
+import { STRING, FUNCTION } from "../constants";
 import { GET_METHOD, POST_METHOD } from "../methods";
 import { APPLICATION_JSON_CONTENT_TYPE } from "../contentTypes";
 import { ACCEPT_HEADER, CONTENT_TYPE_HEADER } from "../headers";
 import { underwrite, urlFromHostURIAndQuery } from "../utilities/http";
 
-export function get(host, uri, query, headers, callback) {
-  if (callback === undefined) {
+export function get(host, uri, query, headers, responseType, callback) {
+  if (typeof headers === FUNCTION) {
     callback = headers; ///
+
+    responseType = null;
+
     headers = {};
+  }
+
+  if (typeof responseType === FUNCTION) {
+    callback = responseType;  ///
+
+    if (typeof headers === STRING) {
+      responseType = headers; ///
+
+      headers = {};
+    } else {
+      responseType = null
+    }
   }
 
   const method = GET_METHOD,
@@ -17,14 +33,28 @@ export function get(host, uri, query, headers, callback) {
 
   underwriteAcceptHeader(headers, accept);
 
-  request(host, uri, query, method, headers, content, callback);
+  request(host, uri, query, method, content, headers, responseType, callback);
 }
 
-export function post(host, uri, query, headers, content, callback) {
-  if (callback === undefined) {
-    callback = content;
-    content = headers;
+export function post(host, uri, query, content, headers, responseType, callback) {
+  if (typeof headers === FUNCTION) {
+    callback = headers; ///
+
+    responseType = null;
+
     headers = {};
+  }
+
+  if (typeof responseType === FUNCTION) {
+    callback = responseType;  ///
+
+    if (typeof headers === STRING) {
+      responseType = headers; ///
+
+      headers = {};
+    } else {
+      responseType = null
+    }
   }
 
   const method = POST_METHOD,
@@ -35,10 +65,10 @@ export function post(host, uri, query, headers, content, callback) {
 
   underwriteContentTypeHeader(headers, contentType);
 
-  request(host, uri, query, method, headers, content, callback);
+  request(host, uri, query, method, content, headers, responseType, callback);
 }
 
-export function request(host, uri, query, method, headers, content, callback) {
+export function request(host, uri, query, method, content, headers, responseType, callback) {
   const url = urlFromHostURIAndQuery(host, uri, query),
         accept = headers[ACCEPT_HEADER] || null,
         contentType = headers[CONTENT_TYPE_HEADER] || null,
@@ -49,6 +79,12 @@ export function request(host, uri, query, method, headers, content, callback) {
           jsonString = JSON.stringify(json);
 
     content = jsonString;  ///
+  }
+
+  if (responseType !== null) {
+    Object.assign(xmlHttpRequest, {
+      responseType
+    });
   }
 
   xmlHttpRequest.onreadystatechange = () => {
