@@ -17,8 +17,6 @@ export { default as stringUtilities } from "./utilities/string";
 export { default as versionUtilities } from "./utilities/version";
 export { default as asynchronousUtilities } from "./utilities/asynchronous";
 
-
-
 export { default as shellUtilities } from "./utilities/shell";
 export { default as requestUtilities } from "./utilities/request";
 export { default as loggingUtilities } from "./utilities/logging";
