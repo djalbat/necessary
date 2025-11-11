@@ -2,24 +2,27 @@
 
 import { readFile } from "../utilities/fileSystem";
 import { EMPTY_STRING } from "../constants";
+import { NEW_LINE_CHARACTER } from "../characters";
 
-export function parseFile(filePath, args, regex) {
+const defaultRegularExpression = /\${(.+?)}/g;
+
+export function parseFile(filePath, args, regularExpression = defaultRegularExpression) {
   const content = readFile(filePath),
-        parsedContent = parseContent(content, args, regex);
+        parsedContent = parseContent(content, args, regularExpression);
 
   return parsedContent;
 }
 
-export function parseContent(content, args, regex) {
-  const lines = content.split("\n"),
-        parsedLines = parseLines(lines, args, regex),
-        parsedContent = parsedLines.join("\n");
+export function parseContent(content, args, regularExpression = defaultRegularExpression) {
+  const lines = content.split(NEW_LINE_CHARACTER),
+        parsedLines = parseLines(lines, args, regularExpression),
+        parsedContent = parsedLines.join(NEW_LINE_CHARACTER);
 
   return parsedContent;
 }
 
-export function parseLine(line, args, regex = /\${(.+?)}/g) {
-  const parsedLine = line.replace(regex, (match, token) => {
+export function parseLine(line, args, regularExpression = defaultRegularExpression) {
+  const parsedLine = line.replace(regularExpression, (match, token) => {
     const parsedToken = parseToken(token, args);
 
     return parsedToken;
@@ -34,9 +37,9 @@ export default {
   parseLine
 };
 
-function parseLines(lines, args, regex) {
+function parseLines(lines, args, regularExpression) {
   const parsedLines = lines.map((line) => {
-    const parsedLine = parseLine(line, args, regex);
+    const parsedLine = parseLine(line, args, regularExpression);
 
     return parsedLine;
   });

@@ -395,7 +395,7 @@ const filePath = "/etc/var/public/name.html",
       args = {
         name,
         age
-      }
+      },
       parsedContent = parseFile(filePath, args);
 ```
 
@@ -404,8 +404,8 @@ const filePath = "/etc/var/public/name.html",
 ```
 const content = `
 
-  name: <strong>${name}</strong><br/>
-  age: <strong>${age}</strong><br/>
+  name: <strong>\${name}</strong><br/>
+  age: <strong>\${age}</strong><br/>
 
       `,
       name = "Joe Bloggs",
@@ -413,9 +413,32 @@ const content = `
       args = {
         name,
         age
-      }
+      },
       parsedContent = parseContent(content, args);
 ```
+
+Note that the dollar signs are escaped here. 
+Alternatively you can dispense with them altogether and pass in a different regular expression:
+
+```
+const content = `
+
+  name: <strong>{name}</strong><br/>
+  age: <strong>{age}</strong><br/>
+
+      `,
+      name = "Joe Bloggs",
+      age = 99,
+      args = {
+        name,
+        age
+      },
+      regularExpression = /{(.+?)}/g,
+      parsedContent = parseContent(content, args, regularExpression);
+```
+
+You can of course choose any token format you like if you provide the requisite regular expression to match it.
+The `parseLine()` and `parseFile()` functions also behave in this way.
 
 * The `parseLine()` function takes a single line of content as the first argument:
 
@@ -426,7 +449,7 @@ const line = "${name}, aged ${age}.",
       args = {
         name,
         age
-      }
+      },
       parsedLine = parseLine(line, args); // returns 'Joe Bloggs, aged 99.'
 ```
 
