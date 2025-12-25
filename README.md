@@ -941,7 +941,7 @@ extract([1, 2, -1, -2], (element, index) => (element === 2)); // returns 2 and t
 patch([1, 2, 0, -1, -2], 4, (element, index) => (element === 0)); // the array argument becomes [1, 2, 0, -1, -2, 4]
 ```
 
-* The `compress()` function will remove elements from the array argument whenever the callback function returns a truthy value:
+* The `compress()` function will remove elements from the array argument whenever the callback function returns a falsey value:
 
 ```
 compress([1, 2, 1], (element1, element2) => (element1 === element2)); // the array argument becomes [1, 2]
