@@ -66,6 +66,12 @@ export function sequence(operations, done, context) {
 export function eventually(operations, done, context) {
   const length = operations.length;  ///
 
+  if (length === 0) {
+    done();
+
+    return;
+  }
+
   let count = 0;
 
   function next() {
@@ -84,6 +90,12 @@ export function eventually(operations, done, context) {
 }
 
 export function repeatedly(operation, length, done, context) {
+  if (length === 0) {
+    done();
+
+    return;
+  }
+
   let count = 0;
 
   function next() {
