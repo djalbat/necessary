@@ -1217,7 +1217,6 @@ They also take a `done()` function and an optional `context` argument.
 They all pass a `next()` function to the operations followed by the `done()` function, the `context` and then an `index` argument. Operations can call the `done()` function instead of the `next()` function in order to terminate early.
 
 * The `whilst()` function takes a single operation, which it calls each time the operation invokes the given `next()` function or until the operation invokes the given `done()` function. 
-The operation can also force termination by returning a truthy value, in which case it must *not* call the given `next()` or `done()` functions. 
 In the example below the operation will be executed ten times:
 
 ```
@@ -1228,11 +1227,13 @@ const operation = (next, done, context, index) => {
 
   if (terminate) {
     done();
-  } else {
-    ...
+    
+    return;
+  } 
+  
+  ...
 
-    next();
-  }
+  next();
 }
 
 whilst(operation, () => {
@@ -1252,11 +1253,13 @@ const operation = (element, next, done, context, index) => {
 
   if (terminate) {
     done();
-  } else {
-    ...
-
-    next();
+    
+    return;
   }
+
+  ...
+
+  next();
 }
 
 const array = [0, 1, 2, 3, 4, 5];

@@ -6,12 +6,9 @@ export function whilst(operation, done, context) {
   function next() {
     count++;
 
-    const index = count,  ///
-          terminate = operation(next, done, context, index);
+    const index = count;  ///
 
-    if (terminate) {
-      done();
-    }
+    operation(next, done, context, index);
   }
 
   next();
