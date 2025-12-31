@@ -326,7 +326,7 @@ export function compress(array, callback) {
       const elementA = array[index2],
             passed = callback(elementA, elementB);
 
-      if (passed) {
+      if (!passed) {
         const start = index2, ///
               deleteCount = 1;
 
