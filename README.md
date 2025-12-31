@@ -947,13 +947,13 @@ patch([1, 2, 0, -1, -2], 4, (element, index) => (element === 0)); // the array a
 compress([1, 2, 1], (element1, element2) => (element1 === element2)); // the array argument becomes [1, 2]
 ```
 
-* The `combine()` function will concatenate the two array arguments, combine them and and return the result
+* The `combine()` function will concatenate the two array arguments, compress them and and return the result:
 
 ```
 combine([1, 2, 1], [2, 3], (element1, element2) => (element1 === element2)); // returns [1, 2, 3]
 ```
 
-* The `reverse()` function returns the array argument reversed, as opposed to its native counterpart which reverses an array in place 
+* The `reverse()` function returns the array argument reversed, as opposed to its native counterpart which reverses an array in place: 
 
 ```
 reverse([1, 2, 3]); // returns [3, 2, 1]
