@@ -2,8 +2,8 @@
 
 import { first, second } from "../utilities/array";
 import { DEFAULT_RC_BASE_EXTENSION } from "../defaults";
-import { STRING, NUMBER, BOOLEAN, ENVIRONMENT } from "../constants";
 import { readFile, writeFile, checkFileExists } from "../utilities/fileSystem";
+import { STRING, NUMBER, BOOLEAN, ENVIRONMENT, DOUBLE_SPACE } from "../constants";
 
 if (!globalThis.rc) {
   globalThis.rc = _rc;
@@ -41,7 +41,7 @@ function readRCFile() {
 
 function writeRCFile(json) {
   const rcFilePath = rcFilePathFromNothing(),
-        rdFileContent = JSON.stringify(json, null, "  ");
+        rdFileContent = JSON.stringify(json, null, DOUBLE_SPACE);
 
   writeFile(rcFilePath, rdFileContent);
 }
@@ -68,11 +68,10 @@ function checkRCFileExists() {
 }
 
 function createVacuousRCFile() {
-  const json = {
-    "environments": [
-      {}
-    ]
-  };
+  const environments = [],
+        json = {
+          environments
+        };
 
   writeRCFile(json);
 }
@@ -90,6 +89,7 @@ Object.assign(_rc, {
 
 function findEnvironment(json, environmentName) {
   let environment;
+
   const { environments } = json;
 
   if (environmentName === null) {
@@ -150,7 +150,11 @@ function replaceEnvironmentVariable(string) {
   if (stringUpperCase) {
     const name = string;  ///
 
-    value = process.env[name] || null;
+    value = process.env[name];
+
+    if (value === undefined) {
+      value = null;
+    }
   }
 
   return value;
@@ -165,7 +169,7 @@ function replaceEnvironmentVariables(environment) {
   if (false) {
     ///
   } else if (jsonArray) {
-    const array = json,
+    const array = json, ///
           length = array.length;
 
     for (let index = 0; index < length; index++) {
@@ -173,7 +177,7 @@ function replaceEnvironmentVariables(environment) {
             jsonString = isJSONString(json);
 
       if (jsonString) {
-        const string = json,
+        const string = json,  ///
               value = replaceEnvironmentVariable(string);
 
         if (value !== null) {
