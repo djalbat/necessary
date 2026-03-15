@@ -824,7 +824,7 @@ If the array is not long enough they return `undefined`.
   
 * The `head()` function returns an array containing the first element of its array argument whilst the `tail()` function returns an array containing all but the first element of its array argument. 
  
-* The `back()` function returns an array containing hte last element of its array argument whilst the `front()` function returns an array returning all but the last element of its array argument.
+* The `back()` function returns an array containing the last element of its array argument whilst the `front()` function returns an array returning all but the last element of its array argument.
 
 * The `push()` function is similar to its native counterpart but will push an array rather than a single element.
 
