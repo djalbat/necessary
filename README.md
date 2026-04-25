@@ -1091,19 +1091,19 @@ Its return value is the difference between the code points of the first differin
 Some examples should clarify:
 
 ```
-strcmp("", "") = 0;
+strcmp("", "") === 0;
 
-strcmp("a", "") < 0;
+strcmp("a", "") > 0;
 
-strcmp("", "a") > 0;
+strcmp("", "a") < 0;
 
-strcmp("a", "a") = 0;
+strcmp("a", "a") === 0;
 
-strcmp("ab", "a") < 0;
+strcmp("ab", "a") > 0;
 
-strcmp("ab", "ac") > 0;
+strcmp("ab", "ac") < 0;
 
-strcmp("C", "𝔸") > 0;
+strcmp("C", "𝔸") < 0;
 ```
 
 Note that, conceptually speaking, the first argument is taken away from the second argument in order to compute the difference and not the other way around.
