@@ -1,126 +1,115 @@
 "use strict";
 
-import { EMPTY_STRING } from "../constants";
-
 export function strlen(string) {
   let length = 0;
 
-  const iterator = string[Symbol.iterator]();
-
-  let character = iterator.next();
-
-  while (!character.done) {
-    character = iterator.next();
-
-    length++
+  for (const _ of string) {
+    length++;
   }
 
   return length;
 }
 
 export function strcmp(stringA, stringB) {
-  let difference;
+  let difference = 0;
 
-  const iteratorA = stringA[Symbol.iterator](), ///
-        iteratorB = stringB[Symbol.iterator](); ///
+  let naiveIndexA = 0,
+      naiveIndexB = 0;
 
-  let characterA = iteratorA.next(),
-      characterB = iteratorB.next(),
-      codePointA,
-      codePointB;
+  const stringANaiveLength = stringA.length,
+        stringBNaiveLength = stringB.length;
 
-  while (true) {
-    codePointA = characterA.value ? ///
-                   characterA.value.codePointAt(0) :
-                     0;
-    codePointB = characterB.value ? ///
-                   characterB.value.codePointAt(0) :
-                     0;
+  while ((naiveIndexA < stringANaiveLength) || (naiveIndexB < stringBNaiveLength)) {
+    const codePointA = (naiveIndexA < stringANaiveLength) ?
+                         stringA.codePointAt(naiveIndexA) :
+                           0,
+          codePointB = (naiveIndexB < stringBNaiveLength) ?
+                         stringB.codePointAt(naiveIndexB) :
+                           0;
 
-    difference = codePointB - codePointA;
+    difference = (codePointA - codePointB);
 
     if (difference !== 0) {
       break;
     }
 
-    if (characterA.done || characterB.done) {
-      break;
-    }
+    naiveIndexA += (codePointA > 0xFFFF) ?
+                2 :
+                  1;
 
-    characterA = iteratorA.next();
-    characterB = iteratorB.next();
+    naiveIndexB += (codePointB > 0xFFFF) ?
+                2 :
+                  1;
   }
 
   return difference;
 }
 
 export function indexOf(string, searchString) {
-  let index = -1,
-      found = false;
+  let index = -1;
 
-  const searchStringLength = strlen(searchString);
+  const searchStringLength = searchString.length;
 
   if (searchStringLength > 0) {
-    let character;
+    const outerNaiveIndex = string.indexOf(searchString);
 
-    const iterator = string[Symbol.iterator](),
-          searchIterator = searchString[Symbol.iterator](),
-          searchCharacter = searchIterator.next();
+    if (outerNaiveIndex > -1) {
+      index = 0;
 
-    character = iterator.next();
+      let innerNaiveIndex = 0;
 
-    index++;
+      while (innerNaiveIndex < outerNaiveIndex) {
+        const charCode = string.charCodeAt(innerNaiveIndex);
 
-    while (!character.done) {
-      if (character.value === searchCharacter.value) {
-        const start = index,  ///
-              end = start + searchStringLength,
-              subString = substring(string, start, end),
-              difference = strcmp(subString, searchString);
+        innerNaiveIndex += ((charCode >= 0xD800) && (charCode <= 0xDBFF)) ?
+                             2 :
+                               1;
 
-        if (difference === 0) {
-          found = true;
-
-          break;
-        }
+        index++;
       }
-
-      character = iterator.next();
-
-      index++
     }
-  }
-
-  if (!found) {
-    index = -1;
   }
 
   return index;
 }
 
 export function substring(string, start, end = Infinity) {
-  let index = 0;
+  const stringNaiveLength = string.length;
 
-  const iterator = string[Symbol.iterator](),
-        characters = [];
+  let index = 0,
+      naiveIndex = 0,
+      naiveStart = stringNaiveLength, ///
+      naiveEnd = stringNaiveLength; ///
 
-  let character = iterator.next();
+  while (naiveIndex < stringNaiveLength) {
+    if (index === start) {
+      naiveStart = naiveIndex;  ///
+    }
 
-  while (!character.done) {
     if (index === end) {
+      naiveEnd = naiveIndex;  ///
+
       break;
     }
 
-    if (index >= start) {
-      characters.push(character.value); ///
-    }
+    const charCode = string.charCodeAt(naiveIndex);
 
-    index++
+    naiveIndex += ((charCode >= 0xD800) && (charCode <= 0xDBFF)) ?
+                    2 :
+                      1;
 
-    character = iterator.next();
+    index++;
   }
 
-  const substring = characters.join(EMPTY_STRING);
+  if (index === start) {
+    naiveStart = naiveIndex;  ///
+  }
+
+  if (index === end) {
+    naiveEnd = naiveIndex;  ///
+  }
+
+  const substring = string.substring(naiveStart, naiveEnd);
 
   return substring;
 }
