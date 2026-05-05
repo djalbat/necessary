@@ -23,6 +23,7 @@ These cna only be used on Node:
 These can be used both on Node and in the browser:
 
 * [Path utilities](#path-utilities)
+* [JSON utilities](#json-utilities)
 * [Array utilities](#array-utilities)
 * [HTTP utilities](#http-utilities)
 * [String utilities](#string-utilities)
@@ -755,6 +756,91 @@ topmostDirectoryNameFromPath("etc/init.conf"); // returns 'etc'
 pathWithoutBottommostNameFromPath("root/etc/init.conf"); // returns 'root/etc'
 
 pathWithoutTopmostDirectoryNameFromPath("root/etc/init.conf"); // returns 'etc/init.conf'
+```
+
+## JSON utilities
+
+- `typeOf()`
+- `isNull()`
+- `isArray()`
+- `isObject()`
+- `isString()`
+- `isNumber()`
+- `isBoolean()`
+- `isPrimitive()`
+
+These functions return the types of all valid JSON objects and primitives.
+Note that they are only meant for JSON and are not meant to be used for arbitrary JavaScript objects.
+
+* The `typeOf()` function returns either `array`, `object` or `primitive` depending on its only argument:
+
+```
+typeOf([1,2,3]); // returns 'array'
+
+typeOf({"foo": "bah"}); // returns 'object'
+
+typeOf(123); // returns 'primitive'
+```
+
+* The `isNull()` function returns true if passed null, otherwise false.
+
+```
+isNull(null); // returns true
+
+isNull("null"); // returns false
+```
+
+* The `isArray()` function returns true if passed an array, otherwise false.
+
+```
+isArray([1,2,3]); // returns true
+
+isArray("1,2,3"); // returns false
+```
+
+* The `isObject()` function returns true if passed an object, otherwise false.
+
+```
+isObject({"foo": "bah"}); // returns true
+
+isObject("foo:bar"); // returns false
+```
+
+* The `isString()` function returns true if passed a string, otherwise false.
+
+```
+isString("foo:bar"); // returns true
+
+isString({"foo": "bah"}); // returns false
+```
+
+* The `isNumber()` function returns true if passed a number, otherwise false.
+
+```
+isNumber(123); // returns true
+
+isNumber("123"); // returns false
+```
+
+* The `isBoolean()` function returns true if passed true or false, false otherwise
+
+```
+isBoolean(false); // returns true
+
+isBoolean(123); // returns false
+```
+* The `isPrimitive()` function returns true if passed a primitive, false otherwise
+
+```
+isPrimitive(123); // returns true
+
+isPrimitive(null); // returns true
+
+isPrimitive("foo"); // returns true
+
+isPrimitive([]); // returns false
+
+isPrimitive({}); // returns false
 ```
 
 ## Array utilities
