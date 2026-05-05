@@ -1,9 +1,11 @@
 "use strict";
 
+import { ENVIRONMENT } from "../constants";
 import { first, second } from "../utilities/array";
+import { isStringUpperCase } from "../utilities/string";
 import { DEFAULT_RC_BASE_EXTENSION } from "../defaults";
+import { isArray, isObject, isPrimitive } from "../utilities/json";
 import { readFile, writeFile, checkFileExists } from "../utilities/fileSystem";
-import { STRING, NUMBER, BOOLEAN, ENVIRONMENT, DOUBLE_SPACE } from "../constants";
 
 if (!globalThis.rc) {
   globalThis.rc = _rc;
@@ -41,7 +43,7 @@ function readRCFile() {
 
 function writeRCFile(json) {
   const rcFilePath = rcFilePathFromNothing(),
-        rdFileContent = JSON.stringify(json, null, DOUBLE_SPACE);
+        rdFileContent = JSON.stringify(json, null, 2);
 
   writeFile(rcFilePath, rdFileContent);
 }
@@ -163,8 +165,8 @@ function replaceEnvironmentVariable(string) {
 function replaceEnvironmentVariables(environment) {
   let json = environment;
 
-  const jsonArray = isJSONArray(json),
-        jsonObject = isJSONObject(json);
+  const jsonArray = isArray(json),
+        jsonObject = isObject(json);
 
   if (false) {
     ///
@@ -174,9 +176,9 @@ function replaceEnvironmentVariables(environment) {
 
     for (let index = 0; index < length; index++) {
       const json = array[index],
-            jsonString = isJSONString(json);
+            jsonPrimitive = isPrimitive(json);
 
-      if (jsonString) {
+      if (jsonPrimitive) {
         const string = json,  ///
               value = replaceEnvironmentVariable(string);
 
@@ -190,9 +192,9 @@ function replaceEnvironmentVariables(environment) {
 
     for (let name in object) {
       const json = object[name],
-            jsonString = isJSONString(json);
+            jsonPrimitive = isPrimitive(json);
 
-      if (jsonString) {
+      if (jsonPrimitive) {
         const string = json,  ///
               value = replaceEnvironmentVariable(string);  ///
 
@@ -204,52 +206,4 @@ function replaceEnvironmentVariables(environment) {
       }
     }
   }
-}
-
-function isJSONArray(json) {
-  const jsonArray = (json instanceof Array);
-
-  return jsonArray;
-}
-
-function isJSONObject(json) {
-  const jsonArray = isJSONArray(json),
-        jsonPrimitive = isJSONPrimitive(json),
-        jsonObject = (!jsonArray && ! jsonPrimitive);
-
-  return jsonObject;
-}
-
-function isJSONString(json) {
-  const jsonString = (typeof json === STRING);
-
-  return jsonString;
-}
-
-function isJSONNumber(json) {
-  const jsonNumber = (typeof json === NUMBER);
-
-  return jsonNumber;
-}
-
-function isJSONBoolean(json) {
-  const jsonBoolean = (typeof json === BOOLEAN);
-
-  return jsonBoolean;
-}
-
-function isJSONPrimitive(json) {
-  const jsonString = isJSONString(json),
-        jsonNumber = isJSONNumber(json),
-        jsonBoolean = isJSONBoolean(json),
-        jsonPrimitive = (jsonString || jsonNumber || jsonBoolean);
-
-  return jsonPrimitive;
-}
-
-function isStringUpperCase(string) {
-  const upperCaseString = string.toUpperCase(),
-        stringUpperCase = (string === upperCaseString);
-
-  return stringUpperCase;
 }

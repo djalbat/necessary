@@ -822,14 +822,14 @@ isNumber(123); // returns true
 isNumber("123"); // returns false
 ```
 
-* The `isBoolean()` function returns true if passed true or false, false otherwise
+* The `isBoolean()` function returns true if passed true or false, false otherwise.
 
 ```
 isBoolean(false); // returns true
 
 isBoolean(123); // returns false
 ```
-* The `isPrimitive()` function returns true if passed a primitive, false otherwise
+* The `isPrimitive()` function returns true if passed a primitive, false otherwise.
 
 ```
 isPrimitive(123); // returns true
@@ -1157,9 +1157,10 @@ Ideally the `host` argument should not include a trailing forward slash whereas 
 - `strcmp()`
 - `indexOf()`
 - `substring()`
+- `isStringUpperCase()`
 
 String functions with support for Unicode. 
-Specifically, characters in Unicode astral plains are counted twice in native string functions and methods whereas these functions effectively count astral Unicode characters only once. 
+Specifically, characters in Unicode astral plains are counted twice in native string functions and methods whereas these functions effectively count astral Unicode characters only once.
 
 * The `strlen()` function takes a single `string` argument. 
 It works in much the same way as the `length` property of the `String` prototype, however it is Unicode safe:
@@ -1204,13 +1205,24 @@ indexOf("𝔸b", "b"); // Returns 1.
 
 In the above example the aforementioned native method would return 2.
 
-* The `substring()` function takes `string` and `start` arguments and an optional `end` argument. 
-It works in much the same way as the `substring()` method of the `String` prototype, however it is Unicode safe:
+* The `substring()` function takes `string` and `start` arguments and an optional `end` argument.
+  It works in much the same way as the `substring()` method of the `String` prototype, however it is Unicode safe:
 
 ```
 "𝔸𝔹C".substring(3) = "C" // The 𝔹 character is in an astral plane and counts as two.  
 
 substring("𝔸𝔹C", 2) = "C" // Again the string is converted to an array and thus the third character is returned.
+```
+
+* The `isStringUppercase()` function takes a single `string` argument.
+  It returns true is the string is uppercase, false otherwise:
+
+```
+isStringUpperCase("CAFÉ"); // returns true
+
+isStringUpperCase("Café"); // returns false
+
+isStringUpperCase("MÜNCHEN"); // returns true
 ```
 
 Note the native `substring()` method can be particularly egregious because the `start` and `end` arguments may result in only half of some characters being returned, so to speak.

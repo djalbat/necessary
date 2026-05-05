@@ -114,9 +114,17 @@ export function substring(string, start, end = Infinity) {
   return substring;
 }
 
+export function isStringUpperCase(string) {
+  const upperCaseString = string.toUpperCase(),
+        stringUpperCase = (string === upperCaseString);
+
+  return stringUpperCase;
+}
+
 export default {
   strcmp,
   strlen,
   indexOf,
-  substring
+  substring,
+  isStringUpperCase
 };
