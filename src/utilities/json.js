@@ -1,5 +1,6 @@
 "use strict";
 
+import { OBJECT_OBJECT } from "../constants";
 import { ARRAY_JSON_TYPE,
          OBJECT_JSON_TYPE,
          STRING_JSON_TYPE,
@@ -40,9 +41,7 @@ export function isArray(json) {
 }
 
 export function isObject(json) {
-  const array = isArray(json),
-        primitive = isPrimitive(json),
-        object = (!array && !primitive);
+  const object = (Object.prototype.toString.call(json) === OBJECT_OBJECT);
 
   return object;
 }
