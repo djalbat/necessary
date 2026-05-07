@@ -47,19 +47,19 @@ export function isObject(json) {
 }
 
 export function isString(json) {
-  const string = ((typeof json) === STRING_JSON_TYPE);
+  const string = (typeof json === STRING_JSON_TYPE);
 
   return string;
 }
 
 export function isNumber(json) {
-  const number = ((typeof json) === NUMBER_JSON_TYPE);
+  const number = (typeof json === NUMBER_JSON_TYPE);
 
   return number;
 }
 
 export function isBoolean(json) {
-  const boolean = ((typeof json) === BOOLEAN_JSON_TYPE);
+  const boolean = (typeof json === BOOLEAN_JSON_TYPE);
 
   return boolean;
 }
