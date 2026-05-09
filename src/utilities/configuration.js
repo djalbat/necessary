@@ -4,7 +4,7 @@ import { ENVIRONMENT } from "../constants";
 import { first, second } from "../utilities/array";
 import { isStringUpperCase } from "../utilities/string";
 import { DEFAULT_RC_BASE_EXTENSION } from "../defaults";
-import { isArray, isObject, isPrimitive } from "../utilities/json";
+import { isArray, isObject, isString } from "../utilities/json";
 import { readFile, writeFile, checkFileExists } from "../utilities/fileSystem";
 
 if (!globalThis.rc) {
@@ -176,9 +176,9 @@ function replaceEnvironmentVariables(environment) {
 
     for (let index = 0; index < length; index++) {
       const json = array[index],
-            jsonPrimitive = isPrimitive(json);
+            jsonString = isString(json);
 
-      if (jsonPrimitive) {
+      if (jsonString) {
         const string = json,  ///
               value = replaceEnvironmentVariable(string);
 
@@ -192,9 +192,9 @@ function replaceEnvironmentVariables(environment) {
 
     for (let name in object) {
       const json = object[name],
-            jsonPrimitive = isPrimitive(json);
+            jsonString = isString(json);
 
-      if (jsonPrimitive) {
+      if (jsonString) {
         const string = json,  ///
               value = replaceEnvironmentVariable(string);  ///
 
