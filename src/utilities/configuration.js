@@ -42,8 +42,9 @@ function readRCFile() {
 }
 
 function writeRCFile(json) {
-  const rcFilePath = rcFilePathFromNothing(),
-        rdFileContent = JSON.stringify(json, null, 2);
+  const jsonString = JSON.stringify(json, null, 2),
+        rcFilePath = rcFilePathFromNothing(),
+        rdFileContent = jsonString;///
 
   writeFile(rcFilePath, rdFileContent);
 }
