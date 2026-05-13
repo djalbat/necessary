@@ -48,9 +48,11 @@ export function getPackageJSON() {
   if (packageJSON === null) {
     const packagePath = getPackagePath(),
           packageJSONFilePath = concatenatePaths(packagePath, PACKAGE_JSON),
-          packageJSONFileContent = readFile(packageJSONFilePath);
+          packageJSONFileContent = readFile(packageJSONFilePath),
+          jsonString = packageJSONFileContent,  ///
+          json = JSON.parse(jsonString);
 
-    packageJSON = JSON.parse(packageJSONFileContent);
+    packageJSON = json; ///
   }
 
   return packageJSON;

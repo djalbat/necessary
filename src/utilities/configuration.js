@@ -36,7 +36,8 @@ function _rc(environmentName) {
 function readRCFile() {
   const rcFilePath = rcFilePathFromNothing(),
         rcFileContent = readFile(rcFilePath),
-        json = JSON.parse(rcFileContent);
+        jsonString = rcFileContent, ///
+        json = JSON.parse(jsonString);
 
   return json;      
 }
