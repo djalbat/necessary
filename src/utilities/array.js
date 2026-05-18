@@ -194,10 +194,33 @@ export function resolve(arrayA, arrayB, callback) {
   return resolved;
 }
 
+export function one(array, callback) {
+  let found = false;
+
+  const arrayLength = array.length;
+
+  for (let index = 0; index < arrayLength; index++) {
+    const element = array[index],
+          passed = callback(element, index);
+
+    if (passed) {
+      if (!found) {
+        found = true;
+      } else {
+        found = false;
+
+        break;
+      }
+    }
+  }
+
+  return found;
+}
+
 export function find(array, callback) {
   const elements = [];
 
-  forwardsForEach(array, (element, index) => {
+  array.forEach((element, index) => {
     const passed = callback(element, index);
 
     if (passed) {
@@ -316,25 +339,25 @@ export function patch(array, element, callback) {
 }
 
 export function compress(array, callback) {
-  let index1 = 0,
+  let indexB = 0,
       length = array.length;
 
-  while (index1 < length) {
-    const elementB = array[index1];
+  while (indexB < length) {
+    const elementB = array[indexB];
 
-    for (let index2 = length - 1; index2 > index1; index2--) {
-      const elementA = array[index2],
+    for (let indexA = length - 1; indexA > indexB; indexA--) {
+      const elementA = array[indexA],
             passed = callback(elementA, elementB);
 
       if (!passed) {
-        const start = index2, ///
+        const start = indexA, ///
               deleteCount = 1;
 
         array.splice(start, deleteCount);
       }
     }
 
-    index1++;
+    indexB++;
 
     length = array.length;
   }
@@ -581,6 +604,7 @@ export default {
   compare,
   correlate,
   resolve,
+  one,
   find,
   replace,
   splice,
