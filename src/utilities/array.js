@@ -217,6 +217,27 @@ export function one(array, callback) {
   return found;
 }
 
+export function each(array, callback) {
+  let found = false;
+
+  const arrayLength = array.length;
+
+  for (let index = 0; index < arrayLength; index++) {
+    const element = array[index],
+          passed = callback(element, index);
+
+    if (passed) {
+      found = true;
+    } else {
+      found = false;
+
+      break;
+    }
+  }
+
+  return found;
+}
+
 export function find(array, callback) {
   const elements = [];
 
@@ -605,6 +626,7 @@ export default {
   correlate,
   resolve,
   one,
+  each,
   find,
   replace,
   splice,

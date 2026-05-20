@@ -879,6 +879,7 @@ isPrimitive({}); // returns false
 - `correlate()`
 - `resolve()`
 - `one()`
+- `each()`
 - `find()`
 - `replace()`
 - `splice()`
@@ -982,12 +983,20 @@ The second array argument will contain the elements according to this ordering.
 The first array argument is left untouched whether or not the function succeeds. 
 The second array argument may contain elements if it has only been partially successful, however.
 
-* The `one()` function is akin to the native `some()` method but returns true only if the callback returns a truthy value exactly once:
+* The `one()` function is akin to the native `some()` method but returns true only if the callback returns a truthy value once and only  once:
 
 ```
 one([1, 2, 1], (element) => (element === 1)); // returns true;
 
 one([1, 2, 1, 3], (element) => (element === 1)); // returns false;
+```
+
+* The `each()` function is akin to the native `every()` method but returns true only if the callback returns a truthy value always and at least once:
+
+```
+each([1, 1], (element) => (element === 1)); // returns true;
+
+each([], (element) => (element === 1)); // returns false;
 ```
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the callback function returns a truthy value, rather than just the first:
