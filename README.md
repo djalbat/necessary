@@ -881,6 +881,7 @@ isPrimitive({}); // returns false
 - `one()`
 - `each()`
 - `find()`
+- `clone()`
 - `replace()`
 - `splice()`
 - `filter()`
@@ -998,6 +999,14 @@ each([1, 1], (element) => (element === 1)); // returns true;
 
 each([], (element) => (element === 1)); // returns false;
 ```
+
+* The `clone()` function returns a *shallow* clone of its array argument. 
+
+```
+clone([1, 2, 3]); // returns [1, 2, 3]
+```
+
+This is often invaluable if many of the subsequent funtions, which mutate their array argument, are employed.
 
 * The `find()` function is like its native counterpart, however it returns an array of all the elements for which the callback function returns a truthy value, rather than just the first:
 

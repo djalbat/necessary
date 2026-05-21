@@ -252,6 +252,14 @@ export function find(array, callback) {
   return elements;
 }
 
+export function clone(array) {
+  array = [ ///
+    ...array
+  ];
+
+  return array;
+}
+
 export function replace(array, element, callback) {
   let start;
   
@@ -628,6 +636,7 @@ export default {
   one,
   each,
   find,
+  clone,
   replace,
   splice,
   filter,
