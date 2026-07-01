@@ -41,7 +41,7 @@ export function log(messageOrError, level = EMPTY_STRING) {
   let error,
       message;
 
-  if (messageOrError instanceof Error) {
+  if (Error.prototype.isPrototypeOf(messageOrError)) {
     error = messageOrError; ///
 
     ({ message } = error);

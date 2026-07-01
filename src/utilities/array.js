@@ -53,9 +53,9 @@ export function push(arrayA, arrayB) { Array.prototype.push.apply(arrayA, arrayB
 export function unshift(arrayA, arrayB) { Array.prototype.unshift.apply(arrayA, arrayB); }
 
 export function concat(arrayA, elementOrArray2) {
-  const arrayB = (elementOrArray2 instanceof Array) ?
-                    elementOrArray2 :
-                     [ elementOrArray2 ];
+  const arrayB = Array.isArray(elementOrArray2) ?
+                   elementOrArray2 :
+                    [ elementOrArray2 ];
   
   push(arrayA, arrayB);
 }
