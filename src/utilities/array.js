@@ -298,10 +298,9 @@ export function filter(array, callback) {
     if (!passed) {
       const start = index,  ///
             deleteCount = 1,
-            deletedElements = array.splice(start, deleteCount),
-            firstDeletedElement = first(deletedElements);
-      
-      deletedElements.unshift(firstDeletedElement);  ///
+            deletedElement = array.splice(start, deleteCount).pop();  ///
+
+      deletedElements.unshift(deletedElement);  ///
     }
   });
   
@@ -316,11 +315,9 @@ export function prune(array, callback) {
 
     if (!passed) {
       const start = index,  ///
-            deleteCount = 1,
-            deletedElements = array.splice(start, deleteCount),
-            firstDeletedElement = first(deletedElements);
-      
-      deletedElement = firstDeletedElement;  ///
+            deleteCount = 1;
+
+      deletedElement = array.splice(start, deleteCount).pop();  ///
 
       return true;
     }
@@ -337,11 +334,9 @@ export function extract(array, callback) {
 
     if (passed) {
       const start = index,  ///
-            deleteCount = 1,
-            deletedElements = array.splice(start, deleteCount),
-            firstDeletedElement = first(deletedElements);
+            deleteCount = 1;
 
-      deletedElement = firstDeletedElement;  ///
+      deletedElement = array.splice(start, deleteCount).pop();  ///
 
       return true;
     }
