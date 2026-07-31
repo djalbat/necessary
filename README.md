@@ -893,6 +893,10 @@ isPrimitive({}); // returns false
 - `combine()`
 - `augment()`
 - `separate()`
+- `union()`
+- `intersection()`
+- `leftDifference()`
+- `rigthDifference()`
 - `forwardsFind()`
 - `backwardsFind()`
 - `forwardsSome()`
@@ -1084,9 +1088,35 @@ augment([1, 2, 3], [-1, 4, -2, 5], (element, index) => (element > 0)); // the ar
 separate([1, -1, -2, 2, 3, -3], [], [], (element, index) => {(element > 0)); // the second and third array arguments become [1, 2, 3] and [-1, -2, 3], respectively.
 ```
 
-The `forwardsXXX()` and `backwardsXXX()`functions do as their names suggest. 
-The `fowardsXXX()` functions take an array for their first argument but otherwise behave identically to their native counterparts. 
-The `backwardsXXX()` functions behave similarly, only backwards.
+* The `union()` function combines the first and second array arguments into a new array, using the callback function to ensure that no matching duplicates are included in the returned set:
+
+```
+union([1, 2, 3], [2, 3, 4], (valueA, valueB) => (valueA === valueB)); // returns [1, 2, 3, 4]
+```
+
+* The `intersection()` function compares the first and second array arguments, returning a new array containing only the elements from the first array that match an element in the second array based on the callback function:
+
+```
+intersection([1, 2, 3], [2, 3, 4], (valueA, valueB) => (valueA === valueB)); // returns [2, 3]
+```
+
+* The `leftDifference()` function compares the first and second array arguments, returning a new array containing only the elements from the first array that do not match any element in the second array based on the callback function:
+
+```
+leftDifference([1, 2, 3], [2, 3, 4], (valueA, valueB) => (valueA === valueB)); // returns [1]
+```
+
+* The `rightDifference()` function compares the first and second array arguments, returning a new array containing only the elements from the second array that do not match any element in the first array based on the callback function:
+
+```
+rightDifference([1, 2, 3], [2, 3, 4], (valueA, valueB) => (valueA === valueB)); // returns [4]
+```
+
+* The `forwardsXXX()` and `backwardsXXX()`functions do as their names suggest.
+ 
+* The `fowardsXXX()` functions take an array for their first argument but otherwise behave identically to their native counterparts.
+
+* The `backwardsXXX()` functions behave similarly, only backwards.
 
 ## HTTP utilities
 

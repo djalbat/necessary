@@ -395,6 +395,9 @@ export function resolve(arrayA, arrayB, callback) {
 }
 
 export function combine(arrayA, arrayB, callback) {
+  arrayA = Array.prototype.slice.call(arrayA);  ///
+  arrayB = Array.prototype.slice.call(arrayB);  ///
+
   const array = [
     ...arrayA,
     ...arrayB
@@ -406,23 +409,155 @@ export function combine(arrayA, arrayB, callback) {
 }
 
 export function augment(arrayA, arrayB, callback) {
-  arrayB.forEach((element, index) => {
-    const passed = callback(element, index);
+  const arrayBLength = arrayB.length;
+
+  for (let index = 0; index < arrayBLength; index++) {
+    const element = arrayB[index],
+          passed = callback(element, index);
 
     if (passed) {
-      arrayA.push(element);
+      Array.prototype.push.call(arrayA, element);
     }
-  });
+  }
 }
 
 export function separate(array, arrayA, arrayB, callback) {
-  array.forEach((element, index) => {
-    const passed = callback(element, index);
+  const arrayLength = array.length;
 
-    passed ?
-      arrayA.push(element) :
-        arrayB.push(element);
-  });
+  for (let index = 0; index < arrayLength; index++) {
+    const element = array[index],
+          passed = callback(element, index);
+
+    if (passed) {
+      Array.prototype.push.call(arrayA, element);
+    } else {
+      Array.prototype.push.call(arrayB, element);
+    }
+  }
+}
+
+export function union(arrayA, arrayB, callback) {
+  arrayA = Array.prototype.slice.call(arrayA);  ///
+  arrayB = Array.prototype.slice.call(arrayB);  ///
+
+  const combinedArray = [
+    ...arrayA,
+    ...arrayB
+  ];
+
+  const array = [],
+        combinedArrayLength = combinedArray.length;
+
+  for (let index = 0; index < combinedArrayLength; index++) {
+    let found = false;
+
+    const arrayLength = array.length,
+          combinedElement = combinedArray[index];
+
+    for (let arrayIndex = 0; arrayIndex < arrayLength; arrayIndex++) {
+      const element = array[arrayIndex],
+            passed = callback(element, combinedElement);
+
+      if (passed) {
+        found = true;
+
+        break;
+      }
+    }
+
+    if (!found) {
+      Array.prototype.push.call(array, combinedElement);
+    }
+  }
+
+  return array;
+}
+
+export function intersection(arrayA, arrayB, callback) {
+  const array = [],
+        arrayALength = arrayA.length;
+
+  for (let indexA = 0; indexA < arrayALength; indexA++) {
+    let found = false;
+
+    const elementA = arrayA[indexA],
+          arrayBLength = arrayB.length;
+
+    for (let indexB = 0; indexB < arrayBLength; indexB++) {
+      const elementB = arrayB[indexB],
+            passed = callback(elementA, elementB);
+
+      if (passed) {
+        found = true;
+
+        break;
+      }
+    }
+
+    if (found) {
+      Array.prototype.push.call(array, elementA);
+    }
+  }
+
+  return array;
+}
+
+export function leftDifference(arrayA, arrayB, callback) {
+  const array = [],
+        arrayALength = arrayA.length;
+
+  for (let indexA = 0; indexA < arrayALength; indexA++) {
+    let found = false;
+
+    const elementA = arrayA[indexA],
+          arrayBLength = arrayB.length;
+
+    for (let indexB = 0; indexB < arrayBLength; indexB++) {
+      const elementB = arrayB[indexB],
+            passed = callback(elementA, elementB);
+
+      if (passed) {
+        found = true;
+
+        break;
+      }
+    }
+
+    if (!found) {
+      Array.prototype.push.call(array, elementA);
+    }
+  }
+
+  return array;
+}
+
+export function rightDifference(arrayA, arrayB, callback) {
+  const array = [],
+        arrayBLength = arrayB.length;
+
+  for (let indexB = 0; indexB < arrayBLength; indexB++) {
+    let found = false;
+
+    const elementB = arrayB[indexB],
+          arrayALength = arrayA.length;
+
+    for (let indexA = 0; indexA < arrayALength; indexA++) {
+      const elementA = arrayA[indexA],
+            passed = callback(elementA, elementB);
+
+      if (passed) {
+        found = true;
+
+        break;
+      }
+    }
+
+    if (!found) {
+      Array.prototype.push.call(array, elementB);
+    }
+  }
+
+  return array;
 }
 
 export function forwardsFind(array, callback) {
@@ -437,7 +572,7 @@ export function forwardsFind(array, callback) {
     }
   }
 
-  return false;
+  return undefined;
 }
 
 export function backwardsFind(array, callback) {
@@ -452,7 +587,7 @@ export function backwardsFind(array, callback) {
     }
   }
 
-  return false;
+  return undefined;
 }
 
 export function forwardsSome(array, callback) {
@@ -642,6 +777,10 @@ export default {
   reverse,
   augment,
   separate,
+  union,
+  intersection,
+  leftDifference,
+  rightDifference,
   forwardsFind,
   backwardsFind,
   forwardsSome,
