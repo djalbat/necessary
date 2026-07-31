@@ -100,7 +100,7 @@ export function filter(array, callback) {
           passed = callback(element, index);
 
     if (!passed) {
-      const start = i,
+      const start = index,  ///
             deleteCount = 1,
             deletedElement = Array.prototype.splice.call(array, start, deleteCount).pop();
 
