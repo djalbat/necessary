@@ -44,154 +44,134 @@ export function head(array) { return array.slice(0, 1); }
 
 export function tail(array) { return array.slice(1); }
 
-export function back(array) { return array.slice(array.length - 1); }
+export function back(array) { return array.slice(-1); }
 
-export function front(array) { return array.slice(0, Math.max(1, array.length - 1)); }
+export function front(array) { return array.slice(0, -1); }
 
-export function push(arrayA, arrayB) { Array.prototype.push.apply(arrayA, arrayB); }
+export function push(arrayA, arrayB) { return Array.prototype.push.apply(arrayA, arrayB); }
 
-export function unshift(arrayA, arrayB) { Array.prototype.unshift.apply(arrayA, arrayB); }
+export function unshift(arrayA, arrayB) { return Array.prototype.unshift.apply(arrayA, arrayB); }
+
+export function merge(arrayA, arrayB) { Array.prototype.push.apply(arrayA, arrayB); }
 
 export function concat(arrayA, elementOrArray2) {
   const arrayB = Array.isArray(elementOrArray2) ?
                    elementOrArray2 :
                     [ elementOrArray2 ];
-  
-  push(arrayA, arrayB);
+
+  Array.prototype.push.apply(arrayA, arrayB);
+}
+
+export function splice(arrayA, start, deleteCount = Infinity, arrayB = []) {
+  return Array.prototype.splice.call(arrayA, start, deleteCount, ...arrayB);
 }
 
 export function clear(array) {
   const start = 0;
-  
-  return array.splice(start);
+
+  return Array.prototype.splice.call(array, start);
+}
+
+export function clone(array) {
+  const start = 0;
+
+  return Array.prototype.slice.call(array, start);
+}
+
+export function reverse(array) {
+  const start = 0;
+
+  return Array.prototype.slice.call(array, start).reverse();
 }
 
 export function copy(arrayA, arrayB) {
   const start = 0,
         deleteCount = arrayB.length;  ///
-  
-  splice(arrayA, start, deleteCount, arrayB);
+
+  Array.prototype.splice.call(arrayA, start, deleteCount, ...arrayB);
 }
 
-export function merge(arrayA, arrayB) { Array.prototype.push.apply(arrayA, arrayB); }
+export function filter(array, callback) {
+  const deletedElements = [],
+        arrayLength = array.length;
 
-export function match(arrayA, arrayB, callback) {
-  let matches = false;
+  for (let index = arrayLength - 1; index >= 0; index--) {
+    const element = array[index],
+          passed = callback(element, index);
 
-  const arrayALength = arrayA.length,
-        arrayBLength = arrayB.length;
+    if (!passed) {
+      const start = i,
+            deleteCount = 1,
+            deletedElement = Array.prototype.splice.call(array, start, deleteCount).pop();
 
-  if (arrayALength === arrayBLength) {
-    matches = arrayA.every((elementA, index) => {
-      const elementB = arrayB[index],
-            passed = callback(elementA, elementB, index);
-
-      if (passed) {
-        return true;
-      }
-    });
+      deletedElements.unshift(deletedElement);
+    }
   }
 
-  return matches;
+  return deletedElements;
 }
 
-export function compare(arrayA, arrayB, callback) {
-  let coupled = false;
+export function prune(array, callback) {
+  let deletedElement = undefined;
 
-  const arrayALength = arrayA.length,
-        arrayBLength = arrayB.length;
+  Array.prototype.some.call(array, (element, index) => {
+    const passed = callback(element, index);
 
-  if (arrayALength === arrayBLength) {
-    arrayB = [  ///
-      ...arrayB
-    ];
+    if (!passed) {
+      const start = index,  ///
+            deleteCount = 1;
 
-    coupled = arrayA.every((elementA, index) => {
-      const elementB = extract(arrayB, (elementB) => {
-        const result = callback(elementA, elementB);
+      deletedElement = Array.prototype.splice.call(array, start, deleteCount).pop();  ///
 
-        if (result) {
-          return true;
-        }
-      }) || null;
-
-      if (elementB !== null) {
-        return true;
-      }
-    });
-  }
-
-  return coupled;
-}
-
-export function correlate(arrayA, arrayB, callback) {
-  arrayB = [  ///
-    ...arrayB
-  ];
-
-  const correlates = arrayA.every((elementA) => {
-    const elementB = extract(arrayB, (elementB) => {
-      const result = callback(elementA, elementB);
-
-      if (result) {
-        return true;
-      }
-    }) || null;
-
-    if (elementB !== null) {
       return true;
     }
   });
 
-  return correlates;
+  return deletedElement;
 }
 
-export function resolve(arrayA, arrayB, callback) {
-  let resolved;
+export function extract(array, callback) {
+  let deletedElement = undefined;
 
-  arrayA = [  ///
-    ...arrayA
-  ];
+  Array.prototype.some.call(array, (element, index) => {
+    const passed = callback(element, index);
 
-  for (;;) {
-    const arrayALength = arrayA.length;
+    if (passed) {
+      const start = index,  ///
+            deleteCount = 1;
 
-    if (arrayALength === 0) {
-      break;
+      deletedElement = Array.prototype.splice.call(array, start, deleteCount).pop();  ///
+
+      return true;
+    }
+  });
+
+  return deletedElement;
+}
+
+export function compress(array, callback) {
+  let indexB = 0,
+      arrayLength = array.length;
+
+  while (indexB < arrayLength) {
+    const elementB = array[indexB];
+
+    for (let indexA = arrayLength - 1; indexA > indexB; indexA--) {
+      const elementA = array[indexA],
+            passed = callback(elementA, elementB);
+
+      if (!passed) {
+        const start = indexA, ///
+              deleteCount = 1;
+
+        Array.prototype.splice.call(array, start, deleteCount);
+      }
     }
 
-    let resolved = false;
+    indexB++;
 
-    arrayA.forEach((elementA) => {
-      const passed = callback(elementA);
-
-      if (passed) {
-        const elementB = elementA;  ///
-
-        arrayB.push(elementB);
-
-        resolved = true;
-      }
-    });
-
-    if (!resolved) {
-      break;
-    }
-
-    filter(arrayA, (elementA) => {
-      const arrayBIncludesElementA = arrayB.includes(elementA);
-
-      if (!arrayBIncludesElementA) {
-        return true;
-      }
-    });
+    arrayLength = array.length;
   }
-
-  const arrayALength = arrayA.length;
-
-  resolved = (arrayALength === 0);
-
-  return resolved;
 }
 
 export function one(array, callback) {
@@ -239,152 +219,179 @@ export function each(array, callback) {
 }
 
 export function find(array, callback) {
-  const elements = [];
+  const elements = [],
+        arrayLength = array.length;
 
-  array.forEach((element, index) => {
-    const passed = callback(element, index);
+  for (let index = 0; index < arrayLength; index++) {
+    const element = array[index],
+          passed = callback(element, index);
 
     if (passed) {
       elements.push(element);
     }
-  });
+  }
 
   return elements;
 }
 
-export function clone(array) {
-  array = [ ///
-    ...array
-  ];
+export function patch(arrayA, elementB, callback) {
+  let found = false;
 
-  return array;
-}
+  const arrayALength = arrayA.length;
 
-export function replace(array, element, callback) {
-  let start;
-  
-  const found = array.some((element, index) => {
-    const passed = callback(element, index);
+  for (let index = 0; index < arrayALength; index++) {
+    const elementA = arrayA[index],
+          passed = callback(elementA, index);
 
     if (passed) {
-      start = index;  ///
-      
-      return true;
-    }
-  });
-  
-  if (found) {
-    const deleteCount = 1;
+      Array.prototype.push.call(arrayA, elementB);
 
-    array.splice(start, deleteCount, element);
+      found = true;
+
+      break;
+    }
   }
 
   return found;
 }
 
-export function splice(arrayA, start, deleteCount = Infinity, arrayB = []) {
-  const args = [ start, deleteCount, ...arrayB ],
-        deletedElements = Array.prototype.splice.apply(arrayA, args);
+export function replace(arrayA, elementB, callback) {
+  let found = false;
 
-  return deletedElements;
-}
+  const arrayALength = arrayA.length;
 
-export function filter(array, callback) {
-  const deletedElements = [];
-  
-  backwardsForEach(array, (element, index) => {
-    const passed = callback(element, index);
-
-    if (!passed) {
-      const start = index,  ///
-            deleteCount = 1,
-            deletedElement = array.splice(start, deleteCount).pop();  ///
-
-      deletedElements.unshift(deletedElement);  ///
-    }
-  });
-  
-  return deletedElements;
-}
-
-export function prune(array, callback) {
-  let deletedElement = undefined;
-  
-  array.some((element, index) => {
-    const passed = callback(element, index);
-
-    if (!passed) {
-      const start = index,  ///
-            deleteCount = 1;
-
-      deletedElement = array.splice(start, deleteCount).pop();  ///
-
-      return true;
-    }
-  });
-  
-  return deletedElement;
-}
-
-export function extract(array, callback) {
-  let deletedElement = undefined;
-
-  array.some((element, index) => {
-    const passed = callback(element, index);
+  for (let index = 0; index < arrayALength; index++) {
+    const elementA = arrayA[index],
+          passed = callback(elementA, index);
 
     if (passed) {
       const start = index,  ///
             deleteCount = 1;
 
-      deletedElement = array.splice(start, deleteCount).pop();  ///
+      Array.prototype.splice.call(arrayA, start, deleteCount, elementB);
 
-      return true;
+      found = true;
+
+      break;
     }
-  });
-
-  return deletedElement;
-}
-
-export function patch(array, element, callback) {
-  const found = array.some((element, index) => {
-    const passed = callback(element, index);
-
-    if (passed) {
-      return true;
-    }
-  });
-
-
-  if (found) {
-    array.push(element);
   }
 
   return found;
 }
 
-export function compress(array, callback) {
-  let indexB = 0,
-      length = array.length;
+export function match(arrayA, arrayB, callback) {
+  let matches = false;
 
-  while (indexB < length) {
-    const elementB = array[indexB];
+  const arrayALength = arrayA.length,
+        arrayBLength = arrayB.length;
 
-    for (let indexA = length - 1; indexA > indexB; indexA--) {
-      const elementA = array[indexA],
-            passed = callback(elementA, elementB);
+  if (arrayALength === arrayBLength) {
+    matches = Array.prototype.every.call(arrayA, (elementA, index) => {
+      const elementB = arrayB[index],
+            passed = callback(elementA, elementB, index);
 
-      if (!passed) {
-        const start = indexA, ///
-              deleteCount = 1;
-
-        array.splice(start, deleteCount);
+      if (passed) {
+        return true;
       }
+    });
+  }
+
+  return matches;
+}
+
+export function compare(arrayA, arrayB, callback) {
+  let compares = false;
+
+  const arrayALength = arrayA.length,
+        arrayBLength = arrayB.length;
+
+  if (arrayALength === arrayBLength) {
+    arrayB = clone(arrayB); ///
+
+    compares = Array.prototype.every.call(arrayA,(elementA) => {
+      const elementB = extract(arrayB, (elementB) => {
+        const passed = callback(elementA, elementB);
+
+        if (passed) {
+          return true;
+        }
+      });
+
+      if (elementB !== undefined) {
+        return true;
+      }
+    });
+  }
+
+  return compares;
+}
+
+export function correlate(arrayA, arrayB, callback) {
+  let correlates;
+
+  arrayB = clone(arrayB); ///
+
+  correlates = Array.prototype.every.call(arrayA,(elementA) => {
+    const elementB = extract(arrayB, (elementB) => {
+      const passed = callback(elementA, elementB);
+
+      if (passed) {
+        return true;
+      }
+    });
+
+    if (elementB !== undefined) {
+      return true;
+    }
+  });
+
+  return correlates;
+}
+
+export function resolve(arrayA, arrayB, callback) {
+  let resolved;
+
+  arrayA = clone(arrayA); ///
+
+  for (;;) {
+    const arrayALength = arrayA.length;
+
+    if (arrayALength === 0) {
+      break;
     }
 
-    indexB++;
+    let resolved = false;
 
-    length = array.length;
+    Array.prototype.forEach.call(arrayA, (elementA) => {
+      const passed = callback(elementA);
+
+      if (passed) {
+        const elementB = elementA;  ///
+
+        Array.prototype.push.call(arrayB, elementB);
+
+        resolved = true;
+      }
+    });
+
+    if (!resolved) {
+      break;
+    }
+
+    filter(arrayA, (elementA) => {
+      const arrayBIncludesElementA = Array.prototype.includes.call(arrayB, elementA);
+
+      if (!arrayBIncludesElementA) {
+        return true;
+      }
+    });
   }
+
+  const arrayALength = arrayA.length;
+
+  resolved = (arrayALength === 0);
+
+  return resolved;
 }
 
 export function combine(arrayA, arrayB, callback) {
@@ -394,14 +401,6 @@ export function combine(arrayA, arrayB, callback) {
   ];
 
   compress(array, callback);
-
-  return array;
-}
-
-export function reverse(array) {
-  array = [ ///
-    ...array
-  ].reverse();
 
   return array;
 }
@@ -621,9 +620,9 @@ export default {
   push,
   unshift,
   concat,
+  merge,
   clear,
   copy,
-  merge,
   match,
   compare,
   correlate,

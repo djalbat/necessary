@@ -870,27 +870,27 @@ isPrimitive({}); // returns false
 - `front()`
 - `push()`
 - `unshift()`
-- `concat()`
-- `clear()`
-- `copy()`
 - `merge()`
+- `concat()`
+- `splice()`
+- `clear()`
+- `clone()`
+- `reverse()`
+- `copy()`
+- `filter()`
+- `prune()`
+- `extract()`
+- `one()`
+- `each()`
+- `find()`
+- `replace()`
+- `patch()`
+- `compress()`
 - `match()`
 - `compare()`
 - `correlate()`
 - `resolve()`
-- `one()`
-- `each()`
-- `find()`
-- `clone()`
-- `replace()`
-- `splice()`
-- `filter()`
-- `prune()`
-- `extract()`
-- `patch()`
-- `compress()`
 - `combine()`
-- `reverse()`
 - `augment()`
 - `separate()`
 - `forwardsFind()`
@@ -919,6 +919,12 @@ If the array is not long enough they return `undefined`.
 
 * The `unshift()` function is similar to its native counterpart but will unshift an array rather than a single element.
 
+* The `merge()` function copies the second array argument onto to the end of the first array argument, behaving in identical fashion to the `push()` function:
+
+```
+merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4, 5, 6, 7]
+```
+
 * The `concat()` function is similar to its native counterpart, however it alters the first array argument *in place*. 
 Like its native counterpart it will also take a single element as the second argument and convert it to an array.
 
@@ -926,10 +932,29 @@ Like its native counterpart it will also take a single element as the second arg
 concat([1, 2, 3], 4); // the array argument becomes [1, 2, 3, 4]
 ```
 
+* The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards.
+  It mutates the first array argument and returns an array of the elements that have been deleted:
+
+```
+splice([1, 2, 3], 1, 2, [4, 5]); // the first array argument becomes [1, 4, 5]
+```
+
 * The `clear()` function removes all the elements in the array argument and returns them as a fresh array:
 
 ```
 clear([1, 2, 3]); // the array argument becomes []
+```
+
+* The `clone()` function returns a *shallow* clone of its array argument.
+
+```
+clone([1, 2, 3]); // returns [1, 2, 3]
+```
+
+* The `reverse()` function returns the array argument reversed, as opposed to its native counterpart which reverses an array in place:
+
+```
+reverse([1, 2, 3]); // returns [3, 2, 1]
 ```
 
 * The `copy()` function copies the second array argument over the top of the first array argument, in other words it replaces each element of the first array argument with the corresponding element in the second array argument. 
@@ -939,10 +964,67 @@ If there are more elements in the second array argument that the first, the firs
 copy([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [4, 5, 6, 7]
 ```
 
-* The `merge()` function copies the second array argument onto to the end of the first array argument, behaving in identical fashion to the `push()` function:
+* The `filter()` function is like its native counterpart, however it filters the first array argument *in place*.
+  The second argument should be a callback function that will be invoked for each element of the array.
+  If it does not return a truthy value, the corresponding element will be deleted.
+  The deleted elements are returned.
 
 ```
-merge([1, 2, 3], [4, 5, 6, 7]); // the first array argument becomes [1, 2, 3, 4, 5, 6, 7]
+filter([1, 2, -2], (element, index) => (element > 0)); // returns [-2] and the array argument becomes [1, 2] 
+```
+
+* The `prune()` function is much like the `filter()` function, however it will terminate the first time that the callback function does not return a truthy value:
+
+```
+prune([1, 2, -1, -2], (element, index) => (element > 0)); // returns -1 and the array argument becomes [1, 2, -2]
+```
+
+* The `extract()` function is identical to the `prune()` function, however the callback should return a truthy value in order to delete and return an element:
+
+```
+extract([1, 2, -1, -2], (element, index) => (element === 2)); // returns 2 and the array argument becomes [1, -1, -2]
+```
+
+* The `compress()` function will remove elements from the array argument whenever the callback function returns a falsey value:
+
+```
+compress([1, 2, 1], (element1, element2) => (element1 !== element2)); // the array argument becomes [1, 2]
+```
+
+* The `one()` function is akin to the native `some()` method but returns true only if the callback returns a truthy value once and only  once:
+
+```
+one([1, 2, 1], (element) => (element === 1)); // returns true;
+
+one([1, 2, 1, 3], (element) => (element === 1)); // returns false;
+```
+
+* The `each()` function is akin to the native `every()` method but returns true only if the callback returns a truthy value always and at least once:
+
+```
+each([1, 1], (element) => (element === 1)); // returns true;
+
+each([], (element) => (element === 1)); // returns false;
+```
+
+This is often invaluable if many of the subsequent funtions, which mutate their array argument, are employed.
+
+* The `find()` function is like its native counterpart, however it returns an array of all the elements for which the callback function returns a truthy value, rather than just the first:
+
+```
+find([1, 2, -1, -2], (element, index) => (element > 0)); // returns [1, 2]
+```
+
+* The `replace()` function will replace an element in the array with the given element the first time that the callback function returns a truthy value:
+
+```
+replace([1, 0, -2], 3, (element, index) => (element === 0)); // the array argument becomes [1, 3, -2]
+```
+
+* The `patch()` function will append the given element to the array argument the first time that the callback function returns a truthy value:
+
+```
+patch([1, 2, 0, -1, -2], 4, (element, index) => (element === 0)); // the array argument becomes [1, 2, 0, -1, -2, 4]
 ```
 
 * The `match()` function compares the first and second array arguments in order. 
@@ -984,92 +1066,10 @@ The second array argument will contain the elements according to this ordering.
 The first array argument is left untouched whether or not the function succeeds. 
 The second array argument may contain elements if it has only been partially successful, however.
 
-* The `one()` function is akin to the native `some()` method but returns true only if the callback returns a truthy value once and only  once:
-
-```
-one([1, 2, 1], (element) => (element === 1)); // returns true;
-
-one([1, 2, 1, 3], (element) => (element === 1)); // returns false;
-```
-
-* The `each()` function is akin to the native `every()` method but returns true only if the callback returns a truthy value always and at least once:
-
-```
-each([1, 1], (element) => (element === 1)); // returns true;
-
-each([], (element) => (element === 1)); // returns false;
-```
-
-* The `clone()` function returns a *shallow* clone of its array argument. 
-
-```
-clone([1, 2, 3]); // returns [1, 2, 3]
-```
-
-This is often invaluable if many of the subsequent funtions, which mutate their array argument, are employed.
-
-* The `find()` function is like its native counterpart, however it returns an array of all the elements for which the callback function returns a truthy value, rather than just the first:
-
-```
-find([1, 2, -1, -2], (element, index) => (element > 0)); // returns [1, 2]
-```
-
-* The `replace()` function will replace an element in the array with the given element the first time that the callback function returns a truthy value:
-
-```
-replace([1, 0, -2], 3, (element, index) => (element === 0)); // the array argument becomes [1, 3, -2]
-```
-
-* The `splice()` function works in a similar vein to its native counterpart, however it takes an array as the optional fourth argument rather than a series of elements from the fourth argument onwards. 
-It mutates the first array argument and returns an array of the elements that have been deleted:
-
-```
-splice([1, 2, 3], 1, 2, [4, 5]); // the first array argument becomes [1, 4, 5]
-```
-
-* The `filter()` function is like its native counterpart, however it filters the first array argument *in place*. 
-The second argument should be a callback function that will be invoked for each element of the array. 
-If it does not return a truthy value, the corresponding element will be deleted. 
-The deleted elements are returned.
-
-```
-filter([1, 2, -2], (element, index) => (element > 0)); // returns [-2] and the array argument becomes [1, 2] 
-```
-
-* The `prune()` function is much like the `filter()` function, however it will terminate the first time that the callback function does not return a truthy value:
-
-```
-prune([1, 2, -1, -2], (element, index) => (element > 0)); // returns -1 and the array argument becomes [1, 2, -2]
-```
-
-* The `extract()` function is identical to the `prune()` function, however the callback should return a truthy value in order to delete and return an element:
-
-```
-extract([1, 2, -1, -2], (element, index) => (element === 2)); // returns 2 and the array argument becomes [1, -1, -2]
-```
-
-* The `patch()` function will append the given element to the array argument the first time that the callback function returns a truthy value:
-
-```
-patch([1, 2, 0, -1, -2], 4, (element, index) => (element === 0)); // the array argument becomes [1, 2, 0, -1, -2, 4]
-```
-
-* The `compress()` function will remove elements from the array argument whenever the callback function returns a falsey value:
-
-```
-compress([1, 2, 1], (element1, element2) => (element1 !== element2)); // the array argument becomes [1, 2]
-```
-
 * The `combine()` function will concatenate the two array arguments, compress them and and return the result:
 
 ```
 combine([1, 2, 1], [2, 3], (element1, element2) => (element1 !== element2)); // returns [1, 2, 3]
-```
-
-* The `reverse()` function returns the array argument reversed, as opposed to its native counterpart which reverses an array in place: 
-
-```
-reverse([1, 2, 3]); // returns [3, 2, 1]
 ```
 
 * The `augment()` function appends each of the elements of the second array argument to the first array argument whenever the callback returns a truthy value:
