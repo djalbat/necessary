@@ -279,16 +279,27 @@ export function replace(arrayA, elementB, callback) {
   return found;
 }
 
+export function zip(arrayA, arrayB, callback) {
+  const array = Array.prototype.map.call(arrayA, (elementA, index) => {
+    const elementB = arrayB[index],
+          element = callback(elementA, elementB, index);
+
+    return element;
+  });
+
+  return array;
+}
+
 export function match(arrayA, arrayB, callback) {
   let matches = false;
 
   const arrayALength = arrayA.length,
-        arrayBLength = arrayB.length;
+    arrayBLength = arrayB.length;
 
   if (arrayALength === arrayBLength) {
     matches = Array.prototype.every.call(arrayA, (elementA, index) => {
       const elementB = arrayB[index],
-            passed = callback(elementA, elementB, index);
+        passed = callback(elementA, elementB, index);
 
       if (passed) {
         return true;
@@ -758,6 +769,7 @@ export default {
   merge,
   clear,
   copy,
+  zip,
   match,
   compare,
   correlate,

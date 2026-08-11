@@ -886,6 +886,7 @@ isPrimitive({}); // returns false
 - `replace()`
 - `patch()`
 - `compress()`
+- `zip()`
 - `match()`
 - `compare()`
 - `correlate()`
@@ -1031,8 +1032,15 @@ replace([1, 0, -2], 3, (element, index) => (element === 0)); // the array argume
 patch([1, 2, 0, -1, -2], 4, (element, index) => (element === 0)); // the array argument becomes [1, 2, 0, -1, -2, 4]
 ```
 
-* The `match()` function compares the first and second array arguments in order. 
-If they are of the same length and the callback argument supplied returns a truthy value when invoked with each pair of elements then it returns true:
+* The `zip()` function will pass the corresponding elements of the two array arguments to the callabck function and put the return value into a third array
+  It is assumed that the first array's length is less than or eaual to the seond's. 
+
+```
+zip([1, 2, 3], [-1, -2, -3], (valueA, valueB) => (valueA + valueB)); // returns [0, 0, 0]
+```
+
+* The `match()` function compares the first and second array arguments in order.
+  If they are of the same length and the callback argument supplied returns a truthy value when invoked with each pair of elements then it returns true:
 
 ```
 match([1, 2, 3], [-1, -2, -3], (valueA, valueB) => (valueA === -valueB)); // returns true
