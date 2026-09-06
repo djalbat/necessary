@@ -1455,7 +1455,8 @@ sequence(operations, () => {
 }, context);
 ```
 
-* The `eventually()` function takes an array of operations, each of which it calls immediately without waiting for the operations to invoke the given `next()` functions. When each of the operations has invoked the given `next()` function, it will call the `done()` function. 
+* The `eventually()` function takes an array of operations, each of which it calls immediately without waiting for the operations to invoke the given `next()` functions. 
+When each of the operations has invoked the given `next()` function, it will call the `done()` function. 
 Note that in this case invoking the `done()` function from within a operation will not halt the execution of other operations, it is passed as an argument only for the sake of convention. 
 In the example below each of the operations is executed:
 
@@ -1474,8 +1475,10 @@ const firstOperation = (next, done, context, index) => { next(); },
 eventually(operations, () => {
   /// done
 }, context);
+
 ```
-* The `repeatedly()` function takes a single operation and a `length` argument, immediately calling the operation a `length` number of times without waiting for it to invoke the given `next()` function each time. When the operation has invoked the given `next()` function a `length` number of times, it will call the `done()` function. 
+* The `repeatedly()` function takes a single operation and a `length` argument, immediately calling the operation a `length` number of times without waiting for it to invoke the given `next()` function each time. 
+When the operation has invoked the given `next()` function a `length` number of times, it will call the `done()` function. 
 Note that in this case invoking the `done()` function from within the operation will not halt its execution the requisite number of times, it is passed as an argument only for the sake of convention. 
 In the example below the operation is executed ten times:
 
